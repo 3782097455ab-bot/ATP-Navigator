@@ -1,0 +1,48 @@
+{
+  "dataset_version": "ATP-Navigator Dataset v1.0",
+  "purpose": "three-layer evidence registry; no cross-label training implied",
+  "created_at": "2026-08-22T18:26:34.881Z",
+  "output_file": "data/dataset_v1.0/ATP_Navigator_Dataset_v1.csv",
+  "output_sha256": "88df875d4c9bd65bbb5bf16c6608d57c5947b5fbb8ec58cc053bb8c9b9724bb0",
+  "row_count": 6754,
+  "column_count": 12,
+  "unique_compound_ids": 2329,
+  "unique_nonblank_smiles": 2324,
+  "layer_counts": {
+    "layer_2_atp_synthase_specific": 363,
+    "layer_1_general_antibacterial": 6355,
+    "layer_3_internal_atp_navigator": 36
+  },
+  "public_source": {
+    "file": "C:\\Users\\Lenovo\\Downloads\\ATP-Navigator公开训练数据库.csv",
+    "sha256": "8b7127c6cddcfdebbaab68f1537d5cc5a7c0e4163c82269d069f4525b977d06b",
+    "raw_rows": 6777,
+    "exact_duplicate_rows_excluded": 35,
+    "identity_conflict_ids_excluded": [
+      "WSA236",
+      "WSA238"
+    ],
+    "identity_conflict_rows_excluded": 24,
+    "included_rows": 6718,
+    "canonical_smiles_policy": "copied from source-declared RDKit-normalized smiles; not independently recanonicalized in this build"
+  },
+  "internal_source": {
+    "static_mmgbsa_rows": 17,
+    "glide_docking_rows": 17,
+    "md_mmgbsa_mean_rows": 2,
+    "included_rows": 36,
+    "mmgbsa_unit_policy": "blank because the processed source tables do not carry an explicit unit field",
+    "md_trajectory_status": "source systems are marked incomplete; only existing derived 1000-frame means are registered"
+  },
+  "rules": {
+    "exact_duplicates": "excluded from processed output",
+    "conflicting_compound_identity": "excluded; no guessed structure reassignment",
+    "activity_values": "preserved as source text; comparator and range values are not coerced",
+    "labels": "MIC, IC50, docking, static MMGBSA, and MD MMGBSA remain separate activity_type values",
+    "unit_normalization": "μg/mL and µg/mL normalized to ug/mL; numeric values unchanged"
+  },
+  "validation": {
+    "used_range": "A1:L6755",
+    "preview": "{\"kind\":\"region\",\"sheet\":\"dataset_v1\",\"address\":\"A1:L8\",\"rows\":8,\"cols\":12,\"nonEmpty\":89,\"blank\":7,\"text\":89,\"maxTextLength\":204,\"preview\":[[\"compound_id\",\"canonical_smiles\",\"target\",\"protein_id\",\"organism\",\"activity_type\",\"activity_value\",\"unit\",\"dataset_layer\",\"data_source\",\"reference\",\"label_confidence\"],[\"WSA264\",\"CCN1CCC=NC(SCc2ccccc2)=C2C=CC(CCNC2)CC1\",\"whole cell\",null,\"Acinetobacter baumannii ATCC 17978\",\"MIC\",\">128\",\"ug/mL\",\"layer_2_atp_synthase_specific\",\"Literature (ACS Omega 2025)\",\"DOI=10.1021/acsomega.5c06380 | year=2025 | title=Synthesis and Evaluation of ...\",\"medium_source_traceable_unverified\"],[\"WSA264\",\"CCN1CCC=NC(SCc2ccccc2)=C2C=CC(CCNC2)CC1\",\"whole cell\",null,\"Acinetobacter baumannii BAA 1605 (MDR)\",\"MIC\",\">128\",\"ug/mL\",\"layer_2_atp_synthase_specific\",\"Literature (ACS Omega 2025)\",\"DOI=10.1021/acsomega.5c06380 | year=2025 | title=Synthesis and Evaluation of ...\",\"medium_source_traceable_unverified\"],[\"WSA265\",\"C1=CC2CCNCC1=C(SCc1ccccc1)N=CCCN(C1CCCC1)CC2\",\"whole cell\",null,\"Acinetobacter baumannii ATCC 17978\",\"MIC\",\">128\",\"ug/mL\",\"layer_2_atp_synthase_specific\",\"Literature (ACS Omega 2025)\",\"DOI=10.1021/acsomega.5c06380 | year=2025 | title=Synthesis and Evaluation of ...\",\"medium_source_traceable_unverified\"],[\"WSA265\",\"C1=CC2CCNCC1=C(SCc1ccccc1)N=CCCN(C1CCCC1)CC2\",\"whole cell\",null,\"Acinetobacter baumannii BAA 1605 (MDR)\",\"MIC\",\">128\",\"ug/mL\",\"layer_2_atp_synthase_specific\",\"Literature (ACS Omega 2025)\",\"DOI=10.1021/acsomega.5c06380 | year=2025 | title=Synthesis and Evaluation of ...\",\"medium_source_traceable_unverified\"],[\"WSA267\",\"C1=CC(CN2CCCC2)=CC=C2C=CC(=C(SCc3ccccc3)N=C1)CNC2\",\"whole cell\",null,\"Acinetobacter baumannii ATCC 17978\",\"MIC\",\"128\",\"ug/mL\",\"layer_2_atp_synthase_specific\",\"Literature (ACS Omega 2025)\",\"DOI=10.1021/acsomega.5c06380 | year=2025 | title=Synthesis and Evaluation of ...\",\"medium_source_traceable_unverified\"],[\"WSA267\",\"C1=CC(CN2CCCC2)=CC=C2C=CC(=C(SCc3ccccc3)N=C1)CNC2\",\"whole cell\",null,\"Acinetobacter baumannii BAA 1605 (MDR)\",\"MIC\",\"128\",\"ug/mL\",\"layer_2_atp_synthase_specific\",\"Literature (ACS Omega 2025)\",\"DOI=10.1021/acsomega.5c06380 | year=2025 | title=Synthesis and Evaluation of ...\",\"medium_source_traceable_unverified\"],[\"WSA268\",\"CN1CCC=NC(SCc2ccccc2)=C2C=CN(CCNC2)CC1\",\"whole cell\",null,\"Acinetobacter baumannii ATCC 17978\",\"MIC\",\">128\",\"ug/mL\",\"layer_2_atp_synthase_specific\",\"Literature (ACS Omega 2025)\",\"DOI=10.1021/acsomega.5c06380 | year=2025 | title=Synthesis and Evaluation of ...\",\"medium_source_traceable_unverified\"]],\"previewAddress\":\"A1:L8\",\"previewRows\":8,\"previewCols\":12}"
+  }
+}

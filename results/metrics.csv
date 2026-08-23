@@ -1,0 +1,5 @@
+model,target_stage,feature_count,n_samples,spearman,rmse,ndcg,top_k,top_k_recall,status
+docking_only,MMGBSA,1,0,,,,0,,not_evaluable_insufficient_overlap
+random_forest,MMGBSA,1035,17,-0.03921568627450981,7.643798907551054,0.6179634154547637,5,0.4,ok
+xgboost,MMGBSA,1035,17,0.556372549019608,6.841857477441597,0.8078465167236677,5,0.6,ok
+lightgbm,MMGBSA,1035,17,0.6740196078431374,6.426733179368009,0.8443496823319389,5,0.6,ok

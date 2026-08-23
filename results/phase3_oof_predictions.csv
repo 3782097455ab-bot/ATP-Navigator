@@ -1,0 +1,52 @@
+compound_id,compound_code,historical_alias,model_id,model,fold_id,scaffold,observed_mmgbsa,predicted_score,score_direction,prediction_type
+ATP-SMI-15737353FB69,29508,Hit7,Model 0,docking_only,0,c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1,-51.42,-8.11191224598807,lower_is_better,direct_ranking
+ATP-SMI-4417138BF81D,90158,Hit17,Model 0,docking_only,0,O=C(Nc1ccccc1)c1cc2ccccc2nc1NCc1ccccc1,-33.54,-8.58843526811927,lower_is_better,direct_ranking
+ATP-SMI-5B36D3E11A3B,91074,Hit13,Model 0,docking_only,0,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-44.13,-8.18448236860633,lower_is_better,direct_ranking
+ATP-SMI-5D3E7B6B6796,56519,Hit4,Model 0,docking_only,0,c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1,-54.81,-8.07246311561382,lower_is_better,direct_ranking
+ATP-SMI-775D33706F04,91072,Hit14,Model 0,docking_only,0,O=C(NCc1ccccc1)c1sccc1NCc1ccccc1,-43,-8.47125394301545,lower_is_better,direct_ranking
+ATP-SMI-874C2DE25FE4,27063,Hit3,Model 0,docking_only,0,c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1,-56.37,-8.42196401327989,lower_is_better,direct_ranking
+ATP-SMI-91E7552C2382,23289,Hit16,Model 0,docking_only,0,c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1,-34.76,-8.50768563789492,lower_is_better,direct_ranking
+ATP-SMI-94F73967C042,71800,Hit12,Model 0,docking_only,0,O=C(Nc1ccccc1)c1cc(NCc2ccccc2)cs1,-44.48,-8.34211914130707,lower_is_better,direct_ranking
+ATP-SMI-96FD6257D8BA,57003,Hit5,Model 0,docking_only,0,c1ccc(-n2cc(C[NH2+]CCc3ccc(N4CC[NH2+]CC4)cc3)c(-c3cccnc3)n2)cc1,-52.9,-8.37304414520958,lower_is_better,direct_ranking
+ATP-SMI-9DA3213A09E8,20304,Hit1,Model 0,docking_only,0,O=C(NCc1ccccc1)c1ccnc(C[NH2+]Cc2ccccc2)c1,-57.51,-8.12068275383396,lower_is_better,direct_ranking
+ATP-SMI-BF69AB71C1A4,84919,Hit8,Model 0,docking_only,0,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-51.01,-8.14688200228842,lower_is_better,direct_ranking
+ATP-SMI-C3308BEE03AC,84927,Hit10,Model 0,docking_only,0,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-48.06,-8.40968869431086,lower_is_better,direct_ranking
+ATP-SMI-C93E6EC67CDB,91771,Hit2,Model 0,docking_only,0,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-56.56,-8.42562825587936,lower_is_better,direct_ranking
+ATP-SMI-CDED936B42F4,33710,Hit11,Model 0,docking_only,0,c1ccc(CC[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1,-47.89,-8.15834295820794,lower_is_better,direct_ranking
+ATP-SMI-CFA68A98711F,34890,Hit15,Model 0,docking_only,0,c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1,-37.5,-10.0131045249552,lower_is_better,direct_ranking
+ATP-SMI-E9798004BA11,65938,Hit6,Model 0,docking_only,0,c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1,-51.99,-8.23545529108907,lower_is_better,direct_ranking
+ATP-SMI-FCA9CDF3313B,3339,Hit9,Model 0,docking_only,0,c1ccc(CCNc2nc(Nc3ccccc3)nc3ccccc23)cc1,-48.88,-8.15986913112427,lower_is_better,direct_ranking
+ATP-SMI-15737353FB69,29508,Hit7,Legacy P1 LightGBM,lightgbm_baseline,11,c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1,-51.42,-53.13931453370717,lower_is_better,out_of_fold
+ATP-SMI-4417138BF81D,90158,Hit17,Legacy P1 LightGBM,lightgbm_baseline,5,O=C(Nc1ccccc1)c1cc2ccccc2nc1NCc1ccccc1,-33.54,-49.36265335330995,lower_is_better,out_of_fold
+ATP-SMI-5B36D3E11A3B,91074,Hit13,Legacy P1 LightGBM,lightgbm_baseline,1,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-44.13,-45.7903711169742,lower_is_better,out_of_fold
+ATP-SMI-5D3E7B6B6796,56519,Hit4,Legacy P1 LightGBM,lightgbm_baseline,9,c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1,-54.81,-54.857170792499915,lower_is_better,out_of_fold
+ATP-SMI-775D33706F04,91072,Hit14,Legacy P1 LightGBM,lightgbm_baseline,3,O=C(NCc1ccccc1)c1sccc1NCc1ccccc1,-43,-44.889799000811585,lower_is_better,out_of_fold
+ATP-SMI-874C2DE25FE4,27063,Hit3,Legacy P1 LightGBM,lightgbm_baseline,11,c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1,-56.37,-53.13931453370717,lower_is_better,out_of_fold
+ATP-SMI-91E7552C2382,23289,Hit16,Legacy P1 LightGBM,lightgbm_baseline,10,c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1,-34.76,-48.821445813907786,lower_is_better,out_of_fold
+ATP-SMI-94F73967C042,71800,Hit12,Legacy P1 LightGBM,lightgbm_baseline,4,O=C(Nc1ccccc1)c1cc(NCc2ccccc2)cs1,-44.48,-45.01163907157035,lower_is_better,out_of_fold
+ATP-SMI-96FD6257D8BA,57003,Hit5,Legacy P1 LightGBM,lightgbm_baseline,6,c1ccc(-n2cc(C[NH2+]CCc3ccc(N4CC[NH2+]CC4)cc3)c(-c3cccnc3)n2)cc1,-52.9,-51.91496431821652,lower_is_better,out_of_fold
+ATP-SMI-9DA3213A09E8,20304,Hit1,Legacy P1 LightGBM,lightgbm_baseline,2,O=C(NCc1ccccc1)c1ccnc(C[NH2+]Cc2ccccc2)c1,-57.51,-53.13348018534351,lower_is_better,out_of_fold
+ATP-SMI-BF69AB71C1A4,84919,Hit8,Legacy P1 LightGBM,lightgbm_baseline,1,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-51.01,-44.204587401117834,lower_is_better,out_of_fold
+ATP-SMI-C3308BEE03AC,84927,Hit10,Legacy P1 LightGBM,lightgbm_baseline,1,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-48.06,-45.49614723220675,lower_is_better,out_of_fold
+ATP-SMI-C93E6EC67CDB,91771,Hit2,Legacy P1 LightGBM,lightgbm_baseline,1,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-56.56,-52.74504035786353,lower_is_better,out_of_fold
+ATP-SMI-CDED936B42F4,33710,Hit11,Legacy P1 LightGBM,lightgbm_baseline,8,c1ccc(CC[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1,-47.89,-37.31826441150566,lower_is_better,out_of_fold
+ATP-SMI-CFA68A98711F,34890,Hit15,Legacy P1 LightGBM,lightgbm_baseline,9,c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1,-37.5,-43.22322950195253,lower_is_better,out_of_fold
+ATP-SMI-E9798004BA11,65938,Hit6,Legacy P1 LightGBM,lightgbm_baseline,10,c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1,-51.99,-58.34269515081082,lower_is_better,out_of_fold
+ATP-SMI-FCA9CDF3313B,3339,Hit9,Legacy P1 LightGBM,lightgbm_baseline,7,c1ccc(CCNc2nc(Nc3ccccc3)nc3ccccc23)cc1,-48.88,-53.63626917652174,lower_is_better,out_of_fold
+ATP-SMI-15737353FB69,29508,Hit7,Model 2,lightgbm_enhanced_v1,11,c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1,-51.42,-51.72163802770089,lower_is_better,out_of_fold
+ATP-SMI-4417138BF81D,90158,Hit17,Model 2,lightgbm_enhanced_v1,5,O=C(Nc1ccccc1)c1cc2ccccc2nc1NCc1ccccc1,-33.54,-43.00416842375439,lower_is_better,out_of_fold
+ATP-SMI-5B36D3E11A3B,91074,Hit13,Model 2,lightgbm_enhanced_v1,1,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-44.13,-44.69349939943265,lower_is_better,out_of_fold
+ATP-SMI-5D3E7B6B6796,56519,Hit4,Model 2,lightgbm_enhanced_v1,9,c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1,-54.81,-50.61958752798029,lower_is_better,out_of_fold
+ATP-SMI-775D33706F04,91072,Hit14,Model 2,lightgbm_enhanced_v1,3,O=C(NCc1ccccc1)c1sccc1NCc1ccccc1,-43,-39.790248871589824,lower_is_better,out_of_fold
+ATP-SMI-874C2DE25FE4,27063,Hit3,Model 2,lightgbm_enhanced_v1,11,c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1,-56.37,-50.0413784572074,lower_is_better,out_of_fold
+ATP-SMI-91E7552C2382,23289,Hit16,Model 2,lightgbm_enhanced_v1,10,c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1,-34.76,-43.9899159829435,lower_is_better,out_of_fold
+ATP-SMI-94F73967C042,71800,Hit12,Model 2,lightgbm_enhanced_v1,4,O=C(Nc1ccccc1)c1cc(NCc2ccccc2)cs1,-44.48,-45.359427538502345,lower_is_better,out_of_fold
+ATP-SMI-96FD6257D8BA,57003,Hit5,Model 2,lightgbm_enhanced_v1,6,c1ccc(-n2cc(C[NH2+]CCc3ccc(N4CC[NH2+]CC4)cc3)c(-c3cccnc3)n2)cc1,-52.9,-51.938821174853906,lower_is_better,out_of_fold
+ATP-SMI-9DA3213A09E8,20304,Hit1,Model 2,lightgbm_enhanced_v1,2,O=C(NCc1ccccc1)c1ccnc(C[NH2+]Cc2ccccc2)c1,-57.51,-51.539629765578745,lower_is_better,out_of_fold
+ATP-SMI-BF69AB71C1A4,84919,Hit8,Model 2,lightgbm_enhanced_v1,1,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-51.01,-44.94223794764702,lower_is_better,out_of_fold
+ATP-SMI-C3308BEE03AC,84927,Hit10,Model 2,lightgbm_enhanced_v1,1,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-48.06,-44.26355341345089,lower_is_better,out_of_fold
+ATP-SMI-C93E6EC67CDB,91771,Hit2,Model 2,lightgbm_enhanced_v1,1,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-56.56,-49.80513000504389,lower_is_better,out_of_fold
+ATP-SMI-CDED936B42F4,33710,Hit11,Model 2,lightgbm_enhanced_v1,8,c1ccc(CC[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1,-47.89,-47.934065810915925,lower_is_better,out_of_fold
+ATP-SMI-CFA68A98711F,34890,Hit15,Model 2,lightgbm_enhanced_v1,9,c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1,-37.5,-38.388870404264615,lower_is_better,out_of_fold
+ATP-SMI-E9798004BA11,65938,Hit6,Model 2,lightgbm_enhanced_v1,10,c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1,-51.99,-54.2618093012437,lower_is_better,out_of_fold
+ATP-SMI-FCA9CDF3313B,3339,Hit9,Model 2,lightgbm_enhanced_v1,7,c1ccc(CCNc2nc(Nc3ccccc3)nc3ccccc23)cc1,-48.88,-52.88214193793212,lower_is_better,out_of_fold

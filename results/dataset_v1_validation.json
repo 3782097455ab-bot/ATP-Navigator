@@ -1,0 +1,72 @@
+{
+  "status": "valid",
+  "used_range": "A1:L6755",
+  "rows": 6754,
+  "columns": 12,
+  "headers": [
+    "compound_id",
+    "canonical_smiles",
+    "target",
+    "protein_id",
+    "organism",
+    "activity_type",
+    "activity_value",
+    "unit",
+    "dataset_layer",
+    "data_source",
+    "reference",
+    "label_confidence"
+  ],
+  "unique_compound_ids": 2329,
+  "unique_nonblank_smiles": 2324,
+  "exact_duplicate_rows": 0,
+  "compound_ids_with_multiple_nonblank_smiles": [],
+  "quarantined_ids_present": 0,
+  "layer_counts": {
+    "layer_1_general_antibacterial": 6355,
+    "layer_2_atp_synthase_specific": 363,
+    "layer_3_internal_atp_navigator": 36
+  },
+  "activity_type_by_layer": {
+    "layer_2_atp_synthase_specific": {
+      "MIC": 245,
+      "IC50 (ATP synthesis inhibition)": 35,
+      "MIC (cytotoxicity, XTT)": 30,
+      "IC50": 17,
+      "IC50 (ATP synthesis, inverted membrane vesicles)": 9,
+      "Activity": 7,
+      "IC50 (ETC inhibition)": 7,
+      "IC50 (ETC, ACMA fluorescence)": 6,
+      "<missing>": 4,
+      "Inhibition": 3
+    },
+    "layer_1_general_antibacterial": {
+      "MIC": 6355
+    },
+    "layer_3_internal_atp_navigator": {
+      "Glide_docking_score": 17,
+      "MMGBSA_dG_Bind_static": 17,
+      "MMGBSA_dG_Bind_MD_mean_1000_frames": 2
+    }
+  },
+  "label_confidence_counts": {
+    "medium_source_traceable_unverified": 6714,
+    "high_internal_identity_confirmed": 35,
+    "low_annotation_or_incomplete": 4,
+    "medium_internal_alias_structure_unresolved": 1
+  },
+  "missing_by_field": {
+    "compound_id": 0,
+    "canonical_smiles": 1,
+    "target": 0,
+    "protein_id": 336,
+    "organism": 4,
+    "activity_type": 4,
+    "activity_value": 4,
+    "unit": 40,
+    "dataset_layer": 0,
+    "data_source": 0,
+    "reference": 0,
+    "label_confidence": 0
+  }
+}

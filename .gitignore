@@ -1,0 +1,54 @@
+.venv/
+.vscode/
+node_modules/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+results/.matplotlib/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+*.log
+~$*
+
+# Python/package caches
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+pip-wheel-metadata/
+*.egg-info/
+
+# Large molecular dynamics / simulation raw files
+*.dcd
+*.xtc
+*.trr
+*.netcdf
+*.nc
+*.mdcrd
+*.crd
+*.rst
+*.rst7
+*.ncrst
+*.vel
+*.xsc
+*.cpt
+*.chk
+*.edr
+*.tpr
+
+# Large/compressed raw archives and temporary exports
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+
+# Local scratch outputs
+tmp/
+temp/
+cache/
+.cache/

@@ -1,0 +1,18 @@
+[
+  {
+    "n_bits": 1024,
+    "molecules": 18,
+    "mean_on_bits": 51.55555555555556,
+    "mean_density": 0.050347222222222224,
+    "mean_distinct_features": 52.333333333333336,
+    "mean_folding_collision_rate": 0.014657336178577587
+  },
+  {
+    "n_bits": 2048,
+    "molecules": 18,
+    "mean_on_bits": 51.94444444444444,
+    "mean_density": 0.025363498263888888,
+    "mean_distinct_features": 52.333333333333336,
+    "mean_folding_collision_rate": 0.007425865620945712
+  }
+]

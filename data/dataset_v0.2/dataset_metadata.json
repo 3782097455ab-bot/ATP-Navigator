@@ -1,0 +1,156 @@
+{
+  "dataset_version": "dataset_v0.2",
+  "purpose": "AI-assisted ranking of the 17 verified virtual-screening candidates; not biological-activity prediction",
+  "sample_count": 17,
+  "unique_compound_ids": 17,
+  "unique_inchi_keys": 17,
+  "unique_scaffolds": 11,
+  "scaffold_group_sizes": [
+    4,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "identity_rule": "Exact source SMILES/chemical identity matched between VSW.csv and VSW.maegz; unverifiable records excluded",
+  "label": {
+    "name": "label_score",
+    "type": "VSW static MMGBSA dG Bind",
+    "direction": "lower_is_better",
+    "source": "作图/作图/2-基于衍生数据库的虚拟筛选/数据/VSW.csv"
+  },
+  "feature_groups": {
+    "morgan": 1024,
+    "rdkit_descriptor": 11,
+    "docking": 11,
+    "quickprop_complete_nonconstant": 43,
+    "model2_total": 1089
+  },
+  "quickprop_discovered": 51,
+  "quickprop_complete": 51,
+  "quickprop_used_nonconstant": 43,
+  "source_audit": {
+    "labels_file": "作图/作图/2-基于衍生数据库的虚拟筛选/数据/VSW.csv",
+    "labels_sha256": "f13a06aca40b0f1b84e6aaab60f96ad56f8b204aa68eef78d6509ab5c411a701",
+    "feature_file": "作图/作图/2-基于衍生数据库的虚拟筛选/数据/VSW.maegz",
+    "feature_sha256": "c4048042f3e35cd25c2c1b1a9a188a4000425f39d10feefea7096e98e568cdd1",
+    "raw_maestro_records": 18,
+    "matched_candidate_records": 17,
+    "selection": {
+      "C[NH+](C)Cc1ccc(C[NH2+]Cc2cc(C(=O)N[C@@H](C#N)c3ccccc3)ccn2)cc1": {
+        "matched_records": 1,
+        "compound_code": "20304",
+        "variant": "20304-1",
+        "title": "Top-1"
+      },
+      "C[NH2+]C[C@@H](NC(=O)c1cc(NCc2cccc(C[NH+](C)C)c2)c(Cl)s1)c1ccccc1": {
+        "matched_records": 1,
+        "compound_code": "91771",
+        "variant": "91771-2",
+        "title": "Top-2"
+      },
+      "Cc1ccc(-c2nn(Cc3ccccc3)cc2C[NH2+]Cc2ccccc2C[N@H+]2CC[C@@H](O)C2)cc1": {
+        "matched_records": 1,
+        "compound_code": "27063",
+        "variant": "27063-1",
+        "title": "Top-3"
+      },
+      "O=[N+]([O-])c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)c(O)c1": {
+        "matched_records": 1,
+        "compound_code": "56519",
+        "variant": "56519-1",
+        "title": "Top-4"
+      },
+      "C[NH+]1CCN(c2ccc(CC[NH2+]Cc3cn(-c4ccccc4)nc3-c3cccnc3)cc2)CC1": {
+        "matched_records": 1,
+        "compound_code": "57003",
+        "variant": "57003-1",
+        "title": "Top-5"
+      },
+      "COc1cc(C[NH2+]Cc2ccccc2NCC[NH+](C)C)cc(O)c1OCc1ccccc1": {
+        "matched_records": 1,
+        "compound_code": "65938",
+        "variant": "65938-1",
+        "title": "m_270004bbb____25289958____24720040"
+      },
+      "O[C@H]1CC[N@@H+](Cc2ccccc2C[NH2+]Cc2cn(Cc3ccccc3)nc2-c2ccccc2)C1": {
+        "matched_records": 1,
+        "compound_code": "29508",
+        "variant": "29508-4",
+        "title": "m_270004bbb____8628186____7548060"
+      },
+      "C[NH+](C)Cc1cccc(CNc2cc(C(=O)N[C@@H](C[NH3+])c3ccccc3)sc2Cl)c1": {
+        "matched_records": 1,
+        "compound_code": "84919",
+        "variant": "84919-1",
+        "title": "rxn512b____EMOL44391395____EMOL44846536____EMOL2873214"
+      },
+      "Cc1ccc([C@H](CNc2nc(N(CC[NH3+])c3cccc(Cl)c3)nc3ccccc23)[NH+](C)C)cc1": {
+        "matched_records": 1,
+        "compound_code": "3339",
+        "variant": "3339-1",
+        "title": "YAS_R007____OTV5753507____OTV1142656____OTV7020410266"
+      },
+      "C[NH+](C)Cc1ccc(CNc2cc(C(=O)N[C@H](C[NH3+])c3ccccc3)sc2Cl)cc1": {
+        "matched_records": 1,
+        "compound_code": "84927",
+        "variant": "84927-2",
+        "title": "rxn512b____EMOL44391395____EMOL44846536____EMOL50155899"
+      },
+      "Oc1cccc([C@H](O)C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)c1": {
+        "matched_records": 1,
+        "compound_code": "33710",
+        "variant": "33710-2",
+        "title": "m_270004bbb____24793762____8127862"
+      },
+      "C[NH+](C)Cc1ccc(CNc2cc(C(=O)N(CC[NH3+])c3ccccc3)sc2Cl)cc1": {
+        "matched_records": 1,
+        "compound_code": "71800",
+        "variant": "71800-1",
+        "title": "rxn512b____EMOL530647____EMOL44846536____EMOL50155899"
+      },
+      "C[NH+](C)Cc1ccc(CNc2csc(C(=O)N[C@H](C[NH3+])c3ccccc3)c2)cc1": {
+        "matched_records": 1,
+        "compound_code": "91074",
+        "variant": "91074-2",
+        "title": "rxn512b____EMOL44391395____EMOL720738____EMOL50155899"
+      },
+      "C[NH+](C)Cc1cccc(CNc2ccsc2C(=O)N[C@H](C[NH3+])c2ccccc2)c1": {
+        "matched_records": 1,
+        "compound_code": "91072",
+        "variant": "91072-2",
+        "title": "rxn512b____EMOL44391395____EMOL525138____EMOL2873214"
+      },
+      "Oc1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1O": {
+        "matched_records": 1,
+        "compound_code": "34890",
+        "variant": "34890-1",
+        "title": "m_207dba____17850802____7963830"
+      },
+      "COc1cc(C[NH2+]Cc2cccc(C[NH+](C)C)c2)cc(O)c1OCc1ccccc1": {
+        "matched_records": 1,
+        "compound_code": "23289",
+        "variant": "23289-1",
+        "title": "m_270004bbb____8349656____24720040"
+      },
+      "[NH3+]C[C@@H](Nc1nc2ccccc2cc1C(=O)Nc1ccccc1)c1cccc(Cl)c1": {
+        "matched_records": 1,
+        "compound_code": "90158",
+        "variant": "90158-2",
+        "title": "rxn207____EMOL6253876____EMOL2720785"
+      }
+    }
+  },
+  "software": {
+    "rdkit": "2026.03.5",
+    "lightgbm": "4.7.0",
+    "shap": "0.49.1",
+    "pandas": "2.3.3"
+  }
+}

@@ -1,0 +1,9 @@
+# Phase 4 ranker benchmark; Dataset v0.3 remains a design, not a materialized activity dataset.
+lightgbm==4.7.0
+xgboost==3.4.1
+scikit-learn==1.9.0
+scipy==1.18.1
+pandas==2.3.3
+numpy==2.5.2
+matplotlib==3.11.1
+joblib==1.5.3

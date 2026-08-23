@@ -1,0 +1,5 @@
+model_id,model,benchmark_protocol,ranking_population,evaluation_samples,feature_set,spearman,ndcg,top_k,top_k_enrichment,hit_recovery,recovered_hits,true_hits,status,notes
+Model 0,docking_only,no_common_evaluation_set,1633,0,best HTVS Glide docking score per canonical_id,,,0,,,0,0,not_evaluable_no_verified_id_bridge,"HTVS ranking is retained, but HTVS canonical IDs cannot yet be verified against the 17 MMGBSA candidates."
+Model 1,random_forest,scaffold_grouped_leave_one_out,17,17,Morgan1024 + RDKit10 + ADMET_SUM,0.13970588235294118,0.7188686075691363,5,1.3599999999999999,0.4,2,5,ok,All members of the held-out Bemis-Murcko scaffold group are excluded from training.
+Model 2,xgboost,scaffold_grouped_leave_one_out,17,17,Morgan1024 + RDKit10 + ADMET_SUM,0.5318627450980392,0.7780509463093052,5,1.3599999999999999,0.4,2,5,ok,All members of the held-out Bemis-Murcko scaffold group are excluded from training.
+Model 3,lightgbm,scaffold_grouped_leave_one_out,17,17,Morgan1024 + RDKit10 + ADMET_SUM,0.5984059984350675,0.7876931670049191,5,1.3599999999999999,0.4,2,5,ok,All members of the held-out Bemis-Murcko scaffold group are excluded from training.

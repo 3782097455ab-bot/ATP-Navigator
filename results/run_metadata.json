@@ -1,0 +1,31 @@
+{
+  "phase": "Phase 1 baseline",
+  "target_stage": "MMGBSA",
+  "score_direction": "lower_is_better",
+  "cv": "leave_one_out",
+  "random_seed": 42,
+  "training_rows": 17,
+  "usable_feature_count": 1035,
+  "usable_feature_groups": {
+    "morgan": 1024,
+    "physicochemical": 10,
+    "screening_evidence": 1,
+    "quickprop": 0
+  },
+  "docking_target_overlap": 0,
+  "limitations": [
+    "Dataset v0.1 has no verified canonical-id bridge between HTVS/Docking records and the MMGBSA hit set.",
+    "QuickProp fields are not present in molecules.csv or screening_records.csv.",
+    "MMGBSA training set is a small computed-label set, not experimental activity data."
+  ],
+  "dependencies": {
+    "python": "3.12.13",
+    "numpy": "2.5.2",
+    "pandas": "2.3.3",
+    "sklearn": "1.9.0",
+    "scipy": "1.18.1",
+    "rdkit": "2026.03.5",
+    "xgboost": "3.4.1",
+    "lightgbm": "4.7.0"
+  }
+}

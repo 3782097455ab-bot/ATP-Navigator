@@ -1,0 +1,303 @@
+{
+  "phase": "Phase 3",
+  "dataset_version": "dataset_v0.2",
+  "model_version": "lightgbm_enhanced_v1.0",
+  "preserved_prior_artifacts": true,
+  "trained_large_model": false,
+  "task_definition": "computational MMGBSA candidate ranking",
+  "not_biological_activity_prediction": true,
+  "sample_count": 17,
+  "scaffold_count": 11,
+  "feature_count": 1089,
+  "model_config": {
+    "objective": "regression",
+    "n_estimators": 160,
+    "learning_rate": 0.03,
+    "num_leaves": 7,
+    "max_depth": 3,
+    "min_child_samples": 2,
+    "subsample": 0.9,
+    "colsample_bytree": 0.45,
+    "reg_alpha": 0.1,
+    "reg_lambda": 1.0,
+    "random_state": 42,
+    "n_jobs": 1
+  },
+  "comparison": [
+    {
+      "model_id": "Model 0",
+      "model": "docking_only",
+      "dataset_version": "dataset_v0.2",
+      "evaluation_population": "verified_17_candidate_common_set",
+      "evaluation_samples": 17,
+      "benchmark_protocol": "same_population_direct_ranking",
+      "feature_set": "Glide docking score",
+      "feature_count": 1,
+      "spearman": -0.5318627450980392,
+      "rmse": 40.23169444584778,
+      "ndcg": 0.27474999583926785,
+      "top_k": 5,
+      "recovered_hits": 1,
+      "true_hits": 5,
+      "top_k_enrichment": 0.6799999999999999,
+      "hit_recovery": 0.2,
+      "status": "ok",
+      "notes": "No model fitting; direct Glide ranking on the same verified 17 candidates."
+    },
+    {
+      "model_id": "Legacy P1 LightGBM",
+      "model": "lightgbm_baseline",
+      "dataset_version": "dataset_v0.2",
+      "evaluation_population": "verified_17_candidate_common_set",
+      "evaluation_samples": 17,
+      "benchmark_protocol": "scaffold_grouped_leave_one_out",
+      "feature_set": "Morgan1024 + RDKit10 + ADMET_SUM",
+      "feature_count": 1035,
+      "spearman": 0.5984059984350675,
+      "rmse": 6.700078697576927,
+      "ndcg": 0.7876931670049191,
+      "top_k": 5,
+      "recovered_hits": 2,
+      "true_hits": 5,
+      "top_k_enrichment": 1.3599999999999999,
+      "hit_recovery": 0.4,
+      "status": "ok",
+      "notes": "Existing Phase 1.5 OOF predictions retained and re-evaluated on the same candidate order."
+    },
+    {
+      "model_id": "Model 2",
+      "model": "lightgbm_enhanced_v1",
+      "dataset_version": "dataset_v0.2",
+      "evaluation_population": "verified_17_candidate_common_set",
+      "evaluation_samples": 17,
+      "benchmark_protocol": "scaffold_grouped_leave_one_out",
+      "feature_set": "Morgan1024 + RDKit11 + verified VSW docking + complete nonconstant QuickProp",
+      "feature_count": 1089,
+      "spearman": 0.752450980392157,
+      "rmse": 4.846197658132629,
+      "ndcg": 0.7774290836650433,
+      "top_k": 5,
+      "recovered_hits": 2,
+      "true_hits": 5,
+      "top_k_enrichment": 1.3599999999999999,
+      "hit_recovery": 0.4,
+      "status": "ok",
+      "notes": "All feature extraction precedes no learned preprocessing; molecular identities are unique and scaffold groups are held out."
+    }
+  ],
+  "top_shap_features": [
+    {
+      "importance_rank": 1,
+      "feature": "glide_ligand_efficiency",
+      "feature_group": "docking",
+      "mean_abs_shap": 1.7447525720609436,
+      "mean_shap": 0.08895356154669058,
+      "max_abs_shap": 3.3601339981151246,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 2,
+      "feature": "glide_ligand_efficiency_sa",
+      "feature_group": "docking",
+      "mean_abs_shap": 1.0291030748236538,
+      "mean_shap": 0.07130693409362966,
+      "max_abs_shap": 2.115968116421503,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 3,
+      "feature": "glide_emodel",
+      "feature_group": "docking",
+      "mean_abs_shap": 1.0275168476843592,
+      "mean_shap": -0.04753021495971002,
+      "max_abs_shap": 2.157845453711413,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 4,
+      "feature": "glide_docking_score",
+      "feature_group": "docking",
+      "mean_abs_shap": 0.9409159649804417,
+      "mean_shap": -0.13650452363767845,
+      "max_abs_shap": 2.3710281786919905,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 5,
+      "feature": "glide_gscore",
+      "feature_group": "docking",
+      "mean_abs_shap": 0.6555893051079071,
+      "mean_shap": -0.1113339010641962,
+      "max_abs_shap": 1.1719662891025442,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 6,
+      "feature": "quickprop_ip_ev",
+      "feature_group": "quickprop",
+      "mean_abs_shap": 0.651022814037146,
+      "mean_shap": 0.006692727840554426,
+      "max_abs_shap": 1.050427669594721,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 7,
+      "feature": "quickprop_nonhatm",
+      "feature_group": "quickprop",
+      "mean_abs_shap": 0.44355523649938683,
+      "mean_shap": 0.020203546177082095,
+      "max_abs_shap": 0.5706418557403137,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 8,
+      "feature": "desc_heavy_atom_count",
+      "feature_group": "rdkit_descriptor",
+      "mean_abs_shap": 0.31926551875335785,
+      "mean_shap": 0.03066519906091225,
+      "max_abs_shap": 0.4124196618004985,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 9,
+      "feature": "glide_ecoul",
+      "feature_group": "docking",
+      "mean_abs_shap": 0.3007922660227088,
+      "mean_shap": 0.02973222158017738,
+      "max_abs_shap": 0.4507978258270474,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 10,
+      "feature": "morgan1024_0072",
+      "feature_group": "morgan",
+      "mean_abs_shap": 0.2230789537856746,
+      "mean_shap": -0.01052998326370503,
+      "max_abs_shap": 0.787374652207697,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 11,
+      "feature": "quickprop_qplogpw",
+      "feature_group": "quickprop",
+      "mean_abs_shap": 0.15373474318896624,
+      "mean_shap": 0.019004512834914673,
+      "max_abs_shap": 0.2788446392110837,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 12,
+      "feature": "morgan1024_0017",
+      "feature_group": "morgan",
+      "mean_abs_shap": 0.15042821944709125,
+      "mean_shap": -0.002158549830133269,
+      "max_abs_shap": 0.24725648422311905,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 13,
+      "feature": "glide_einternal",
+      "feature_group": "docking",
+      "mean_abs_shap": 0.12583979395428568,
+      "mean_shap": -0.0014913568235956516,
+      "max_abs_shap": 0.29095335573570774,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 14,
+      "feature": "desc_mol_wt",
+      "feature_group": "rdkit_descriptor",
+      "mean_abs_shap": 0.10965015234788193,
+      "mean_shap": 0.005959655360993226,
+      "max_abs_shap": 0.4202691135553388,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 15,
+      "feature": "quickprop_in56",
+      "feature_group": "quickprop",
+      "mean_abs_shap": 0.09442435599425263,
+      "mean_shap": 0.013885934705037144,
+      "max_abs_shap": 0.1809800156556508,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 16,
+      "feature": "quickprop_volume",
+      "feature_group": "quickprop",
+      "mean_abs_shap": 0.08761256227446217,
+      "mean_shap": 0.01453426136680992,
+      "max_abs_shap": 0.1452614828438268,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 17,
+      "feature": "quickprop_qppolrz",
+      "feature_group": "quickprop",
+      "mean_abs_shap": 0.08450173432038352,
+      "mean_shap": 0.004425567129571907,
+      "max_abs_shap": 0.18910166196011594,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 18,
+      "feature": "morgan1024_0774",
+      "feature_group": "morgan",
+      "mean_abs_shap": 0.08046227465886552,
+      "mean_shap": -0.011729653986405656,
+      "max_abs_shap": 0.3380702358364909,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 19,
+      "feature": "desc_hba",
+      "feature_group": "rdkit_descriptor",
+      "mean_abs_shap": 0.07855709332781283,
+      "mean_shap": 0.00640788918562856,
+      "max_abs_shap": 0.2625627876034918,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    },
+    {
+      "importance_rank": 20,
+      "feature": "quickprop_metab",
+      "feature_group": "quickprop",
+      "mean_abs_shap": 0.0713227832551692,
+      "mean_shap": -0.007122090926151846,
+      "max_abs_shap": 0.11274414900990436,
+      "nonzero_samples": 17,
+      "shap_scope": "full_fit_exploratory"
+    }
+  ],
+  "outputs": {
+    "model": "models/lightgbm_enhanced_v1.joblib",
+    "shap_plot": "results/figures/shap_summary_v1.png",
+    "comparison_plot": "results/figures/phase3_model_comparison.png",
+    "ranking_plot": "results/figures/phase3_ranking_output.png"
+  },
+  "limitations": [
+    "Only 17 verified candidates and 11 Bemis-Murcko scaffold groups are available.",
+    "Labels are computational static MM/GBSA values, not measured biological activity.",
+    "Candidates were selected by an upstream virtual-screening process, creating selection bias.",
+    "SHAP values explain the full-fit small-sample model and are exploratory, non-causal, and not OOF explanations.",
+    "The priority score is a rank-scaled batch score, not a calibrated probability."
+  ]
+}

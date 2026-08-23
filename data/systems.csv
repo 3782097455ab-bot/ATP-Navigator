@@ -1,0 +1,3 @@
+system_id,ligand_id,protein,trajectory_status,source
+SYS-MD-IN2-001,ATP-REF-IN2,7P3W,incomplete,运行/运行/ATP-Ref-MD1/MD.xtc.baiduyun.p.downloading;运行/运行/ATP-Ref-MD1/MD.cms;作图/作图/1-阳性化合物和蛋白的MD/图-1/ATP-Ref-MD1.pdf
+SYS-MD-HIT-001,ATP-HIT-MD-001,7P3W,incomplete,运行/运行/ATP-Top1-MD2/MD.xtc.baiduyun.p.downloading;运行/运行/ATP-Top1-MD2/MD.cms;作图/作图/3-新型苗头有化合物和蛋白复合物的MD/图-1/ATP-Top1-MD2.pdf

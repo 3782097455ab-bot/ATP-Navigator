@@ -1,0 +1,594 @@
+{
+  "systems": {
+    "SYS-MD-IN2-001": {
+      "raw_data_dir": "作图/作图/1-阳性化合物和蛋白的MD/图-1/raw-data",
+      "contacts": {
+        "HBond": {
+          "file": "作图/作图/1-阳性化合物和蛋白的MD/图-1/raw-data/PL-Contacts_HBond.dat",
+          "bytes": 1020385,
+          "nul_bytes": 229444,
+          "non_ascii_bytes": 16941,
+          "numeric_candidate_lines": 8530,
+          "parsed_event_rows": 8518,
+          "rejected_numeric_lines": 12,
+          "parse_rate_numeric_lines": 0.9985932004689332,
+          "unique_event_frames": 6370,
+          "max_frame": 9999,
+          "inferred_frame_count": 10000,
+          "top_residues": [
+            {
+              "residue": "e:ASP81",
+              "event_count": 5379,
+              "occupied_frames": 5361,
+              "occupancy_file_inferred": 0.5361,
+              "occupancy_system_frames": 0.5361
+            },
+            {
+              "residue": "g:GLU227",
+              "event_count": 2030,
+              "occupied_frames": 1998,
+              "occupancy_file_inferred": 0.1998,
+              "occupancy_system_frames": 0.1998
+            },
+            {
+              "residue": "g:GLN154",
+              "event_count": 1105,
+              "occupied_frames": 1105,
+              "occupancy_file_inferred": 0.1105,
+              "occupancy_system_frames": 0.1105
+            },
+            {
+              "residue": "g:GLU216",
+              "event_count": 4,
+              "occupied_frames": 4,
+              "occupancy_file_inferred": 0.0004,
+              "occupancy_system_frames": 0.0004
+            }
+          ]
+        },
+        "Hydrophobic": {
+          "file": "作图/作图/1-阳性化合物和蛋白的MD/图-1/raw-data/PL-Contacts_Hydrophobic.dat",
+          "bytes": 266600,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 4299,
+          "parsed_event_rows": 4299,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": 1.0,
+          "unique_event_frames": 4069,
+          "max_frame": 9997,
+          "inferred_frame_count": 9998,
+          "top_residues": [
+            {
+              "residue": "g:LEU146",
+              "event_count": 3103,
+              "occupied_frames": 3103,
+              "occupancy_file_inferred": 0.3103620724144829,
+              "occupancy_system_frames": 0.3103
+            },
+            {
+              "residue": "g:VAL223",
+              "event_count": 1072,
+              "occupied_frames": 1072,
+              "occupancy_file_inferred": 0.10722144428885777,
+              "occupancy_system_frames": 0.1072
+            },
+            {
+              "residue": "e:PRO47",
+              "event_count": 56,
+              "occupied_frames": 56,
+              "occupancy_file_inferred": 0.005601120224044809,
+              "occupancy_system_frames": 0.0056
+            },
+            {
+              "residue": "g:VAL153",
+              "event_count": 38,
+              "occupied_frames": 38,
+              "occupancy_file_inferred": 0.003800760152030406,
+              "occupancy_system_frames": 0.0038
+            },
+            {
+              "residue": "g:LEU157",
+              "event_count": 30,
+              "occupied_frames": 30,
+              "occupancy_file_inferred": 0.0030006001200240046,
+              "occupancy_system_frames": 0.003
+            }
+          ]
+        },
+        "Ionic": {
+          "file": "作图/作图/1-阳性化合物和蛋白的MD/图-1/raw-data/PL-Contacts_Ionic.dat",
+          "bytes": 392699,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 3926,
+          "parsed_event_rows": 3926,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": 1.0,
+          "unique_event_frames": 3728,
+          "max_frame": 9992,
+          "inferred_frame_count": 9993,
+          "top_residues": [
+            {
+              "residue": "e:ASP81",
+              "event_count": 2280,
+              "occupied_frames": 2280,
+              "occupancy_file_inferred": 0.22815971179825878,
+              "occupancy_system_frames": 0.228
+            },
+            {
+              "residue": "g:GLU227",
+              "event_count": 1539,
+              "occupied_frames": 1539,
+              "occupancy_file_inferred": 0.15400780546382467,
+              "occupancy_system_frames": 0.1539
+            },
+            {
+              "residue": "g:GLU216",
+              "event_count": 106,
+              "occupied_frames": 106,
+              "occupancy_file_inferred": 0.010607425197638347,
+              "occupancy_system_frames": 0.0106
+            },
+            {
+              "residue": "g:ASP158",
+              "event_count": 1,
+              "occupied_frames": 1,
+              "occupancy_file_inferred": 0.00010007004903432403,
+              "occupancy_system_frames": 0.0001
+            }
+          ]
+        },
+        "Pi-Cation": {
+          "file": "作图/作图/1-阳性化合物和蛋白的MD/图-1/raw-data/PL-Contacts_Pi-Cation.dat",
+          "bytes": 169727,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 2175,
+          "parsed_event_rows": 2175,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": 1.0,
+          "unique_event_frames": 2117,
+          "max_frame": 7765,
+          "inferred_frame_count": 7766,
+          "top_residues": [
+            {
+              "residue": "g:ARG224",
+              "event_count": 2102,
+              "occupied_frames": 2086,
+              "occupancy_file_inferred": 0.26860674736028844,
+              "occupancy_system_frames": 0.2086
+            },
+            {
+              "residue": "e:LYS99",
+              "event_count": 73,
+              "occupied_frames": 73,
+              "occupancy_file_inferred": 0.009399948493432913,
+              "occupancy_system_frames": 0.0073
+            }
+          ]
+        },
+        "Pi-Pi": {
+          "file": "作图/作图/1-阳性化合物和蛋白的MD/图-1/raw-data/PL-Contacts_Pi-Pi.dat",
+          "bytes": 88,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 0,
+          "parsed_event_rows": 0,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": null,
+          "unique_event_frames": 0,
+          "max_frame": null,
+          "inferred_frame_count": 0,
+          "top_residues": []
+        },
+        "WaterBridge": {
+          "file": "作图/作图/1-阳性化合物和蛋白的MD/图-1/raw-data/PL-Contacts_WaterBridge.dat",
+          "bytes": 707372,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 7947,
+          "parsed_event_rows": 7947,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": 1.0,
+          "unique_event_frames": 5658,
+          "max_frame": 9945,
+          "inferred_frame_count": 9946,
+          "top_residues": [
+            {
+              "residue": "g:GLU227",
+              "event_count": 3023,
+              "occupied_frames": 2942,
+              "occupancy_file_inferred": 0.2957973054494269,
+              "occupancy_system_frames": 0.2942
+            },
+            {
+              "residue": "e:ASP81",
+              "event_count": 2483,
+              "occupied_frames": 2264,
+              "occupancy_file_inferred": 0.22762919766740397,
+              "occupancy_system_frames": 0.2264
+            },
+            {
+              "residue": "g:GLN154",
+              "event_count": 1701,
+              "occupied_frames": 1698,
+              "occupancy_file_inferred": 0.17072189825055298,
+              "occupancy_system_frames": 0.1698
+            },
+            {
+              "residue": "g:THR150",
+              "event_count": 243,
+              "occupied_frames": 243,
+              "occupancy_file_inferred": 0.02443193243514981,
+              "occupancy_system_frames": 0.0243
+            },
+            {
+              "residue": "e:SER65",
+              "event_count": 153,
+              "occupied_frames": 153,
+              "occupancy_file_inferred": 0.015383068570279509,
+              "occupancy_system_frames": 0.0153
+            },
+            {
+              "residue": "g:GLU147",
+              "event_count": 126,
+              "occupied_frames": 126,
+              "occupancy_file_inferred": 0.01266840941081842,
+              "occupancy_system_frames": 0.0126
+            },
+            {
+              "residue": "g:GLU216",
+              "event_count": 83,
+              "occupied_frames": 83,
+              "occupancy_file_inferred": 0.008345063342047054,
+              "occupancy_system_frames": 0.0083
+            },
+            {
+              "residue": "g:LEU146",
+              "event_count": 49,
+              "occupied_frames": 49,
+              "occupancy_file_inferred": 0.004926603659762718,
+              "occupancy_system_frames": 0.0049
+            },
+            {
+              "residue": "g:ASN219",
+              "event_count": 30,
+              "occupied_frames": 30,
+              "occupancy_file_inferred": 0.0030162879549567667,
+              "occupancy_system_frames": 0.003
+            },
+            {
+              "residue": "g:TYR45",
+              "event_count": 26,
+              "occupied_frames": 26,
+              "occupancy_file_inferred": 0.0026141162276291977,
+              "occupancy_system_frames": 0.0026
+            },
+            {
+              "residue": "g:ASP158",
+              "event_count": 18,
+              "occupied_frames": 18,
+              "occupancy_file_inferred": 0.0018097727729740598,
+              "occupancy_system_frames": 0.0018
+            },
+            {
+              "residue": "g:VAL223",
+              "event_count": 12,
+              "occupied_frames": 12,
+              "occupancy_file_inferred": 0.0012065151819827067,
+              "occupancy_system_frames": 0.0012
+            }
+          ]
+        },
+        "Halogen": {
+          "file": "作图/作图/1-阳性化合物和蛋白的MD/图-1/raw-data/PL-Contacts_Halogen.dat",
+          "bytes": 88,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 0,
+          "parsed_event_rows": 0,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": null,
+          "unique_event_frames": 0,
+          "max_frame": null,
+          "inferred_frame_count": 0,
+          "top_residues": []
+        },
+        "Metal": {
+          "file": "作图/作图/1-阳性化合物和蛋白的MD/图-1/raw-data/PL-Contacts_Metal.dat",
+          "bytes": 71,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 0,
+          "parsed_event_rows": 0,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": null,
+          "unique_event_frames": 0,
+          "max_frame": null,
+          "inferred_frame_count": 0,
+          "top_residues": []
+        }
+      },
+      "system_frame_count_from_contact_exports": 10000,
+      "raw_trajectory_status": "incomplete_download_fragment",
+      "raw_trajectory_sources": [
+        "运行/运行/ATP-Ref-MD1/MD.xtc.baiduyun.p.downloading"
+      ]
+    },
+    "SYS-MD-HIT-001": {
+      "raw_data_dir": "作图/作图/3-新型苗头有化合物和蛋白复合物的MD/图-1/raw-data",
+      "contacts": {
+        "HBond": {
+          "file": "作图/作图/3-新型苗头有化合物和蛋白复合物的MD/图-1/raw-data/PL-Contacts_HBond.dat",
+          "bytes": 1798779,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 20210,
+          "parsed_event_rows": 20210,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": 1.0,
+          "unique_event_frames": 9993,
+          "max_frame": 9999,
+          "inferred_frame_count": 10000,
+          "top_residues": [
+            {
+              "residue": "g:GLU227",
+              "event_count": 9856,
+              "occupied_frames": 9856,
+              "occupancy_file_inferred": 0.9856,
+              "occupancy_system_frames": 0.9856
+            },
+            {
+              "residue": "e:ASP81",
+              "event_count": 9694,
+              "occupied_frames": 9693,
+              "occupancy_file_inferred": 0.9693,
+              "occupancy_system_frames": 0.9693
+            },
+            {
+              "residue": "g:ASP158",
+              "event_count": 423,
+              "occupied_frames": 423,
+              "occupancy_file_inferred": 0.0423,
+              "occupancy_system_frames": 0.0423
+            },
+            {
+              "residue": "g:GLN154",
+              "event_count": 237,
+              "occupied_frames": 237,
+              "occupancy_file_inferred": 0.0237,
+              "occupancy_system_frames": 0.0237
+            }
+          ]
+        },
+        "Hydrophobic": {
+          "file": "作图/作图/3-新型苗头有化合物和蛋白复合物的MD/图-1/raw-data/PL-Contacts_Hydrophobic.dat",
+          "bytes": 400148,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 6453,
+          "parsed_event_rows": 6453,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": 1.0,
+          "unique_event_frames": 5281,
+          "max_frame": 9999,
+          "inferred_frame_count": 10000,
+          "top_residues": [
+            {
+              "residue": "g:LEU146",
+              "event_count": 3350,
+              "occupied_frames": 3345,
+              "occupancy_file_inferred": 0.3345,
+              "occupancy_system_frames": 0.3345
+            },
+            {
+              "residue": "e:VAL11",
+              "event_count": 1971,
+              "occupied_frames": 1971,
+              "occupancy_file_inferred": 0.1971,
+              "occupancy_system_frames": 0.1971
+            },
+            {
+              "residue": "g:VAL223",
+              "event_count": 860,
+              "occupied_frames": 860,
+              "occupancy_file_inferred": 0.086,
+              "occupancy_system_frames": 0.086
+            },
+            {
+              "residue": "g:LEU157",
+              "event_count": 272,
+              "occupied_frames": 272,
+              "occupancy_file_inferred": 0.0272,
+              "occupancy_system_frames": 0.0272
+            }
+          ]
+        },
+        "Ionic": {
+          "file": "作图/作图/3-新型苗头有化合物和蛋白复合物的MD/图-1/raw-data/PL-Contacts_Ionic.dat",
+          "bytes": 1014899,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 10148,
+          "parsed_event_rows": 10148,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": 1.0,
+          "unique_event_frames": 9846,
+          "max_frame": 9999,
+          "inferred_frame_count": 10000,
+          "top_residues": [
+            {
+              "residue": "g:GLU227",
+              "event_count": 9987,
+              "occupied_frames": 9845,
+              "occupancy_file_inferred": 0.9845,
+              "occupancy_system_frames": 0.9845
+            },
+            {
+              "residue": "e:ASP81",
+              "event_count": 161,
+              "occupied_frames": 161,
+              "occupancy_file_inferred": 0.0161,
+              "occupancy_system_frames": 0.0161
+            }
+          ]
+        },
+        "Pi-Cation": {
+          "file": "作图/作图/3-新型苗头有化合物和蛋白复合物的MD/图-1/raw-data/PL-Contacts_Pi-Cation.dat",
+          "bytes": 2027,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 25,
+          "parsed_event_rows": 25,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": 1.0,
+          "unique_event_frames": 25,
+          "max_frame": 8369,
+          "inferred_frame_count": 8370,
+          "top_residues": [
+            {
+              "residue": "g:ARG224",
+              "event_count": 25,
+              "occupied_frames": 25,
+              "occupancy_file_inferred": 0.002986857825567503,
+              "occupancy_system_frames": 0.0025
+            }
+          ]
+        },
+        "Pi-Pi": {
+          "file": "作图/作图/3-新型苗头有化合物和蛋白复合物的MD/图-1/raw-data/PL-Contacts_Pi-Pi.dat",
+          "bytes": 88,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 0,
+          "parsed_event_rows": 0,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": null,
+          "unique_event_frames": 0,
+          "max_frame": null,
+          "inferred_frame_count": 0,
+          "top_residues": []
+        },
+        "WaterBridge": {
+          "file": "作图/作图/3-新型苗头有化合物和蛋白复合物的MD/图-1/raw-data/PL-Contacts_WaterBridge.dat",
+          "bytes": 1624606,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 18253,
+          "parsed_event_rows": 18253,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": 1.0,
+          "unique_event_frames": 9132,
+          "max_frame": 9999,
+          "inferred_frame_count": 10000,
+          "top_residues": [
+            {
+              "residue": "g:ASP158",
+              "event_count": 7601,
+              "occupied_frames": 7541,
+              "occupancy_file_inferred": 0.7541,
+              "occupancy_system_frames": 0.7541
+            },
+            {
+              "residue": "g:GLN154",
+              "event_count": 5068,
+              "occupied_frames": 5043,
+              "occupancy_file_inferred": 0.5043,
+              "occupancy_system_frames": 0.5043
+            },
+            {
+              "residue": "g:ASP161",
+              "event_count": 2911,
+              "occupied_frames": 2856,
+              "occupancy_file_inferred": 0.2856,
+              "occupancy_system_frames": 0.2856
+            },
+            {
+              "residue": "g:GLU147",
+              "event_count": 2548,
+              "occupied_frames": 2548,
+              "occupancy_file_inferred": 0.2548,
+              "occupancy_system_frames": 0.2548
+            },
+            {
+              "residue": "g:LEU157",
+              "event_count": 46,
+              "occupied_frames": 46,
+              "occupancy_file_inferred": 0.0046,
+              "occupancy_system_frames": 0.0046
+            },
+            {
+              "residue": "g:ASN219",
+              "event_count": 37,
+              "occupied_frames": 37,
+              "occupancy_file_inferred": 0.0037,
+              "occupancy_system_frames": 0.0037
+            },
+            {
+              "residue": "e:ASP81",
+              "event_count": 34,
+              "occupied_frames": 34,
+              "occupancy_file_inferred": 0.0034,
+              "occupancy_system_frames": 0.0034
+            },
+            {
+              "residue": "e:LYS99",
+              "event_count": 4,
+              "occupied_frames": 4,
+              "occupancy_file_inferred": 0.0004,
+              "occupancy_system_frames": 0.0004
+            },
+            {
+              "residue": "g:TYR67",
+              "event_count": 3,
+              "occupied_frames": 3,
+              "occupancy_file_inferred": 0.0003,
+              "occupancy_system_frames": 0.0003
+            },
+            {
+              "residue": "e:THR82",
+              "event_count": 1,
+              "occupied_frames": 1,
+              "occupancy_file_inferred": 0.0001,
+              "occupancy_system_frames": 0.0001
+            }
+          ]
+        },
+        "Halogen": {
+          "file": "作图/作图/3-新型苗头有化合物和蛋白复合物的MD/图-1/raw-data/PL-Contacts_Halogen.dat",
+          "bytes": 88,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 0,
+          "parsed_event_rows": 0,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": null,
+          "unique_event_frames": 0,
+          "max_frame": null,
+          "inferred_frame_count": 0,
+          "top_residues": []
+        },
+        "Metal": {
+          "file": "作图/作图/3-新型苗头有化合物和蛋白复合物的MD/图-1/raw-data/PL-Contacts_Metal.dat",
+          "bytes": 71,
+          "nul_bytes": 0,
+          "non_ascii_bytes": 0,
+          "numeric_candidate_lines": 0,
+          "parsed_event_rows": 0,
+          "rejected_numeric_lines": 0,
+          "parse_rate_numeric_lines": null,
+          "unique_event_frames": 0,
+          "max_frame": null,
+          "inferred_frame_count": 0,
+          "top_residues": []
+        }
+      },
+      "system_frame_count_from_contact_exports": 10000,
+      "raw_trajectory_status": "incomplete_download_fragment",
+      "raw_trajectory_sources": [
+        "运行/运行/ATP-Top1-MD2/MD.xtc.baiduyun.p.downloading"
+      ]
+    }
+  }
+}

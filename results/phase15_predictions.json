@@ -1,0 +1,359 @@
+[
+  {
+    "canonical_id": "ATP-SMI-15737353FB69",
+    "model": "random_forest",
+    "scaffold": "c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1",
+    "observed_score": -51.42,
+    "predicted_score": -49.20018351592855
+  },
+  {
+    "canonical_id": "ATP-SMI-4417138BF81D",
+    "model": "random_forest",
+    "scaffold": "O=C(Nc1ccccc1)c1cc2ccccc2nc1NCc1ccccc1",
+    "observed_score": -33.54,
+    "predicted_score": -48.787754001554006
+  },
+  {
+    "canonical_id": "ATP-SMI-5B36D3E11A3B",
+    "model": "random_forest",
+    "scaffold": "O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -44.13,
+    "predicted_score": -45.64455670573874
+  },
+  {
+    "canonical_id": "ATP-SMI-5D3E7B6B6796",
+    "model": "random_forest",
+    "scaffold": "c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1",
+    "observed_score": -54.81,
+    "predicted_score": -47.43302150072152
+  },
+  {
+    "canonical_id": "ATP-SMI-775D33706F04",
+    "model": "random_forest",
+    "scaffold": "O=C(NCc1ccccc1)c1sccc1NCc1ccccc1",
+    "observed_score": -43.0,
+    "predicted_score": -47.30642878860025
+  },
+  {
+    "canonical_id": "ATP-SMI-874C2DE25FE4",
+    "model": "random_forest",
+    "scaffold": "c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1",
+    "observed_score": -56.37,
+    "predicted_score": -49.655102301642835
+  },
+  {
+    "canonical_id": "ATP-SMI-91E7552C2382",
+    "model": "random_forest",
+    "scaffold": "c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1",
+    "observed_score": -34.76,
+    "predicted_score": -49.54763715007215
+  },
+  {
+    "canonical_id": "ATP-SMI-94F73967C042",
+    "model": "random_forest",
+    "scaffold": "O=C(Nc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -44.48,
+    "predicted_score": -48.58403503968249
+  },
+  {
+    "canonical_id": "ATP-SMI-96FD6257D8BA",
+    "model": "random_forest",
+    "scaffold": "c1ccc(-n2cc(C[NH2+]CCc3ccc(N4CC[NH2+]CC4)cc3)c(-c3cccnc3)n2)cc1",
+    "observed_score": -52.9,
+    "predicted_score": -50.67814280952385
+  },
+  {
+    "canonical_id": "ATP-SMI-9DA3213A09E8",
+    "model": "random_forest",
+    "scaffold": "O=C(NCc1ccccc1)c1ccnc(C[NH2+]Cc2ccccc2)c1",
+    "observed_score": -57.51,
+    "predicted_score": -46.5549630313853
+  },
+  {
+    "canonical_id": "ATP-SMI-BF69AB71C1A4",
+    "model": "random_forest",
+    "scaffold": "O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -51.01,
+    "predicted_score": -44.63424980097681
+  },
+  {
+    "canonical_id": "ATP-SMI-C3308BEE03AC",
+    "model": "random_forest",
+    "scaffold": "O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -48.06,
+    "predicted_score": -45.50553170573872
+  },
+  {
+    "canonical_id": "ATP-SMI-C93E6EC67CDB",
+    "model": "random_forest",
+    "scaffold": "O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -56.56,
+    "predicted_score": -46.771581110500584
+  },
+  {
+    "canonical_id": "ATP-SMI-CDED936B42F4",
+    "model": "random_forest",
+    "scaffold": "c1ccc(CC[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1",
+    "observed_score": -47.89,
+    "predicted_score": -44.23912924999999
+  },
+  {
+    "canonical_id": "ATP-SMI-CFA68A98711F",
+    "model": "random_forest",
+    "scaffold": "c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1",
+    "observed_score": -37.5,
+    "predicted_score": -46.145680203463286
+  },
+  {
+    "canonical_id": "ATP-SMI-E9798004BA11",
+    "model": "random_forest",
+    "scaffold": "c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1",
+    "observed_score": -51.99,
+    "predicted_score": -50.71629395959595
+  },
+  {
+    "canonical_id": "ATP-SMI-FCA9CDF3313B",
+    "model": "random_forest",
+    "scaffold": "c1ccc(CCNc2nc(Nc3ccccc3)nc3ccccc23)cc1",
+    "observed_score": -48.88,
+    "predicted_score": -47.611998036796585
+  },
+  {
+    "canonical_id": "ATP-SMI-15737353FB69",
+    "model": "xgboost",
+    "scaffold": "c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1",
+    "observed_score": -51.42,
+    "predicted_score": -52.90782165527344
+  },
+  {
+    "canonical_id": "ATP-SMI-4417138BF81D",
+    "model": "xgboost",
+    "scaffold": "O=C(Nc1ccccc1)c1cc2ccccc2nc1NCc1ccccc1",
+    "observed_score": -33.54,
+    "predicted_score": -47.8011474609375
+  },
+  {
+    "canonical_id": "ATP-SMI-5B36D3E11A3B",
+    "model": "xgboost",
+    "scaffold": "O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -44.13,
+    "predicted_score": -41.08378219604492
+  },
+  {
+    "canonical_id": "ATP-SMI-5D3E7B6B6796",
+    "model": "xgboost",
+    "scaffold": "c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1",
+    "observed_score": -54.81,
+    "predicted_score": -49.04170608520508
+  },
+  {
+    "canonical_id": "ATP-SMI-775D33706F04",
+    "model": "xgboost",
+    "scaffold": "O=C(NCc1ccccc1)c1sccc1NCc1ccccc1",
+    "observed_score": -43.0,
+    "predicted_score": -45.1893424987793
+  },
+  {
+    "canonical_id": "ATP-SMI-874C2DE25FE4",
+    "model": "xgboost",
+    "scaffold": "c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1",
+    "observed_score": -56.37,
+    "predicted_score": -52.603294372558594
+  },
+  {
+    "canonical_id": "ATP-SMI-91E7552C2382",
+    "model": "xgboost",
+    "scaffold": "c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1",
+    "observed_score": -34.76,
+    "predicted_score": -49.32383728027344
+  },
+  {
+    "canonical_id": "ATP-SMI-94F73967C042",
+    "model": "xgboost",
+    "scaffold": "O=C(Nc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -44.48,
+    "predicted_score": -45.018680572509766
+  },
+  {
+    "canonical_id": "ATP-SMI-96FD6257D8BA",
+    "model": "xgboost",
+    "scaffold": "c1ccc(-n2cc(C[NH2+]CCc3ccc(N4CC[NH2+]CC4)cc3)c(-c3cccnc3)n2)cc1",
+    "observed_score": -52.9,
+    "predicted_score": -52.55119323730469
+  },
+  {
+    "canonical_id": "ATP-SMI-9DA3213A09E8",
+    "model": "xgboost",
+    "scaffold": "O=C(NCc1ccccc1)c1ccnc(C[NH2+]Cc2ccccc2)c1",
+    "observed_score": -57.51,
+    "predicted_score": -49.32017135620117
+  },
+  {
+    "canonical_id": "ATP-SMI-BF69AB71C1A4",
+    "model": "xgboost",
+    "scaffold": "O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -51.01,
+    "predicted_score": -42.15421676635742
+  },
+  {
+    "canonical_id": "ATP-SMI-C3308BEE03AC",
+    "model": "xgboost",
+    "scaffold": "O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -48.06,
+    "predicted_score": -43.633506774902344
+  },
+  {
+    "canonical_id": "ATP-SMI-C93E6EC67CDB",
+    "model": "xgboost",
+    "scaffold": "O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -56.56,
+    "predicted_score": -50.11124038696289
+  },
+  {
+    "canonical_id": "ATP-SMI-CDED936B42F4",
+    "model": "xgboost",
+    "scaffold": "c1ccc(CC[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1",
+    "observed_score": -47.89,
+    "predicted_score": -35.09770965576172
+  },
+  {
+    "canonical_id": "ATP-SMI-CFA68A98711F",
+    "model": "xgboost",
+    "scaffold": "c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1",
+    "observed_score": -37.5,
+    "predicted_score": -38.21174621582031
+  },
+  {
+    "canonical_id": "ATP-SMI-E9798004BA11",
+    "model": "xgboost",
+    "scaffold": "c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1",
+    "observed_score": -51.99,
+    "predicted_score": -56.074703216552734
+  },
+  {
+    "canonical_id": "ATP-SMI-FCA9CDF3313B",
+    "model": "xgboost",
+    "scaffold": "c1ccc(CCNc2nc(Nc3ccccc3)nc3ccccc23)cc1",
+    "observed_score": -48.88,
+    "predicted_score": -51.74125289916992
+  },
+  {
+    "canonical_id": "ATP-SMI-15737353FB69",
+    "model": "lightgbm",
+    "scaffold": "c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1",
+    "observed_score": -51.42,
+    "predicted_score": -53.13931453370717
+  },
+  {
+    "canonical_id": "ATP-SMI-4417138BF81D",
+    "model": "lightgbm",
+    "scaffold": "O=C(Nc1ccccc1)c1cc2ccccc2nc1NCc1ccccc1",
+    "observed_score": -33.54,
+    "predicted_score": -49.36265335330995
+  },
+  {
+    "canonical_id": "ATP-SMI-5B36D3E11A3B",
+    "model": "lightgbm",
+    "scaffold": "O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -44.13,
+    "predicted_score": -45.7903711169742
+  },
+  {
+    "canonical_id": "ATP-SMI-5D3E7B6B6796",
+    "model": "lightgbm",
+    "scaffold": "c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1",
+    "observed_score": -54.81,
+    "predicted_score": -54.857170792499915
+  },
+  {
+    "canonical_id": "ATP-SMI-775D33706F04",
+    "model": "lightgbm",
+    "scaffold": "O=C(NCc1ccccc1)c1sccc1NCc1ccccc1",
+    "observed_score": -43.0,
+    "predicted_score": -44.889799000811585
+  },
+  {
+    "canonical_id": "ATP-SMI-874C2DE25FE4",
+    "model": "lightgbm",
+    "scaffold": "c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1",
+    "observed_score": -56.37,
+    "predicted_score": -53.13931453370717
+  },
+  {
+    "canonical_id": "ATP-SMI-91E7552C2382",
+    "model": "lightgbm",
+    "scaffold": "c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1",
+    "observed_score": -34.76,
+    "predicted_score": -48.821445813907786
+  },
+  {
+    "canonical_id": "ATP-SMI-94F73967C042",
+    "model": "lightgbm",
+    "scaffold": "O=C(Nc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -44.48,
+    "predicted_score": -45.01163907157035
+  },
+  {
+    "canonical_id": "ATP-SMI-96FD6257D8BA",
+    "model": "lightgbm",
+    "scaffold": "c1ccc(-n2cc(C[NH2+]CCc3ccc(N4CC[NH2+]CC4)cc3)c(-c3cccnc3)n2)cc1",
+    "observed_score": -52.9,
+    "predicted_score": -51.91496431821652
+  },
+  {
+    "canonical_id": "ATP-SMI-9DA3213A09E8",
+    "model": "lightgbm",
+    "scaffold": "O=C(NCc1ccccc1)c1ccnc(C[NH2+]Cc2ccccc2)c1",
+    "observed_score": -57.51,
+    "predicted_score": -53.13348018534351
+  },
+  {
+    "canonical_id": "ATP-SMI-BF69AB71C1A4",
+    "model": "lightgbm",
+    "scaffold": "O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -51.01,
+    "predicted_score": -44.204587401117834
+  },
+  {
+    "canonical_id": "ATP-SMI-C3308BEE03AC",
+    "model": "lightgbm",
+    "scaffold": "O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -48.06,
+    "predicted_score": -45.49614723220675
+  },
+  {
+    "canonical_id": "ATP-SMI-C93E6EC67CDB",
+    "model": "lightgbm",
+    "scaffold": "O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1",
+    "observed_score": -56.56,
+    "predicted_score": -52.74504035786353
+  },
+  {
+    "canonical_id": "ATP-SMI-CDED936B42F4",
+    "model": "lightgbm",
+    "scaffold": "c1ccc(CC[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1",
+    "observed_score": -47.89,
+    "predicted_score": -37.31826441150566
+  },
+  {
+    "canonical_id": "ATP-SMI-CFA68A98711F",
+    "model": "lightgbm",
+    "scaffold": "c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1",
+    "observed_score": -37.5,
+    "predicted_score": -43.22322950195253
+  },
+  {
+    "canonical_id": "ATP-SMI-E9798004BA11",
+    "model": "lightgbm",
+    "scaffold": "c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1",
+    "observed_score": -51.99,
+    "predicted_score": -58.34269515081082
+  },
+  {
+    "canonical_id": "ATP-SMI-FCA9CDF3313B",
+    "model": "lightgbm",
+    "scaffold": "c1ccc(CCNc2nc(Nc3ccccc3)nc3ccccc23)cc1",
+    "observed_score": -48.88,
+    "predicted_score": -53.63626917652174
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "feature_config": {
+    "radius": 2,
+    "n_bits": 1024,
+    "use_chirality": true
+  },
+  "rows": 1659,
+  "valid_smiles": 18,
+  "invalid_or_missing_smiles": 1641,
+  "fingerprint_schema": {
+    "prefix": "morgan_",
+    "count": 1024,
+    "radius": 2,
+    "use_chirality": true
+  },
+  "descriptor_columns": [
+    "desc_mol_wt",
+    "desc_logp",
+    "desc_tpsa",
+    "desc_hbd",
+    "desc_hba",
+    "desc_rotatable_bonds",
+    "desc_fraction_csp3",
+    "desc_heavy_atom_count",
+    "desc_ring_count",
+    "desc_formal_charge"
+  ],
+  "evidence_columns": [
+    "score_ADMET",
+    "score_HTVS",
+    "score_MMGBSA"
+  ],
+  "quickprop_columns": [],
+  "quickprop_available": false,
+  "stage_coverage": {
+    "ADMET": 18,
+    "HTVS": 1633,
+    "MMGBSA": 19
+  }
+}

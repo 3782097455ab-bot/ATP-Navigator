@@ -1,0 +1,59 @@
+{
+  "phase": "Phase 1.5",
+  "preserved_baseline": true,
+  "original_protocol": "leave_one_molecule_out",
+  "strict_protocol": "leave_one_Bemis-Murcko_scaffold_group_out",
+  "structural_audit": {
+    "candidate_rows": 17,
+    "unique_canonical_ids": 17,
+    "unique_raw_smiles": 17,
+    "unique_canonical_smiles": 17,
+    "unique_inchikeys": 17,
+    "unique_connectivity_keys": 17,
+    "unique_scaffolds": 11,
+    "scaffold_group_sizes": [
+      4,
+      2,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "largest_scaffold_group": 4,
+    "max_pairwise_tanimoto": 0.8545454545454545,
+    "mean_pairwise_tanimoto": 0.25304124336314876,
+    "pairs_tanimoto_ge_0_7": 4
+  },
+  "leakage_assessment": {
+    "duplicate_canonical_id_across_rows": false,
+    "duplicate_canonical_smiles": false,
+    "duplicate_connectivity_identity": false,
+    "same_compound_conformer_split": false,
+    "same_scaffold_can_cross_original_LOOCV": true,
+    "preprocessing_fitted_outside_fold": false,
+    "target_column_in_model_features": false,
+    "model_selection_bias_risk": "Metrics compare three fixed models on the same small OOF set; model choice needs later external or nested validation."
+  },
+  "label_assessment": {
+    "training_label": "VSW static MMGBSA dG Bind",
+    "score_direction": "lower_is_better",
+    "training_label_rows": 17,
+    "min_label_rows_per_candidate": 1,
+    "max_label_rows_per_candidate": 1,
+    "label_sources": [
+      "作图/作图/2-基于衍生数据库的虚拟筛选/数据/VSW.csv"
+    ],
+    "mixed_MD_frame_mean_in_training": false,
+    "schema_risk": "screening_records.stage=MMGBSA also contains two MD-frame means outside this 17-compound training subset; future schema needs protocol_id and aggregation fields."
+  },
+  "correction": {
+    "implemented_now": "scaffold_grouped_leave_one_out benchmark",
+    "retained_old_results": true,
+    "next_required": "verified HTVS-to-hit canonical ID bridge before Model 0 can be scored on the same benchmark set"
+  }
+}

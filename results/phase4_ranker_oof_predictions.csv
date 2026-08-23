@@ -1,0 +1,86 @@
+model_id,model,compound_id,compound_code,historical_alias,scaffold_fold,observed_mmgbsa_score,ranking_score_lower_is_better,observed_rank,predicted_rank,is_true_top5,is_predicted_top5,label_semantics
+Model 0,docking_only,ATP-SMI-15737353FB69,29508,Hit7,,-51.42,-8.11191224598807,7,16,false,false,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-4417138BF81D,90158,Hit17,,-33.54,-8.58843526811927,17,2,false,true,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-5B36D3E11A3B,91074,Hit13,,-44.13,-8.18448236860633,13,11,false,false,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-5D3E7B6B6796,56519,Hit4,,-54.81,-8.07246311561382,4,17,true,false,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-775D33706F04,91072,Hit14,,-43,-8.47125394301545,14,4,false,true,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-874C2DE25FE4,27063,Hit3,,-56.37,-8.42196401327989,3,6,true,false,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-91E7552C2382,23289,Hit16,,-34.76,-8.50768563789492,16,3,false,true,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-94F73967C042,71800,Hit12,,-44.48,-8.34211914130707,12,9,false,false,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-96FD6257D8BA,57003,Hit5,,-52.9,-8.37304414520958,5,8,true,false,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-9DA3213A09E8,20304,Hit1,,-57.51,-8.12068275383396,1,15,true,false,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-BF69AB71C1A4,84919,Hit8,,-51.01,-8.14688200228842,8,14,false,false,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-C3308BEE03AC,84927,Hit10,,-48.06,-8.40968869431086,10,7,false,false,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-C93E6EC67CDB,91771,Hit2,,-56.56,-8.42562825587936,2,5,true,true,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-CDED936B42F4,33710,Hit11,,-47.89,-8.15834295820794,11,13,false,false,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-CFA68A98711F,34890,Hit15,,-37.5,-10.0131045249552,15,1,false,true,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-E9798004BA11,65938,Hit6,,-51.99,-8.23545529108907,6,10,false,false,computational_static_MMGBSA_not_biological_activity
+Model 0,docking_only,ATP-SMI-FCA9CDF3313B,3339,Hit9,,-48.88,-8.15986913112427,9,12,false,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-15737353FB69,29508,Hit7,11,-51.42,-53.13931453370717,7,4,false,true,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-4417138BF81D,90158,Hit17,5,-33.54,-49.36265335330995,17,9,false,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-5B36D3E11A3B,91074,Hit13,1,-44.13,-45.7903711169742,13,11,false,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-5D3E7B6B6796,56519,Hit4,9,-54.81,-54.85717079249992,4,2,true,true,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-775D33706F04,91072,Hit14,3,-43,-44.88979900081159,14,14,false,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-874C2DE25FE4,27063,Hit3,11,-56.37,-53.13931453370717,3,5,true,true,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-91E7552C2382,23289,Hit16,10,-34.76,-48.821445813907786,16,10,false,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-94F73967C042,71800,Hit12,4,-44.48,-45.01163907157035,12,13,false,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-96FD6257D8BA,57003,Hit5,6,-52.9,-51.91496431821652,5,8,true,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-9DA3213A09E8,20304,Hit1,2,-57.51,-53.13348018534351,1,6,true,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-BF69AB71C1A4,84919,Hit8,1,-51.01,-44.20458740111784,8,15,false,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-C3308BEE03AC,84927,Hit10,1,-48.06,-45.49614723220675,10,12,false,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-C93E6EC67CDB,91771,Hit2,1,-56.56,-52.74504035786353,2,7,true,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-CDED936B42F4,33710,Hit11,8,-47.89,-37.31826441150566,11,17,false,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-CFA68A98711F,34890,Hit15,9,-37.5,-43.22322950195253,15,16,false,false,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-E9798004BA11,65938,Hit6,10,-51.99,-58.34269515081082,6,1,false,true,computational_static_MMGBSA_not_biological_activity
+Legacy P1 LightGBM,lightgbm_baseline,ATP-SMI-FCA9CDF3313B,3339,Hit9,7,-48.88,-53.63626917652174,9,3,false,true,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-15737353FB69,29508,Hit7,11,-51.42,-51.72163802770089,7,4,false,true,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-4417138BF81D,90158,Hit17,5,-33.54,-43.00416842375439,17,15,false,false,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-5B36D3E11A3B,91074,Hit13,1,-44.13,-44.69349939943265,13,12,false,false,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-5D3E7B6B6796,56519,Hit4,9,-54.81,-50.61958752798029,4,6,true,false,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-775D33706F04,91072,Hit14,3,-43,-39.790248871589824,14,16,false,false,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-874C2DE25FE4,27063,Hit3,11,-56.37,-50.0413784572074,3,7,true,false,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-91E7552C2382,23289,Hit16,10,-34.76,-43.9899159829435,16,14,false,false,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-94F73967C042,71800,Hit12,4,-44.48,-45.359427538502345,12,10,false,false,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-96FD6257D8BA,57003,Hit5,6,-52.9,-51.93882117485391,5,3,true,true,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-9DA3213A09E8,20304,Hit1,2,-57.51,-51.539629765578745,1,5,true,true,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-BF69AB71C1A4,84919,Hit8,1,-51.01,-44.94223794764702,8,11,false,false,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-C3308BEE03AC,84927,Hit10,1,-48.06,-44.26355341345089,10,13,false,false,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-C93E6EC67CDB,91771,Hit2,1,-56.56,-49.80513000504389,2,8,true,false,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-CDED936B42F4,33710,Hit11,8,-47.89,-47.934065810915925,11,9,false,false,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-CFA68A98711F,34890,Hit15,9,-37.5,-38.388870404264615,15,17,false,false,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-E9798004BA11,65938,Hit6,10,-51.99,-54.2618093012437,6,1,false,true,computational_static_MMGBSA_not_biological_activity
+Model 2,lightgbm_regression_enhanced,ATP-SMI-FCA9CDF3313B,3339,Hit9,7,-48.88,-52.88214193793212,9,2,false,true,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-15737353FB69,29508,Hit7,11,-51.42,0.30387606303704834,7,6,false,false,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-4417138BF81D,90158,Hit17,5,-33.54,0.2335175153133456,17,5,false,true,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-5B36D3E11A3B,91074,Hit13,1,-44.13,1.3293580164579242,13,14,false,false,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-5D3E7B6B6796,56519,Hit4,9,-54.81,0.7909242281479343,4,11,true,false,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-775D33706F04,91072,Hit14,3,-43,1.4023870797992672,14,17,false,false,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-874C2DE25FE4,27063,Hit3,11,-56.37,0.339922290643057,3,7,true,false,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-91E7552C2382,23289,Hit16,10,-34.76,0.3441600746016022,16,8,false,false,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-94F73967C042,71800,Hit12,4,-44.48,-0.2727268118258027,12,1,false,true,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-96FD6257D8BA,57003,Hit5,6,-52.9,0.029488024099155862,5,2,true,true,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-9DA3213A09E8,20304,Hit1,2,-57.51,0.7525827880359148,1,10,true,false,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-BF69AB71C1A4,84919,Hit8,1,-51.01,1.3293580164579242,8,15,false,false,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-C3308BEE03AC,84927,Hit10,1,-48.06,1.318939008085101,10,13,false,false,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-C93E6EC67CDB,91771,Hit2,1,-56.56,1.0571831223439756,2,12,true,false,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-CDED936B42F4,33710,Hit11,8,-47.89,0.4106886047158349,11,9,false,false,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-CFA68A98711F,34890,Hit15,9,-37.5,1.3576517566111133,15,16,false,false,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-E9798004BA11,65938,Hit6,10,-51.99,0.10029742768960417,6,3,false,true,computational_static_MMGBSA_not_biological_activity
+Model 3,lightgbm_lambdarank,ATP-SMI-FCA9CDF3313B,3339,Hit9,7,-48.88,0.1569714706473224,9,4,false,true,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-15737353FB69,29508,Hit7,11,-51.42,0.07153096050024033,7,13,false,false,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-4417138BF81D,90158,Hit17,5,-33.54,0.06564867496490479,17,11,false,false,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-5B36D3E11A3B,91074,Hit13,1,-44.13,0.0612323172390461,13,3,false,true,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-5D3E7B6B6796,56519,Hit4,9,-54.81,0.0579741895198822,4,1,true,true,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-775D33706F04,91072,Hit14,3,-43,0.06307972222566605,14,8,false,false,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-874C2DE25FE4,27063,Hit3,11,-56.37,0.07153096050024033,3,14,true,false,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-91E7552C2382,23289,Hit16,10,-34.76,0.06314170360565186,16,9,false,false,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-94F73967C042,71800,Hit12,4,-44.48,0.06593119353055954,12,12,false,false,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-96FD6257D8BA,57003,Hit5,6,-52.9,0.06202930584549904,5,7,true,false,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-9DA3213A09E8,20304,Hit1,2,-57.51,0.08231143653392792,1,15,true,false,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-BF69AB71C1A4,84919,Hit8,1,-51.01,0.0612323172390461,8,4,false,true,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-C3308BEE03AC,84927,Hit10,1,-48.06,0.0612323172390461,10,5,false,true,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-C93E6EC67CDB,91771,Hit2,1,-56.56,0.0612323172390461,2,6,true,false,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-CDED936B42F4,33710,Hit11,8,-47.89,0.11912749707698822,11,16,false,false,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-CFA68A98711F,34890,Hit15,9,-37.5,0.0579741895198822,15,2,false,true,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-E9798004BA11,65938,Hit6,10,-51.99,0.06314170360565186,6,10,false,false,computational_static_MMGBSA_not_biological_activity
+Model 4,xgboost_ranker_ndcg5,ATP-SMI-FCA9CDF3313B,3339,Hit9,7,-48.88,0.11957085132598877,9,17,false,false,computational_static_MMGBSA_not_biological_activity
