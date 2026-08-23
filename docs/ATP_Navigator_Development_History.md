@@ -17,6 +17,10 @@
 
 本文 Phase 0–4 是面向整个项目历史的总结性分段，不完全等同于旧文件名中的 Phase 编号。
 
+## 后续维护记录格式
+
+每次重大开发完成后，必须在本文追加一条已完成记录，至少包括：日期、开发阶段、目标、新增文件、修改文件、使用数据、实现功能、模型变化、性能变化和当前限制。只有已经生成并核验的代码、数据、模型或文档才能登记；未来计划继续保留在Current System Status的未完成任务中。
+
 ## 模型名称映射
 
 项目早期和当前比较表使用过不同命名，必须区分：
@@ -308,6 +312,71 @@ Model v3 由独立提交 `e0a0ce5` 于 2026-08-23T16:29:41+08:00 加入，`ac06d
 - `results/model_v3/candidate_ranking.csv`
 - `docs/Model_v3_Report.md`
 
+## Phase 5：ATP-Navigator Intelligent Decision System
+
+### 日期
+
+2026-08-23；主体提交：`61d3b41`。
+
+### 目标
+
+在不修改Model v0–v3的前提下，将已有Model v3、Docking、静态MM/GBSA、外部ATP/抗菌prior、结构相似性、RDKit描述符和预测ADMET转换为透明的多目标候选决策排序。
+
+### 新增文件
+
+- `src/decision_engine.py`
+- `scoring_config.json`
+- `results/final_candidate_ranking.csv`
+- `docs/Decision_Engine_Report.md`
+- `docs/Candidate_Explanation_Report.md`
+- `docs/Current_System_Status.md`
+- `docs/Model_Registry.md`
+- `docs/Data_Registry.md`
+
+### 修改文件
+
+- `docs/ATP_Navigator_Development_History.md`：追加本条已完成记录和维护格式；
+- `docs/Model_Evolution_Table.csv`：追加Phase 5决策层记录。
+
+### 使用数据
+
+- `results/model_v3/candidate_ranking.csv`：Model v3当前17候选预测；
+- `data/dataset_v0.2/samples.csv`：compound ID、结构描述符、Docking和静态MM/GBSA；
+- `results/model_v2/external_priors_internal.csv`：AB whole-cell MIC、PA/Mtb/AB ATP IC50外部模型prior；
+- `data/model_v3/chemical_space_analysis.csv`：直接ATP assay参考相似性；
+- `data/admet_features_v0_2.csv`：27个预测ADMET风险端点和endpoint sum。
+
+上述5个输入文件的SHA-256已写入`docs/Decision_Engine_Report.md`。
+
+### 实现功能
+
+- 将lower-is-better原始计算值转换为0–100、higher-is-better的当前批次rank percentile；
+- 透明计算Binding、ATP target、Antibacterial和Drug-likeness四个分量；
+- 按公开公式计算Final Score：0.45×Binding + 0.25×ATP target + 0.15×Antibacterial + 0.15×Drug-likeness；
+- 所有最终权重、子权重、方向、描述符阈值和缺失策略写入`scoring_config.json`；
+- AB ATP IC50 prior保留原值但权重为0，因为其Model v2外部子任务样本少且scaffold OOF Spearman为负；
+- 实验MIC、ATP enzyme inhibition和toxicity全部标记为`unknown`，没有填补；
+- 生成Top 5候选逐项解释；
+- 提供已有compound ID查询JSON和新SMILES请求JSON接口；新SMILES缺少上游计算证据时返回`score=null`，不虚构分数；
+- 相同输入重复运行得到相同ranking和两份报告SHA-256。
+
+### 模型变化
+
+无。Phase 5没有训练Model v4，也没有修改Model v0、v1、v2或v3。Decision Engine是可配置规则层，不是监督模型。
+
+### 性能变化
+
+无新的监督性能指标。Phase 5没有新增真实标签，不能报告新的Spearman、RMSE或NDCG提升。当前综合决策Top 1为`ATP-SMI-C93E6EC67CDB (Hit2)`，Final Score 73.9071；该值是当前17候选批次内的相对规则分数，不是成功概率或实验活性。
+
+### 当前限制
+
+- 权重是透明人工决策规则，尚未通过前瞻性实验优化；
+- Model v3 prediction与静态MM/GBSA相关，Binding分量不是独立证据加和；
+- ATP和抗菌分量来自外部模型/相似性，存在domain shift；
+- 分位数依赖当前17候选批次，不能跨批次直接比较；
+- 所有候选confidence为60/100的`medium_computational_only`；实验验证贡献为0；
+- Final Score禁止回流为未来监督训练标签，避免自我循环标签。
+
 # Git 历史审计
 
 | Commit | 时间 | 可确认变化 |
@@ -318,6 +387,8 @@ Model v3 由独立提交 `e0a0ce5` 于 2026-08-23T16:29:41+08:00 加入，`ac06d
 | `52f6679` | 2026-08-23T15:05:35+08:00 | 新增团队外部数据上传区、文献记录区和比赛提交目录；不改变已有模型与结果。 |
 | `e0a0ce5` | 2026-08-23T16:29:41+08:00 | 新增完整 Model v3 代码、数据表、模型文件、OOF 结果和报告。 |
 | `ac06dc4` | 2026-08-23T16:30:39+08:00 | 只调整 Model v3 报告和代码模板中的 Markdown 格式。 |
+| `48745bd` | 2026-08-23 | 新增Development History和Model Evolution Table，首次系统整理项目历史。 |
+| `61d3b41` | 2026-08-23 | 新增Phase 5 Decision Engine、透明评分配置、综合排序、候选解释和三份长期注册文档。 |
 
 ## `docs/src/models/results` 目录变化
 
@@ -329,12 +400,15 @@ Model v3 由独立提交 `e0a0ce5` 于 2026-08-23T16:29:41+08:00 加入，`ac06d
 | `52f6679` | 15 | 21 | 13 | 50 | 只新增 data/competition 协作结构。 |
 | `e0a0ce5` | 16 | 22 | 16 | 54 | Model v3 新增 1 份报告、1 个 pipeline、3 个模型版本文件和 4 个结果文件。 |
 | `ac06dc4` | 16 | 22 | 16 | 54 | 文件数不变，仅格式修正。 |
+| `48745bd` | 18 | 22 | 16 | 54 | 新增2份历史审计文档。 |
+| `61d3b41` | 23 | 23 | 16 | 55 | 新增Decision Engine、综合排序及5份Phase 5/维护文档；历史模型目录不变。 |
 
 ## 当前可确认的项目状态
 
 - 数据层：Dataset v0.1、v0.2、v1.0 和 Model v3 派生训练表均存在；
 - 模型层：RF、XGBoost、baseline LightGBM、enhanced LightGBM v1.0、Model v2-A/v2-B、Model v3 均有保存产物；
 - 评价层：Spearman、RMSE、NDCG@5、Top-k enrichment、hit recovery 均有落盘结果；
+- 决策层：透明四分量Final Score、缺失实验unknown标记、Top候选解释和JSON接口已运行；
 - 可复现性：主要 pipeline、feature list、training config、输入 hash 和 OOF 预测已保存；
 - 未完成：真实生物活性验证、完整原始 MD 轨迹、独立前瞻性测试和更大规模的同协议内部 MM/GBSA 标签。
 
