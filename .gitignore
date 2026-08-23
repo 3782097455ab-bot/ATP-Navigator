@@ -47,6 +47,9 @@ pip-wheel-metadata/
 *.tar.gz
 *.tgz
 
+# Literature full text is kept outside Git; track metadata in data/literature/references.csv
+data/literature/papers/
+
 # Local scratch outputs
 tmp/
 temp/
