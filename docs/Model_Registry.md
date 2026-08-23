@@ -80,6 +80,22 @@
 
 Decision Engine 不登记为Model v4。它没有训练标签、模型拟合或新性能指标，只根据`scoring_config.json`透明组合Model v3、Docking、静态MM/GBSA、外部prior、相似性、描述符和预测ADMET。当前Final Score不能作为未来训练标签，否则会造成自我循环标签。
 
+## Phase 6A Robustness & Benchmark Validation（非监督模型）
+
+| 项目 | 登记内容 |
+|---|---|
+| 目的 | 检查Phase 5 Decision Engine对预设权重变化和分量移除的敏感性，并建立只验证不训练的外部benchmark接口 |
+| 输入 | `results/final_candidate_ranking.csv`中的17候选及Binding、ATP target、Antibacterial、Drug-likeness四分量；Dataset v1.0仅用于外部精确结构重叠审计 |
+| 标签定义 | 无训练标签；不把Final Score、外部prior或内部计算证据视为实验标签 |
+| 方法 | default+A-D五套固定权重；Spearman/Kendall排名相关；Top 3/Top 5出现频率；Binding only、Binding+ATP、完整方案三组消融 |
+| 评价结果 | A-D最低两两Spearman 0.4583、最低Kendall tau 0.3235；default/A/C/D Top 1为Hit2，B Top 1为Hit13；A-D中始终Top 3和始终Top 5的候选均只有1个 |
+| External benchmark | Dataset v1.0外部Layer 1/2与17候选精确canonical SMILES重叠为0；当前可评价benchmark为0，未生成相关性指标 |
+| 代码和结果 | `src/phase6a_robustness.py`、`results/phase6A/`、`docs/Phase6A_Robustness_Report.md`、`docs/Phase6A_Limitation_Report.md` |
+| 模型变化 | 无；Model v0-v3文件、参数和历史结果均保持不变；没有Model v4 |
+| 限制 | 仅17个已筛选候选；场景相关性不是实验准确率；分量存在计算证据相关性；无独立实验验证 |
+
+Phase 6A的场景分数、稳定性和消融结果不得作为未来监督标签，也不得登记为模型性能提升。
+
 ## 新模型登记规则
 
 未来只有满足以下条件才能新增版本号：

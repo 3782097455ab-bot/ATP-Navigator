@@ -2,7 +2,7 @@
 
 更新时间：2026-08-23
 
-当前阶段：Phase 5 — ATP-Navigator Intelligent Decision System
+当前阶段：Phase 6A — Robustness & Benchmark Validation Module
 
 当前系统定位：基于鲍曼不动杆菌 F1F0-ATP synthase 真实虚拟筛选案例的 AI 增强型候选优先级排序与多目标决策系统。系统优化已有计算候选排序，不替代 Schrödinger、MD/MMGBSA 或实验验证。
 
@@ -20,6 +20,8 @@
 | Feature-enhanced ranking | Model v3 | 1,128 特征 LightGBM、11折 scaffold OOF、候选 ranking |
 | Target-aware evidence | 案例级可用 | IN-2 与 Hit3 MD interaction/MMGBSA；未进入通用模型 |
 | Intelligent Decision Engine | Phase 5 v1.0 已运行 | 透明多目标权重、综合排序、候选解释、JSON接口准备 |
+| Robustness validation | Phase 6A v1.0 已运行 | 5套权重方案、排名稳定性、Top-k一致性、决策消融 |
+| External benchmark framework | 接口已建立；当前不可评价 | Dataset v1.0外部层重叠检查、独立验证文件规范、无虚构指标 |
 | 团队数据接入 | 目录和登记表已建立 | `data/external/incoming/`、`data/external/curated/` |
 | 文献追溯 | 框架已建立 | `data/literature/references.csv` |
 | 网页/前端 | 未开发 | 当前不在本阶段范围 |
@@ -35,6 +37,8 @@
 
 Phase 5 Decision Engine 不是新的监督模型，不登记为 Model v4。它读取 Model v3 和已有计算/外部先验，根据 `scoring_config.json` 的人工透明权重形成决策排序。
 
+Phase 6A同样不是Model v4。它不训练模型，只对Phase 5既有四分量执行预设权重扰动、排名相关性、Top-k一致性和消融验证。
+
 ## 3. 当前数据集
 
 | 数据版本/资产 | 规模 | 当前用途 |
@@ -45,6 +49,7 @@ Phase 5 Decision Engine 不是新的监督模型，不登记为 Model v4。它�
 | Model v3 chemical space | 17内部候选；55个去重直接ATP assay参考结构 | 相似性和scaffold特征 |
 | Model v3 binding table | 18 compounds；MD动态证据覆盖IN-2和Hit3 | 结合证据审计；稀疏MD特征不训练 |
 | Phase 5 final ranking | 17 candidates | 多目标决策输出；禁止作为新的活性训练标签 |
+| Phase 6A robustness outputs | 17 candidates；5套权重；3套消融 | 验证决策规则对权重和分量选择的敏感性；禁止作为训练标签 |
 
 ## 4. 当前代码结构
 
@@ -54,6 +59,7 @@ ATP-Navigator/
 ├─ src/                  审计、数据构建、特征、训练、评价和Decision Engine
 ├─ models/               历史模型与版本化配置
 ├─ results/              OOF指标、预测、排序和图表
+│  └─ phase6A/           权重敏感性、稳定性、消融和benchmark状态
 ├─ docs/                 审计、方法、注册表、历史和解释报告
 ├─ notebooks/            探索性分析入口
 ├─ competition/          比赛交付整理入口
@@ -68,6 +74,7 @@ ATP-Navigator/
 - `src/model_v2_pipeline.py`
 - `src/model_v3_pipeline.py`
 - `src/decision_engine.py`
+- `src/phase6a_robustness.py`
 - `src/data_import_pipeline.py`
 
 ## 5. 已完成任务
@@ -79,6 +86,8 @@ ATP-Navigator/
 - 完成 enhanced ranking v1.0、SHAP解释、Model v2外部知识先验和Model v3增强特征排序；
 - 保持 MIC、IC50、Docking、静态 MM/GBSA、MD/MMGBSA 标签隔离；
 - 完成 Phase 5 透明多目标评分、缺失实验标记、Top候选解释和JSON接口准备；
+- 完成 Phase 6A 默认+A-D权重敏感性、Spearman/Kendall稳定性、Top 3/Top 5一致性和三方案消融；
+- 建立只验证不训练的external benchmark接口；确认Dataset v1.0外部Layer 1/2与17候选精确canonical SMILES重叠为0，当前不计算虚假外部指标；
 - 建立 Development History、Model Registry 和 Data Registry；
 - 项目已连接 GitHub，并建立团队新增数据与文献登记入口。
 
@@ -91,6 +100,7 @@ ATP-Navigator/
 - 更多候选的同协议 MD interaction/MMGBSA 特征；
 - 更大规模、包含中等和负候选的同协议内部静态 MM/GBSA 数据；
 - 独立前瞻性测试集和实验闭环；
+- 可与17个内部候选精确对应、且endpoint/unit/assay一致的独立外部benchmark；
 - 对公开 Dataset v1.0 逐条回源复核；
 - 跨批次可校准的绝对决策分数；
 - 网页端、正式服务API和软著交付包。
@@ -100,6 +110,9 @@ ATP-Navigator/
 - Model v3 OOF Spearman 0.7696、RMSE 4.8877、NDCG@5 0.7782、Top-5 enrichment 1.36；只有17个样本，不能视为稳定泛化性能。
 - Phase 5 不训练模型，也没有新性能指标。Final Score 是相对当前17候选的决策规则输出，不是活性或成功概率。
 - 当前Top候选为 `ATP-SMI-C93E6EC67CDB (Hit2)`，依据是多目标计算证据；MIC、ATP enzyme和实验毒性仍为unknown。
+- Phase 6A在default、A、C、D场景中Top 1均为Hit2；ATP权重50%的B场景Top 1变为`ATP-SMI-5B36D3E11A3B (Hit13)`。A-D场景最低两两Spearman为0.4583、最低Kendall tau为0.3235，说明存在明显权重敏感性。
+- A-D中只有1个候选始终进入Top 3，也只有1个候选始终进入Top 5；不能宣称Top候选整体高度稳定。
+- 当前external benchmark可评价数量为0；该状态是数据可用性审计，不是外部验证通过。
 
 ## 8. 维护规则
 
