@@ -452,6 +452,78 @@ Phase 6A — Decision Engine稳健性与benchmark可用性验证。
 - 没有内部MIC、ATP enzyme inhibition、实验毒性或独立前瞻性结果；
 - benchmark状态为`not_evaluable`，不得描述为外部验证通过。
 
+## Phase 6B：External Benchmark Pipeline
+
+### 日期
+
+2026-08-23；主体提交：`180a97d`。
+
+### 开发阶段
+
+Phase 6B — 公开ATP synthase inhibitor外部数据导入与严格验证准备。
+
+### 目标
+
+建立只用于验证的External Benchmark Pipeline，在不修改Model v0-v3、不修改Decision Engine评分逻辑且不训练模型的前提下，支持公开ATP synthase inhibitor记录的标准化、结构去重、Morgan fingerprint计算和严格评分门控。
+
+### 新增文件
+
+- `src/external_benchmark.py`
+- `results/phase6B/standardized_benchmark_compounds.csv`
+- `results/phase6B/benchmark_ranking.csv`
+- `results/phase6B/benchmark_metrics.csv`
+- `docs/Phase6B_External_Validation_Report.md`
+
+### 修改文件
+
+- `docs/Current_System_Status.md`
+- `docs/Data_Registry.md`
+- `docs/ATP_Navigator_Development_History.md`：追加本条已完成记录。
+
+### 使用数据
+
+- `data/dataset_v1.0/ATP_Navigator_Dataset_v1.csv`中的Layer 2，共363条公开ATP synthase相关记录；
+- `results/final_candidate_ranking.csv`及Phase 5 Decision Engine现有17候选评分，仅用于精确结构匹配和原始评分调用；
+- Dataset v1.0 Layer 2结构集合，用于检测Model v2外部知识训练结构重叠。
+
+公开activity没有进入训练，也没有进入Decision Engine评分公式。
+
+### 实现功能
+
+- 支持字段`compound_id, SMILES, target, organism, activity_type, activity_value, reference`，并支持可选unit/source/confidence字段；
+- 使用RDKit生成isomeric canonical SMILES，记录缺失或无效结构；
+- 按canonical SMILES去重，同时保留来源compound ID、target、organism、activity type、unit和reference集合；
+- 为每个唯一结构计算radius 2、2048 bit Morgan fingerprint，并保存512字符hex和on-bit count；
+- 调用未修改的Phase 5 Decision Engine；新结构缺少上游计算证据时保持unscored；
+- 对Model v2外部知识训练结构进行重叠标记，并从独立验证指标中排除；
+- 只有训练不重叠、精确数值、且target/organism/activity type/unit/direction单一的stratum才允许计算Spearman和Kendall；
+- 重复运行3个结果文件和报告得到相同SHA-256。
+
+### 模型变化
+
+无。没有修改或重新训练Model v0、v1、v2、v3，没有创建Model v4；Decision Engine代码、权重和评分逻辑均未修改。
+
+### 性能变化
+
+无新的性能指标。实际运行结果为：
+
+- 输入363条，363条SMILES均可由RDKit解析；
+- 去重后109个唯一结构，合并254条重复结构记录；
+- 109/109结构均与Model v2外部知识训练结构重叠；
+- 0个结构具备完整Decision Engine证据，`benchmark_ranking.csv`只有表头；
+- `benchmark_metrics.csv`记录`status=empty`，Spearman和Kendall为空；
+- 0个成功评价metric stratum。
+
+这些结果是可用性和独立性审计，不是外部验证通过或模型性能下降。
+
+### 当前限制
+
+- 现有公开Layer 2已经参与Model v2外部知识构建，不是完全独立测试集；
+- 外部新分子缺少Docking、静态MM/GBSA、Model v3和完整预测ADMET等Decision Engine必需证据；
+- Layer 2混合MIC、IC50、细胞毒性、Activity和Inhibition，必须继续按端点和协议分层；
+- 当前没有可计算外部验证相关性的已评分独立候选；
+- 不能用Morgan fingerprint或公开activity直接替代Decision Engine缺失分量。
+
 # Git 历史审计
 
 | Commit | 时间 | 可确认变化 |
@@ -466,6 +538,8 @@ Phase 6A — Decision Engine稳健性与benchmark可用性验证。
 | `61d3b41` | 2026-08-23 | 新增Phase 5 Decision Engine、透明评分配置、综合排序、候选解释和三份长期注册文档。 |
 | `c80d3b2` | 2026-08-23 | 追加Phase 5开发历史和模型演化记录。 |
 | `2ab74a3` | 2026-08-23 | 新增Phase 6A权重敏感性、排名稳定性、Top-k一致性、决策消融和external benchmark可用性验证。 |
+| `a2a1a88` | 2026-08-23 | 追加Phase 6A真实开发历史记录。 |
+| `180a97d` | 2026-08-23 | 新增Phase 6B公开ATP数据标准化、Morgan2048、严格评分门控和外部验证empty状态记录。 |
 
 ## `docs/src/models/results` 目录变化
 
@@ -481,6 +555,8 @@ Phase 6A — Decision Engine稳健性与benchmark可用性验证。
 | `61d3b41` | 23 | 23 | 16 | 55 | 新增Decision Engine、综合排序及5份Phase 5/维护文档；历史模型目录不变。 |
 | `c80d3b2` | 23 | 23 | 16 | 55 | 文件数不变，只更新Phase 5历史记录。 |
 | `2ab74a3` | 25 | 24 | 16 | 62 | 新增Phase 6A代码、2份报告和7个结果文件；模型目录不变。 |
+| `a2a1a88` | 25 | 24 | 16 | 62 | 文件数不变，只更新Phase 6A历史记录。 |
+| `180a97d` | 26 | 25 | 16 | 65 | 新增Phase 6B代码、1份报告和3个结果文件；模型目录不变。 |
 
 ## 当前可确认的项目状态
 
@@ -489,6 +565,7 @@ Phase 6A — Decision Engine稳健性与benchmark可用性验证。
 - 评价层：Spearman、RMSE、NDCG@5、Top-k enrichment、hit recovery 均有落盘结果；
 - 决策层：透明四分量Final Score、缺失实验unknown标记、Top候选解释和JSON接口已运行；
 - 验证层：Phase 6A权重敏感性、Spearman/Kendall稳定性、Top-k一致性和消融已运行；external benchmark接口已建立但当前不可评价；
+- 外部验证层：Phase 6B标准化和Morgan计算已完成；现有公开集合因训练重叠和计算证据缺失而保持ranking/metrics empty；
 - 可复现性：主要 pipeline、feature list、training config、输入 hash 和 OOF 预测已保存；
 - 未完成：真实生物活性验证、完整原始 MD 轨迹、独立前瞻性测试和更大规模的同协议内部 MM/GBSA 标签。
 
