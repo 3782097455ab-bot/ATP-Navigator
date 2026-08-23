@@ -1,0 +1,91 @@
+{
+  "model_version": "ATP-Navigator_Model_v3.0",
+  "metrics": {
+    "spearman": 0.7696078431372549,
+    "rmse": 4.887703665520265,
+    "ndcg_at_5": 0.7782318298332684,
+    "top_k": 5,
+    "recovered_hits": 2,
+    "true_hits": 5,
+    "top_k_enrichment": 1.3599999999999999,
+    "hit_recovery": 0.4
+  },
+  "comparison": [
+    {
+      "model_id": "Model v0",
+      "model": "docking_only",
+      "description": "Docking ranking",
+      "evaluation_samples": 17,
+      "scaffold_groups": 11,
+      "benchmark_protocol": "same_population_direct_ranking",
+      "feature_count": 1,
+      "spearman": -0.5318627450980392,
+      "rmse": 40.23169444584778,
+      "ndcg_at_5": 0.2747499958392678,
+      "top_k_enrichment": 0.6799999999999999,
+      "hit_recovery": 0.2,
+      "status": "preserved_comparator",
+      "source_model_id": "Model 0"
+    },
+    {
+      "model_id": "Model v1",
+      "model": "lightgbm_baseline",
+      "description": "Current baseline",
+      "evaluation_samples": 17,
+      "scaffold_groups": 11,
+      "benchmark_protocol": "scaffold_grouped_leave_one_out",
+      "feature_count": 1035,
+      "spearman": 0.5984059984350675,
+      "rmse": 6.700078697576927,
+      "ndcg_at_5": 0.7876931670049191,
+      "top_k_enrichment": 1.36,
+      "hit_recovery": 0.4,
+      "status": "preserved_comparator",
+      "source_model_id": "Legacy P1 LightGBM"
+    },
+    {
+      "model_id": "Model v2",
+      "model": "lightgbm_enhanced_plus_external_priors_v2",
+      "description": "External knowledge enhanced model",
+      "evaluation_samples": 17,
+      "scaffold_groups": 11,
+      "benchmark_protocol": "scaffold_grouped_leave_one_group_out",
+      "feature_count": 1093,
+      "spearman": 0.7573529411764707,
+      "rmse": 4.922646614454728,
+      "ndcg_at_5": 0.7743921405350457,
+      "top_k_enrichment": 1.36,
+      "hit_recovery": 0.4,
+      "status": "preserved_comparator",
+      "source_model_id": "Model v2-B"
+    },
+    {
+      "model_id": "Model v3",
+      "model": "lightgbm_feature_external_enhanced_v3",
+      "description": "Structure + external knowledge enhanced ranking model",
+      "evaluation_samples": 17,
+      "scaffold_groups": 11,
+      "benchmark_protocol": "scaffold_grouped_leave_one_out",
+      "feature_count": 1128,
+      "spearman": 0.7696078431372549,
+      "rmse": 4.887703665520265,
+      "ndcg_at_5": 0.7782318298332684,
+      "top_k_enrichment": 1.3599999999999999,
+      "hit_recovery": 0.4,
+      "status": "new_oof_result",
+      "source_model_id": "Model v3"
+    }
+  ],
+  "feature_count": 1128,
+  "feature_groups": {
+    "morgan_fingerprint": 1024,
+    "enhanced_rdkit_descriptors": 16,
+    "chemical_similarity": 2,
+    "docking": 11,
+    "quickprop_complete_nonconstant": 43,
+    "admet": 28,
+    "external_knowledge_priors": 4
+  },
+  "chemical_reference_count": 55,
+  "md_internal_coverage": 1
+}

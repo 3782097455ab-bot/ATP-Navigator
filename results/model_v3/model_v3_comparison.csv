@@ -1,0 +1,5 @@
+model_id,model,description,evaluation_samples,scaffold_groups,benchmark_protocol,feature_count,spearman,rmse,ndcg_at_5,top_k_enrichment,hit_recovery,status,source_model_id
+Model v0,docking_only,Docking ranking,17,11,same_population_direct_ranking,1,-0.5318627450980392,40.23169444584778,0.2747499958392678,0.6799999999999999,0.2,preserved_comparator,Model 0
+Model v1,lightgbm_baseline,Current baseline,17,11,scaffold_grouped_leave_one_out,1035,0.5984059984350675,6.700078697576927,0.7876931670049191,1.36,0.4,preserved_comparator,Legacy P1 LightGBM
+Model v2,lightgbm_enhanced_plus_external_priors_v2,External knowledge enhanced model,17,11,scaffold_grouped_leave_one_group_out,1093,0.7573529411764707,4.922646614454728,0.7743921405350457,1.36,0.4,preserved_comparator,Model v2-B
+Model v3,lightgbm_feature_external_enhanced_v3,Structure + external knowledge enhanced ranking model,17,11,scaffold_grouped_leave_one_out,1128,0.7696078431372549,4.887703665520265,0.7782318298332684,1.3599999999999999,0.4,new_oof_result,Model v3

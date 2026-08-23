@@ -1,0 +1,79 @@
+{
+  "model_version": "ATP-Navigator_Model_v3.0",
+  "preserved_external_model_version": "ATP-Navigator_Model_v2.0",
+  "algorithm": "LightGBM LGBMRegressor",
+  "parameters": {
+    "boosting_type": "gbdt",
+    "class_weight": null,
+    "colsample_bytree": 0.45,
+    "importance_type": "split",
+    "learning_rate": 0.03,
+    "max_depth": 3,
+    "min_child_samples": 2,
+    "min_child_weight": 0.001,
+    "min_split_gain": 0.0,
+    "n_estimators": 160,
+    "n_jobs": 1,
+    "num_leaves": 7,
+    "objective": "regression",
+    "random_state": 42,
+    "reg_alpha": 0.1,
+    "reg_lambda": 1.0,
+    "subsample": 0.9,
+    "subsample_for_bin": 200000,
+    "subsample_freq": 0,
+    "deterministic": true,
+    "force_col_wise": true,
+    "verbosity": -1
+  },
+  "random_seed": 42,
+  "evaluation": "Leave-One-Scaffold-Group-Out OOF",
+  "top_k": 5,
+  "training_samples": 17,
+  "scaffold_groups": 11,
+  "label": {
+    "name": "MMGBSA_dG_Bind_static",
+    "direction": "lower_is_better",
+    "semantics": "computational ranking label; not biological activity",
+    "used_as_feature": false
+  },
+  "feature_count": 1128,
+  "feature_groups": {
+    "morgan_fingerprint": 1024,
+    "enhanced_rdkit_descriptors": 16,
+    "chemical_similarity": 2,
+    "docking": 11,
+    "quickprop_complete_nonconstant": 43,
+    "admet": 28,
+    "external_knowledge_priors": 4
+  },
+  "known_inhibitor_reference_policy": {
+    "dataset_layer": "layer_2_atp_synthase_specific",
+    "target_contains": "ATP synthase",
+    "activity_scope": "direct ATP synthesis IC50 or target-specific IC50",
+    "numeric_positive_only": true,
+    "low_confidence_excluded": true,
+    "deduplicated_reference_structures": 55
+  },
+  "excluded_feature_blocks": {
+    "static_mmgbsa": "supervised label; excluded to prevent direct leakage",
+    "md_mmgbsa": "only one of 17 internal candidates has mapped same-protocol MD data",
+    "md_interactions": "only one of 17 internal candidates has mapped MD interaction data"
+  },
+  "input_hashes": {
+    "samples.csv": "fdef34d7984dafadd743b94f910bd2d4a529b553dfed892115775bd03baf31e3",
+    "ATP_Navigator_Dataset_v1.csv": "88df875d4c9bd65bbb5bf16c6608d57c5947b5fbb8ec58cc053bb8c9b9724bb0",
+    "admet_features_v0_2.csv": "edc47010a604d99fcdd5584e43fb2a82f3170ffc83daeec8648252f1b2d348f0",
+    "feature_manifest.csv": "1f3e31a5b9ce6b8696fc0ca1ddd3080e8c508d823857626436cb0202895aed16",
+    "external_priors_internal.csv": "62fac36bdfc4e58d0c6dcd1edf3f007deee98024f918328546a77d7794776195",
+    "phase4_interaction_audit.json": "9a5ba444315ae8a262b5a57cddc2b7b1dfb7238bf3a8e6d360922d9e4b7e609f"
+  },
+  "environment": {
+    "python": "3.12.13",
+    "rdkit": "2026.03.5",
+    "lightgbm": "4.7.0",
+    "pandas": "2.3.3",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1"
+  }
+}
