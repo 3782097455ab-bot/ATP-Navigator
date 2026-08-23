@@ -1,0 +1,125 @@
+{
+  "scoring_version": "ATP-Navigator_Phase5_Decision_v1.0",
+  "scope": "relative prioritization of the current 17 computationally evaluated candidates",
+  "score_scale": {
+    "minimum": 0.0,
+    "maximum": 100.0,
+    "direction": "higher_is_better",
+    "probability": false
+  },
+  "normalization": {
+    "method": "within_batch_rank_percentile",
+    "formula_lower_is_better": "100 * (n - rank_average) / (n - 1)",
+    "formula_higher_is_better": "100 * (rank_average - 1) / (n - 1)",
+    "notes": "Scores are relative to the current candidate batch and are not calibrated probabilities."
+  },
+  "final_formula": "final_score = 0.45 * binding_score + 0.25 * ATP_target_score + 0.15 * antibacterial_score + 0.15 * druglikeness_score",
+  "component_weights": {
+    "binding_score": 0.45,
+    "ATP_target_score": 0.25,
+    "antibacterial_score": 0.15,
+    "druglikeness_score": 0.15
+  },
+  "binding_score": {
+    "formula": "0.50 * model_v3_percentile + 0.20 * docking_percentile + 0.30 * static_mmgbsa_percentile",
+    "subweights": {
+      "model_v3_percentile": 0.5,
+      "docking_percentile": 0.2,
+      "static_mmgbsa_percentile": 0.3
+    },
+    "directions": {
+      "model_v3_prediction": "lower_is_better",
+      "docking_score": "lower_is_better",
+      "static_mmgbsa_score": "lower_is_better"
+    },
+    "warning": "Model v3 was trained against static MM/GBSA, so these inputs are correlated computational evidence rather than independent experiments."
+  },
+  "ATP_target_score": {
+    "formula": "0.30 * direct_ATP_similarity_percentile + 0.35 * PA_ATP_IC50_prior_percentile + 0.35 * Mtb_ATP_IC50_prior_percentile",
+    "subweights": {
+      "direct_ATP_similarity_percentile": 0.3,
+      "PA_ATP_IC50_prior_percentile": 0.35,
+      "Mtb_ATP_IC50_prior_percentile": 0.35,
+      "AB_ATP_IC50_prior_percentile": 0.0
+    },
+    "directions": {
+      "similarity_to_known_inhibitor": "higher_is_better",
+      "PA_ATP_IC50_prior": "lower_is_better",
+      "Mtb_ATP_IC50_prior": "lower_is_better",
+      "AB_ATP_IC50_prior": "lower_is_better"
+    },
+    "excluded_signal": "The AB ATP IC50 prior remains in the output for audit but has weight 0 because its source task had 10 compounds, 3 scaffolds, and negative scaffold-OOF Spearman in Model v2."
+  },
+  "antibacterial_score": {
+    "formula": "AB_whole_cell_MIC_prior_percentile",
+    "subweights": {
+      "AB_whole_cell_MIC_prior_percentile": 1.0
+    },
+    "directions": {
+      "AB_whole_cell_MIC_prior": "lower_is_better"
+    },
+    "warning": "This is an external-model whole-cell MIC prior, not an ATP mechanism label and not an experiment on the internal candidates."
+  },
+  "druglikeness_score": {
+    "formula": "0.50 * descriptor_rule_score + 0.50 * predicted_ADMET_safety_score",
+    "subweights": {
+      "descriptor_rule_score": 0.5,
+      "predicted_ADMET_safety_score": 0.5
+    },
+    "descriptor_rules": {
+      "desc_mol_wt": {
+        "maximum": 500.0
+      },
+      "desc_logp": {
+        "minimum": -2.0,
+        "maximum": 5.0
+      },
+      "desc_tpsa": {
+        "maximum": 140.0
+      },
+      "desc_hbd": {
+        "maximum": 5.0
+      },
+      "desc_hba": {
+        "maximum": 10.0
+      },
+      "desc_rotatable_bonds": {
+        "maximum": 10.0
+      }
+    },
+    "admet_risk_endpoint_count": 27,
+    "admet_formula": "100 * (1 - admet_endpoint_sum / 27)",
+    "warning": "Descriptor thresholds are heuristic and ADMET endpoints are predictions, not experimental safety results."
+  },
+  "confidence": {
+    "formula": "100 * (0.15 identity + 0.15 binding coverage + 0.10 ATP coverage + 0.05 antibacterial coverage + 0.15 druglikeness coverage + 0.40 experimental validation)",
+    "weights": {
+      "identity_confirmed": 0.15,
+      "binding_input_coverage": 0.15,
+      "ATP_input_coverage": 0.1,
+      "antibacterial_input_coverage": 0.05,
+      "druglikeness_input_coverage": 0.15,
+      "experimental_validation": 0.4
+    },
+    "thresholds": {
+      "high": 90.0,
+      "medium": 60.0
+    },
+    "current_experimental_validation": 0.0,
+    "notes": "No internal MIC, ATP-enzyme inhibition, or experimental toxicity result is available; confidence therefore cannot be high."
+  },
+  "missing_data_policy": {
+    "required_computational_component_missing": "final_score_unknown",
+    "experimental_activity_missing": "mark_unknown_and_do_not_impute",
+    "renormalize_weights": false,
+    "unknown_literal": "unknown"
+  },
+  "source_files": {
+    "model_v3_prediction": "results/model_v3/candidate_ranking.csv",
+    "internal_candidates_and_binding": "data/dataset_v0.2/samples.csv",
+    "external_knowledge_priors": "results/model_v2/external_priors_internal.csv",
+    "chemical_similarity": "data/model_v3/chemical_space_analysis.csv",
+    "predicted_admet": "data/admet_features_v0_2.csv"
+  },
+  "top_candidate_explanations": 5
+}
