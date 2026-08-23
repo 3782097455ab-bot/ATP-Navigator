@@ -1,7 +1,9 @@
 # ATP-Navigator Model v3 Report
 
-版本：Model v3.0  
-任务：Feature-enhanced AI ranking model  
+版本：Model v3.0
+
+任务：Feature-enhanced AI ranking model
+
 标签语义：同协议静态 MM/GBSA 计算排序，lower-is-better；不是实验活性。
 
 ## 1. 新增的 AI 能力
