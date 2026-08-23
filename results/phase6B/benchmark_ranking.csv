@@ -1,0 +1,1 @@
+benchmark_rank,compound_id,SMILES,canonical_smiles,target,organism,activity_type,activity_value,activity_relation,activity_numeric,activity_value_status,activity_direction,unit,reference,atp_navigator_score,confidence,confidence_score,scoring_status,independence_status

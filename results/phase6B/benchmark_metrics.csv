@@ -1,0 +1,2 @@
+benchmark_scope,target,organism,activity_type,unit,activity_direction,n_scored_compounds,n_exact_numeric_compounds,spearman_correlation,kendall_tau,status,reason
+independent_external_validation,unknown,unknown,unknown,unknown,unknown,0,0,,,empty,"No independently eligible scored compounds. Novel external structures lack the required Decision Engine evidence, and known external-training structures are excluded."

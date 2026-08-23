@@ -25,6 +25,9 @@
 | Phase 5 final ranking | Decision Engine对现有17候选的透明多目标组合 | 17 candidates | `results/final_candidate_ranking.csv` | component scores、final_score、confidence、raw evidence、unknown statuses | 决策规则输出 | 否，不得回流为训练label | 批次相对分数；权重为人工策略；实验均unknown |
 | Phase 6A robustness results | Phase 5四分量的固定权重扰动、排名相关、Top-k一致性和消融 | sensitivity 85 rows；ranking 17 rows；stability 25 pairs；consistency 17 rows；ablation 51 rows | `results/phase6A/` | scenario/ablation权重、score、rank、Spearman、Kendall、Top 3/5频率 | 验证派生结果；无新标签 | 否，不得作为训练label | 仅17个内部候选；衡量规则敏感性而非实验准确率 |
 | Phase 6A benchmark status | Dataset v1.0外部Layer 1/2与17内部候选精确结构重叠审计 | 3 audit rows；当前0个可评价benchmark | `results/phase6A/benchmark_results.csv`、`benchmark_report.md` | source、外部规模、匹配数、evaluable、status、reason | 数据可用性审计 | 否；未来独立文件只用于验证 | 外部Layer 1/2精确结构重叠为0；相关性为空，不代表验证通过 |
+| Phase 6B standardized ATP benchmark | Dataset v1.0 Layer 2公开ATP synthase相关记录，经RDKit标准化和canonical SMILES去重 | 363 source records；363 valid structure records；109 unique structures | `results/phase6B/standardized_benchmark_compounds.csv` | structure ID、来源ID、canonical SMILES、端点集合、reference、Morgan2048、训练重叠、scoring status | 混合MIC/IC50/细胞毒性/其他端点；未合并 | 否；只用于验证准备 | 109/109均与Model v2外部知识训练结构重叠；无完整Decision Engine证据 |
+| Phase 6B external ranking | 未改变的Phase 5 Decision Engine对符合条件外部结构的严格评分出口 | 当前0 rows，只有表头 | `results/phase6B/benchmark_ranking.csv` | benchmark rank、compound、activity stratum、ATP-Navigator score、confidence、independence | 决策分数与外部实验记录并列，不形成训练label | 否，只验证 | 当前可评分结构为0；状态empty，不得描述为排名结果已验证 |
+| Phase 6B external metrics | 仅对训练不重叠、精确数值、同target/organism/activity type/unit/direction的已评分stratum计算 | 当前1 status row；0 evaluated strata | `results/phase6B/benchmark_metrics.csv` | n、Spearman、Kendall、status、reason | 外部验证metric | 否，只验证 | 当前相关性为空；公开Layer 2参与过Model v2知识训练且外部分子无完整决策证据 |
 | External incoming | 团队未来上传 | 当前0条提交记录 | `data/external/incoming/` | manifest约定来源、引用、许可、状态等 | unknown直到审计 | 否，审计前禁止训练 | 需要来源、许可、结构、单位、重复项和标签语义检查 |
 | Literature registry | 团队论文和数据库来源记录 | 当前仅表头 | `data/literature/references.csv` | title、authors、DOI、URL、target、organism、linked dataset、status | 文献元数据 | 不直接训练 | 不保存未授权全文；需人工筛选和复核 |
 
@@ -37,6 +40,7 @@
 - Phase 5 Final Score：只用于当前候选决策，不是活性真值，也不是新的监督标签。
 - Phase 6A scenario/ablation score：只用于稳健性验证，不是新标签，不得回流训练。
 - External benchmark：只接受候选级精确结构匹配、实验来源可追溯且endpoint/organism/unit/assay一致的数据；验证集不得进入训练或权重选择。
+- Phase 6B：Morgan fingerprint是结构处理产物，不是活性标签；MIC、IC50、细胞毒性、Activity和Inhibition必须分层，训练重叠数据不得报告为独立验证。
 
 ## 新数据登记规则
 

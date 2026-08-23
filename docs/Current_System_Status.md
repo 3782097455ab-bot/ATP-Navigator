@@ -2,7 +2,7 @@
 
 更新时间：2026-08-23
 
-当前阶段：Phase 6A — Robustness & Benchmark Validation Module
+当前阶段：Phase 6B — External Benchmark Pipeline
 
 当前系统定位：基于鲍曼不动杆菌 F1F0-ATP synthase 真实虚拟筛选案例的 AI 增强型候选优先级排序与多目标决策系统。系统优化已有计算候选排序，不替代 Schrödinger、MD/MMGBSA 或实验验证。
 
@@ -22,6 +22,7 @@
 | Intelligent Decision Engine | Phase 5 v1.0 已运行 | 透明多目标权重、综合排序、候选解释、JSON接口准备 |
 | Robustness validation | Phase 6A v1.0 已运行 | 5套权重方案、排名稳定性、Top-k一致性、决策消融 |
 | External benchmark framework | 接口已建立；当前不可评价 | Dataset v1.0外部层重叠检查、独立验证文件规范、无虚构指标 |
+| External benchmark import pipeline | Phase 6B v1.0 已运行；当前empty | 标准化、canonical结构去重、Morgan2048、Decision Engine严格评分门控、端点分层metric接口 |
 | 团队数据接入 | 目录和登记表已建立 | `data/external/incoming/`、`data/external/curated/` |
 | 文献追溯 | 框架已建立 | `data/literature/references.csv` |
 | 网页/前端 | 未开发 | 当前不在本阶段范围 |
@@ -39,6 +40,8 @@ Phase 5 Decision Engine 不是新的监督模型，不登记为 Model v4。它�
 
 Phase 6A同样不是Model v4。它不训练模型，只对Phase 5既有四分量执行预设权重扰动、排名相关性、Top-k一致性和消融验证。
 
+Phase 6B不是新模型，也不改变Decision Engine。它导入公开ATP synthase inhibitor记录，完成结构处理后，仅允许已有完整Phase 5计算证据的分子取得原始Decision Engine分数。
+
 ## 3. 当前数据集
 
 | 数据版本/资产 | 规模 | 当前用途 |
@@ -50,6 +53,8 @@ Phase 6A同样不是Model v4。它不训练模型，只对Phase 5既有四分量
 | Model v3 binding table | 18 compounds；MD动态证据覆盖IN-2和Hit3 | 结合证据审计；稀疏MD特征不训练 |
 | Phase 5 final ranking | 17 candidates | 多目标决策输出；禁止作为新的活性训练标签 |
 | Phase 6A robustness outputs | 17 candidates；5套权重；3套消融 | 验证决策规则对权重和分量选择的敏感性；禁止作为训练标签 |
+| Phase 6B standardized external benchmark | 363 input records；109 unique valid structures；Morgan2048 | 外部验证数据准备；109个结构均与Model v2外部知识训练集重叠，不能作为独立训练外验证 |
+| Phase 6B ranking/metrics | 0 scored structures；0 ranking rows；0 evaluated strata | 当前明确为empty；不产生虚假分数或验证指标 |
 
 ## 4. 当前代码结构
 
@@ -75,6 +80,7 @@ ATP-Navigator/
 - `src/model_v3_pipeline.py`
 - `src/decision_engine.py`
 - `src/phase6a_robustness.py`
+- `src/external_benchmark.py`
 - `src/data_import_pipeline.py`
 
 ## 5. 已完成任务
@@ -88,6 +94,8 @@ ATP-Navigator/
 - 完成 Phase 5 透明多目标评分、缺失实验标记、Top候选解释和JSON接口准备；
 - 完成 Phase 6A 默认+A-D权重敏感性、Spearman/Kendall稳定性、Top 3/Top 5一致性和三方案消融；
 - 建立只验证不训练的external benchmark接口；确认Dataset v1.0外部Layer 1/2与17候选精确canonical SMILES重叠为0，当前不计算虚假外部指标；
+- 完成Phase 6B公开ATP数据标准化、RDKit结构核验、canonical SMILES去重和Morgan2048计算；
+- 建立Decision Engine评分门控和独立验证泄漏保护；现有363条Layer 2记录形成109个唯一结构，但可评分结构、ranking和可评价metric均为0，明确记录为empty；
 - 建立 Development History、Model Registry 和 Data Registry；
 - 项目已连接 GitHub，并建立团队新增数据与文献登记入口。
 
@@ -101,6 +109,7 @@ ATP-Navigator/
 - 更大规模、包含中等和负候选的同协议内部静态 MM/GBSA 数据；
 - 独立前瞻性测试集和实验闭环；
 - 可与17个内部候选精确对应、且endpoint/unit/assay一致的独立外部benchmark；
+- 为独立外部候选补齐按冻结协议生成的Docking、静态MM/GBSA、Model v3输入和预测ADMET等Decision Engine必需证据；
 - 对公开 Dataset v1.0 逐条回源复核；
 - 跨批次可校准的绝对决策分数；
 - 网页端、正式服务API和软著交付包。
@@ -113,6 +122,7 @@ ATP-Navigator/
 - Phase 6A在default、A、C、D场景中Top 1均为Hit2；ATP权重50%的B场景Top 1变为`ATP-SMI-5B36D3E11A3B (Hit13)`。A-D场景最低两两Spearman为0.4583、最低Kendall tau为0.3235，说明存在明显权重敏感性。
 - A-D中只有1个候选始终进入Top 3，也只有1个候选始终进入Top 5；不能宣称Top候选整体高度稳定。
 - 当前external benchmark可评价数量为0；该状态是数据可用性审计，不是外部验证通过。
+- Phase 6B没有因“有公开activity”就生成评分：现有109个外部唯一结构全部缺少完整Decision Engine证据，且全部与Model v2外部知识训练结构重叠；`benchmark_ranking.csv`只有表头，`benchmark_metrics.csv`状态为`empty`。
 
 ## 8. 维护规则
 
