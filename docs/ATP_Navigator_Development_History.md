@@ -377,6 +377,81 @@ Model v3 由独立提交 `e0a0ce5` 于 2026-08-23T16:29:41+08:00 加入，`ac06d
 - 所有候选confidence为60/100的`medium_computational_only`；实验验证贡献为0；
 - Final Score禁止回流为未来监督训练标签，避免自我循环标签。
 
+## Phase 6A：Robustness & Benchmark Validation Module
+
+### 日期
+
+2026-08-23；主体提交：`2ab74a3`。
+
+### 开发阶段
+
+Phase 6A — Decision Engine稳健性与benchmark可用性验证。
+
+### 目标
+
+在不修改Model v0-v3、不重新训练监督模型的前提下，检查Phase 5 Decision Engine对预设权重变化和决策分量移除的敏感性，并建立严格只用于验证的external benchmark接口。
+
+### 新增文件
+
+- `src/phase6a_robustness.py`
+- `results/phase6A/weight_sensitivity_results.csv`
+- `results/phase6A/ranking_matrix.csv`
+- `results/phase6A/ranking_stability_matrix.csv`
+- `results/phase6A/top_candidate_consistency.csv`
+- `results/phase6A/decision_ablation.csv`
+- `results/phase6A/benchmark_results.csv`
+- `results/phase6A/benchmark_report.md`
+- `docs/Phase6A_Robustness_Report.md`
+- `docs/Phase6A_Limitation_Report.md`
+
+### 修改文件
+
+- `docs/Current_System_Status.md`
+- `docs/Model_Registry.md`
+- `docs/Data_Registry.md`
+- `docs/ATP_Navigator_Development_History.md`：追加本条已完成记录。
+
+### 使用数据
+
+- `results/final_candidate_ranking.csv`：17个内部候选的Phase 5四分量、默认Final Score和身份；
+- `scoring_config.json`：Phase 5冻结默认权重和评分语义；
+- `data/dataset_v1.0/ATP_Navigator_Dataset_v1.csv`：仅用于外部Layer 1/2与17候选的精确canonical SMILES重叠审计，不用于训练。
+
+### 实现功能
+
+- 对default及A-D五套透明权重重新计算17候选分数和排名；
+- 生成25组场景对的Spearman和Kendall tau稳定性矩阵；
+- 统计各候选在A-D四场景中的Top 3/Top 5出现频率、平均排名和排名范围；
+- 完成Binding only、Binding + ATP、完整ATP-Navigator三组决策消融；
+- 建立可选`data/external/curated/phase6a_benchmark.csv`验证接口，只有实验来源、精确结构匹配且endpoint/unit/direction单一时才允许计算相关性；
+- 两次重复运行的7个结果文件和2份报告SHA-256均保持一致；
+- 校验默认场景与Phase 5分数/排名完全一致，稳定性矩阵对称，完整消融与默认公式一致。
+
+### 模型变化
+
+无。没有修改或重新训练Model v0、v1、v2、v3，没有创建Model v4。Phase 6A是验证模块，不是监督模型。
+
+### 性能变化
+
+无新的监督性能指标，也没有真实活性性能提升声明。稳健性结果为：
+
+- default、A、C、D场景Top 1均为`ATP-SMI-C93E6EC67CDB (Hit2)`；B场景Top 1为`ATP-SMI-5B36D3E11A3B (Hit13)`；
+- A-D四场景最低两两Spearman为0.4583，最低Kendall tau为0.3235；
+- `ATP-SMI-9DA3213A09E8 (Hit1)`是A-D中唯一始终进入Top 3、也唯一始终进入Top 5的候选；
+- Binding only相对完整方案Spearman为0.6205、Kendall tau为0.4502；Binding + ATP分别为0.8971和0.7353；
+- 当前可评价external benchmark数量为0，相关性指标保持空值。
+
+这些数字衡量决策规则稳定性，不衡量实验活性准确率。
+
+### 当前限制
+
+- 只有17个经过预筛选的内部候选；
+- 分量间存在计算证据相关性，不是独立证据；
+- A-D只是预注册的有限权重场景，不能覆盖所有权重空间；
+- 外部Layer 1/2与内部候选精确结构重叠为0；
+- 没有内部MIC、ATP enzyme inhibition、实验毒性或独立前瞻性结果；
+- benchmark状态为`not_evaluable`，不得描述为外部验证通过。
+
 # Git 历史审计
 
 | Commit | 时间 | 可确认变化 |
@@ -389,6 +464,8 @@ Model v3 由独立提交 `e0a0ce5` 于 2026-08-23T16:29:41+08:00 加入，`ac06d
 | `ac06dc4` | 2026-08-23T16:30:39+08:00 | 只调整 Model v3 报告和代码模板中的 Markdown 格式。 |
 | `48745bd` | 2026-08-23 | 新增Development History和Model Evolution Table，首次系统整理项目历史。 |
 | `61d3b41` | 2026-08-23 | 新增Phase 5 Decision Engine、透明评分配置、综合排序、候选解释和三份长期注册文档。 |
+| `c80d3b2` | 2026-08-23 | 追加Phase 5开发历史和模型演化记录。 |
+| `2ab74a3` | 2026-08-23 | 新增Phase 6A权重敏感性、排名稳定性、Top-k一致性、决策消融和external benchmark可用性验证。 |
 
 ## `docs/src/models/results` 目录变化
 
@@ -402,6 +479,8 @@ Model v3 由独立提交 `e0a0ce5` 于 2026-08-23T16:29:41+08:00 加入，`ac06d
 | `ac06dc4` | 16 | 22 | 16 | 54 | 文件数不变，仅格式修正。 |
 | `48745bd` | 18 | 22 | 16 | 54 | 新增2份历史审计文档。 |
 | `61d3b41` | 23 | 23 | 16 | 55 | 新增Decision Engine、综合排序及5份Phase 5/维护文档；历史模型目录不变。 |
+| `c80d3b2` | 23 | 23 | 16 | 55 | 文件数不变，只更新Phase 5历史记录。 |
+| `2ab74a3` | 25 | 24 | 16 | 62 | 新增Phase 6A代码、2份报告和7个结果文件；模型目录不变。 |
 
 ## 当前可确认的项目状态
 
@@ -409,6 +488,7 @@ Model v3 由独立提交 `e0a0ce5` 于 2026-08-23T16:29:41+08:00 加入，`ac06d
 - 模型层：RF、XGBoost、baseline LightGBM、enhanced LightGBM v1.0、Model v2-A/v2-B、Model v3 均有保存产物；
 - 评价层：Spearman、RMSE、NDCG@5、Top-k enrichment、hit recovery 均有落盘结果；
 - 决策层：透明四分量Final Score、缺失实验unknown标记、Top候选解释和JSON接口已运行；
+- 验证层：Phase 6A权重敏感性、Spearman/Kendall稳定性、Top-k一致性和消融已运行；external benchmark接口已建立但当前不可评价；
 - 可复现性：主要 pipeline、feature list、training config、输入 hash 和 OOF 预测已保存；
 - 未完成：真实生物活性验证、完整原始 MD 轨迹、独立前瞻性测试和更大规模的同协议内部 MM/GBSA 标签。
 
