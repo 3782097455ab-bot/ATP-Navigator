@@ -524,6 +524,75 @@ Phase 6B — 公开ATP synthase inhibitor外部数据导入与严格验证准备
 - 当前没有可计算外部验证相关性的已评分独立候选；
 - 不能用Morgan fingerprint或公开activity直接替代Decision Engine缺失分量。
 
+# Phase 7 — External Knowledge Enhanced Training Experiment
+
+日期：2026-08-24
+
+## 目标
+
+在不修改Model v0-v3和Phase 5 Decision Engine正式输出的前提下，首次按Dataset v2.0规范分别建立抗菌MIC、ATP synthase target和内部候选排序任务，验证外部知识预测先验是否改善Model v3。
+
+## 新增文件
+
+- `data/dataset_v2.0/ATP_Navigator_external_dataset_v1.csv`
+- `data/dataset_v2.0/dataset_metadata.json`
+- `src/model_v4_alpha_pipeline.py`
+- `models/model_v4_alpha/`：Task A模型、4个Task B分层模型、Task C模型、训练配置和feature list
+- `results/model_v4_alpha/`：数据审计、任务路由、训练视图、OOF预测、外部prior、模型比较和shadow candidate ranking
+- `docs/ATP_Navigator_Model_Input_Spec.md`
+- `docs/ATP_Navigator_Data_Dictionary_v1.md`
+- `docs/Dataset_QC_Report_external_source.md`
+- `docs/Source_Quality_System.md`
+- `docs/Model_v4_alpha_Report.md`
+
+## 修改文件
+
+- `docs/Current_System_Status.md`
+- `docs/Model_Registry.md`
+- `docs/Data_Registry.md`
+- `docs/ATP_Navigator_Development_History.md`：追加本条已完成记录。
+
+## 使用数据
+
+- Dataset v2.0输入8,820行、4,338个RDKit canonical structures；Task A 6,663行、Task B 77行、Benchmark 2,080行；
+- 8,573条exact value、239条censored value、8条range value；
+- 内部Dataset v0.2的17个候选、11个scaffold和静态MM/GBSA计算标签；
+- Model v3的1,128个已有特征与Phase 5四分量评分，仅作为保留基线与shadow决策输入。
+
+`Dataset_QC_Report_external_source.md`描述的是早期6,777行主库，不能替代当前8,820行输入审计；Phase 7另行生成`dataset_audit.json`。source level和reference沿用提供文件标注，本阶段未逐条打开原论文或数据库复核。
+
+## 实现功能
+
+- 按Task A、Task B、Task C严格路由，MIC、不同IC50端点/单位、百分比和静态MM/GBSA不合并；
+- 按canonical SMILES与Bemis–Murcko scaffold隔离划分，防止同结构/同scaffold泄漏；
+- Task A以Morgan1024、RDKit descriptors和organism one-hot建立MIC回归，source level和confidence只作样本权重；
+- Task B按activity type、organism species、unit建立独立模型，只有至少8个结构且3个scaffold的stratum训练；
+- Task C保留Model v3全部特征，新增Task A/B外部知识预测先验；
+- 2,080条Benchmark数据完全排除训练；
+- 保存输入SHA-256、feature list、training config、OOF预测和small-data状态；
+- 生成不覆盖Phase 5的Decision Engine shadow ranking，缺失MIC、ATP enzyme和毒性实验继续标记unknown。
+
+## 模型变化
+
+新增`Model v4-alpha`实验版本；Model v0-v3文件、配置和历史结果未修改。v4-alpha不是最终Model v4，也没有替代当前正式Model v3。
+
+## 性能变化
+
+- Task A正式A/B high-confidence切片：n=3,395，scaffold GroupKFold RMSE 0.8015 log10 μg/mL，Spearman 0.7464；classification accuracy因无预注册阈值而标记not applicable；
+- Task B有4个可训练stratum，Spearman分别为0.6170、-0.3283、0.7037、0.0838，不能跨endpoint/unit汇总解释；
+- 内部Task C：Model v4-alpha Spearman 0.7549、RMSE 4.9268、NDCG@5 0.7774、Top-5 enrichment 1.36、Hit recovery 0.40；
+- 相同17候选协议下Model v3为0.7696、4.8877、0.7782、1.36、0.40。v4-alpha未改善相关性、误差、NDCG或Top-k，不能宣称外部知识已带来性能提升；
+- shadow Decision ranking相对Phase 5的Spearman为0.7721、Kendall为0.6029、Top3重叠2/3、Top5重叠4/5；这些是排序变化，不是实验准确率。
+
+## 当前限制
+
+- Task C只有17个已筛选候选，且没有独立前瞻测试；
+- Task B每个同质stratum只有8–25个样本，部分分层出现负或接近零的OOF相关；
+- 外部模型输出是跨域计算prior，不是内部候选的MIC或ATP enzyme实验；
+- censored/range activity本轮排除，尚未使用删失回归；
+- Dataset v2.0与既有外部知识来源可能有内容重叠，不能作为独立外部验证；
+- 当前最缺A. baumannii同一ATP synthase亚型、同一assay和同一unit的高质量实验数据，以及内部17候选真实MIC/ATP enzyme/毒性数据。
+
 # Git 历史审计
 
 | Commit | 时间 | 可确认变化 |

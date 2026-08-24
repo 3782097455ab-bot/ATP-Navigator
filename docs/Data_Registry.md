@@ -1,6 +1,6 @@
 # ATP-Navigator Data Registry
 
-更新时间：2026-08-23
+更新时间：2026-08-24
 
 登记原则：数据可用于训练不等于数据是真实活性。每个训练任务必须按来源、身份、target、organism、activity type、unit和计算/实验协议生成独立视图。
 
@@ -28,6 +28,12 @@
 | Phase 6B standardized ATP benchmark | Dataset v1.0 Layer 2公开ATP synthase相关记录，经RDKit标准化和canonical SMILES去重 | 363 source records；363 valid structure records；109 unique structures | `results/phase6B/standardized_benchmark_compounds.csv` | structure ID、来源ID、canonical SMILES、端点集合、reference、Morgan2048、训练重叠、scoring status | 混合MIC/IC50/细胞毒性/其他端点；未合并 | 否；只用于验证准备 | 109/109均与Model v2外部知识训练结构重叠；无完整Decision Engine证据 |
 | Phase 6B external ranking | 未改变的Phase 5 Decision Engine对符合条件外部结构的严格评分出口 | 当前0 rows，只有表头 | `results/phase6B/benchmark_ranking.csv` | benchmark rank、compound、activity stratum、ATP-Navigator score、confidence、independence | 决策分数与外部实验记录并列，不形成训练label | 否，只验证 | 当前可评分结构为0；状态empty，不得描述为排名结果已验证 |
 | Phase 6B external metrics | 仅对训练不重叠、精确数值、同target/organism/activity type/unit/direction的已评分stratum计算 | 当前1 status row；0 evaluated strata | `results/phase6B/benchmark_metrics.csv` | n、Spearman、Kendall、status、reason | 外部验证metric | 否，只验证 | 当前相关性为空；公开Layer 2参与过Model v2知识训练且外部分子无完整决策证据 |
+| Dataset v2.0 原始标准输入 | 用户提供的外部知识标准表；Phase 7 独立执行结构和schema审计 | 8,820 rows；4,341 source compound IDs；4,338 canonical structures | `data/dataset_v2.0/ATP_Navigator_external_dataset_v1.csv` | compound、SMILES、target、organism、activity、unit、reference、source level、confidence、task type | Task A MIC、Task B ATP activity、Benchmark binding records | 是，但只能按任务、端点、物种和单位建立隔离视图 | Task A 6,663、Task B 77、Benchmark 2,080；exact 8,573、censored 239、range 8；43个结构跨task；Benchmark禁止进入本轮训练；来源等级未逐条回源核实 |
+| Dataset v2.0 Task A view | Dataset v2.0 Antibacterial 中精确正值 MIC，经 canonical structure×organism species 聚合 | 3,396 structure-species samples；2,263 structures；832 scaffolds | `results/model_v4_alpha/task_a_training_view.csv` | canonical structure、organism、log10 MIC、source/confidence weight、scaffold | log10 MIC μg/mL，lower-is-better | 是，仅Task A | 排除截尾/范围和非MIC；classification阈值未预注册；source A仅82个聚合样本；不是ATP专项标签 |
+| Dataset v2.0 Task B view | Dataset v2.0 ATP_target A/B来源的精确正值实验记录 | 76 aggregated samples；7 endpoint-organism-unit strata；4 trained strata | `results/model_v4_alpha/task_b_training_view.csv` | activity type、organism、unit、log10 activity、source/confidence weight、scaffold | 每个stratum独立的ATP target activity | 是，仅同质stratum | 单层只有3–25个样本；4层可训练、3层small-data；不同单位、IC50与百分比禁止合并 |
+| Model v4-alpha external priors | Task A与4个Task B子模型对内部17候选的预测 | 17 candidates；1个Task A预测、4个Task B预测和1个rank ensemble | `results/model_v4_alpha/external_priors_internal.csv` | endpoint-specific prediction、within-batch percentile、ensemble rank | 模型预测特征 | 可作Task C辅助输入，不可作实验label | 内部结构与Dataset v2.0 exact overlap为0；跨域预测；不同单位只做批次rank percentile后等权，不合并数值 |
+| Model v4-alpha Task C training/output | Model v3训练表 + Dataset v2.0预测先验 | 17 candidates；11 scaffolds；1,134 features | `results/model_v4_alpha/internal_oof_predictions.csv`、`candidate_ranking.csv` | Model v3特征、外部prior、静态MM/GBSA label、OOF prediction | 静态MM/GBSA计算标签 | 是，仅复现v4-alpha实验 | v4-alpha未优于v3；无独立测试和真实活性；不得将Decision Engine分数回流训练 |
+| Model v4-alpha Decision shadow ranking | 未改变权重的Phase 5公式接入v4-alpha预测分量 | 17 candidates | `results/model_v4_alpha/decision_engine_candidate_ranking.csv` | 四分量、shadow final score/rank、unknown实验状态 | 决策派生结果 | 否 | 不覆盖Phase 5；分数为当前17候选批次内相对优先级，不是活性或成功概率 |
 | External incoming | 团队未来上传 | 当前0条提交记录 | `data/external/incoming/` | manifest约定来源、引用、许可、状态等 | unknown直到审计 | 否，审计前禁止训练 | 需要来源、许可、结构、单位、重复项和标签语义检查 |
 | Literature registry | 团队论文和数据库来源记录 | 当前仅表头 | `data/literature/references.csv` | title、authors、DOI、URL、target、organism、linked dataset、status | 文献元数据 | 不直接训练 | 不保存未授权全文；需人工筛选和复核 |
 
@@ -41,6 +47,7 @@
 - Phase 6A scenario/ablation score：只用于稳健性验证，不是新标签，不得回流训练。
 - External benchmark：只接受候选级精确结构匹配、实验来源可追溯且endpoint/organism/unit/assay一致的数据；验证集不得进入训练或权重选择。
 - Phase 6B：Morgan fingerprint是结构处理产物，不是活性标签；MIC、IC50、细胞毒性、Activity和Inhibition必须分层，训练重叠数据不得报告为独立验证。
+- Phase 7：Task A MIC、Task B分层ATP activity与Task C静态MM/GBSA分别建模；Benchmark 2,080条不参与训练；source level/confidence只用于sample weighting；外部预测只能作为prior，不能改写为内部实验标签。
 
 ## 新数据登记规则
 

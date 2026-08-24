@@ -1,0 +1,8 @@
+﻿task,stratum_id,activity_type,organism_species,unit,samples,unique_compounds,scaffolds,status,reason,split,spearman,rmse,ndcg_at_5,top_k_enrichment,hit_recovery
+Task B,activity__mycobacterium_tuberculosis__unknown,Activity,Mycobacterium tuberculosis,%,7,7,4,insufficient_small_data,requires >=8 unique compounds and >=3 scaffolds,not_run,,,,,
+Task B,ic50__mycobacterium_tuberculosis__nm,IC50,Mycobacterium tuberculosis,nM,17,17,7,trained,,5-fold scaffold GroupKFold,0.6170289659285253,0.7053299199340404,0.7964706721287553,2.04,0.6
+Task B,ic50_atp_synthesis_inhibition__acinetobacter_baumannii__g_ml,IC50 (ATP synthesis inhibition),Acinetobacter baumannii,μg/mL,6,6,4,insufficient_small_data,requires >=8 unique compounds and >=3 scaffolds,not_run,,,,,
+Task B,ic50_atp_synthesis_inhibition__acinetobacter_baumannii__ng_ml,IC50 (ATP synthesis inhibition),Acinetobacter baumannii,ng/mL,10,10,3,trained,,3-fold scaffold GroupKFold,-0.32826899358723494,0.21787288271853522,0.4972539168977332,0.8,0.4
+Task B,ic50_atp_synthesis_inhibition__pseudomonas_aeruginosa__g_ml,IC50 (ATP synthesis inhibition),Pseudomonas aeruginosa,μg/mL,25,25,18,trained,,5-fold scaffold GroupKFold,0.7037398692478865,0.5042927608648284,0.8564212173242358,3.0,0.6
+Task B,ic50_atp_synthesis_inverted_membrane_vesicles__pseudomonas_aeruginosa__g_ml,"IC50 (ATP synthesis, inverted membrane vesicles)",Pseudomonas aeruginosa,μg/mL,8,8,7,trained,,5-fold scaffold GroupKFold,0.08383383833392813,0.4776687662301561,0.7621176164338936,1.28,0.8
+Task B,inhibition__mycobacterium_tuberculosis__unknown,Inhibition,Mycobacterium tuberculosis,%,3,3,3,insufficient_small_data,requires >=8 unique compounds and >=3 scaffolds,not_run,,,,,

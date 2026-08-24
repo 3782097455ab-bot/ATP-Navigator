@@ -1,0 +1,65 @@
+{
+  "dataset_version": "ATP-Navigator_Dataset_v2.0",
+  "source_file": "data/dataset_v2.0/ATP_Navigator_external_dataset_v1.csv",
+  "source_sha256": "1c8ca1b93518f1919067952f28423cda1ed5578f47b36a3d647fa65b3ad3d40b",
+  "rows": 8820,
+  "unique_compound_ids": 4341,
+  "unique_canonical_smiles": 4338,
+  "invalid_smiles": 0,
+  "task_counts": {
+    "Antibacterial": 6663,
+    "Benchmark": 2080,
+    "ATP_target": 77
+  },
+  "source_levels": {
+    "B": 8494,
+    "A": 323,
+    "C": 3
+  },
+  "confidence_levels": {
+    "high": 8817,
+    "medium": 3
+  },
+  "value_classes": {
+    "exact_numeric": 8573,
+    "censored": 239,
+    "range": 8
+  },
+  "unit_counts": {
+    "μg/mL": 6703,
+    "nM": 2097,
+    "ng/mL": 10,
+    "%": 10
+  },
+  "activity_type_counts": {
+    "MIC": 6648,
+    "IC50": 1433,
+    "Ki": 521,
+    "EC50": 97,
+    "Kd": 46,
+    "IC50 (ATP synthesis inhibition)": 41,
+    "IC50 (ETC inhibition)": 9,
+    "IC50 (ATP synthesis, inverted membrane vesicles)": 9,
+    "Activity": 7,
+    "IC50 (ETC, ACMA fluorescence)": 6,
+    "Inhibition": 3
+  },
+  "missing_or_unknown_required": {
+    "compound_id": 0,
+    "canonical_smiles": 0,
+    "target": 0,
+    "organism": 0,
+    "activity_type": 0,
+    "activity_value": 0,
+    "unit": 0,
+    "reference": 0,
+    "source_level": 0,
+    "confidence": 0,
+    "task_type": 0
+  },
+  "canonical_present_in_multiple_tasks": 43,
+  "qc_warning": "The supplied Dataset_QC_Report.md describes the earlier 6,777-row public master; this pipeline independently audits the 8,820-row standard Dataset v2.0 input.",
+  "provenance_boundary": "source_level/reference annotations are user-supplied; Phase 7 checks structure and schema consistency but does not independently re-open every paper/database record",
+  "internal_exact_structure_overlap": 0,
+  "benchmark_training_policy": "2,080 Benchmark rows excluded from Task A/B/C training"
+}

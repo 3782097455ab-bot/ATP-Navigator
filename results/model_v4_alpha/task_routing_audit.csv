@@ -1,0 +1,4 @@
+﻿task_type,rows,training_use
+Antibacterial,6663,task_specific_filter_only
+Benchmark,2080,excluded_validation_only
+ATP_target,77,task_specific_filter_only

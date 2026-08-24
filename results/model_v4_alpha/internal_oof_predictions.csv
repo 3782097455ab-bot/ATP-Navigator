@@ -1,0 +1,18 @@
+﻿compound_id,canonical_smiles,scaffold,label_score,model_v4_alpha_oof_prediction,fold,label_semantics
+ATP-SMI-15737353FB69,O[C@H]1CC[N@@H+](Cc2ccccc2C[NH2+]Cc2cn(Cc3ccccc3)nc2-c2ccccc2)C1,c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1,-51.42,-51.33979335103052,10,static MMGBSA computational ranking; not biological activity
+ATP-SMI-4417138BF81D,[NH3+]C[C@@H](Nc1nc2ccccc2cc1C(=O)Nc1ccccc1)c1cccc(Cl)c1,O=C(Nc1ccccc1)c1cc2ccccc2nc1NCc1ccccc1,-33.54,-42.869086837140735,4,static MMGBSA computational ranking; not biological activity
+ATP-SMI-5B36D3E11A3B,C[NH+](C)Cc1ccc(CNc2csc(C(=O)N[C@H](C[NH3+])c3ccccc3)c2)cc1,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-44.13,-43.72490825073846,0,static MMGBSA computational ranking; not biological activity
+ATP-SMI-5D3E7B6B6796,O=[N+]([O-])c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)c(O)c1,c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1,-54.81,-50.58113886434623,8,static MMGBSA computational ranking; not biological activity
+ATP-SMI-775D33706F04,C[NH+](C)Cc1cccc(CNc2ccsc2C(=O)N[C@H](C[NH3+])c2ccccc2)c1,O=C(NCc1ccccc1)c1sccc1NCc1ccccc1,-43.0,-39.586214404977774,2,static MMGBSA computational ranking; not biological activity
+ATP-SMI-874C2DE25FE4,Cc1ccc(-c2nn(Cc3ccccc3)cc2C[NH2+]Cc2ccccc2C[N@H+]2CC[C@@H](O)C2)cc1,c1ccc(Cn2cc(C[NH2+]Cc3ccccc3C[NH+]3CCCC3)c(-c3ccccc3)n2)cc1,-56.37,-49.48540212155611,10,static MMGBSA computational ranking; not biological activity
+ATP-SMI-91E7552C2382,COc1cc(C[NH2+]Cc2cccc(C[NH+](C)C)c2)cc(O)c1OCc1ccccc1,c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1,-34.76,-43.788840069629735,9,static MMGBSA computational ranking; not biological activity
+ATP-SMI-94F73967C042,C[NH+](C)Cc1ccc(CNc2cc(C(=O)N(CC[NH3+])c3ccccc3)sc2Cl)cc1,O=C(Nc1ccccc1)c1cc(NCc2ccccc2)cs1,-44.48,-45.72291886552463,3,static MMGBSA computational ranking; not biological activity
+ATP-SMI-96FD6257D8BA,C[NH+]1CCN(c2ccc(CC[NH2+]Cc3cn(-c4ccccc4)nc3-c3cccnc3)cc2)CC1,c1ccc(-n2cc(C[NH2+]CCc3ccc(N4CC[NH2+]CC4)cc3)c(-c3cccnc3)n2)cc1,-52.9,-51.85614338380731,5,static MMGBSA computational ranking; not biological activity
+ATP-SMI-9DA3213A09E8,C[NH+](C)Cc1ccc(C[NH2+]Cc2cc(C(=O)N[C@@H](C#N)c3ccccc3)ccn2)cc1,O=C(NCc1ccccc1)c1ccnc(C[NH2+]Cc2ccccc2)c1,-57.51,-51.075517170919944,1,static MMGBSA computational ranking; not biological activity
+ATP-SMI-BF69AB71C1A4,C[NH+](C)Cc1cccc(CNc2cc(C(=O)N[C@@H](C[NH3+])c3ccccc3)sc2Cl)c1,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-51.01,-44.422616683013786,0,static MMGBSA computational ranking; not biological activity
+ATP-SMI-C3308BEE03AC,C[NH+](C)Cc1ccc(CNc2cc(C(=O)N[C@H](C[NH3+])c3ccccc3)sc2Cl)cc1,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-48.06,-43.947467579574926,0,static MMGBSA computational ranking; not biological activity
+ATP-SMI-C93E6EC67CDB,C[NH2+]C[C@@H](NC(=O)c1cc(NCc2cccc(C[NH+](C)C)c2)c(Cl)s1)c1ccccc1,O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,-56.56,-49.925685045990505,0,static MMGBSA computational ranking; not biological activity
+ATP-SMI-CDED936B42F4,Oc1cccc([C@H](O)C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)c1,c1ccc(CC[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1,-47.89,-47.932324282435395,7,static MMGBSA computational ranking; not biological activity
+ATP-SMI-CFA68A98711F,Oc1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1O,c1ccc(C[NH2+]Cc2cc(OCc3ccccc3)c3ccccc3c2)cc1,-37.5,-37.6461251457322,8,static MMGBSA computational ranking; not biological activity
+ATP-SMI-E9798004BA11,COc1cc(C[NH2+]Cc2ccccc2NCC[NH+](C)C)cc(O)c1OCc1ccccc1,c1ccc(C[NH2+]Cc2ccc(OCc3ccccc3)cc2)cc1,-51.99,-53.70271056827205,9,static MMGBSA computational ranking; not biological activity
+ATP-SMI-FCA9CDF3313B,Cc1ccc([C@H](CNc2nc(N(CC[NH3+])c3cccc(Cl)c3)nc3ccccc23)[NH+](C)C)cc1,c1ccc(CCNc2nc(Nc3ccccc3)nc3ccccc23)cc1,-48.88,-52.83933357073694,6,static MMGBSA computational ranking; not biological activity

@@ -1,0 +1,5 @@
+﻿task,slice,label,split,n,rmse,spearman,classification_accuracy,classification_status
+Task A,all_eligible,log10_MIC_ug_ml,5-fold scaffold GroupKFold,3396,0.8023675028610496,0.745716514582302,,not_applicable_no_pre_registered_active_threshold
+Task A,formal_A_B_high,log10_MIC_ug_ml,5-fold scaffold GroupKFold,3395,0.8014815860797764,0.7464483426377593,,not_applicable_no_pre_registered_active_threshold
+Task A,source_A,log10_MIC_ug_ml,5-fold scaffold GroupKFold,82,0.5153783508104175,0.014946863479157326,,not_applicable_no_pre_registered_active_threshold
+Task A,source_B,log10_MIC_ug_ml,5-fold scaffold GroupKFold,3313,0.8072780562822528,0.7370100014809918,,not_applicable_no_pre_registered_active_threshold

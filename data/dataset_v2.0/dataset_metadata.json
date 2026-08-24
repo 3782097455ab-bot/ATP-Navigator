@@ -1,0 +1,18 @@
+{
+  "dataset_version": "ATP-Navigator_Dataset_v2.0",
+  "source_file": "ATP_Navigator_external_dataset_v1.csv",
+  "source_sha256": "1c8ca1b93518f1919067952f28423cda1ed5578f47b36a3d647fa65b3ad3d40b",
+  "rows": 8820,
+  "unique_canonical_smiles": 4338,
+  "task_counts": {
+    "Antibacterial": 6663,
+    "Benchmark": 2080,
+    "ATP_target": 77
+  },
+  "immutable_source": true,
+  "derived_training_views": [
+    "results/model_v4_alpha/task_a_training_view.csv",
+    "results/model_v4_alpha/task_b_training_view.csv"
+  ],
+  "labels_not_mixed": true
+}

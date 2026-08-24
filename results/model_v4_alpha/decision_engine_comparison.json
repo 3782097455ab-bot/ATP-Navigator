@@ -1,0 +1,18 @@
+{
+  "formula": "0.45 Binding + 0.25 ATP target + 0.15 Antibacterial + 0.15 Drug-likeness",
+  "phase5_output_overwritten": false,
+  "component_update": {
+    "binding": "Model v3 percentile replaced by Model v4-alpha percentile; docking/static MMGBSA subweights preserved",
+    "ATP_target": "30% direct similarity + 70% equal-weight Task B stratum percentile ensemble",
+    "antibacterial": "Task A predicted A. baumannii MIC percentile",
+    "druglikeness": "preserved Phase 5 component"
+  },
+  "rank_spearman_vs_phase5": 0.7720588235294118,
+  "rank_kendall_vs_phase5": 0.6029411764705882,
+  "top3_overlap": 2,
+  "top5_overlap": 4,
+  "top_compound_v4_alpha": "ATP-SMI-C93E6EC67CDB",
+  "top_alias_v4_alpha": "Hit2",
+  "top_score_v4_alpha": 78.82899305555556,
+  "interpretation": "ranking comparison only; no experimental accuracy claim"
+}

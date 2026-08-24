@@ -1,0 +1,310 @@
+{
+  "model_version": "ATP-Navigator_Model_v4-alpha",
+  "status": "alpha_experiment_not_final",
+  "random_seed": 42,
+  "tasks": {
+    "A": {
+      "raw_task_rows": 6663,
+      "mic_rows": 6648,
+      "exact_positive_mic_rows": 6529,
+      "excluded_censored_or_range_or_non_mic_rows": 134,
+      "aggregated_samples": 3396,
+      "unique_structures": 2263,
+      "scaffold_groups": 832,
+      "species": {
+        "Klebsiella pneumoniae": 973,
+        "Pseudomonas aeruginosa": 836,
+        "Escherichia coli": 800,
+        "Acinetobacter baumannii": 784,
+        "Staphylococcus aureus": 2,
+        "Mycobacterium abscessus": 1
+      },
+      "label": "log10 MIC in μg/mL; lower-is-better",
+      "classification_accuracy": null,
+      "classification_status": "not_applicable_no_pre_registered_active_threshold",
+      "feature_count": 1046,
+      "split": "5-fold scaffold GroupKFold",
+      "formal_metrics": {
+        "task": "Task A",
+        "slice": "formal_A_B_high",
+        "label": "log10_MIC_ug_ml",
+        "split": "5-fold scaffold GroupKFold",
+        "n": 3395,
+        "rmse": 0.8014815860797764,
+        "spearman": 0.7464483426377593,
+        "classification_accuracy": null,
+        "classification_status": "not_applicable_no_pre_registered_active_threshold"
+      }
+    },
+    "B": {
+      "raw_task_rows": 77,
+      "exact_positive_A_B_rows": 77,
+      "aggregated_samples": 76,
+      "strata": 7,
+      "rule": "train each activity_type + organism species + unit stratum separately",
+      "minimum_unique_compounds": 8,
+      "minimum_scaffolds": 3,
+      "trained_strata": 4,
+      "stratum_summary": [
+        {
+          "stratum_id": "activity__mycobacterium_tuberculosis__unknown",
+          "activity_type": "Activity",
+          "organism_species": "Mycobacterium tuberculosis",
+          "unit": "%",
+          "samples": 7,
+          "unique_compounds": 7,
+          "scaffolds": 4,
+          "status": "insufficient_small_data",
+          "reason": "requires >=8 unique compounds and >=3 scaffolds"
+        },
+        {
+          "stratum_id": "ic50__mycobacterium_tuberculosis__nm",
+          "activity_type": "IC50",
+          "organism_species": "Mycobacterium tuberculosis",
+          "unit": "nM",
+          "samples": 17,
+          "unique_compounds": 17,
+          "scaffolds": 7,
+          "status": "trained",
+          "split": "5-fold scaffold GroupKFold"
+        },
+        {
+          "stratum_id": "ic50_atp_synthesis_inhibition__acinetobacter_baumannii__g_ml",
+          "activity_type": "IC50 (ATP synthesis inhibition)",
+          "organism_species": "Acinetobacter baumannii",
+          "unit": "μg/mL",
+          "samples": 6,
+          "unique_compounds": 6,
+          "scaffolds": 4,
+          "status": "insufficient_small_data",
+          "reason": "requires >=8 unique compounds and >=3 scaffolds"
+        },
+        {
+          "stratum_id": "ic50_atp_synthesis_inhibition__acinetobacter_baumannii__ng_ml",
+          "activity_type": "IC50 (ATP synthesis inhibition)",
+          "organism_species": "Acinetobacter baumannii",
+          "unit": "ng/mL",
+          "samples": 10,
+          "unique_compounds": 10,
+          "scaffolds": 3,
+          "status": "trained",
+          "split": "3-fold scaffold GroupKFold"
+        },
+        {
+          "stratum_id": "ic50_atp_synthesis_inhibition__pseudomonas_aeruginosa__g_ml",
+          "activity_type": "IC50 (ATP synthesis inhibition)",
+          "organism_species": "Pseudomonas aeruginosa",
+          "unit": "μg/mL",
+          "samples": 25,
+          "unique_compounds": 25,
+          "scaffolds": 18,
+          "status": "trained",
+          "split": "5-fold scaffold GroupKFold"
+        },
+        {
+          "stratum_id": "ic50_atp_synthesis_inverted_membrane_vesicles__pseudomonas_aeruginosa__g_ml",
+          "activity_type": "IC50 (ATP synthesis, inverted membrane vesicles)",
+          "organism_species": "Pseudomonas aeruginosa",
+          "unit": "μg/mL",
+          "samples": 8,
+          "unique_compounds": 8,
+          "scaffolds": 7,
+          "status": "trained",
+          "split": "5-fold scaffold GroupKFold"
+        },
+        {
+          "stratum_id": "inhibition__mycobacterium_tuberculosis__unknown",
+          "activity_type": "Inhibition",
+          "organism_species": "Mycobacterium tuberculosis",
+          "unit": "%",
+          "samples": 3,
+          "unique_compounds": 3,
+          "scaffolds": 3,
+          "status": "insufficient_small_data",
+          "reason": "requires >=8 unique compounds and >=3 scaffolds"
+        }
+      ],
+      "feature_count": 1040
+    },
+    "C": {
+      "training_samples": 17,
+      "scaffold_groups": 11,
+      "base_feature_count": 1128,
+      "new_external_prior_feature_count": 6,
+      "feature_count": 1134,
+      "new_external_prior_features": [
+        "v4a_task_a_ab_mic_log10_ug_ml",
+        "v4a_task_b_ic50__mycobacterium_tuberculosis__nm_prediction_log10",
+        "v4a_task_b_ic50_atp_synthesis_inhibition__acinetobacter_baumannii__ng_ml_prediction_log10",
+        "v4a_task_b_ic50_atp_synthesis_inhibition__pseudomonas_aeruginosa__g_ml_prediction_log10",
+        "v4a_task_b_ic50_atp_synthesis_inverted_membrane_vesicles__pseudomonas_aeruginosa__g_ml_prediction_log10",
+        "v4a_task_b_ensemble_priority"
+      ],
+      "evaluation": "Leave-One-Scaffold-Group-Out",
+      "metrics": {
+        "spearman": 0.7549019607843138,
+        "rmse": 4.9268042793017175,
+        "ndcg_at_5": 0.7774290836650433,
+        "top_k": 5,
+        "recovered_hits": 2,
+        "true_hits": 5,
+        "top_k_enrichment": 1.3599999999999999,
+        "hit_recovery": 0.4
+      },
+      "model_v3_metrics": {
+        "spearman": 0.7696078431372549,
+        "rmse": 4.887703665520265,
+        "ndcg_at_5": 0.7782318298332684,
+        "top_k_enrichment": 1.36,
+        "hit_recovery": 0.4
+      }
+    }
+  },
+  "label_separation": {
+    "Task A": "MIC μg/mL only",
+    "Task B": "separate activity_type + organism + unit strata",
+    "Task C": "internal static MMGBSA computational ranking only",
+    "Benchmark": "excluded from training"
+  },
+  "weights": {
+    "task_a_source": {
+      "A": 1.0,
+      "B": 1.0,
+      "C": 0.5,
+      "D": 0.0
+    },
+    "task_b_source": {
+      "A": 1.0,
+      "B": 0.8,
+      "C": 0.5,
+      "D": 0.0
+    },
+    "confidence": {
+      "high": 1.0,
+      "medium": 0.7,
+      "low": 0.3
+    }
+  },
+  "lightgbm_parameters": {
+    "boosting_type": "gbdt",
+    "class_weight": null,
+    "colsample_bytree": 0.45,
+    "importance_type": "split",
+    "learning_rate": 0.03,
+    "max_depth": 3,
+    "min_child_samples": 2,
+    "min_child_weight": 0.001,
+    "min_split_gain": 0.0,
+    "n_estimators": 160,
+    "n_jobs": 1,
+    "num_leaves": 7,
+    "objective": "regression",
+    "random_state": 42,
+    "reg_alpha": 0.1,
+    "reg_lambda": 1.0,
+    "subsample": 0.9,
+    "subsample_for_bin": 200000,
+    "subsample_freq": 0,
+    "deterministic": true,
+    "force_col_wise": true,
+    "verbosity": -1
+  },
+  "decision_shadow": {
+    "formula": "0.45 Binding + 0.25 ATP target + 0.15 Antibacterial + 0.15 Drug-likeness",
+    "phase5_output_overwritten": false,
+    "component_update": {
+      "binding": "Model v3 percentile replaced by Model v4-alpha percentile; docking/static MMGBSA subweights preserved",
+      "ATP_target": "30% direct similarity + 70% equal-weight Task B stratum percentile ensemble",
+      "antibacterial": "Task A predicted A. baumannii MIC percentile",
+      "druglikeness": "preserved Phase 5 component"
+    },
+    "rank_spearman_vs_phase5": 0.7720588235294118,
+    "rank_kendall_vs_phase5": 0.6029411764705882,
+    "top3_overlap": 2,
+    "top5_overlap": 4,
+    "top_compound_v4_alpha": "ATP-SMI-C93E6EC67CDB",
+    "top_alias_v4_alpha": "Hit2",
+    "top_score_v4_alpha": 78.82899305555556,
+    "interpretation": "ranking comparison only; no experimental accuracy claim"
+  },
+  "dataset_audit": {
+    "dataset_version": "ATP-Navigator_Dataset_v2.0",
+    "source_file": "data/dataset_v2.0/ATP_Navigator_external_dataset_v1.csv",
+    "source_sha256": "1c8ca1b93518f1919067952f28423cda1ed5578f47b36a3d647fa65b3ad3d40b",
+    "rows": 8820,
+    "unique_compound_ids": 4341,
+    "unique_canonical_smiles": 4338,
+    "invalid_smiles": 0,
+    "task_counts": {
+      "Antibacterial": 6663,
+      "Benchmark": 2080,
+      "ATP_target": 77
+    },
+    "source_levels": {
+      "B": 8494,
+      "A": 323,
+      "C": 3
+    },
+    "confidence_levels": {
+      "high": 8817,
+      "medium": 3
+    },
+    "value_classes": {
+      "exact_numeric": 8573,
+      "censored": 239,
+      "range": 8
+    },
+    "unit_counts": {
+      "μg/mL": 6703,
+      "nM": 2097,
+      "ng/mL": 10,
+      "%": 10
+    },
+    "activity_type_counts": {
+      "MIC": 6648,
+      "IC50": 1433,
+      "Ki": 521,
+      "EC50": 97,
+      "Kd": 46,
+      "IC50 (ATP synthesis inhibition)": 41,
+      "IC50 (ETC inhibition)": 9,
+      "IC50 (ATP synthesis, inverted membrane vesicles)": 9,
+      "Activity": 7,
+      "IC50 (ETC, ACMA fluorescence)": 6,
+      "Inhibition": 3
+    },
+    "missing_or_unknown_required": {
+      "compound_id": 0,
+      "canonical_smiles": 0,
+      "target": 0,
+      "organism": 0,
+      "activity_type": 0,
+      "activity_value": 0,
+      "unit": 0,
+      "reference": 0,
+      "source_level": 0,
+      "confidence": 0,
+      "task_type": 0
+    },
+    "canonical_present_in_multiple_tasks": 43,
+    "qc_warning": "The supplied Dataset_QC_Report.md describes the earlier 6,777-row public master; this pipeline independently audits the 8,820-row standard Dataset v2.0 input.",
+    "provenance_boundary": "source_level/reference annotations are user-supplied; Phase 7 checks structure and schema consistency but does not independently re-open every paper/database record",
+    "internal_exact_structure_overlap": 0,
+    "benchmark_training_policy": "2,080 Benchmark rows excluded from Task A/B/C training"
+  },
+  "input_hashes": {
+    "dataset_v2": "1c8ca1b93518f1919067952f28423cda1ed5578f47b36a3d647fa65b3ad3d40b",
+    "model_input_spec": "6b90459a6bd35d5aeeccd5093ed78785bc1b8af847095119f4ed83b3de92ebe0",
+    "data_dictionary": "32637af1d7504bbdf69f9b7dacfefded9ebd131456f4e7f782e529f786774e4d",
+    "source_quality": "fff71140f5e3092b41951dac621726f5d36fe773ebae9a32b8e12d55d21c8316",
+    "model_v3_training_table": "fa6d57753ba4b72f33ac21ef68eeba932c6c891bc7949bd5af30ac3dc3cd0a1b",
+    "phase5_ranking": "8e9fdff47d305d12bf2a96ce6baa5c786b1a5a63a8efebdcb03e03e963ae29dc"
+  },
+  "environment": {
+    "python": "3.12.13",
+    "pandas": "2.3.3",
+    "numpy": "2.5.2",
+    "rdkit": "2026.03.5",
+    "lightgbm": "4.7.0"
+  }
+}

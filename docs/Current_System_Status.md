@@ -1,8 +1,8 @@
 # ATP-Navigator Current System Status
 
-更新时间：2026-08-23
+更新时间：2026-08-24
 
-当前阶段：Phase 6B — External Benchmark Pipeline
+当前阶段：Phase 7 — External Knowledge Enhanced Training Experiment（Model v4-alpha）
 
 当前系统定位：基于鲍曼不动杆菌 F1F0-ATP synthase 真实虚拟筛选案例的 AI 增强型候选优先级排序与多目标决策系统。系统优化已有计算候选排序，不替代 Schrödinger、MD/MMGBSA 或实验验证。
 
@@ -23,6 +23,8 @@
 | Robustness validation | Phase 6A v1.0 已运行 | 5套权重方案、排名稳定性、Top-k一致性、决策消融 |
 | External benchmark framework | 接口已建立；当前不可评价 | Dataset v1.0外部层重叠检查、独立验证文件规范、无虚构指标 |
 | External benchmark import pipeline | Phase 6B v1.0 已运行；当前empty | 标准化、canonical结构去重、Morgan2048、Decision Engine严格评分门控、端点分层metric接口 |
+| Dataset v2.0 task router | Phase 7 已运行 | 8,820行按Task A MIC、Task B ATP target、Benchmark严格隔离；Benchmark不训练 |
+| External knowledge training experiment | Model v4-alpha 已运行；未替代v3 | Task A MIC模型、4个Task B分层模型、Task C增强排序和Decision Engine shadow ranking |
 | 团队数据接入 | 目录和登记表已建立 | `data/external/incoming/`、`data/external/curated/` |
 | 文献追溯 | 框架已建立 | `data/literature/references.csv` |
 | 网页/前端 | 未开发 | 当前不在本阶段范围 |
@@ -35,12 +37,15 @@
 | Model v1 | Legacy P1 LightGBM baseline；Morgan1024 + RDKit10 + ADMET_SUM | 保留、可复现 |
 | Model v2 | External knowledge enhanced v2-B；Model 2特征 + 4个外部 prior | 保留、可复现 |
 | Model v3 | Structure + similarity + Docking/QuickProp + ADMET + external priors | 当前最新监督排序模型；保留、可复现 |
+| Model v4-alpha | Model v3 + Dataset v2.0 Task A/B预测先验 | Phase 7实验版本；真实评估未优于v3，不作为当前正式替代模型 |
 
 Phase 5 Decision Engine 不是新的监督模型，不登记为 Model v4。它读取 Model v3 和已有计算/外部先验，根据 `scoring_config.json` 的人工透明权重形成决策排序。
 
 Phase 6A同样不是Model v4。它不训练模型，只对Phase 5既有四分量执行预设权重扰动、排名相关性、Top-k一致性和消融验证。
 
 Phase 6B不是新模型，也不改变Decision Engine。它导入公开ATP synthase inhibitor记录，完成结构处理后，仅允许已有完整Phase 5计算证据的分子取得原始Decision Engine分数。
+
+Phase 7新增Model v4-alpha实验版本，但正式基线仍保留Model v3。v4-alpha严格分离MIC、ATP target assay和内部静态MM/GBSA标签；其Decision Engine输出仅为shadow ranking，不覆盖Phase 5正式结果。
 
 ## 3. 当前数据集
 
@@ -55,6 +60,10 @@ Phase 6B不是新模型，也不改变Decision Engine。它导入公开ATP synth
 | Phase 6A robustness outputs | 17 candidates；5套权重；3套消融 | 验证决策规则对权重和分量选择的敏感性；禁止作为训练标签 |
 | Phase 6B standardized external benchmark | 363 input records；109 unique valid structures；Morgan2048 | 外部验证数据准备；109个结构均与Model v2外部知识训练集重叠，不能作为独立训练外验证 |
 | Phase 6B ranking/metrics | 0 scored structures；0 ranking rows；0 evaluated strata | 当前明确为empty；不产生虚假分数或验证指标 |
+| Dataset v2.0 | 8,820 rows；4,338 canonical structures；Task A 6,663、Task B 77、Benchmark 2,080 | Phase 7分任务外部知识建模；Benchmark完全排除训练 |
+| Model v4-alpha Task A | 3,396 structure-species samples；2,263 structures；832 scaffolds | log10 MIC回归；正式A/B high切片Spearman 0.7464、RMSE 0.8015 |
+| Model v4-alpha Task B | 76 aggregated samples；7 strata；4 trained strata | 按endpoint、organism、unit独立ATP target ranking；不合并单位 |
+| Model v4-alpha Task C | 17 candidates；11 scaffolds；1,134 features | 与Model v3相同scaffold OOF协议比较；未观察到性能提升 |
 
 ## 4. 当前代码结构
 
@@ -81,6 +90,7 @@ ATP-Navigator/
 - `src/decision_engine.py`
 - `src/phase6a_robustness.py`
 - `src/external_benchmark.py`
+- `src/model_v4_alpha_pipeline.py`
 - `src/data_import_pipeline.py`
 
 ## 5. 已完成任务
@@ -96,6 +106,9 @@ ATP-Navigator/
 - 建立只验证不训练的external benchmark接口；确认Dataset v1.0外部Layer 1/2与17候选精确canonical SMILES重叠为0，当前不计算虚假外部指标；
 - 完成Phase 6B公开ATP数据标准化、RDKit结构核验、canonical SMILES去重和Morgan2048计算；
 - 建立Decision Engine评分门控和独立验证泄漏保护；现有363条Layer 2记录形成109个唯一结构，但可评分结构、ranking和可评价metric均为0，明确记录为empty；
+- 完成Dataset v2.0的8,820行独立审计和三任务严格路由，截尾/范围值不静默转数值，2,080条Benchmark记录不用于训练；
+- 完成Model v4-alpha：Task A MIC baseline、4个Task B同质分层baseline、Task C外部prior增强排序和不覆盖Phase 5的shadow Decision Engine接入；
+- 完成Model v3与v4-alpha同协议比较；v4-alpha未改善内部17候选指标，已作为负结果如实登记；
 - 建立 Development History、Model Registry 和 Data Registry；
 - 项目已连接 GitHub，并建立团队新增数据与文献登记入口。
 
@@ -119,6 +132,9 @@ ATP-Navigator/
 - Model v3 OOF Spearman 0.7696、RMSE 4.8877、NDCG@5 0.7782、Top-5 enrichment 1.36；只有17个样本，不能视为稳定泛化性能。
 - Phase 5 不训练模型，也没有新性能指标。Final Score 是相对当前17候选的决策规则输出，不是活性或成功概率。
 - 当前Top候选为 `ATP-SMI-C93E6EC67CDB (Hit2)`，依据是多目标计算证据；MIC、ATP enzyme和实验毒性仍为unknown。
+- Model v4-alpha在内部17候选上的Spearman 0.7549、RMSE 4.9268、NDCG@5 0.7774、Top-5 enrichment 1.36、Hit recovery 0.40；对应Model v3为0.7696、4.8877、0.7782、1.36、0.40，因此本轮不能宣称性能提升。
+- Task A正式切片Spearman 0.7464、RMSE 0.8015 log10 μg/mL；Task B四个stratum的表现差异大且样本仅8–25个，只能作为small-data baseline。
+- Phase 7 shadow Decision Engine Top 1仍为Hit2，但该排序不替代Phase 5，所有内部候选的MIC、ATP enzyme和实验毒性状态仍为unknown。
 - Phase 6A在default、A、C、D场景中Top 1均为Hit2；ATP权重50%的B场景Top 1变为`ATP-SMI-5B36D3E11A3B (Hit13)`。A-D场景最低两两Spearman为0.4583、最低Kendall tau为0.3235，说明存在明显权重敏感性。
 - A-D中只有1个候选始终进入Top 3，也只有1个候选始终进入Top 5；不能宣称Top候选整体高度稳定。
 - 当前external benchmark可评价数量为0；该状态是数据可用性审计，不是外部验证通过。

@@ -1,6 +1,6 @@
 # ATP-Navigator Model Registry
 
-更新时间：2026-08-23
+更新时间：2026-08-24
 
 登记原则：每个监督模型版本必须保留目的、特征、标签、训练数据、算法、评价协议、指标、文件和限制。Future model在实际训练并验证前不得预登记为“已完成”。
 
@@ -95,6 +95,30 @@ Decision Engine 不登记为Model v4。它没有训练标签、模型拟合或�
 | 限制 | 仅17个已筛选候选；场景相关性不是实验准确率；分量存在计算证据相关性；无独立实验验证 |
 
 Phase 6A的场景分数、稳定性和消融结果不得作为未来监督标签，也不得登记为模型性能提升。
+
+## Model v4-alpha — External Knowledge Enhanced Training Experiment
+
+Model v4-alpha 是 Phase 7 的首轮外部知识增强实验，不登记为最终 Model v4，也不替代 Model v3。
+
+| 项目 | 登记内容 |
+|---|---|
+| 目的 | 验证 Dataset v2.0 的外部抗菌与 ATP synthase 实验知识能否通过独立子任务预测先验，增强内部候选静态 MM/GBSA 排序 |
+| Task A | Antibacterial MIC regression；仅精确正值 MIC、统一为 μg/mL，目标为 log10(MIC)，不同物种作为显式条件特征；3,396 个结构-物种样本、2,263 个结构、832 个 scaffold |
+| Task B | ATP synthase target regression/ranking；按 activity type、organism species、unit 分为 7 个独立 stratum，4 个达到至少 8 个结构和 3 个 scaffold 的训练门槛；不同端点和单位不合并 |
+| Task C | 内部 17 候选排序；保留 Model v3 的 1,128 个特征，新增 1 个 Task A 与 4 个 Task B预测及其等权 rank-percentile ensemble，共 1,134 个特征 |
+| 标签定义 | Task A 为实验 MIC；Task B 为各同质 stratum 内实验 activity；Task C 仍为内部静态 MM/GBSA。MIC、IC50、百分比和 MM/GBSA 从未合并为同一 label |
+| 数据 | `data/dataset_v2.0/ATP_Navigator_external_dataset_v1.csv`，8,820 行、4,338 个 canonical structures；其中 Task A 6,663、Task B 77、Benchmark 2,080。Benchmark 全部排除训练 |
+| 特征与权重 | Morgan1024 + RDKit descriptors；Task A 加 organism one-hot。source level 与 confidence 仅作 sample weight，不作为结构特征；Task A A/B/C=1.0/1.0/0.5，Task B A/B/C=1.0/0.8/0.5 |
+| 算法 | 固定参数 LightGBM regression；外部子模型与内部 ranker 分别保存，不进行小样本超参数搜索 |
+| 评价协议 | Task A 5-fold scaffold GroupKFold；Task B 每个 stratum 3–5 fold scaffold GroupKFold；Task C 11-fold Leave-One-Scaffold-Group-Out |
+| Task A 指标 | 正式 A/B high-confidence 切片：n=3,395，RMSE 0.8015 log10 μg/mL，Spearman 0.7464；没有预注册活性阈值，classification accuracy 标记 not applicable |
+| Task B 指标 | 4 个 stratum 的 Spearman 分别为 0.6170、-0.3283、0.7037、0.0838；各指标只在本 stratum 内解释，禁止跨单位汇总为统一 IC50 性能 |
+| Task C 指标 | Spearman 0.7549；RMSE 4.9268；NDCG@5 0.7774；Top-5 enrichment 1.36；Hit recovery 0.40 |
+| 与 Model v3 比较 | Model v3 为 0.7696 / 4.8877 / 0.7782 / 1.36 / 0.40；v4-alpha 没有提高 Spearman、RMSE、NDCG 或 Top-k，因此不能宣称外部知识已带来性能提升 |
+| 模型文件 | `models/model_v4_alpha/`；含 Task A、4 个 Task B 子模型、Task C ranker、`training_config.json`和`feature_list.json` |
+| 主要结果 | `results/model_v4_alpha/`、`docs/Model_v4_alpha_Report.md` |
+| Decision Engine 接入 | 仅生成 shadow ranking，不覆盖 Phase 5；实验 MIC、ATP enzyme 与毒性仍为 unknown |
+| 限制 | Task C 只有 17 个候选；Task B stratum 仅 8–25 个样本；没有独立前瞻测试；source level 为提供文件标注、未逐条回源；预测先验不是内部实验结果 |
 
 ## 新模型登记规则
 
