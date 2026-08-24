@@ -2,7 +2,7 @@
 
 更新时间：2026-08-24
 
-当前阶段：Phase 7 — External Knowledge Enhanced Training Experiment（Model v4-alpha）
+当前阶段：Phase 8 — Data Acquisition Intelligence（不训练模型）
 
 当前系统定位：基于鲍曼不动杆菌 F1F0-ATP synthase 真实虚拟筛选案例的 AI 增强型候选优先级排序与多目标决策系统。系统优化已有计算候选排序，不替代 Schrödinger、MD/MMGBSA 或实验验证。
 
@@ -25,6 +25,7 @@
 | External benchmark import pipeline | Phase 6B v1.0 已运行；当前empty | 标准化、canonical结构去重、Morgan2048、Decision Engine严格评分门控、端点分层metric接口 |
 | Dataset v2.0 task router | Phase 7 已运行 | 8,820行按Task A MIC、Task B ATP target、Benchmark严格隔离；Benchmark不训练 |
 | External knowledge training experiment | Model v4-alpha 已运行；未替代v3 | Task A MIC模型、4个Task B分层模型、Task C增强排序和Decision Engine shadow ranking |
+| Data acquisition intelligence | Phase 8 已运行 | 1,633个HTVS候选审计、60个MM/GBSA获取队列、P0/P1批次和实验回填模板 |
 | 团队数据接入 | 目录和登记表已建立 | `data/external/incoming/`、`data/external/curated/` |
 | 文献追溯 | 框架已建立 | `data/literature/references.csv` |
 | 网页/前端 | 未开发 | 当前不在本阶段范围 |
@@ -47,6 +48,8 @@ Phase 6B不是新模型，也不改变Decision Engine。它导入公开ATP synth
 
 Phase 7新增Model v4-alpha实验版本，但正式基线仍保留Model v3。v4-alpha严格分离MIC、ATP target assay和内部静态MM/GBSA标签；其Decision Engine输出仅为shadow ranking，不覆盖Phase 5正式结果。
 
+Phase 8不新增Model v5，也不重新训练任何历史模型。它把现有HTVS候选转化为结构导出与同协议MM/GBSA的数据生产队列，为下一轮扩大内部Task C标签做准备。
+
 ## 3. 当前数据集
 
 | 数据版本/资产 | 规模 | 当前用途 |
@@ -64,6 +67,9 @@ Phase 7新增Model v4-alpha实验版本，但正式基线仍保留Model v3。v4-
 | Model v4-alpha Task A | 3,396 structure-species samples；2,263 structures；832 scaffolds | log10 MIC回归；正式A/B high切片Spearman 0.7464、RMSE 0.8015 |
 | Model v4-alpha Task B | 76 aggregated samples；7 strata；4 trained strata | 按endpoint、organism、unit独立ATP target ranking；不合并单位 |
 | Model v4-alpha Task C | 17 candidates；11 scaffolds；1,134 features | 与Model v3相同scaffold OOF协议比较；未观察到性能提升 |
+| Phase 8 HTVS pool | 4,373 poses；1,633 compounds；1,632 eligible | 可追溯source pose的数据获取池；当前0个HTVS ID可直接连接SMILES |
+| Phase 8 acquisition queue | 60 candidates；P0 24、P1 36；三选择臂各20 | 待导出结构并补算同协议MM/GBSA；当前标签全部pending |
+| Phase 8 return templates | 60个MM/GBSA行；17个内部实验行 | 空白回填接口；禁止用预测填充真实结果 |
 
 ## 4. 当前代码结构
 
@@ -91,6 +97,7 @@ ATP-Navigator/
 - `src/phase6a_robustness.py`
 - `src/external_benchmark.py`
 - `src/model_v4_alpha_pipeline.py`
+- `src/data_acquisition_planner.py`
 - `src/data_import_pipeline.py`
 
 ## 5. 已完成任务
@@ -109,6 +116,9 @@ ATP-Navigator/
 - 完成Dataset v2.0的8,820行独立审计和三任务严格路由，截尾/范围值不静默转数值，2,080条Benchmark记录不用于训练；
 - 完成Model v4-alpha：Task A MIC baseline、4个Task B同质分层baseline、Task C外部prior增强排序和不覆盖Phase 5的shadow Decision Engine接入；
 - 完成Model v3与v4-alpha同协议比较；v4-alpha未改善内部17候选指标，已作为负结果如实登记；
+- 完成Phase 8 HTVS候选池审计：4,373个pose聚合为1,633个compound ID，排除1个已知内部映射，1,632个达到数据获取选择门槛；
+- 建立60个候选的MM/GBSA acquisition queue：P0首批24、P1扩展36，exploitation、descriptor diversity、score calibration各20；
+- 建立60行MM/GBSA和17行内部生物活性空白回填模板，所有未知结果保持空白；
 - 建立 Development History、Model Registry 和 Data Registry；
 - 项目已连接 GitHub，并建立团队新增数据与文献登记入口。
 
@@ -123,6 +133,8 @@ ATP-Navigator/
 - 独立前瞻性测试集和实验闭环；
 - 可与17个内部候选精确对应、且endpoint/unit/assay一致的独立外部benchmark；
 - 为独立外部候选补齐按冻结协议生成的Docking、静态MM/GBSA、Model v3输入和预测ADMET等Decision Engine必需证据；
+- 从三个Schrödinger HTVS源文件导出Phase 8队列的精确SDF/SMILES并完成结构QC；
+- 先完成P0 24个、再完成P1 36个同协议静态MM/GBSA计算；
 - 对公开 Dataset v1.0 逐条回源复核；
 - 跨批次可校准的绝对决策分数；
 - 网页端、正式服务API和软著交付包。
@@ -135,6 +147,7 @@ ATP-Navigator/
 - Model v4-alpha在内部17候选上的Spearman 0.7549、RMSE 4.9268、NDCG@5 0.7774、Top-5 enrichment 1.36、Hit recovery 0.40；对应Model v3为0.7696、4.8877、0.7782、1.36、0.40，因此本轮不能宣称性能提升。
 - Task A正式切片Spearman 0.7464、RMSE 0.8015 log10 μg/mL；Task B四个stratum的表现差异大且样本仅8–25个，只能作为small-data baseline。
 - Phase 7 shadow Decision Engine Top 1仍为Hit2，但该排序不替代Phase 5，所有内部候选的MIC、ATP enzyme和实验毒性状态仍为unknown。
+- Phase 8没有新增性能指标；60个候选只是数据获取队列。HTVS大库当前缺少SMILES，因此多样性选择仅基于Docking/QuickProp连续特征，待结构导出后必须重新做Morgan/scaffold审计。
 - Phase 6A在default、A、C、D场景中Top 1均为Hit2；ATP权重50%的B场景Top 1变为`ATP-SMI-5B36D3E11A3B (Hit13)`。A-D场景最低两两Spearman为0.4583、最低Kendall tau为0.3235，说明存在明显权重敏感性。
 - A-D中只有1个候选始终进入Top 3，也只有1个候选始终进入Top 5；不能宣称Top候选整体高度稳定。
 - 当前external benchmark可评价数量为0；该状态是数据可用性审计，不是外部验证通过。

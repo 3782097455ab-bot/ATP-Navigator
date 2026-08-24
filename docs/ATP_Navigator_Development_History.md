@@ -593,6 +593,63 @@ Phase 6B — 公开ATP synthase inhibitor外部数据导入与严格验证准备
 - Dataset v2.0与既有外部知识来源可能有内容重叠，不能作为独立外部验证；
 - 当前最缺A. baumannii同一ATP synthase亚型、同一assay和同一unit的高质量实验数据，以及内部17候选真实MIC/ATP enzyme/毒性数据。
 
+# Phase 8 — Data Acquisition Intelligence
+
+日期：2026-08-24
+
+## 目标
+
+在Model v4-alpha未超过Model v3后，不继续增加模型复杂度，而是从现有HTVS资产中建立下一批可执行的结构导出、同协议MM/GBSA和实验数据回填任务，直接扩大内部Task C标签并降低Top-hit选择偏差。
+
+## 新增文件
+
+- `src/data_acquisition_planner.py`
+- `results/phase8_data_acquisition/htvs_pool_audit.csv`
+- `results/phase8_data_acquisition/mmgbsa_acquisition_queue.csv`
+- `results/phase8_data_acquisition/data_requirements_priority.csv`
+- `results/phase8_data_acquisition/acquisition_summary.json`
+- `data/templates/phase8_mmgbsa_return_template.csv`
+- `data/templates/phase8_experimental_activity_template.csv`
+- `docs/Phase8_Data_Strengthening_Plan.md`
+
+## 修改文件
+
+- `docs/Current_System_Status.md`
+- `docs/Data_Registry.md`
+- `docs/ATP_Navigator_Development_History.md`：追加本条已完成记录。
+
+## 使用数据
+
+- `data/docking_features_v0_2.csv`：4,373个HTVS pose、1,633个canonical HTVS ID、3个Schrödinger源文件；
+- `data/compound_mapping_v1.csv`与内部17候选：用于排除1个已知映射重叠；
+- `data/molecules.csv`：核验HTVS ID的SMILES覆盖，当前为0/1,633；
+- Model v3 training table和Phase 5 ranking：只用于生成17候选实验空白模板，没有训练或重新评分。
+
+## 实现功能
+
+- 按compound ID选择可追溯最佳pose，保留source file、title、variant、pose index及pose/variant计数；
+- 对Docking、E-model、ligand efficiency和QuickProp完整性进行质量门控，得到1,632个eligible候选；
+- 建立三个互补数据获取臂：20个exploitation、20个descriptor-space diversity、20个score calibration；
+- 建立P0首批24个和P1扩展36个队列；
+- 主动纳入中等和较弱Docking校准分子，避免继续只给Top hits补标签；
+- 建立空白MM/GBSA与实验activity回填模板，字段包括结构、协议、单位、上下界、重复和QC；
+- 质量检查确认60个队列ID唯一、源文件存在、已知内部映射未混入、所有MM/GBSA和实验值保持空白。
+
+## 模型变化
+
+无。没有新增Model v5，没有修改或重新训练Model v0-v4-alpha，没有改变Decision Engine。
+
+## 性能变化
+
+无。本阶段没有产生新的模型性能指标。60个候选是数据获取优先级，不是活性预测、候选成功概率或验证结果。
+
+## 当前限制
+
+- 1,633个HTVS ID当前均无法从`molecules.csv`直接连接SMILES；
+- descriptor diversity不是结构/scaffold diversity，必须在源pose导出SDF/SMILES后重新审计；
+- MM/GBSA仍是计算标签，不能替代MIC、ATP enzyme或毒性实验；
+- 下一轮训练必须等待P0结构QC与同协议MM/GBSA回填通过，pending/failed任务不得当作数值标签。
+
 # Git 历史审计
 
 | Commit | 时间 | 可确认变化 |
