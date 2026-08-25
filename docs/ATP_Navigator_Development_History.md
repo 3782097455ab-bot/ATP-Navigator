@@ -650,6 +650,78 @@ Phase 6B — 公开ATP synthase inhibitor外部数据导入与严格验证准备
 - MM/GBSA仍是计算标签，不能替代MIC、ATP enzyme或毒性实验；
 - 下一轮训练必须等待P0结构QC与同协议MM/GBSA回填通过，pending/failed任务不得当作数值标签。
 
+# Phase 8.1–8.2 — Maestro Structure Recovery and Structure-aware Acquisition
+
+日期：2026-08-25
+
+## 目标
+
+核验用户已提供的Schrödinger原始文件能否直接恢复HTVS结构；在不修改原文件、不训练模型和不生成标签的前提下，建立可追溯结构资产，并用真实Morgan fingerprint与scaffold信息增量升级Phase 8数据获取队列。
+
+## 新增文件
+
+- `src/maestro_structure_extractor.py`
+- `src/structure_aware_acquisition.py`
+- `data/htvs_structures_v0_1.csv`
+- `data/htvs_best_pose_structures_v0_1.sdf`
+- `data/templates/phase8_mmgbsa_return_template_v2.csv`
+- `results/phase8_data_acquisition/maestro_source_audit.csv`
+- `results/phase8_data_acquisition/htvs_pose_structure_audit.csv`
+- `results/phase8_data_acquisition/known_structure_validation.csv`
+- `results/phase8_data_acquisition/selected_structure_manifest_v0_1.csv`
+- `results/phase8_data_acquisition/selected_structures_v0_1.sdf`
+- `results/phase8_data_acquisition/p0_structures_v0_1.sdf`
+- `results/phase8_data_acquisition/mmgbsa_acquisition_queue_v2.csv`
+- `results/phase8_data_acquisition/selected_structures_v0_2.sdf`
+- `results/phase8_data_acquisition/p0_structures_v0_2.sdf`
+- `results/phase8_data_acquisition/queue_v1_v2_comparison.csv`
+- `results/phase8_data_acquisition/structure_extraction_summary.json`
+- `results/phase8_data_acquisition/structure_aware_acquisition_summary.json`
+- `docs/Phase8_Structure_Extraction_Report.md`
+- `docs/Phase8_Structure_Aware_Acquisition_Report.md`
+
+## 修改文件
+
+- `docs/Current_System_Status.md`
+- `docs/Data_Registry.md`
+- `docs/ATP_Navigator_Development_History.md`：追加本条已完成记录。
+
+## 使用数据
+
+- 3个Schrödinger HTVS Maestro源文件：001 plain Maestro、002 gzip Maestro、003 plain Maestro；输入文件只读，保存各自SHA-256；
+- `data/docking_features_v0_2.csv`：4,373个Docking pose身份和计算属性；
+- `results/phase8_data_acquisition/htvs_pool_audit.csv`及v1队列：保留Phase 8.1基准与来源追溯；
+- `data/model_v3/training_table.csv`中的17个内部候选结构：仅用于结构相似性参照，不使用MM/GBSA标签训练。
+
+## 实现功能
+
+- 通过RDKit Maestro supplier从文件句柄/gzip流解析源文件，绕过Windows中文路径限制；
+- 匹配4,372/4,373个pose；唯一失败pose为compound 74371的一条bad stereo bond构象，已保留失败审计；
+- 为1,633/1,633个compound生成canonical isomeric SMILES、Murcko scaffold、formula、formal charge及最佳3D pose SDF，共565个scaffold；
+- 用Hit13/compound 91074验证内部—HTVS身份桥接，exact isomeric SMILES和connectivity均匹配；
+- 为v1 60个候选及P0 24个候选生成可直接交接的SDF；
+- 建立v2三个20候选选择臂：exploitation、local structure bridge、scaffold-score exploration；每臂P0 8、P1 12；
+- v2 60个候选覆盖57个scaffold，P0 24个覆盖24个scaffold；与v1重叠24个，新增36个；
+- 结构相似桥接臂对内部候选的Morgan相似度中位数为0.5702，探索臂为0.1941；
+- v2模板的MM/GBSA结果、协议、计算状态和实验字段保持空白；
+- 对结构CSV、全库/队列SDF、v2队列和模板重复运行并比较SHA-256，核心输出全部一致。
+
+## 模型变化
+
+无。没有训练、修改或覆盖Model v0-v4-alpha，也没有改变Decision Engine权重或评分逻辑。
+
+## 性能变化
+
+无模型性能变化。本阶段提升的是结构覆盖、队列化学空间设计和计算任务可执行性，不得表述为模型精度提升。
+
+## 当前限制
+
+- 新的MM/GBSA值尚未计算，v2队列不是新监督数据；
+- 1个pose的Maestro立体键标记无法由当前RDKit解析，但不影响该compound的最佳有效pose和compound级覆盖；
+- Morgan相似性反映二维结构邻近，不等于ATP synthase抑制活性；
+- 下一步应先按冻结协议完成P0 24个同协议静态MM/GBSA并回填QC，再决定是否扩展P1；
+- MIC、ATP enzyme inhibition、毒性、选择性等真实实验数据仍未产生，不能从已有文件中推导或替代。
+
 # Git 历史审计
 
 | Commit | 时间 | 可确认变化 |

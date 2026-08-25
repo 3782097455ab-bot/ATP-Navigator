@@ -1,6 +1,6 @@
 # ATP-Navigator Data Registry
 
-更新时间：2026-08-24
+更新时间：2026-08-25
 
 登记原则：数据可用于训练不等于数据是真实活性。每个训练任务必须按来源、身份、target、organism、activity type、unit和计算/实验协议生成独立视图。
 
@@ -37,6 +37,10 @@
 | Phase 8 HTVS pool audit | `docking_features_v0_2.csv`的4,373个pose按canonical HTVS ID选择最佳pose并连接source file | 1,633 compounds；1,632 eligible；1个已知内部映射被排除 | `results/phase8_data_acquisition/htvs_pool_audit.csv` | compound/pose身份、Docking、QuickProp、source trace、完整性、选择状态 | 无新增标签 | 否；仅用于数据获取规划 | 0/1,633可直接连接SMILES；结构导出前只能做descriptor-space而非Morgan/scaffold多样性 |
 | Phase 8 MM/GBSA acquisition queue | HTVS pool中按exploitation、descriptor diversity、score calibration三臂确定性选择 | 60 unique candidates；P0 24、P1 36；每臂20 | `results/phase8_data_acquisition/mmgbsa_acquisition_queue.csv` | source pose、选择臂、wave、Docking/QuickProp、下一动作、pending状态 | 当前无MM/GBSA标签 | 否；真实回填和QC后才可训练 | 是数据生产优先级，不是活性排名；必须先从Schrödinger源pose导出结构，再用冻结同协议MM/GBSA |
 | Phase 8 return templates | Phase 8候选队列与当前17内部候选的空白回填接口 | MM/GBSA 60 rows；实验activity 17 rows | `data/templates/phase8_mmgbsa_return_template.csv`、`phase8_experimental_activity_template.csv` | 结构QC、protocol、dG Bind；strain/target/assay/value/bounds/unit/replicate/QC | 全部pending/blank | 否；通过协议和QC门控后按任务接入 | 没有填充预测或假实验值；MM/GBSA、MIC、ATP enzyme和毒性仍须分离 |
+| HTVS Maestro structures v0.1 | 3个Schrödinger HTVS Maestro源文件只读解析，并与Docking pose身份严格匹配 | 4,373 docking rows；4,372 parsed poses；1 failed pose；1,633 compound best poses；565 scaffolds | `data/htvs_structures_v0_1.csv`、`data/htvs_best_pose_structures_v0_1.sdf` | canonical SMILES、scaffold、formula、charge、pose identity、source、SHA-256、3D coordinates | 结构与计算输入，不是标签 | 可用于结构特征、相似性、scaffold拆分和后续计算输入 | 1个pose因bad stereo bond无法解析但该compound有其他有效pose；Maestro来源哈希和失败记录已保存；不能据此生成活性标签 |
+| Phase 8.1 structure extraction audit | Maestro解析、Docking匹配、已知内部结构桥接和所选结构清单 | 3 source files；4,373 pose audit rows；1 known bridge；60 v1 selected structures | `results/phase8_data_acquisition/maestro_source_audit.csv`、`htvs_pose_structure_audit.csv`、`known_structure_validation.csv`、`selected_structure_manifest_v0_1.csv` | source hash、parse/match status、identity、exact/connectivity validation | QC与追溯，无标签 | 否；用于审计 | Hit13/91074为唯一已知桥接且exact/connectivity均匹配；原始文件未修改 |
+| Phase 8.2 structure-aware MM/GBSA queue | HTVS结构表、Morgan2048、Murcko scaffold、Docking/QuickProp与内部17候选结构 | 60 unique candidates；57 scaffolds；P0 24/P1 36；与v1重叠24、新增36 | `results/phase8_data_acquisition/mmgbsa_acquisition_queue_v2.csv`、`selected_structures_v0_2.sdf`、`p0_structures_v0_2.sdf` | exploitation、local structure bridge、scaffold-score exploration、similarity、source pose、wave、priority | 当前无MM/GBSA或实验标签 | 否；真实同协议结果QC后方可进入Task C | 排除唯一内部重叠91074；三个选择臂各20，P0各8；是数据生产计划，不是活性排名 |
+| Phase 8.2 MM/GBSA return template | v2结构队列的空白计算回填接口 | 60 rows | `data/templates/phase8_mmgbsa_return_template_v2.csv` | structure file/record、protocol、protein、software、dG Bind、status、date、operator、notes | 全部结果字段blank | 否；QC通过后按冻结协议接入 | 不含预测填充值；必须保存协议、结构和计算状态；pending/failed不得转为数值标签 |
 | External incoming | 团队未来上传 | 当前0条提交记录 | `data/external/incoming/` | manifest约定来源、引用、许可、状态等 | unknown直到审计 | 否，审计前禁止训练 | 需要来源、许可、结构、单位、重复项和标签语义检查 |
 | Literature registry | 团队论文和数据库来源记录 | 当前仅表头 | `data/literature/references.csv` | title、authors、DOI、URL、target、organism、linked dataset、status | 文献元数据 | 不直接训练 | 不保存未授权全文；需人工筛选和复核 |
 

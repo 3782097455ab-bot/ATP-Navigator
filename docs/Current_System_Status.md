@@ -1,6 +1,6 @@
 # ATP-Navigator Current System Status
 
-更新时间：2026-08-24
+更新时间：2026-08-25
 
 当前阶段：Phase 8 — Data Acquisition Intelligence（不训练模型）
 
@@ -25,7 +25,7 @@
 | External benchmark import pipeline | Phase 6B v1.0 已运行；当前empty | 标准化、canonical结构去重、Morgan2048、Decision Engine严格评分门控、端点分层metric接口 |
 | Dataset v2.0 task router | Phase 7 已运行 | 8,820行按Task A MIC、Task B ATP target、Benchmark严格隔离；Benchmark不训练 |
 | External knowledge training experiment | Model v4-alpha 已运行；未替代v3 | Task A MIC模型、4个Task B分层模型、Task C增强排序和Decision Engine shadow ranking |
-| Data acquisition intelligence | Phase 8 已运行 | 1,633个HTVS候选审计、60个MM/GBSA获取队列、P0/P1批次和实验回填模板 |
+| Data acquisition intelligence | Phase 8.2 已运行 | 3个Maestro源文件恢复1,633个HTVS结构；Morgan/scaffold重选60个MM/GBSA候选；P0/P1结构包与空白回填模板 |
 | 团队数据接入 | 目录和登记表已建立 | `data/external/incoming/`、`data/external/curated/` |
 | 文献追溯 | 框架已建立 | `data/literature/references.csv` |
 | 网页/前端 | 未开发 | 当前不在本阶段范围 |
@@ -98,6 +98,8 @@ ATP-Navigator/
 - `src/external_benchmark.py`
 - `src/model_v4_alpha_pipeline.py`
 - `src/data_acquisition_planner.py`
+- `src/maestro_structure_extractor.py`
+- `src/structure_aware_acquisition.py`
 - `src/data_import_pipeline.py`
 
 ## 5. 已完成任务
@@ -119,6 +121,11 @@ ATP-Navigator/
 - 完成Phase 8 HTVS候选池审计：4,373个pose聚合为1,633个compound ID，排除1个已知内部映射，1,632个达到数据获取选择门槛；
 - 建立60个候选的MM/GBSA acquisition queue：P0首批24、P1扩展36，exploitation、descriptor diversity、score calibration各20；
 - 建立60行MM/GBSA和17行内部生物活性空白回填模板，所有未知结果保持空白；
+- 从3个Schrödinger Maestro源文件只读提取4,372/4,373个pose；唯一失败pose已单独审计，其compound仍有有效pose；
+- 为全部1,633个HTVS compound建立canonical SMILES、Murcko scaffold与最佳三维pose SDF，共565个唯一scaffold；
+- 用Morgan2048和scaffold重建Phase 8.2队列：60个候选覆盖57个scaffold，P0 24个覆盖24个scaffold；与v1重叠24个、新增36个；
+- 输出60个v2候选和24个P0的可读SDF，Hit13/91074已知映射的结构与内部结构exact isomeric SMILES及connectivity均匹配；
+- 对核心结构表、SDF、v2队列与回填模板完成重复运行hash核验，结果可复现；
 - 建立 Development History、Model Registry 和 Data Registry；
 - 项目已连接 GitHub，并建立团队新增数据与文献登记入口。
 
@@ -133,7 +140,6 @@ ATP-Navigator/
 - 独立前瞻性测试集和实验闭环；
 - 可与17个内部候选精确对应、且endpoint/unit/assay一致的独立外部benchmark；
 - 为独立外部候选补齐按冻结协议生成的Docking、静态MM/GBSA、Model v3输入和预测ADMET等Decision Engine必需证据；
-- 从三个Schrödinger HTVS源文件导出Phase 8队列的精确SDF/SMILES并完成结构QC；
 - 先完成P0 24个、再完成P1 36个同协议静态MM/GBSA计算；
 - 对公开 Dataset v1.0 逐条回源复核；
 - 跨批次可校准的绝对决策分数；
@@ -147,7 +153,8 @@ ATP-Navigator/
 - Model v4-alpha在内部17候选上的Spearman 0.7549、RMSE 4.9268、NDCG@5 0.7774、Top-5 enrichment 1.36、Hit recovery 0.40；对应Model v3为0.7696、4.8877、0.7782、1.36、0.40，因此本轮不能宣称性能提升。
 - Task A正式切片Spearman 0.7464、RMSE 0.8015 log10 μg/mL；Task B四个stratum的表现差异大且样本仅8–25个，只能作为small-data baseline。
 - Phase 7 shadow Decision Engine Top 1仍为Hit2，但该排序不替代Phase 5，所有内部候选的MIC、ATP enzyme和实验毒性状态仍为unknown。
-- Phase 8没有新增性能指标；60个候选只是数据获取队列。HTVS大库当前缺少SMILES，因此多样性选择仅基于Docking/QuickProp连续特征，待结构导出后必须重新做Morgan/scaffold审计。
+- Phase 8没有新增性能指标；60个候选只是数据获取队列。Phase 8.2已恢复1,633个结构并完成Morgan/scaffold审计，但尚未产生新的MM/GBSA或实验标签。
+- Maestro解析存在1/4,373个pose的异常立体键；该异常已记录，且同一compound有其他有效pose，因此compound级结构覆盖仍为1,633/1,633。
 - Phase 6A在default、A、C、D场景中Top 1均为Hit2；ATP权重50%的B场景Top 1变为`ATP-SMI-5B36D3E11A3B (Hit13)`。A-D场景最低两两Spearman为0.4583、最低Kendall tau为0.3235，说明存在明显权重敏感性。
 - A-D中只有1个候选始终进入Top 3，也只有1个候选始终进入Top 5；不能宣称Top候选整体高度稳定。
 - 当前external benchmark可评价数量为0；该状态是数据可用性审计，不是外部验证通过。

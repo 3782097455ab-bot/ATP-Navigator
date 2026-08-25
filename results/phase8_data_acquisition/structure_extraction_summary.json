@@ -1,0 +1,24 @@
+{
+  "phase": "Phase 8.1 Maestro Structure Extraction",
+  "model_change": "none",
+  "docking_input_sha256": "39052324588b608cec5bd6d237f9061a283c9195742b37336f592635e65070d9",
+  "source_files": 3,
+  "source_hashes": {
+    "运行/运行/ATP-VSW/ATP-VSW-DOCK_HTVS_1-001_lib/ATP-VSW-DOCK_HTVS_1-001_lib": "eba4440fea41f1c8b302bf4d28de1f43a0595604e5bd1f06a11d3f6179bfe333",
+    "运行/运行/ATP-VSW/ATP-VSW-DOCK_HTVS_1-002_lib.maegz": "3c18fb720710435fe88093bde5486ebe81e1b92bc4a189b50a67efd3e198ae7a",
+    "运行/运行/ATP-VSW/ATP-VSW-DOCK_HTVS_1-003_lib/ATP-VSW-DOCK_HTVS_1-003_lib.mae": "eb2022c3832f2a0269a403a8e165e68cb5f70f2dcc51f6d1b4e446e148164f62"
+  },
+  "docking_rows": 4373,
+  "parsed_structures": 4372,
+  "failed_structures": 1,
+  "matched_docking_rows": 4372,
+  "compound_structures": 1633,
+  "valid_compound_smiles": 1633,
+  "compound_scaffolds": 565,
+  "selected_structures": 60,
+  "p0_structures": 24,
+  "known_validation_rows": 1,
+  "known_exact_matches": 1,
+  "known_connectivity_matches": 1,
+  "original_files_modified": false
+}

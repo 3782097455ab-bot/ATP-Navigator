@@ -1,0 +1,4 @@
+﻿source_file,source_size_bytes,source_sha256,expected_docking_rows,supplier_attempts,parsed_structures,failed_structures,failed_structure_indices,duplicate_identity_keys,count_match_including_failures
+运行/运行/ATP-VSW/ATP-VSW-DOCK_HTVS_1-001_lib/ATP-VSW-DOCK_HTVS_1-001_lib,15694800,eba4440fea41f1c8b302bf4d28de1f43a0595604e5bd1f06a11d3f6179bfe333,1456,1456,1456,0,,0,True
+运行/运行/ATP-VSW/ATP-VSW-DOCK_HTVS_1-002_lib.maegz,3231835,3c18fb720710435fe88093bde5486ebe81e1b92bc4a189b50a67efd3e198ae7a,1457,1457,1457,0,,0,True
+运行/运行/ATP-VSW/ATP-VSW-DOCK_HTVS_1-003_lib/ATP-VSW-DOCK_HTVS_1-003_lib.mae,15681248,eb2022c3832f2a0269a403a8e165e68cb5f70f2dcc51f6d1b4e446e148164f62,1460,1460,1459,1,1210,0,True

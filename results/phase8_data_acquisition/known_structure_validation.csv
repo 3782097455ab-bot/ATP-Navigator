@@ -1,0 +1,2 @@
+﻿internal_compound_id,canonical_id,confidence,source,known_smiles,extracted_smiles,exact_isomeric_match,connectivity_match,validation_status
+ATP-SMI-5B36D3E11A3B,ATP-HTVS-AC71774ACC4B,confirmed,运行/运行/ATP-VSW/ATP-VSW-DOCK_HTVS_1-002_lib.maegz,C[NH+](C)Cc1ccc(CNc2csc(C(=O)N[C@H](C[NH3+])c3ccccc3)c2)cc1,C[NH+](C)Cc1ccc(CNc2csc(C(=O)N[C@H](C[NH3+])c3ccccc3)c2)cc1,True,True,exact_match

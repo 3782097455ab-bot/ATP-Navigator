@@ -1,0 +1,24 @@
+{
+  "eligible_structures": 1632,
+  "internal_reference_structures": 17,
+  "queue_size": 60,
+  "queue_scaffolds": 57,
+  "p0_scaffolds": 24,
+  "scaffolds_seen_in_internal": 4,
+  "v1_v2_compound_overlap": 24,
+  "v2_new_compounds": 36,
+  "max_similarity_internal_min": 0.14942528735632185,
+  "max_similarity_internal_median": 0.2850120870265914,
+  "max_similarity_internal_max": 0.7580645161290323,
+  "bridge_similarity_median": 0.5701970443349753,
+  "exploration_similarity_median": 0.19408669159396208,
+  "phase": "Phase 8.2 Structure-aware Acquisition",
+  "model_change": "none",
+  "fingerprint": {
+    "type": "Morgan",
+    "radius": 2,
+    "bits": 2048
+  },
+  "labels_created": 0,
+  "recommended_queue": "results/phase8_data_acquisition/mmgbsa_acquisition_queue_v2.csv"
+}

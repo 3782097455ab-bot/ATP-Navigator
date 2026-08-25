@@ -1,0 +1,3 @@
+﻿queue_version,candidates,unique_scaffolds,selection_basis,recommended_status
+v1_descriptor_only,60,52,Docking/QuickProp only; no structures available at creation time,preserved_audit_baseline
+v2_structure_aware,60,57,Morgan2048 + scaffold + Docking score + internal-17 bridge,current_recommended_queue
