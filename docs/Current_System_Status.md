@@ -2,7 +2,7 @@
 
 更新时间：2026-08-26
 
-当前阶段：Phase 9 — Researcher-in-the-loop Collaborative Decision Agent（不训练模型）
+当前阶段：Phase 10 — Integrated AI-assisted Candidate Prioritization Workflow（不训练模型）
 
 当前系统定位：面向 ATP synthase 虚拟筛选后实验决策的研究者协作型 AI 候选优先级系统。系统位于 Schrödinger/MD/MMGBSA 与湿实验之间，优化候选取舍和验证资源配置，不替代任何计算或实验环节，也不是通用药物发现平台。
 
@@ -27,6 +27,7 @@
 | External knowledge training experiment | Model v4-alpha 已运行；未替代v3 | Task A MIC模型、4个Task B分层模型、Task C增强排序和Decision Engine shadow ranking |
 | Data acquisition intelligence | Phase 8.2 已运行 | 3个Maestro源文件恢复1,633个HTVS结构；Morgan/scaffold重选60个MM/GBSA候选；P0/P1结构包与空白回填模板 |
 | Collaborative Decision Agent | Phase 9 v1.0 已运行 | 研究意图profile、20,000次权重抽样、Pareto、反事实解释、模型分歧、实验信息价值和证据追踪 |
+| Integrated Decision Workflow | Phase 10 v1.0 已运行 | 标准输入、结构处理、冻结模型门控、四分量决策、研究模式、解释、跨模式稳定性和10项工作流自评 |
 | 团队数据接入 | 目录和登记表已建立 | `data/external/incoming/`、`data/external/curated/` |
 | 文献追溯 | 框架已建立 | `data/literature/references.csv` |
 | 网页/前端 | 未开发 | 当前不在本阶段范围 |
@@ -53,6 +54,8 @@ Phase 8不新增Model v5，也不重新训练任何历史模型。它把现有HT
 
 Phase 9同样不是Model v5。它将冻结的Model v3/v4-alpha输出、Phase 5四个决策分量、历史Hit3证据和实验预算组织为研究者协作型决策Agent。Agent不生成活性数值；所有ATP enzyme、MIC和实验毒性字段保持unknown。
 
+Phase 10不是Model v5，也没有重新训练任何模型。它把候选CSV、RDKit结构处理、冻结Model v3/Model v2-A降级、外部prior模型、Decision Engine、研究模式、稳健排序、解释和工作流自评串成一次运行流程。完整特征才调用Model v3；证据不足时显式降级，任一必需决策分量缺失时final score保持unknown。
+
 ## 3. 当前数据集
 
 | 数据版本/资产 | 规模 | 当前用途 |
@@ -75,6 +78,9 @@ Phase 9同样不是Model v5。它将冻结的Model v3/v4-alpha输出、Phase 5�
 | Phase 8 return templates | 60个MM/GBSA行；17个内部实验行 | 空白回填接口；禁止用预测填充真实结果 |
 | Phase 9 robust decision outputs | 17候选；4个研究意图profile；balanced每个候选20,000次权重评估 | 决策稳健性、Pareto、模型分歧与实验面板；不是训练标签或活性概率 |
 | Phase 9 frozen experiment panel | 6候选：Hit2、Hit1、Hit5、Hit13、Hit3、Hit17 | 下一轮同protocol实验建议；当前结果全部unknown |
+| Phase 10 processed candidate demo | 17个内部候选；17个Model v3完整输入 | 统一输入、结构和证据表；实验ATP/MIC/毒性全部unknown |
+| Phase 10 navigation report | 17候选；4个research profiles；68条profile-candidate比较 | 批次相对决策排序；不作为训练标签或活性概率 |
+| Phase 10 workflow validation | 10/10 integrity checks passed；确定性复跑一致 | 验证流程完整性、证据覆盖和模型hash；不评价生物命中率 |
 
 ## 4. 当前代码结构
 
@@ -84,6 +90,8 @@ ATP-Navigator/
 ├─ src/                  审计、数据构建、特征、训练、评价和Decision Engine
 ├─ models/               历史模型与版本化配置
 ├─ config/               透明Decision Agent配置
+├─ configs/              Phase 10研究profile、权重和门控配置
+├─ examples/             候选输入模板与一键比赛Demo
 ├─ tests/                Agent行为与科学边界测试
 ├─ results/              OOF指标、预测、排序和图表
 │  └─ phase6A/           权重敏感性、稳定性、消融和benchmark状态

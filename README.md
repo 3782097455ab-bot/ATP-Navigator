@@ -6,7 +6,16 @@ AI 用于学习和整合已有虚拟筛选证据，辅助候选排序；当前�
 
 系统位于传统虚拟筛选之后、合成与生物实验之前。它把研究意图、Docking/MMGBSA/ADMET、外部知识、模型分歧和实验预算转化为可审计的候选优先级与下一实验建议。项目不是通用“药物发现平台”。
 
-## 当前主入口
+## Phase 10完整决策入口
+
+```powershell
+python examples/run_navigation_demo.py
+python src/navigator_pipeline.py --input candidates.csv --profile atp_mechanism_focused
+```
+
+输入模板位于`examples/candidate_input_template.csv`，详细字段和降级规则见`docs/Phase10_Workflow_Input_Spec.md`。完整Demo会生成候选排名、逐候选解释、四模式比较、排名稳定性和10项工作流自评。
+
+## Phase 9 Agent入口
 
 ```powershell
 python run_decision_agent.py run --profile balanced --budget 6
@@ -25,6 +34,8 @@ ATP-Navigator/
 ├─ results/              指标、排序结果和图表
 ├─ docs/                 数据审计、方法与阶段报告
 ├─ config/               透明决策权重与Agent运行配置
+├─ configs/              Phase 10研究模式和工作流权重
+├─ examples/             一键比赛Demo与候选输入模板
 ├─ tests/                可复现性和科学边界测试
 ├─ notebooks/            探索性分析
 └─ competition/          比赛交付文件的整理入口
@@ -58,5 +69,6 @@ MIC、IC50、Ki、Kd、Docking score 和 MM/GBSA 不会被直接混合作为同�
 ## 当前科学边界
 
 - 已完成：真实计算链、数据资产化、Model v0-v4-alpha对照、Decision Engine、稳健决策Agent；
+- 已集成：候选输入、结构处理、冻结模型工具、四目标决策、研究模式、解释和自评审计的一次运行工作流；
 - 未完成：ATP synthase活性、MIC/MBC、实验毒性与独立前瞻验证；
 - 禁止：用预测或人工填写数值代替实验结果，或把NMR/LC-MS结构确证表述为生物活性验证。

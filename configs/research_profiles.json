@@ -1,0 +1,99 @@
+{
+  "schema_version": "ATP-Navigator_Phase10_ResearchProfiles_v1.0",
+  "score_semantics": "batch-relative computational decision score; higher is better; not an activity or success probability",
+  "default_profile": "balanced",
+  "component_columns": [
+    "binding_score",
+    "ATP_score",
+    "antibacterial_score",
+    "drug_score"
+  ],
+  "profiles": {
+    "balanced": {
+      "display_name": "Balanced",
+      "intended_use": "General post-screening prioritization when no single experimental objective dominates.",
+      "weights": {
+        "binding_score": 0.40,
+        "ATP_score": 0.25,
+        "antibacterial_score": 0.15,
+        "drug_score": 0.20
+      }
+    },
+    "binding_focused": {
+      "display_name": "Binding-focused",
+      "intended_use": "Prioritize candidates for additional binding calculations or binding-oriented follow-up.",
+      "weights": {
+        "binding_score": 0.60,
+        "ATP_score": 0.20,
+        "antibacterial_score": 0.05,
+        "drug_score": 0.15
+      }
+    },
+    "atp_mechanism_focused": {
+      "display_name": "ATP mechanism-focused",
+      "intended_use": "Prioritize a frozen panel for an ATP synthase functional or enzyme-inhibition assay.",
+      "weights": {
+        "binding_score": 0.30,
+        "ATP_score": 0.50,
+        "antibacterial_score": 0.05,
+        "drug_score": 0.15
+      }
+    },
+    "experimental_validation_focused": {
+      "display_name": "Experimental validation-focused",
+      "intended_use": "Favor computational developability and lower predicted risk when synthesis and assay resources are limiting.",
+      "weights": {
+        "binding_score": 0.30,
+        "ATP_score": 0.25,
+        "antibacterial_score": 0.10,
+        "drug_score": 0.35
+      }
+    }
+  },
+  "binding_subweights": {
+    "model_percentile": 0.50,
+    "docking_percentile": 0.20,
+    "mmgbsa_percentile": 0.30
+  },
+  "ATP_subweights": {
+    "similarity_percentile": 0.30,
+    "PA_ATP_prior_percentile": 0.35,
+    "Mtb_ATP_prior_percentile": 0.35
+  },
+  "drug_subweights": {
+    "descriptor_rule_score": 0.50,
+    "predicted_ADMET_safety_score": 0.50
+  },
+  "descriptor_rules": {
+    "desc_mol_wt": {"maximum": 500.0},
+    "desc_logp": {"minimum": -2.0, "maximum": 5.0},
+    "desc_tpsa": {"maximum": 140.0},
+    "desc_hbd": {"maximum": 5.0},
+    "desc_hba": {"maximum": 10.0},
+    "desc_rotatable_bonds": {"maximum": 10.0}
+  },
+  "predicted_risk_bands": {
+    "lower_predicted_risk_max": 6.0,
+    "moderate_predicted_risk_max": 13.0,
+    "endpoint_count": 27.0
+  },
+  "robustness": {
+    "method": "constrained Dirichlet Monte Carlo rank acceptability",
+    "draws": 10000,
+    "concentration": 45.0,
+    "seed": 20260826,
+    "global_bounds": {
+      "binding_score": [0.10, 0.75],
+      "ATP_score": [0.05, 0.65],
+      "antibacterial_score": [0.02, 0.40],
+      "drug_score": [0.05, 0.50]
+    },
+    "warning": "Rank acceptability is conditional on the declared preference distribution and current computational evidence; it is not biological activity probability."
+  },
+  "missing_policy": {
+    "experimental_missing": "unknown",
+    "computational_component_missing": "final_score_unknown",
+    "renormalize_remaining_weights": false,
+    "duplicate_canonical_structure": "exclude_duplicate_from_ranking_keep_for_audit"
+  }
+}

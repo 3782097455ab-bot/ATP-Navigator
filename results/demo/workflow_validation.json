@@ -1,0 +1,72 @@
+{
+  "evaluator_version": "ATP-Navigator_Phase10_WorkflowEvaluator_v1.0",
+  "candidate_count": 17,
+  "unique_ranking_eligible_count": 17,
+  "complete_decision_count": 17,
+  "duplicate_structure_count": 0,
+  "workflow_readiness": "pass",
+  "biological_performance_evaluated": false,
+  "performance_reason": "No internal experimental ATP inhibition, MIC, or toxicity labels are available. This audit evaluates workflow integrity and evidence coverage, not predictive accuracy.",
+  "checks": [
+    {
+      "check": "valid_structure_coverage",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "All submitted structures parse and standardize with RDKit."
+    },
+    {
+      "check": "any_preserved_model_coverage",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "Every valid structure receives either frozen Model v3 or transparent Model v2-A fallback output."
+    },
+    {
+      "check": "full_model_v3_coverage",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "Informational coverage gate; failure triggers documented fallback rather than imputation."
+    },
+    {
+      "check": "complete_decision_coverage",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "Every unique eligible structure has all four decision components."
+    },
+    {
+      "check": "rank_integrity",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "Ranks are complete and unique among scored candidates."
+    },
+    {
+      "check": "experimental_unknown_integrity",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "No experimental ATP, MIC, or toxicity value was created by the workflow."
+    },
+    {
+      "check": "score_semantics_integrity",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "Outputs explicitly remain batch-relative computational decision scores."
+    },
+    {
+      "check": "source_traceability",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "Every candidate and workflow output retains source/version provenance."
+    },
+    {
+      "check": "historical_model_hash_integrity",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "The workflow did not modify preserved model files."
+    },
+    {
+      "check": "deterministic_replay",
+      "value": 1.0,
+      "pass": true,
+      "interpretation": "Repeated run with the same input/profile produces the same ranking content."
+    }
+  ]
+}

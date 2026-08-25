@@ -136,6 +136,21 @@ Model v4-alpha 是 Phase 7 的首轮外部知识增强实验，不登记为最�
 
 Agent版本只有在输入工具、决策规则、意图schema或审计协议发生变化时升级；监督模型版本仍按下述规则独立登记。
 
+## Phase 10 Integrated Decision Workflow（非监督模型）
+
+| 项目 | 登记内容 |
+|---|---|
+| 目的 | 将虚拟筛选候选输入自动转化为结构特征、冻结模型输出、多目标决策、稳健排名、解释和工作流自评 |
+| 模型调用 | 1128个冻结特征完整时调用Model v3；否则对有效SMILES仅调用Model v2-A structure-only fallback；同时调用4个保留的外部知识prior模型 |
+| 训练 | 无；不修改Model v0-v4-alpha，不更新参数或标签 |
+| 研究模式 | balanced、binding_focused、atp_mechanism_focused、experimental_validation_focused |
+| 评价 | 结构/模型/决策覆盖、排名完整性、unknown完整性、分数语义、来源、model hash、确定性复跑；Demo 10/10 checks passed |
+| 跨模式结果 | balanced和binding-focused首位Hit2；ATP mechanism-focused首位Hit5；experimental validation-focused首位Hit1；最低两两Spearman 0.4681 |
+| 代码/配置 | `src/input_processor.py`、`src/navigator_pipeline.py`、`src/explanation_generator.py`、`src/workflow_evaluator.py`、`configs/research_profiles.json` |
+| 限制 | 自评是工作流完整性，不是生物活性准确率；实验ATP/MIC/毒性均unknown；批次相对分数不可解释为成功概率 |
+
+Phase 10不登记为Model v5。其`model_score`仍是静态MM/GBSA计算任务预测，Decision score不得回流为监督标签。
+
 ## 新模型登记规则
 
 未来只有满足以下条件才能新增版本号：

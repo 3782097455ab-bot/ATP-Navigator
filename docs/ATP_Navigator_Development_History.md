@@ -784,6 +784,82 @@ Phase 6B — 公开ATP synthase inhibitor外部数据导入与严格验证准备
 - 权重抽样量化决策偏好，不是预测误差校准；
 - 下一步必须冻结并执行同protocol候选面板，之后才可比较Docking、人工、固定权重和Agent策略。
 
+# Phase 10 — Integrated AI-assisted Candidate Prioritization Workflow
+
+日期：2026-08-26
+
+## 目标
+
+在不训练或修改Model v0-v4-alpha的前提下，把已有数据资产、结构特征、外部知识模型、Decision Engine和Phase 9稳健Agent能力整合为可一次运行、可解释、可自评的虚拟筛选后候选决策流程。
+
+## 新增文件
+
+- `src/input_processor.py`
+- `src/navigator_pipeline.py`
+- `src/explanation_generator.py`
+- `src/workflow_evaluator.py`
+- `configs/research_profiles.json`
+- `examples/run_navigation_demo.py`
+- `examples/candidate_input_template.csv`
+- `tests/test_phase10_workflow.py`
+- `docs/Phase10_Workflow_Input_Spec.md`
+- `docs/Phase10_Workflow_Integration_Report.md`
+- `docs/Candidate_Recommendation_Report.md`
+- `results/processed_candidate_table.csv`
+- `results/final_navigation_report.csv`
+- `results/phase10_workflow/`
+- `results/demo/`
+
+## 修改文件
+
+- `README.md`
+- `docs/Current_System_Status.md`
+- `docs/Model_Registry.md`
+- `docs/Data_Registry.md`
+- `docs/ATP_Navigator_Development_History.md`
+
+## 使用数据
+
+- Dataset v0.2中17个身份确认候选和静态MM/GBSA计算标签；
+- Model v3 1128项冻结feature contract和保存模型；
+- Model v2-A结构模型及4个外部知识prior模型；
+- Dataset v1.0中55个去重直接ATP assay参考结构，仅用于结构相似性；
+- 既有Docking、QuickProp、预测ADMET与历史别名。
+
+## 实现功能
+
+- 标准候选CSV schema、SMILES canonicalization、Murcko scaffold、Morgan1024和RDKit描述符；
+- 无效SMILES、重复结构、缺失计算证据和实验unknown审计；
+- 完整1128特征才运行冻结Model v3，缺失时显式使用Model v2-A structure-only fallback；
+- 自动调用保留的抗菌与ATP外部prior模型；
+- 计算Binding、ATP、Antibacterial和Drug-likeness四分量；
+- 支持balanced、binding-focused、ATP mechanism-focused、experimental validation-focused四模式；
+- 10,000次权重抽样生成稳健rank、P(Top3)、P(Top5)，并比较所有profile的Spearman/Kendall稳定性；
+- 自动生成逐候选推荐理由、局限和实验unknown声明；
+- 建立10项工作流完整性自评和pipeline trace；
+- 完整Demo处理17候选，17/17使用完整Model v3，17/17形成决策；10/10检查通过；重复运行ranking hash一致；
+- 新增8项Phase 10测试，与Phase 9合计15项测试全部通过。
+
+## 当前Demo结果
+
+- `atp_mechanism_focused`稳健首位为Hit5；
+- balanced首位Hit2，binding-focused首位Hit2，experimental validation-focused首位Hit1；
+- 最低两两profile Spearman为0.4681，说明研发目标会实质改变候选顺序；
+- Hit1在4种模式中3次进入Top3、4次进入Top5；Hit3在4种模式中0次进入Top3、1次进入Top5；
+- 以上均为计算决策表现，不是实验命中结果。
+
+## 模型变化与性能变化
+
+Model变化：无。训练：无。实验标签新增：0。当前没有新的生物活性性能指标，也不宣称预测准确率、命中率或成功概率提高。
+
+## 当前限制
+
+- ATP enzyme、MIC和实验毒性仍全部unknown；
+- 工作流自评只能证明运行完整、可追溯和可复现，不能证明候选有效；
+- 外部prior存在跨物种/跨assay domain shift；
+- Model v3与MM/GBSA/Docking是相关计算证据，不是独立实验；
+- 下一步质量跃迁必须来自冻结候选面板的同protocol真实实验返回。
+
 # Git 历史审计
 
 | Commit | 时间 | 可确认变化 |

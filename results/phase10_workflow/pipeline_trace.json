@@ -1,0 +1,84 @@
+{
+  "pipeline_version": "ATP-Navigator_Phase10_IntegratedWorkflow_v1.0",
+  "steps": [
+    "validate_input_schema",
+    "standardize_SMILES_and_scaffold",
+    "calculate_RDKit_descriptors_and_Morgan1024",
+    "calculate_direct_ATP_reference_similarity",
+    "call_preserved_external_prior_models",
+    "gate_Model_v3_or_use_declared_Model_v2A_fallback",
+    "compute_four_decision_components",
+    "apply_research_profile",
+    "evaluate_weight_robustness",
+    "compare_all_research_profiles",
+    "generate_candidate_explanations",
+    "self_audit_workflow_integrity"
+  ],
+  "input": "D:\\tiaozhansai\\ATP-Navigator\\results\\demo\\demo_input.csv",
+  "input_sha256": "cfaf4ff6799cdbe335e33068313debc6b76d970c59b191043ae6d423bd6404ff",
+  "profile": {
+    "profile": "atp_mechanism_focused",
+    "display_name": "ATP mechanism-focused",
+    "intended_use": "Prioritize a frozen panel for an ATP synthase functional or enzyme-inhibition assay.",
+    "central_weights": {
+      "binding_score": 0.3,
+      "ATP_score": 0.5,
+      "antibacterial_score": 0.05,
+      "drug_score": 0.15
+    },
+    "robustness_method": "constrained Dirichlet Monte Carlo rank acceptability",
+    "robustness_draws": 10000,
+    "scored_candidates": 17,
+    "unscored_candidates": 0
+  },
+  "profile_analysis": {
+    "profile_count": 4,
+    "leaders": {
+      "balanced": {
+        "historical_alias": "Hit2",
+        "compound_id": "ATP-SMI-C93E6EC67CDB"
+      },
+      "binding_focused": {
+        "historical_alias": "Hit2",
+        "compound_id": "ATP-SMI-C93E6EC67CDB"
+      },
+      "atp_mechanism_focused": {
+        "historical_alias": "Hit5",
+        "compound_id": "ATP-SMI-96FD6257D8BA"
+      },
+      "experimental_validation_focused": {
+        "historical_alias": "Hit1",
+        "compound_id": "ATP-SMI-9DA3213A09E8"
+      }
+    },
+    "minimum_off_diagonal_spearman": 0.46813725490196084
+  },
+  "candidate_count": 17,
+  "model_change": "none",
+  "supervised_training": false,
+  "experimental_values_imputed": 0,
+  "biological_performance_evaluated": false,
+  "workflow_readiness": "pass",
+  "outputs": {
+    "processed_candidates": "D:\\tiaozhansai\\ATP-Navigator\\results\\processed_candidate_table.csv",
+    "ranking": "D:\\tiaozhansai\\ATP-Navigator\\results\\final_navigation_report.csv",
+    "explanations": "D:\\tiaozhansai\\ATP-Navigator\\docs\\Candidate_Recommendation_Report.md",
+    "workflow_validation": "D:\\tiaozhansai\\ATP-Navigator\\results\\phase10_workflow\\workflow_validation.json",
+    "profile_comparison": "D:\\tiaozhansai\\ATP-Navigator\\results\\phase10_workflow\\profile_comparison.csv",
+    "profile_rank_stability": "D:\\tiaozhansai\\ATP-Navigator\\results\\phase10_workflow\\profile_rank_stability.csv",
+    "top_candidate_consistency": "D:\\tiaozhansai\\ATP-Navigator\\results\\phase10_workflow\\top_candidate_consistency.csv"
+  },
+  "output_hashes": {
+    "processed_candidates": "a4d2c03541391bb81bcc1bcf7e0bbdeee9e37ac6ff12aab00124d9f34eda03db",
+    "ranking": "9f2d3b00ed67014687742cb5911ba04757b922a7f3a6da6ac4742bc2b293e18d",
+    "explanations": "e75526b9adc73b00c7100f72f6d08d961ba682d022e47a5f09bd75ad0024f38d"
+  },
+  "preserved_model_hashes": {
+    "model_v2a": "de51de808b42b550ea4824f6f7931c6d6deee3666658c274dfcd7114fd7ce526",
+    "model_v3": "f072220b96eace2e0cb5c537a21001072012f5d1672023c21b92cc2807937b3a",
+    "prior_task_a_ab_mic_log10_ug_ml": "c001a2cefd4592141082deb131c1026b26ceaa32ce093e4526b8705b90cdb418",
+    "prior_task_b_pa_atp_ic50_log10_ug_ml": "d80f7f8b637358c18d84006acecd32da462b829dadf82f3872f9e882c749af61",
+    "prior_task_b_mtb_atp_ic50_log10_nm": "12d87ff76d4e9a83645a053605cd49888d91ee48181b917f9b0493b3bda87c24",
+    "prior_task_b_ab_atp_ic50_log10_ng_ml": "6c2678e5943d715ef380ea08cd5796d0cdf4b349b5ac7e58a27f74e6aa300460"
+  }
+}

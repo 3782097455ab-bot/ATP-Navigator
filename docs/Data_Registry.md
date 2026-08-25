@@ -56,6 +56,18 @@
 
 原Literature registry“当前仅表头”的历史状态由本节取代：截至2026-08-26已登记6篇架构方法论文。
 
+## Phase 10 新增工作流资产
+
+| 数据名称 | 来源 | 数据规模 | 文件位置 | 标签类型 | 可用于训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| Processed candidate table | Phase 10 demo输入、RDKit、冻结模型工具 | 17 rows；17个Model v3完整输入 | `results/processed_candidate_table.csv`、`results/demo/processed_candidate_table.csv` | 特征与计算预测 | 否，当前为工作流输入/派生表 | `model_score`预测静态MM/GBSA排序；ATP/MIC/毒性均unknown |
+| Final navigation report | 四分量Decision Engine与所选profile | 17 candidates | `results/final_navigation_report.csv`、`results/demo/candidate_ranking.csv` | 决策派生分数 | 否 | 批次相对；P(Top-k)不是活性概率；不能回流为label |
+| Profile comparison | 同一17候选在4个冻结研究模式下的排序 | 68 rows | `results/phase10_workflow/profile_comparison.csv` | 决策敏感性 | 否 | 模式差异反映研发目标变化，不表示模型失效或活性差异 |
+| Profile rank stability | 4×4 profile pair | 16 rows | `results/phase10_workflow/profile_rank_stability.csv` | Spearman/Kendall决策稳定性 | 否 | 不是预测性能；最低非对角Spearman 0.4681 |
+| Top candidate consistency | 17 candidates × 4 profiles汇总 | 17 rows | `results/phase10_workflow/top_candidate_consistency.csv` | 跨模式出现频率 | 否 | Top3/Top5次数不是实验命中频率 |
+| Workflow validation | 结构、模型、决策、unknown、语义、来源、hash与复跑检查 | Demo 10 checks；10/10 pass | `results/demo/workflow_validation.csv`、`.json` | 工程/科研完整性审计 | 否 | 不评价生物活性准确率或实验成功率 |
+| Phase 10 demo input | Dataset v0.2/Model v3已存在的17候选特征重组 | 17 candidates | `results/demo/demo_input.csv` | 演示输入 | 否，不是新数据 | 未新增或修改任何实验/监督标签 |
+
 ## 标签使用规则
 
 - Classification：Dataset v1.0不直接提供统一二元标签；阈值必须按特定organism/assay预注册。
