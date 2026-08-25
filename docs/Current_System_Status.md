@@ -1,10 +1,10 @@
 # ATP-Navigator Current System Status
 
-更新时间：2026-08-25
+更新时间：2026-08-26
 
-当前阶段：Phase 8 — Data Acquisition Intelligence（不训练模型）
+当前阶段：Phase 9 — Researcher-in-the-loop Collaborative Decision Agent（不训练模型）
 
-当前系统定位：基于鲍曼不动杆菌 F1F0-ATP synthase 真实虚拟筛选案例的 AI 增强型候选优先级排序与多目标决策系统。系统优化已有计算候选排序，不替代 Schrödinger、MD/MMGBSA 或实验验证。
+当前系统定位：面向 ATP synthase 虚拟筛选后实验决策的研究者协作型 AI 候选优先级系统。系统位于 Schrödinger/MD/MMGBSA 与湿实验之间，优化候选取舍和验证资源配置，不替代任何计算或实验环节，也不是通用药物发现平台。
 
 ## 1. 当前已有模块
 
@@ -26,6 +26,7 @@
 | Dataset v2.0 task router | Phase 7 已运行 | 8,820行按Task A MIC、Task B ATP target、Benchmark严格隔离；Benchmark不训练 |
 | External knowledge training experiment | Model v4-alpha 已运行；未替代v3 | Task A MIC模型、4个Task B分层模型、Task C增强排序和Decision Engine shadow ranking |
 | Data acquisition intelligence | Phase 8.2 已运行 | 3个Maestro源文件恢复1,633个HTVS结构；Morgan/scaffold重选60个MM/GBSA候选；P0/P1结构包与空白回填模板 |
+| Collaborative Decision Agent | Phase 9 v1.0 已运行 | 研究意图profile、20,000次权重抽样、Pareto、反事实解释、模型分歧、实验信息价值和证据追踪 |
 | 团队数据接入 | 目录和登记表已建立 | `data/external/incoming/`、`data/external/curated/` |
 | 文献追溯 | 框架已建立 | `data/literature/references.csv` |
 | 网页/前端 | 未开发 | 当前不在本阶段范围 |
@@ -50,6 +51,8 @@ Phase 7新增Model v4-alpha实验版本，但正式基线仍保留Model v3。v4-
 
 Phase 8不新增Model v5，也不重新训练任何历史模型。它把现有HTVS候选转化为结构导出与同协议MM/GBSA的数据生产队列，为下一轮扩大内部Task C标签做准备。
 
+Phase 9同样不是Model v5。它将冻结的Model v3/v4-alpha输出、Phase 5四个决策分量、历史Hit3证据和实验预算组织为研究者协作型决策Agent。Agent不生成活性数值；所有ATP enzyme、MIC和实验毒性字段保持unknown。
+
 ## 3. 当前数据集
 
 | 数据版本/资产 | 规模 | 当前用途 |
@@ -70,6 +73,8 @@ Phase 8不新增Model v5，也不重新训练任何历史模型。它把现有HT
 | Phase 8 HTVS pool | 4,373 poses；1,633 compounds；1,632 eligible | 可追溯source pose的数据获取池；当前0个HTVS ID可直接连接SMILES |
 | Phase 8 acquisition queue | 60 candidates；P0 24、P1 36；三选择臂各20 | 待导出结构并补算同协议MM/GBSA；当前标签全部pending |
 | Phase 8 return templates | 60个MM/GBSA行；17个内部实验行 | 空白回填接口；禁止用预测填充真实结果 |
+| Phase 9 robust decision outputs | 17候选；4个研究意图profile；balanced每个候选20,000次权重评估 | 决策稳健性、Pareto、模型分歧与实验面板；不是训练标签或活性概率 |
+| Phase 9 frozen experiment panel | 6候选：Hit2、Hit1、Hit5、Hit13、Hit3、Hit17 | 下一轮同protocol实验建议；当前结果全部unknown |
 
 ## 4. 当前代码结构
 
@@ -78,6 +83,8 @@ ATP-Navigator/
 ├─ data/                 数据注册表、版本化数据、外部上传和文献记录
 ├─ src/                  审计、数据构建、特征、训练、评价和Decision Engine
 ├─ models/               历史模型与版本化配置
+├─ config/               透明Decision Agent配置
+├─ tests/                Agent行为与科学边界测试
 ├─ results/              OOF指标、预测、排序和图表
 │  └─ phase6A/           权重敏感性、稳定性、消融和benchmark状态
 ├─ docs/                 审计、方法、注册表、历史和解释报告

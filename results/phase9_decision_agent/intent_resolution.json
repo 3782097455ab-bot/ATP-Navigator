@@ -1,0 +1,22 @@
+{
+  "selected_profile": "balanced",
+  "source": "explicit_profile",
+  "research_question": "",
+  "matched_keywords": [],
+  "requires_human_confirmation": false,
+  "profile_description": "Balance binding, ATP relevance, antibacterial prior, and developability while retaining the Phase 5 emphasis on binding.",
+  "central_weights": {
+    "binding_score": 0.4,
+    "ATP_target_score": 0.25,
+    "antibacterial_score": 0.15,
+    "druglikeness_score": 0.2
+  },
+  "hard_evidence_rules": {
+    "unknown_experiment_literal": "unknown",
+    "forbid_imputation_of_experimental_results": true,
+    "forbid_decision_score_as_training_label": true,
+    "preserve_models_v0_to_v4_alpha": true,
+    "binding_correlation_warning": "Model v3 was trained on static MM/GBSA, so model prediction, static MM/GBSA, and docking-derived evidence are not independent.",
+    "external_prior_warning": "ATP and antibacterial priors are cross-domain computational evidence, not measurements on the internal candidates."
+  }
+}

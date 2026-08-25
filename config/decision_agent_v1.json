@@ -1,0 +1,106 @@
+{
+  "agent_version": "ATP-Navigator_Phase9_Collaborative_Decision_Agent_v1.0",
+  "scope": "researcher-in-the-loop prioritization of the preserved 17 internal ATP synthase candidates",
+  "decision_semantics": "relative computational decision support, not biological activity or success probability",
+  "component_columns": [
+    "binding_score",
+    "ATP_target_score",
+    "antibacterial_score",
+    "druglikeness_score"
+  ],
+  "profiles": {
+    "balanced": {
+      "description": "Balance binding, ATP relevance, antibacterial prior, and developability while retaining the Phase 5 emphasis on binding.",
+      "central_weights": {
+        "binding_score": 0.4,
+        "ATP_target_score": 0.25,
+        "antibacterial_score": 0.15,
+        "druglikeness_score": 0.2
+      }
+    },
+    "binding_first": {
+      "description": "Prioritize computational binding evidence when the immediate decision is which candidates merit expensive binding calculations.",
+      "central_weights": {
+        "binding_score": 0.55,
+        "ATP_target_score": 0.2,
+        "antibacterial_score": 0.1,
+        "druglikeness_score": 0.15
+      }
+    },
+    "target_mechanism": {
+      "description": "Prioritize ATP synthase relevance when the next experiment directly measures ATP synthase function or inhibition.",
+      "central_weights": {
+        "binding_score": 0.3,
+        "ATP_target_score": 0.45,
+        "antibacterial_score": 0.1,
+        "druglikeness_score": 0.15
+      }
+    },
+    "translational_balance": {
+      "description": "Increase emphasis on antibacterial and developability evidence for a later whole-cell follow-up decision.",
+      "central_weights": {
+        "binding_score": 0.3,
+        "ATP_target_score": 0.25,
+        "antibacterial_score": 0.2,
+        "druglikeness_score": 0.25
+      }
+    }
+  },
+  "weight_uncertainty": {
+    "method": "SMAA-inspired constrained Dirichlet Monte Carlo rank acceptability",
+    "draws": 20000,
+    "concentration": 45.0,
+    "seed": 20260826,
+    "global_bounds": {
+      "binding_score": [0.15, 0.7],
+      "ATP_target_score": [0.05, 0.6],
+      "antibacterial_score": [0.03, 0.4],
+      "druglikeness_score": [0.05, 0.4]
+    },
+    "probability_warning": "Rank acceptability is conditional on the stated weight distribution and current computational evidence. It is not a probability of biological activity."
+  },
+  "intent_keywords": {
+    "binding_first": ["binding", "docking", "mmgbsa", "亲和", "结合", "对接"],
+    "target_mechanism": ["target", "mechanism", "enzyme", "atp synthase", "靶点", "机制", "酶活", "atp合酶"],
+    "translational_balance": ["mic", "antibacterial", "toxicity", "safety", "admet", "抗菌", "毒性", "安全", "成药"],
+    "balanced": ["balanced", "综合", "平衡", "默认"]
+  },
+  "experiment_planning": {
+    "default_budget": 6,
+    "minimum_budget": 5,
+    "maximum_budget": 12,
+    "primary_assay": "ATP synthase functional or enzyme inhibition dose-response under one frozen protocol",
+    "secondary_assay": "A. baumannii MIC under one declared strain and protocol",
+    "required_controls": [
+      "IN-2 positive control",
+      "vehicle control",
+      "assay-specific negative or inactive comparator",
+      "technical and biological replicates"
+    ],
+    "information_value_proxy_weights": {
+      "rank_interval_width": 0.3,
+      "top5_boundary_uncertainty": 0.25,
+      "model_version_disagreement": 0.2,
+      "scaffold_rarity": 0.15,
+      "legacy_hit3_evidence": 0.1
+    },
+    "warning": "The information-value score is a transparent acquisition proxy, not formal expected information gain and not an activity prediction."
+  },
+  "evidence_policy": {
+    "unknown_experiment_literal": "unknown",
+    "forbid_imputation_of_experimental_results": true,
+    "forbid_decision_score_as_training_label": true,
+    "preserve_models_v0_to_v4_alpha": true,
+    "binding_correlation_warning": "Model v3 was trained on static MM/GBSA, so model prediction, static MM/GBSA, and docking-derived evidence are not independent.",
+    "external_prior_warning": "ATP and antibacterial priors are cross-domain computational evidence, not measurements on the internal candidates."
+  },
+  "source_files": {
+    "phase5_ranking": "results/final_candidate_ranking.csv",
+    "phase5_config": "scoring_config.json",
+    "model_v3_oof": "results/model_v3/model_v3_oof_predictions.csv",
+    "model_v4_alpha_oof": "results/model_v4_alpha/internal_oof_predictions.csv",
+    "binding_features": "data/model_v3/binding_feature_table.csv",
+    "development_history": "docs/ATP_Navigator_Development_History.md"
+  },
+  "legacy_candidate_alias": "Hit3"
+}

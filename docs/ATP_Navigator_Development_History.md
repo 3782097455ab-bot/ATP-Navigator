@@ -722,6 +722,68 @@ Phase 6B — 公开ATP synthase inhibitor外部数据导入与严格验证准备
 - 下一步应先按冻结协议完成P0 24个同协议静态MM/GBSA并回填QC，再决定是否扩展P1；
 - MIC、ATP enzyme inhibition、毒性、选择性等真实实验数据仍未产生，不能从已有文件中推导或替代。
 
+# Phase 9 — Researcher-in-the-loop Collaborative Decision Agent
+
+日期：2026-08-26
+
+## 目标
+
+重新审视原始39页Schrödinger研究汇报、项目策划、比赛通知和各项评分标准，确定项目最终选题；检索科学智能体、多参数决策和分子主动学习原始论文；在不重训历史模型、不制造实验标签的前提下，把已有模型与证据转化为研究者协作型候选决策Agent。
+
+## 新增文件
+
+- `src/research_decision_agent.py`
+- `run_decision_agent.py`
+- `config/decision_agent_v1.json`
+- `tests/test_research_decision_agent.py`
+- `results/phase9_decision_agent/`全部决策、解释、实验面板和审计产物
+- `docs/Phase9_Collaborative_Decision_Agent_Report.md`
+- `docs/Phase9_Literature_and_Architecture_Report.md`
+- `docs/ATP_Navigator_Project_Strategy_Master_Brief.md`
+
+## 修改文件
+
+- `README.md`
+- `data/literature/references.csv`
+- `docs/Current_System_Status.md`
+- `docs/Model_Registry.md`
+- `docs/Data_Registry.md`
+- `docs/ATP_Navigator_Development_History.md`
+
+## 使用数据
+
+- Phase 5的17候选四分量和正式综合排名；
+- Model v3与Model v4-alpha严格scaffold OOF预测；
+- 内部compound/scaffold身份、Hit3历史MD与化学表征状态；
+- 原始PPT中Schrödinger/MD/MMGBSA流程和候选历史；
+- 比赛通知、赛道评分、虚拟筛选单项奖与代码提交规则；
+- 6篇原始方法论文，仅作架构依据，不导入训练数据。
+
+## 实现功能
+
+- 明确最终定位为“虚拟筛选后、湿实验前”的研究者协作型AI候选优先级系统；
+- 支持balanced、binding_first、target_mechanism与translational_balance四种意图profile；
+- 每个profile进行20,000次受约束Dirichlet权重抽样并计算rank acceptability；
+- 增加Pareto front、反事实解释、Model v3/v4-alpha分歧和证据相关性警告；
+- 建立预算感知下一实验面板和evidence ledger/agent trace；
+- balanced结果的稳健领导者为Hit2；冻结六候选面板为Hit2、Hit1、Hit5、Hit13、Hit3、Hit17；
+- 7项单元测试通过，覆盖排名完整性、人工确认、unknown实验状态、面板唯一性、Pareto有效性、模型不变和权重归一化。
+
+## 模型变化
+
+无。Model v0-v4-alpha和Phase 5 Decision Engine均未修改或重训；Phase 9不登记为Model v5。
+
+## 性能变化
+
+无新的真实活性性能指标。Agent产生的是决策稳健性、解释和实验计划；P(Top-k)不是活性概率。实验结果回填前不能宣称命中率、成本或模型准确率提高。
+
+## 当前限制
+
+- 17个候选的监督目标仍为静态MM/GBSA；
+- ATP enzyme、MIC和实验毒性全部unknown；
+- 权重抽样量化决策偏好，不是预测误差校准；
+- 下一步必须冻结并执行同protocol候选面板，之后才可比较Docking、人工、固定权重和Agent策略。
+
 # Git 历史审计
 
 | Commit | 时间 | 可确认变化 |

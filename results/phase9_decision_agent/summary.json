@@ -1,0 +1,21 @@
+{
+  "agent_version": "ATP-Navigator_Phase9_Collaborative_Decision_Agent_v1.0",
+  "selected_profile": "balanced",
+  "requires_human_confirmation": false,
+  "candidate_count": 17,
+  "pareto_front_size": 12,
+  "robust_leader": "Hit2",
+  "legacy_candidate": "Hit3",
+  "experiment_panel": [
+    "Hit2",
+    "Hit1",
+    "Hit5",
+    "Hit13",
+    "Hit3",
+    "Hit17"
+  ],
+  "model_change": "none",
+  "experimental_labels_created": 0,
+  "experimental_activity_status": "unknown",
+  "result_directory": "results\\phase9_decision_agent"
+}

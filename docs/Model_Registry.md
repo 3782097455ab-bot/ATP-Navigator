@@ -120,6 +120,22 @@ Model v4-alpha 是 Phase 7 的首轮外部知识增强实验，不登记为最�
 | Decision Engine 接入 | 仅生成 shadow ranking，不覆盖 Phase 5；实验 MIC、ATP enzyme 与毒性仍为 unknown |
 | 限制 | Task C 只有 17 个候选；Task B stratum 仅 8–25 个样本；没有独立前瞻测试；source level 为提供文件标注、未逐条回源；预测先验不是内部实验结果 |
 
+## Phase 9 Collaborative Decision Agent（非监督模型）
+
+| 项目 | 登记内容 |
+|---|---|
+| 目的 | 把研究者意图、现有模型、计算证据和实验预算转化为可审计候选优先级与下一实验计划 |
+| 输入 | Phase 5四分量、Model v3/v4-alpha scaffold OOF、compound/scaffold身份、Hit3历史证据与配置化研究意图 |
+| 标签定义 | 无新训练标签；ATP enzyme、MIC和实验毒性均保持unknown |
+| 方法 | profile条件化；受约束Dirichlet Monte Carlo 20,000次；rank acceptability；Pareto；反事实解释；模型分歧；实验信息价值代理 |
+| 输出 | `results/phase9_decision_agent/`中的稳健排名、Pareto、模型分歧、解释、实验面板、evidence ledger和agent trace |
+| 结果 | balanced稳健领导者Hit2；冻结面板为Hit2、Hit1、Hit5、Hit13、Hit3、Hit17；这些是决策结果，不是活性验证 |
+| 配置/代码 | `config/decision_agent_v1.json`、`src/research_decision_agent.py`、`run_decision_agent.py` |
+| 模型变化 | 无；不登记为Model v5，不修改或重训Model v0-v4-alpha |
+| 限制 | 权重抽样量化偏好不确定性而非活性概率；无独立实验标签；当前不能证明命中率提升 |
+
+Agent版本只有在输入工具、决策规则、意图schema或审计协议发生变化时升级；监督模型版本仍按下述规则独立登记。
+
 ## 新模型登记规则
 
 未来只有满足以下条件才能新增版本号：

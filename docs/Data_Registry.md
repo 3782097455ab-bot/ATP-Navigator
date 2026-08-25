@@ -1,6 +1,6 @@
 # ATP-Navigator Data Registry
 
-更新时间：2026-08-25
+更新时间：2026-08-26
 
 登记原则：数据可用于训练不等于数据是真实活性。每个训练任务必须按来源、身份、target、organism、activity type、unit和计算/实验协议生成独立视图。
 
@@ -43,6 +43,18 @@
 | Phase 8.2 MM/GBSA return template | v2结构队列的空白计算回填接口 | 60 rows | `data/templates/phase8_mmgbsa_return_template_v2.csv` | structure file/record、protocol、protein、software、dG Bind、status、date、operator、notes | 全部结果字段blank | 否；QC通过后按冻结协议接入 | 不含预测填充值；必须保存协议、结构和计算状态；pending/failed不得转为数值标签 |
 | External incoming | 团队未来上传 | 当前0条提交记录 | `data/external/incoming/` | manifest约定来源、引用、许可、状态等 | unknown直到审计 | 否，审计前禁止训练 | 需要来源、许可、结构、单位、重复项和标签语义检查 |
 | Literature registry | 团队论文和数据库来源记录 | 当前仅表头 | `data/literature/references.csv` | title、authors、DOI、URL、target、organism、linked dataset、status | 文献元数据 | 不直接训练 | 不保存未授权全文；需人工筛选和复核 |
+
+## Phase 9 新增派生资产
+
+| 数据名称 | 来源 | 数据规模 | 文件位置 | 标签类型 | 可用于训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| Agent方法论文登记 | 6篇原始研究论文的出版社/PubMed元数据核验 | 6 records | `data/literature/references.csv` | 文献元数据 | 否 | 仅用于架构依据；未导入分子/活性记录；ChemScreener靶点为WDR5且不是ATP验证 |
+| Phase 9稳健排名 | Phase 5四分量与声明权重分布 | 17 candidates × 4 profiles × 20,000 weight draws的汇总 | `results/phase9_decision_agent/robust_rankings.csv` | 决策派生结果 | 否 | P(Top-k)是权重条件频率，不是活性概率 |
+| Phase 9 Pareto/反事实/模型分歧 | 17候选现有计算分量与Model v3/v4-alpha OOF | 17 candidate-level records per table | `results/phase9_decision_agent/` | 解释与审计派生值 | 否 | 没有新实验标签；模型分歧不表示任一模型正确 |
+| Phase 9冻结实验面板 | 稳健排名、信息价值代理、scaffold多样性、Hit3历史证据 | 6 candidates | `results/phase9_decision_agent/next_experiment_panel.csv` | 实验计划，结果均unknown | 否 | 较低优先候选不是预定义阴性；需同protocol真实实验 |
+| Phase 9证据账本与轨迹 | Agent每个输入、规则和输出状态 | 17 evidence rows + 1 JSON trace | `results/phase9_decision_agent/evidence_ledger.csv`、`agent_trace.json` | 数据血缘/运行日志 | 否 | 用于复现和审计，不得回流为监督label |
+
+原Literature registry“当前仅表头”的历史状态由本节取代：截至2026-08-26已登记6篇架构方法论文。
 
 ## 标签使用规则
 

@@ -1,0 +1,36 @@
+{
+  "agent_version": "ATP-Navigator_Phase9_Collaborative_Decision_Agent_v1.0",
+  "steps": [
+    "resolve_research_intent",
+    "validate_evidence_and_missing_experiments",
+    "evaluate_all_preference_profiles",
+    "compute_SMAA_inspired_rank_acceptability",
+    "compute_Pareto_layers",
+    "compare_Model_v3_and_v4_alpha_scaffold_OOF",
+    "generate_contrastive_counterfactuals",
+    "plan_budget_aware_prospective_experiment_panel",
+    "write_auditable_outputs"
+  ],
+  "selected_profile": "balanced",
+  "model_change": "none",
+  "supervised_training": false,
+  "experimental_labels_created": 0,
+  "decision_score_used_as_label": false,
+  "candidate_count": 17,
+  "simulation_draws_per_profile": 20000,
+  "profile_count": 4,
+  "experiment_panel_size": 6,
+  "output_hashes": {
+    "robust_rankings": "8ded939cc5ff75cc31babf91b32fec4f10e7f6795006c6d737e9f5df481adaa6",
+    "weight_distribution_summary": "694df67b4abe1e5852b02ffe0f3098ab9c34c88ce56673a5125d025a3b31cfed",
+    "pareto_analysis": "1ecb6d01b60ddf1830f315df787be1ab468ad0c4ca8860161a51b8b14773c649",
+    "model_version_disagreement": "6f4269fde8446d1882d2f97a4a618d8e436a1e1aa0098583cf0e907deadd86b3",
+    "counterfactual_explanations": "a8864c8dc424738c7b40e7e8885af0834176694b666873b8824ed20a8cdfaf34",
+    "next_experiment_panel": "1b299d23f1f10cf7a1f4609ca774d4ef60be93019d655b40d4d26f4a1ebb8aa8",
+    "legacy_hit3_comparison": "0b98a9920381125b114830a98ccca09e5643305af0fbe49bde2d15210f6bb288",
+    "evidence_ledger": "d82cc3d59c6d0cdaddd024c759e178f2e6926a5527f65af1549c01412088b1a6",
+    "component_correlation": "e21a7b34cbff5058c2205ee2f0df3fd5eb1962797e754a55014293476144a900"
+  },
+  "report_sha256": "2ab172af2fa388710d2355cfdddb6ed25c32390bc1d661ea97be7ace4b26e4d7",
+  "config_sha256": "fec401697e6f60f0c8f36973b1b4904787fd03b7c7654b9274392d5c22aadb24"
+}
