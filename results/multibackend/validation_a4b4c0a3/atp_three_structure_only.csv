@@ -1,0 +1,4 @@
+compound_id,SMILES
+ATP-SMI-15737353FB69,O[C@H]1CC[N@@H+](Cc2ccccc2C[NH2+]Cc2cn(Cc3ccccc3)nc2-c2ccccc2)C1
+ATP-SMI-4417138BF81D,[NH3+]C[C@@H](Nc1nc2ccccc2cc1C(=O)Nc1ccccc1)c1cccc(Cl)c1
+ATP-SMI-5B36D3E11A3B,C[NH+](C)Cc1ccc(CNc2csc(C(=O)N[C@H](C[NH3+])c3ccccc3)c2)cc1

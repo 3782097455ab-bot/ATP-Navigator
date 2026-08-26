@@ -1,0 +1,10 @@
+{
+  "protocol_id": "ab_7p3w_mmgbsa_historical_incomplete_v1",
+  "protocol_kind": "historical_protocol",
+  "job_type": "unknown",
+  "force_field": "unknown",
+  "solvation_model": "unknown",
+  "receptor_flexibility": "unknown",
+  "confirmation": "required",
+  "note": "No Vina affinity substitution for MM/GBSA; new settings require a new frozen protocol."
+}

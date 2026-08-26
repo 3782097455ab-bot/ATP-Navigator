@@ -18,7 +18,7 @@ from experimental_feedback import FeedbackStore
 from workspace_io import file_hash, identifier, now, safe_id, within
 
 TOOLS = {"status", "run_navigation", "explain_candidate", "compare_profiles", "find_knowledge",
-         "validate_feedback", "ingest_feedback", "prepare_iteration", "evaluate_feedback"}
+         "validate_feedback", "ingest_feedback", "prepare_iteration", "evaluate_feedback", "computation_evidence"}
 MUTATING = {"run_navigation", "ingest_feedback", "prepare_iteration", "evaluate_feedback"}
 HELP = ("离线工作区支持：状态；按 balanced / binding_focused / atp_mechanism_focused / "
         "experimental_validation_focused 排序；解释 Hit3；比较模式；查资料 关键词；"
@@ -101,6 +101,9 @@ class ResearchWorkspace:
 
     def _execute(self, db, session, tool, args):
         feedback = FeedbackStore(self.project)
+        if tool == "computation_evidence":
+            from workspace.workflow_service import session_evidence_answer
+            return session_evidence_answer(db, session['id'])
         if tool == "status":
             return {"session_id": session["id"], "latest_run": session["latest_run"],
                     "feedback": feedback.status(), "models": "frozen_v0_to_v4alpha",
@@ -219,8 +222,13 @@ class ResearchWorkspace:
             self._session(db, session_id)
             self._event(db, session_id, "user_message", {"text": message})
         text = message.strip()
-        if text.startswith("确认 "):
+        if text.startswith(("计划计算 ", "确认计算 ", "恢复计算 ")):
+            from workspace.workflow_service import session_calculation_action
+            result = session_calculation_action(self, session_id, text)
+        elif text.startswith("确认 "):
             result = self.confirm(session_id, text.partition(" ")[2].strip())
+        elif text in {"现在还缺什么证据？", "现在还缺什么证据", "缺什么证据", "/evidence"} or ("为什么" in text and "排名" in text):
+            result = self.dispatch(session_id, "computation_evidence", {})
         elif text in {"状态", "/status"}:
             result = self.dispatch(session_id, "status", {})
         elif text in {"比较模式", "/compare"}:

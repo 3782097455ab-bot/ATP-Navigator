@@ -1,0 +1,13 @@
+profile,compound_id,historical_alias,rank,central_rank,final_score,mean_rank,p_top3,p_top5
+balanced,ATP-SMI-15737353FB69,,,,,,,
+balanced,ATP-SMI-4417138BF81D,,,,,,,
+balanced,ATP-SMI-5B36D3E11A3B,,,,,,,
+binding_focused,ATP-SMI-15737353FB69,,,,,,,
+binding_focused,ATP-SMI-4417138BF81D,,,,,,,
+binding_focused,ATP-SMI-5B36D3E11A3B,,,,,,,
+atp_mechanism_focused,ATP-SMI-15737353FB69,,,,,,,
+atp_mechanism_focused,ATP-SMI-4417138BF81D,,,,,,,
+atp_mechanism_focused,ATP-SMI-5B36D3E11A3B,,,,,,,
+experimental_validation_focused,ATP-SMI-15737353FB69,,,,,,,
+experimental_validation_focused,ATP-SMI-4417138BF81D,,,,,,,
+experimental_validation_focused,ATP-SMI-5B36D3E11A3B,,,,,,,

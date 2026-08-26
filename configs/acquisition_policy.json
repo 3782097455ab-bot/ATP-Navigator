@@ -1,0 +1,6 @@
+{
+  "allocation": {"exploitation": 0.625, "uncertainty": 0.25, "diversity": 0.125},
+  "selection": "within tool/protocol/source-batch cohorts only",
+  "missing_uncertainty": "unknown; quota fallback is explicitly labeled",
+  "interpretation": "computational resource priority, not biological activity probability"
+}

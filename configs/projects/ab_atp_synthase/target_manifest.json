@@ -1,0 +1,8 @@
+{
+  "project_id": "ab_atp_synthase",
+  "target": "F1F0 ATP synthase",
+  "organism": "Acinetobacter baumannii",
+  "pdb_reference": "7P3W",
+  "scope": "pre-experiment computational evidence integration and candidate prioritization",
+  "experimental_activity_status": "unknown"
+}

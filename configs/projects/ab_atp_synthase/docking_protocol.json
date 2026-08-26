@@ -1,0 +1,15 @@
+{
+  "protocol_id": "ab_7p3w_historical_incomplete_v1",
+  "protocol_kind": "historical_protocol",
+  "historical_grid_status": "missing",
+  "historical_equivalence": "unverified",
+  "confirmation": "required",
+  "receptor": null,
+  "grid": null,
+  "box": null,
+  "ligand_preparation": "unknown",
+  "protonation": "unknown",
+  "seed": 42,
+  "exhaustiveness": 8,
+  "note": "Blocked for new execution. Create a separately named new_protocol and explicitly confirm site/box/preparation."
+}

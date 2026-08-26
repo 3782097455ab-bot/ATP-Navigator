@@ -1,0 +1,11 @@
+{
+  "protocol_id": "ab_7p3w_receptor_reference_v1",
+  "pdb_reference": "7P3W",
+  "historical_source_relative_to_research_root": "作图/作图/1-阳性化合物和蛋白的MD/图-2/7P3W-A.pdb",
+  "historical_source_sha256": "6372f1901d1a841981501a524cff0a9a7dc5ec39257cffe4f3774eb0648aecc4",
+  "prepared_docking_receptor_status": "unknown",
+  "historical_grid_status": "missing",
+  "protonation": "unknown",
+  "force_field": "unknown",
+  "note": "An MD/PDB reference is not proof of the original prepared docking receptor. Runtime import hashes the selected file."
+}

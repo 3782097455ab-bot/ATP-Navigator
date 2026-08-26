@@ -1,0 +1,10 @@
+check,value,pass,interpretation
+valid_structure_coverage,1.0,True,All submitted structures parse and standardize with RDKit.
+any_preserved_model_coverage,1.0,True,Every valid structure receives either frozen Model v3 or transparent Model v2-A fallback output.
+full_model_v3_coverage,1.0,True,Informational coverage gate; failure triggers documented fallback rather than imputation.
+complete_decision_coverage,1.0,True,Every unique eligible structure has all four decision components.
+rank_integrity,1.0,True,Ranks are complete and unique among scored candidates.
+experimental_unknown_integrity,1.0,True,"No experimental ATP, MIC, or toxicity value was created by the workflow."
+score_semantics_integrity,1.0,True,Outputs explicitly remain batch-relative computational decision scores.
+source_traceability,1.0,True,Every candidate and workflow output retains source/version provenance.
+historical_model_hash_integrity,1.0,True,The workflow did not modify preserved model files.

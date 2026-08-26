@@ -1,5 +1,20 @@
 # ATP-Navigator Development History
 
+## 2026-08-27：Multi-Backend Computational Workflow
+
+- 目标：将研究意图、真实计算、证据回流和冻结决策接通；本轮明确不训练新模型。
+- 开发前保护：核验Phase12 `6602596`、Release v1 `76e3ca9`、Windows hash修复`c9fce3c`，创建本地checkpoint-before-multibackend-20260827，并成功push main至`c9fce3c`。
+- 新增文件：`src/tools/`统一适配器与实际worker；`src/workspace/multi_*`任务图/执行/证据/预算/监督进程；workflow_service进程内API；run_computational_workflow CLI；五份7P3W配置清单、预算配置、开放工具安装和验证脚本、25项新增测试、Tool Registry与运行指南。
+- 修改文件：research_workspace增加共享证据查询以及同会话计算计划/确认/恢复；更新系统/模型/数据登记。旧评分/监督模型没有修改。
+- 使用数据：17候选历史输入、其前3个候选的结构、官方Vina v1.2.7的1IEP/伊马替尼软件测试输入。没有新增内部实验标签。
+- 真实执行：RDKit/Meeko结构与配体处理、官方已准备受体导入、Vina对接、Pose QC、结果解析及入库；Vina affinity=-12.478 kcal/mol，仅作为非ATP软件测试。没有完成7P3W新Docking/Prime/QikProp。
+- 环境核验：Windows安装登记找到`D:/xuedinge the beginning`；帮助命令能启动。子进程修复缺失WINDIR，不修改系统或许可。Glide最终改用MAIN/SP/XP实际许可项核验，仍签出失败；Prime/QikProp/LigPrep也未取得可用签出。
+- 模型变化：无；原24模型hash保持。性能变化：没有新预测性能实验；17历史综合分数与冻结版本最大差异0。
+- 数据/功能变化：254条分类型证据登记；同数据库会话/任务/决策；可配置预算分层、cohort隔离和幂等恢复；实验反馈链接仅接受已审查批次，当前empty。
+- 测试：首轮90项通过，后补会话/反馈/DAG用例后94项通过；真实Vina重复恢复不重算。首次最终汇总因NumPy布尔值JSON序列化失败，修正后重导出，不隐藏初次记录、不重新Docking。
+- 最终代码验收文件：`results/multibackend/final_checks_0de2ce02/final_acceptance.json`；94测试及9项验收全部通过，包括24模型hash、缓存/恢复、实际Vina、会话证据与历史排名一致性。前次b3815219检查也保留。
+- 当前限制：7P3W缺历史grid和研究者确认的新位点/盒/准备协议；商业许可签出不可用。3–5/17候选新计算全链未完成，1633未展开高成本计算。OpenMM/gmx_MMPBSA/GNINA/Desmond是预留接口；API为进程内服务，不是已部署HTTP或网页。
+
 ## 2026-08-26：发布数据的Git字节级完整性保护
 
 - 在Data Release v1本地提交`76e3ca9034c5fb29d6ec192761c6717e072031c7`之后，补充`.gitattributes`，仅对不可变发布目录禁用换行转换；不修改原始发布包、旧模型或评分。

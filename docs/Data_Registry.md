@@ -1,6 +1,16 @@
 # ATP-Navigator Data Registry
 
-更新时间：2026-08-26
+更新时间：2026-08-27
+
+## Multi-Backend Workflow证据（2026-08-27）
+
+- 同一个`workspace_local/workspace.sqlite3`新增workflow_run/workflow_node/workflow_job_link及计算—决策—面板—实验关联表；旧候选/证据/会话表继续使用。
+- 四个验收项目新增254条登记：49条真实工具输出、85条历史计算证据、120条冻结模型输出。不是254条新实验或训练样本。
+- 官方Vina v1.2.7示例的1IEP受体与伊马替尼SDF下载到`workspace_local/official_vina_smoke/`；出处/文件hash见`results/multibackend/validation_a4b4c0a3/official_smoke_sources.json`。仅软件测试，禁止作为ATP靶点验证或训练标签。
+- 实际Vina affinity 1条（-12.478 kcal/mol），原生pose/命令/stdout/stderr/receipt在本地artifact/job档案；不是内部7P3W结果。3内部候选只做了允许的结构处理，商业数值未产生。
+- 17候选导入85条既有计算证据并重放冻结决策；来源协议不完整，仍标注historical_result，不充作新计算验证。
+- 所有新证据保留工具/版本/backend/protocol/run/job/artifact hash；unknown实验字段不补值。实验反馈为empty，无训练数据变更。
+- 版本化结果在`results/multibackend/`；工具/许可最新摘要在`results/system_capabilities.json`，历次探测快照保留。没有上传原始大型MD或本地会话数据库。
 
 ## Data Release v1增量登记（2026-08-26）
 

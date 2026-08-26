@@ -1,6 +1,13 @@
 # ATP-Navigator Model Registry
 
-更新时间：2026-08-26
+更新时间：2026-08-27
+
+## Multi-Backend Workflow（2026-08-27）：无模型变更
+
+- Model v3仍是正式监督排序模型；Model v0/v1/v2/v3/v4-alpha及两轮Release v1实验模型不重训、不覆盖。
+- 原24模型artifact hash核验不变；冻结Decision Engine评分代码/权重不变。17历史候选重放的综合分数最大差异0。
+- Vina输出只进入独立`vina_affinity`证据，不当作Glide score输入旧模型；跨工具、版本、协议、来源批次的数值不混合归一化。
+- 新任务图、预算分层与恢复不是新监督模型；没有Model v5或新的活性标签。官方1IEP测试仅证明计算执行，不证明ATP候选预测能力。
 
 ## Data Release v1 shadow实验（2026-08-26，未晋升生产）
 

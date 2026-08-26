@@ -1,8 +1,12 @@
 # ATP-Navigator Current System Status
 
-更新时间：2026-08-26
+更新时间：2026-08-27
 
-当前阶段：Phase 12执行工作区已完成本地验收；Data Release v1隔离训练实验已完成，生产模型不变。系统定位：实验前计算证据整合与候选优先级辅助决策。
+当前阶段：Multi-Backend Computational Workflow已完成增量实现和小规模软件验证。系统定位：实验前计算证据整合与候选优先级辅助决策。Model v3保持正式监督模型；v0–v4-alpha与既有shadow模型均不重训。
+
+本轮新增三种模式、统一ToolAdapter、持久化DAG、预算分层、进程receipt恢复、按后端/协议/批次隔离证据、会话计算计划/确认/恢复以及进程内API。94项测试通过；原24模型hash不变。Vina在官方1IEP单化合物测试中真实执行成功；该结果不是ATP验证。17内部候选重放历史证据得到6候选，综合分数相对冻结版本最大差异0。Schrödinger已安装于`D:/xuedinge the beginning`，最终产品许可签出未通过；7P3W仍缺历史grid/确认的新协议，因此3候选新商业/开源完整链未完成。详见`Computational_Workflow_Guide.md`与`Tool_Registry.md`。
+
+前次Phase12、Release v1和Windows hash修复已同步GitHub至`c9fce3c`；本轮结果另行提交，不覆盖历史。以下保留2026-08-26检查记录，涉及“未发现安装”等描述只代表当时状态。
 
 补充迭代：Data Release v1已接入并完成两轮隔离shadow实验（用户随后授权的小规模训练，非Phase12重新训练历史模型）。49条ATP观测按6 assay分离，5个assay模型可拟合；原生产模型仍冻结。内部OOF未超过v3，因此不升级生产模型。新知识已接入Research Session只读检索，并产生40个待计算候选队列；与Docking Top40不同14个，尚不能证明该变化更优。69项测试与10项功能核验通过。详见`Data_Release_v1_Integration_and_Experiment_Report.md`。GitHub同步待上传范围确认。
 

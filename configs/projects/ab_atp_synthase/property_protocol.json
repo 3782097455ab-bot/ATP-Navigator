@@ -1,0 +1,9 @@
+{
+  "protocol_id": "rdkit_properties_no_experimental_admet_v1",
+  "method": "RDKit descriptors",
+  "ionization": "preserve_input",
+  "salt_handling": "preserve_input",
+  "experimental_ADMET": "unknown",
+  "qikprop_protocol": "unknown",
+  "note": "RDKit properties are not QikProp predictions and not experimental toxicity."
+}

@@ -1,0 +1,2 @@
+compound_id,evidence_type,raw_value,tool_id,tool_version,protocol_id,source_batch,cohort_rank,cohort,comparison_scope,cross_protocol
+OFFICIAL_1IEP_IMATINIB,vina_affinity,-12.478,vina,v1.2.7,official_vina_1iep_software_smoke_v1,batch_0c2b1585fe494e49,1,"[""vina"", ""v1.2.7"", ""official_vina_1iep_software_smoke_v1"", ""batch_0c2b1585fe494e49"", ""vina_affinity""]",within_cohort_only,False
