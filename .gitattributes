@@ -1,0 +1,3 @@
+# Immutable releases use byte-level provenance hashes. Do not normalize their
+# line endings on add/checkout, including on Windows with core.autocrlf=true.
+data/external/releases/** -text

@@ -1,5 +1,11 @@
 # ATP-Navigator Development History
 
+## 2026-08-26：发布数据的Git字节级完整性保护
+
+- 在Data Release v1本地提交`76e3ca9034c5fb29d6ec192761c6717e072031c7`之后，补充`.gitattributes`，仅对不可变发布目录禁用换行转换；不修改原始发布包、旧模型或评分。
+- 目的：避免Windows的Git自动CRLF转换使来源清单hash失配；远端上传仍等待确认。
+- 验证：清单18个文件的原始来源、Git暂存内容及checkout过滤输出SHA256全部与发布清单一致。
+
 ## 2026-08-26：Data Release v1接入、文献归档与条件性shadow实验
 
 - Phase12已单独本地提交66025966b87cb747e0db902a1bfdda74a5dfaba2；GitHub推送被权限检查拦截，已向用户说明范围并等待确认，没有绕过。

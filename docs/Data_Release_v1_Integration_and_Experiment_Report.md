@@ -81,6 +81,8 @@
 
 69项全量测试通过；新功能10项核验通过，包括真实会话检索、5篇全文、队列预算及24个旧模型hash。Phase12原17候选排名仍与冻结版本一致。
 
+不可变发布目录另通过`.gitattributes`禁用Git换行转换，保留文件字节级hash，避免Windows下载后因CRLF转换无法恢复证据索引。
+
 主要入口：`release_v1_audit.py --source`；已克隆版本可用`--register-existing`恢复共享索引；`release_v1_pilot.py --release --experiment-id --knowledge-mode add|replace_atp`；`release_knowledge_acquisition.py --release --output --budget 40`。重复实验须使用新experiment_id，不覆盖旧结果。
 
 Phase11已推送检查点481faed；Phase12本地检查点66025966b87cb747e0db902a1bfdda74a5dfaba2。权限检查拦截了后续GitHub推送，本轮本地结果已完成，远端同步等待用户明确确认上传范围。没有通过其他方式绕过上传限制。
