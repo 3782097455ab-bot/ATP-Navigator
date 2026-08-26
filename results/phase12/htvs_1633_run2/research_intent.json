@@ -1,0 +1,1 @@
+{"confirmation": "explicit_user_or_cli_yes", "structured_intent": {"expected_candidates": 1633, "final_experiment_budget": 6, "md_budget": 0, "mmgbsa_budget": 40, "preserve_scaffold_diversity": true, "research_profile": "atp_mechanism_focused", "sp_budget": 200, "xp_budget": 100}, "text": "ATP机制优先，候选1633个，MMGBSA最多40个，最终实验预算6个"}

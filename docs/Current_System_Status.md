@@ -2,9 +2,9 @@
 
 更新时间：2026-08-26
 
-当前阶段：Phase 11 — Persistent Research Workspace & Reviewed Feedback Interface（不训练模型）
+当前阶段：Phase 12 — Computational Execution Workspace（不训练模型）。系统定位：实验前计算证据整合与候选优先级辅助决策。
 
-本轮新增本地会话/提案确认/真实工具执行/产物追踪；实验回填校验、具名审查、独立任务快照、冻结排名回顾评价接口。当前真实实验反馈仍为0；可选LLM路由尚无API配置和真实联调，不声称已有自由科研聊天或自动学习提升。详细操作见 `docs/Phase11_Workspace_and_Feedback_Guide.md`。
+本轮新增共享SQLite计算任务/证据登记、工具与许可探测、协议冻结、预算门控、真实RDKit子进程和恢复入口。17候选完成原冻结决策；1633个HTVS候选完成结构计算和模型调用，但完整决策数0，未强行生成实验面板。Schrödinger未发现，商业计算blocked；不存在新Docking/MMGBSA/QikProp数值。真实实验反馈仍为0。详见`docs/Phase12_Computational_Workspace_Guide.md`及`results/phase12/`。
 
 当前系统定位：面向 ATP synthase 虚拟筛选后实验决策的研究者协作型 AI 候选优先级系统。系统位于 Schrödinger/MD/MMGBSA 与湿实验之间，优化候选取舍和验证资源配置，不替代任何计算或实验环节，也不是通用药物发现平台。
 

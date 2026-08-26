@@ -2,6 +2,21 @@
 
 更新时间：2026-08-26
 
+## Phase 12新增资产（2026-08-26）
+
+| 资产 | 规模/位置 | 来源与边界 |
+|---|---|---|
+| 计算任务/证据共享库 | `workspace_local/workspace.sqlite3` | 与Phase11 sessions共库；artifact按SHA256存档，本地忽略；CSV仅为导出视图 |
+| 真实RDKit计算 | 17内部候选与1633个HTVS候选；`results/phase12/` | 结构质控、Morgan1024、scaffold、描述符；不是新的结合或实验标签 |
+| 历史结合与性质证据 | 原17候选、HTVS最佳pose表 | 历史provenance和不完整协议保留；不冒充新算结果 |
+| ATP target expansion | 87条：7隔离、80待复核 | Downloads原表只读归档；target annotation和来源审查；当前禁止自动训练 |
+| negative SAR | 352条 | endpoint segregation、censoring、论文来源冲突标记；不能把MIC/ETC/细胞毒性合为ATP标签 |
+| ATP structure reference | 28条 | 结构知识层，待来源复核；不产生候选结合分数 |
+| chemical-space bridge | 120条 | unverified retrieval pool，禁止训练及内部候选实验赋值 |
+| 协议与系统能力 | 各运行目录JSON；`results/system_capabilities.json` | 找到7P3W-A.pdb，未找到确认grid；RDKit可执行，Schrödinger未发现 |
+
+原始四表共587条，QC导出在`results/phase12/internal_17_run2/knowledge_qc/`。所有原始文件保持不变。数据问题归类为数据语义一致性、target annotation、endpoint segregation与provenance QC。当前真实实验反馈仍为0。
+
 登记原则：数据可用于训练不等于数据是真实活性。每个训练任务必须按来源、身份、target、organism、activity type、unit和计算/实验协议生成独立视图。
 
 ## Phase 11新增资产（2026-08-26）

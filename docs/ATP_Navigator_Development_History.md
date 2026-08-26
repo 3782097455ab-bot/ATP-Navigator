@@ -1,5 +1,20 @@
 # ATP-Navigator Development History
 
+## 2026-08-26：Phase 12 — Computational Execution Workspace
+
+- 前置检查点：先运行35项历史测试，隔离Phase9测试的输出目录，单独提交并推送Phase11：`481faed9ebec6df09143fe34a98b181426ac800d`。
+- 目标：ResearchIntent、实际计算任务、共享Evidence Registry与冻结Decision Agent联通；不训练模型。
+- 新增文件：`src/workspace/`（状态、工具能力、协议、worker、执行/恢复、parser、planner、证据桥接、知识QC、orchestrator），`src/run_research_workspace.py`，`tests/test_computational_workspace.py`，`examples/verify_phase12.py`，Phase12操作指南及运行结果。
+- 修改文件：Current_System_Status、Model_Registry、Data_Registry和本历史；原模型、Decision Engine、Phase10输入/评分及Phase11反馈代码不改。
+- 使用数据：原17候选、1633个HTVS结构/最佳pose性质、冻结模型/OOF；新增4张CSV共587条，仅知识QC登记。
+- 已实现：真实RDKit执行/命令记录/日志/receipt恢复；任务去重；冻结协议/来源hash；阶段及预算门控；共享证据读取、原决策输出；实验反馈关联索引；商业工具缺失时blocked。
+- 实际工具：RDKit 2026.03.5；未发现Schrödinger命令，商业许可证未检测到；没有新商业计算结果。
+- 运行结果：内部17候选得到6个计算优先候选；1633 HTVS完整决策0、面板0，因为MM/GBSA和完整ADMET证据缺失。阻塞任务记录分别为36与402（含等待前级的占位job）。
+- 模型变化：无；24个模型文件hash不变；不宣称排序性能或实验成功率提高。
+- 测试/复核：全量日志与机器可读校验保存在`results/phase12/verification/`。首轮规模测试暴露空值摘要序列化问题，修复后复跑；首轮文件保留。成功计算按签名复用。
+- 当前限制：历史grid/完整协议缺失；商业adapter无本机端到端验证；启发式acquisition未经实验效益校准；真实实验反馈empty、prospective metrics not_available。没有新增临床用途。
+- 术语：数据语义一致性、target annotation、endpoint segregation、provenance QC；定位为实验前计算证据整合与候选优先级辅助决策系统。
+
 ## 2026-08-26：Phase 11 — Research Workspace & Reviewed Feedback Interface
 
 - 目标：将对话、真实决策工具和未来实验回流接到同一工作区；不重训。
