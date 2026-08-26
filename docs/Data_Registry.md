@@ -2,6 +2,15 @@
 
 更新时间：2026-08-26
 
+## Data Release v1增量登记（2026-08-26）
+
+- 原件：`D:/tiaozhansai/ATP_Navigator_Data_Release_v1`；独立副本与审计：`data/external/releases/release_v1_624c8b2309f4/`。
+- 18文件清单hash/大小校验通过；106实体结构标识/分子式/MW检查通过。49条直接ATP记录、39结构、6 assay通过本轮机器QC，资格为条件性pilot，不代表本轮逐条重绘验证全部原文结构。
+- 其余分区：辅助229、参考46、测量隔离115、bridge隔离120、结构参考28。总587，与原四表总量一致，是质量重建而非587条全新独立实验。
+- 全部分区接入共享knowledge_record；source hash、assay、endpoint、organism、unit、DOI隔离。外部测量不能赋为内部候选标签。Research Session已能检索新记录。
+- 五篇原文：`data/literature/papers/atp_release_v1/`全文XML/文本；元数据`release_v1_papers*.json`，阅读笔记`Release_v1_Reading_Notes.md`；全文不默认上传Git。
+- 两轮实验与化学空间分析：`results/release_v1_shadow_001/`、`release_v1_shadow_replace_atp_002/`。1633候选/39参考检索与预算40队列：`results/release_v1_acquisition/`，仅待计算，不代表已执行或已验证更优。
+
 ## Phase 12新增资产（2026-08-26）
 
 | 资产 | 规模/位置 | 来源与边界 |

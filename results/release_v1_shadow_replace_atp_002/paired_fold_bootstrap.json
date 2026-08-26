@@ -1,0 +1,1 @@
+{"fold_cluster_bootstrap_draws": 2000, "interpretation": "exploratory on the same 17 candidates; not independent prospective validation", "metric": "RMSE(new)-RMSE(old), lower is better", "percentile_95_interval": [-0.2578278793947612, 0.31293633046213715]}

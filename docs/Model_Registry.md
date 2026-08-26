@@ -2,6 +2,14 @@
 
 更新时间：2026-08-26
 
+## Data Release v1 shadow实验（2026-08-26，未晋升生产）
+
+用户在Phase12后新增授权数据接入与测试。`models/experiments/release_v1_shadow_001/`与`release_v1_shadow_replace_atp_002/`保留两轮独立产物：每轮5个分assay的RF（Morgan1024+16描述符，ATP IC50 pActivity；128树、深度4、leaf2、seed42）及1个内部LightGBM shadow。
+
+外部49记录/39结构/6 assay；2样本任务不拟合。内部仍17样本、原11 scaffold、相同MMGBSA标签和v3超参数。直接叠加10特征：Spearman0.762255、RMSE4.955995、NDCG5 0.774392；替换旧5个ATP相关特征后：0.754902、4.940735、0.777429。两者EF5均1.36、恢复2/5；原v3为0.769608、4.887704、0.778232。没有性能提升证据，未替换Model v0-v4-alpha或Decision Engine。详见对应results目录及接入报告。
+
+局限：极小样本、单论文内scaffold验证、化学空间距离、源结构重建仍需最终人工核查；内部没有新的实验活性标签。不能将shadow命名为已验证正式Model v5。
+
 ## Phase 12维护记录（非新模型）
 
 真实RDKit计算和共享Evidence Registry接入冻结Model v3/明确的v2-A fallback及原四分量决策；没有训练、修改权重或替换历史模型。24个models文件SHA256保持不变。新增启发式acquisition planner不登记为监督模型，其输出不是生物活性概率或实测成本节约。商业adapter因本机工具/协议缺失未完成真实环境验证。17候选原排名复核及1633候选缺失门控见`results/phase12/`；未产生新的生物学性能指标。

@@ -1,5 +1,18 @@
 # ATP-Navigator Development History
 
+## 2026-08-26：Data Release v1接入、文献归档与条件性shadow实验
+
+- Phase12已单独本地提交66025966b87cb747e0db902a1bfdda74a5dfaba2；GitHub推送被权限检查拦截，已向用户说明范围并等待确认，没有绕过。
+- 用户随后提供`ATP_Navigator_Data_Release_v1`并授权小规模测试；此授权独立于Phase12“不重训历史模型”的约束。
+- 新增代码：release_v1_audit、release_v1_pilot、collect_release_literature、release_evidence_query、release_knowledge_acquisition；新增验证脚本与6项测试。
+- 修改：research_workspace只读来源检索增加共享registry返回；verify_phase12允许新增实验模型文件但继续逐个核验原24个模型hash；更新维护文档。
+- 使用数据：原四表587行的修正/分区版本；49个直接ATP观测、39结构、6 assay，辅助229、参考46、隔离115+120、结构28。18个清单文件完整性及结构/单位机器QC通过。
+- 真实运行：5篇原文XML/文本归档；5个分assay RF拟合（另1任务n=2不拟合）；两轮内部17样本/11 scaffold固定划分对照；新知识进入真实Research Session检索；1633候选对39参考的实际相似度计算和40预算待计算队列。
+- 模型变化：仅新增两个models/experiments shadow目录，不改旧24模型文件或Decision Engine。直接叠加Spearman0.762255/RMSE4.955995；替换旧ATP知识0.754902/4.940735，均未超过原v3的0.769608/4.887704，Top5恢复均2/5。没有挑选性隐去负结果，也未晋升生产模型。
+- 流程变化：可带DOI/assay/单位检索新数据；待计算队列相对纯Docking Top40改变14个，但没有新计算或实验效益结论。
+- 验证：全量69项测试及10项新功能/完整性检查通过；24旧模型hash不变，生产排名不变；真实内部实验仍0。
+- 限制：小样本、单论文聚集、化学空间距离大、结构重建尚未逐键独立复核、真实商业计算工具/协议仍缺；远端同步待确认。此次是数据质量和研究流程升级，不是已证实药效或实验成功率提升。
+
 ## 2026-08-26：Phase 12 — Computational Execution Workspace
 
 - 前置检查点：先运行35项历史测试，隔离Phase9测试的输出目录，单独提交并推送Phase11：`481faed9ebec6df09143fe34a98b181426ac800d`。

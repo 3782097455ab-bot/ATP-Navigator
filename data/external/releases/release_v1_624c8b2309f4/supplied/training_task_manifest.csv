@@ -1,0 +1,7 @@
+﻿task_id,scope,label,selection_policy,recommended_tier,measurement_rows,unique_compounds,unique_assays,status,required_split_rule
+AB_ATP_IC50_regression,Acinetobacter baumannii,p_activity,exact/mean direct ATP IC50,gold,16,16,2,pilot_only_small_n,Group by Bemis-Murcko scaffold and source DOI; never random-row split
+PA_ATP_IC50_regression,Pseudomonas aeruginosa,p_activity,exact/mean direct ATP IC50,gold,33,29,4,usable_with_grouped_scaffold_split,Group by Bemis-Murcko scaffold and source DOI; never random-row split
+bacterial_ATP_IC50_multitask,A. baumannii + P. aeruginosa,p_activity,organism-aware multitask; keep assay provenance,gold,49,39,6,usable_with_grouped_scaffold_split,Group by Bemis-Murcko scaffold and source DOI; never random-row split
+ATP_activity_classification,A. baumannii + P. aeruginosa,derived_activity_class,include censored observations; threshold defined from pActivity,silver,49,39,6,usable_with_grouped_scaffold_split,Group by Bemis-Murcko scaffold and source DOI; never random-row split
+MIC_auxiliary,reported bacterial strains,value/relation/unit,auxiliary endpoint only; never merge with ATP IC50,auxiliary,186,74,11,usable_with_grouped_scaffold_split,Group by Bemis-Murcko scaffold and source DOI; never random-row split
+cytotoxicity_risk,reported mammalian cell lines,value/relation/unit,risk endpoint only,auxiliary,30,30,1,usable_with_grouped_scaffold_split,Group by Bemis-Murcko scaffold and source DOI; never random-row split

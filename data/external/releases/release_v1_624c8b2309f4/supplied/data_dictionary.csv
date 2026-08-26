@@ -1,0 +1,12 @@
+﻿file,field,definition
+compounds.csv,compound_key,Stable entity key; InChIKey when structure is valid
+compounds.csv,canonical_smiles,RDKit canonical isomeric SMILES
+compounds.csv,structure_verification,How identity was checked; only source-reconstructed identities enter strict training
+measurements_*.csv,assay_id,"Hash of source, target, organism, strain, endpoint and method"
+measurements_*.csv,value_relation,"exact, gt, lt, approx, range, or mean_sd"
+measurements_*.csv,value,Normalized value in the normalized unit
+measurements_*.csv,p_activity,-log10(molar concentration); relation direction must be respected for censored data
+measurements_*.csv,use_for_default_regression,"True only for strict, uncensored direct ATP observations"
+measurements_*.csv,source_locator,Table/figure locator within the primary article or SI
+structure_references.csv,modeled_inhibitor_codes,Only inhibitor codes actually modeled in the PDB entry
+verified_atp_neighbors.csv,tanimoto_morgan_r2_2048,Reproducible similarity among source-verified ATP compounds

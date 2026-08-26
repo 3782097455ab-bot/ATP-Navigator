@@ -1,0 +1,4 @@
+model,n,scaffold_groups,label,spearman,rmse,ndcg_at_5,top_k,recovered_hits,true_hits,top_k_enrichment,hit_recovery
+frozen_v3_saved_OOF,17,11,same_internal_static_MMGBSA_not_experimental_activity,0.7696078431372549,4.887703665520265,0.7782318298332684,5,2,5,1.3599999999999999,0.4
+v3_replayed_control,17,11,same_internal_static_MMGBSA_not_experimental_activity,0.7696078431372549,4.887703665520265,0.7782318298332684,5,2,5,1.3599999999999999,0.4
+release_enhanced_shadow,17,11,same_internal_static_MMGBSA_not_experimental_activity,0.7549019607843138,4.940735245111995,0.7774290836650433,5,2,5,1.3599999999999999,0.4

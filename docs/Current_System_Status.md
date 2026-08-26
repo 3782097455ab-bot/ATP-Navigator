@@ -2,7 +2,9 @@
 
 更新时间：2026-08-26
 
-当前阶段：Phase 12 — Computational Execution Workspace（不训练模型）。系统定位：实验前计算证据整合与候选优先级辅助决策。
+当前阶段：Phase 12执行工作区已完成本地验收；Data Release v1隔离训练实验已完成，生产模型不变。系统定位：实验前计算证据整合与候选优先级辅助决策。
+
+补充迭代：Data Release v1已接入并完成两轮隔离shadow实验（用户随后授权的小规模训练，非Phase12重新训练历史模型）。49条ATP观测按6 assay分离，5个assay模型可拟合；原生产模型仍冻结。内部OOF未超过v3，因此不升级生产模型。新知识已接入Research Session只读检索，并产生40个待计算候选队列；与Docking Top40不同14个，尚不能证明该变化更优。69项测试与10项功能核验通过。详见`Data_Release_v1_Integration_and_Experiment_Report.md`。GitHub同步待上传范围确认。
 
 本轮新增共享SQLite计算任务/证据登记、工具与许可探测、协议冻结、预算门控、真实RDKit子进程和恢复入口。17候选完成原冻结决策；1633个HTVS候选完成结构计算和模型调用，但完整决策数0，未强行生成实验面板。Schrödinger未发现，商业计算blocked；不存在新Docking/MMGBSA/QikProp数值。真实实验反馈仍为0。详见`docs/Phase12_Computational_Workspace_Guide.md`及`results/phase12/`。
 

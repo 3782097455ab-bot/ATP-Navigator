@@ -29,7 +29,7 @@ def main():
         summary=json.loads((folder/'execution_summary.json').read_text(encoding='utf-8'))
         summaries[key]={k:summary[k] for k in ['batch_id','candidate_count','blocked_jobs','commercial_execution_completed','failed_jobs']}
         checks[key+'_sample_count']=summary['candidate_count']==n
-        checks[key+'_models_unchanged']=summary['model_hashes']=={str(p.relative_to(PROJECT)):file_hash(p) for p in (PROJECT/'models').rglob('*') if p.is_file()}
+        checks[key+'_models_unchanged']=all((PROJECT/p).is_file() and file_hash(PROJECT/p)==expected for p,expected in summary['model_hashes'].items())
         table=pd.read_csv(folder/'decision/final_navigation_report.csv')
         checks[key+'_experiments_unknown']=all(table[c].fillna('unknown').eq('unknown').all() for c in
             ['experimental_ATP_inhibition','experimental_MIC','experimental_toxicity'] if c in table)

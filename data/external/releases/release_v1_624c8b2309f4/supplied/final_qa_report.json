@@ -1,0 +1,21 @@
+{
+  "qa_pass": true,
+  "csv_files_parsed": 15,
+  "model_ready_rows": 49,
+  "model_ready_unique_structures": 39,
+  "model_ready_assays": 6,
+  "corrected_structure_lineage_rows": 353,
+  "workbook_sheets": [
+    "Summary",
+    "Compounds",
+    "Aliases",
+    "Model Ready",
+    "Auxiliary",
+    "Quarantine",
+    "Structures",
+    "Tasks",
+    "Quality",
+    "Dictionary"
+  ],
+  "zip_integrity": "PASS"
+}

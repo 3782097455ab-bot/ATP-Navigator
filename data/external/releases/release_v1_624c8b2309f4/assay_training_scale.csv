@@ -1,0 +1,7 @@
+assay_id,organism,doi,n,unique_structures,scaffolds
+asy_4f7a87e5bfe2,Acinetobacter baumannii,10.1002/cmdc.202400952,6,6,4
+asy_55188c1cb354,Pseudomonas aeruginosa,10.1021/acsmedchemlett.3c00480,19,19,14
+asy_6c2d0a1024e4,Pseudomonas aeruginosa,10.1021/acsomega.2c03127,6,6,5
+asy_72ab0153c0c5,Pseudomonas aeruginosa,10.1002/cmdc.202400952,6,6,4
+asy_aa7b51602589,Pseudomonas aeruginosa,10.1021/acsinfecdis.3c00317,2,2,2
+asy_e0b3632b492e,Acinetobacter baumannii,10.1021/acsomega.5c06380,10,10,3
