@@ -1,0 +1,80 @@
+{
+  "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41589-023-01349-8/MediaObjects/41589_2023_1349_MOESM3_ESM.xlsx",
+  "reference": "https://doi.org/10.1038/s41589-023-01349-8",
+  "downloaded_file_sha256": "c6e1566e466dffa3604834d8a22cb9dca4b7c494a3753d15f23c1e64a52e3dbd",
+  "audited_at": "2026-08-26T06:53:12.693712+00:00",
+  "sheets": [
+    {
+      "sheet": "SD1",
+      "rows": 7684,
+      "evidence_kind": "external_experimental_growth",
+      "valid_structures": 7684,
+      "overlap_existing_exact_rows": 32,
+      "overlap_existing_parent_rows": 56
+    },
+    {
+      "sheet": "SD2.RDKit",
+      "rows": 6680,
+      "evidence_kind": "author_model_prediction",
+      "valid_structures": 6680,
+      "overlap_existing_exact_rows": 98,
+      "overlap_existing_parent_rows": 105
+    },
+    {
+      "sheet": "SD2.No RDKit",
+      "rows": 6680,
+      "evidence_kind": "author_model_prediction",
+      "valid_structures": 6680,
+      "overlap_existing_exact_rows": 98,
+      "overlap_existing_parent_rows": 105
+    },
+    {
+      "sheet": "SD3.Prioritized 240",
+      "rows": 240,
+      "evidence_kind": "external_experimental_growth",
+      "valid_structures": 240,
+      "overlap_existing_exact_rows": 3,
+      "overlap_existing_parent_rows": 3
+    },
+    {
+      "sheet": "SD3.Lowest 240",
+      "rows": 240,
+      "evidence_kind": "external_experimental_growth",
+      "valid_structures": 240,
+      "overlap_existing_exact_rows": 0,
+      "overlap_existing_parent_rows": 0
+    },
+    {
+      "sheet": "SD3.Highest 240",
+      "rows": 240,
+      "evidence_kind": "external_experimental_growth",
+      "valid_structures": 240,
+      "overlap_existing_exact_rows": 18,
+      "overlap_existing_parent_rows": 20
+    }
+  ],
+  "total_extracted_rows": 21764,
+  "unique_measured_structures": 8281,
+  "measured_structures_absent_from_existing_exact": 8231,
+  "existing_datasets": [
+    {
+      "path": "data/dataset_v1.0/ATP_Navigator_Dataset_v1.csv",
+      "sha256": "88df875d4c9bd65bbb5bf16c6608d57c5947b5fbb8ec58cc053bb8c9b9724bb0"
+    },
+    {
+      "path": "data/dataset_v2.0/ATP_Navigator_external_dataset_v1.csv",
+      "sha256": "1c8ca1b93518f1919067952f28423cda1ed5578f47b36a3d647fa65b3ad3d40b"
+    }
+  ],
+  "training_performed": false,
+  "new_internal_experiments": 0,
+  "rights_status": "local_only_pending_redistribution_review",
+  "limitations": [
+    "not_MIC_not_ATP_IC50",
+    "SD2_predictions_never_experimental_labels",
+    "assay_conditions_pending_full_method_review",
+    "exact_overlap_not_complete_scaffold_leakage_audit"
+  ],
+  "internal_similarity_min": 0.25806451612903225,
+  "internal_similarity_max": 0.417910447761194
+}

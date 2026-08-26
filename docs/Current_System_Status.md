@@ -2,7 +2,9 @@
 
 更新时间：2026-08-26
 
-当前阶段：Phase 10 — Integrated AI-assisted Candidate Prioritization Workflow（不训练模型）
+当前阶段：Phase 11 — Persistent Research Workspace & Reviewed Feedback Interface（不训练模型）
+
+本轮新增本地会话/提案确认/真实工具执行/产物追踪；实验回填校验、具名审查、独立任务快照、冻结排名回顾评价接口。当前真实实验反馈仍为0；可选LLM路由尚无API配置和真实联调，不声称已有自由科研聊天或自动学习提升。详细操作见 `docs/Phase11_Workspace_and_Feedback_Guide.md`。
 
 当前系统定位：面向 ATP synthase 虚拟筛选后实验决策的研究者协作型 AI 候选优先级系统。系统位于 Schrödinger/MD/MMGBSA 与湿实验之间，优化候选取舍和验证资源配置，不替代任何计算或实验环节，也不是通用药物发现平台。
 
@@ -28,6 +30,9 @@
 | Data acquisition intelligence | Phase 8.2 已运行 | 3个Maestro源文件恢复1,633个HTVS结构；Morgan/scaffold重选60个MM/GBSA候选；P0/P1结构包与空白回填模板 |
 | Collaborative Decision Agent | Phase 9 v1.0 已运行 | 研究意图profile、20,000次权重抽样、Pareto、反事实解释、模型分歧、实验信息价值和证据追踪 |
 | Integrated Decision Workflow | Phase 10 v1.0 已运行 | 标准输入、结构处理、冻结模型门控、四分量决策、研究模式、解释、跨模式稳定性和10项工作流自评 |
+| Persistent Research Workspace | Phase 11 已运行 | 会话输入快照、SQLite记录、9个白名单工具、显式确认、恢复、来源检索；离线有限命令模式 |
+| Reviewed Feedback Interface | Phase 11 已实现，真实数据empty | 原始证据归档、校验隔离、人工审查、Task A/B/C/CC50分层、冻结排名比较；不自动训练 |
+| Public source acquisition | Phase 11 已审计 | abaucin官网补充表：8,404测量行、13,360作者预测行，严格分开；原文数据本地保存、不训练 |
 | 团队数据接入 | 目录和登记表已建立 | `data/external/incoming/`、`data/external/curated/` |
 | 文献追溯 | 框架已建立 | `data/literature/references.csv` |
 | 网页/前端 | 未开发 | 当前不在本阶段范围 |
@@ -153,6 +158,8 @@ ATP-Navigator/
 - 更多候选的同协议 MD interaction/MMGBSA 特征；
 - 更大规模、包含中等和负候选的同协议内部静态 MM/GBSA 数据；
 - 独立前瞻性测试集和实验闭环；
+- Phase11反馈接口已建立，但真实实验回流、授权重训、模型发布的科学闭环尚未发生；
+- 可选LLM意图路由的真实API联调、自然语言意图评测、多人身份认证和用户研究；
 - 可与17个内部候选精确对应、且endpoint/unit/assay一致的独立外部benchmark；
 - 为独立外部候选补齐按冻结协议生成的Docking、静态MM/GBSA、Model v3输入和预测ADMET等Decision Engine必需证据；
 - 先完成P0 24个、再完成P1 36个同协议静态MM/GBSA计算；

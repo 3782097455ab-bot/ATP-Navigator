@@ -27,14 +27,14 @@ from model_v3_pipeline import canonicalize, descriptor_row, direct_atp_reference
 
 rdBase.DisableLog("rdApp.warning")
 
-PROCESSOR_VERSION = "ATP-Navigator_Phase10_InputProcessor_v1.0"
+PROCESSOR_VERSION = "ATP-Navigator_Phase11_InputProcessor_v1.1"
 UNKNOWN = "unknown"
-JSON_FEATURE_COLUMNS = {
+JSON_FEATURE_COLUMNS = (
     "quickprop_features",
     "docking_features",
     "admet_features",
     "literature_features",
-}
+)
 EXPERIMENT_STATUS_COLUMNS = [
     "experimental_ATP_inhibition",
     "experimental_MIC",
@@ -112,6 +112,13 @@ class CandidateInputProcessor:
             _, _, molecule = canonicalize(smiles)
             self.reference_fingerprints.append(self.generator.GetFingerprint(molecule))
         self.known_scaffolds = set(self.references["scaffold"])
+        identities = pd.read_csv(self.project_root / "data/model_v3/training_table.csv",
+                                 usecols=["compound_id", "canonical_smiles"])
+        self.internal_identities = identities.set_index("compound_id")["canonical_smiles"].to_dict()
+        self.supplied_feature_allowlist = {
+            c for c in self.v3_bundle["feature_columns"]
+            if c.startswith(("glide_", "quickprop_", "admet_"))
+        } - {"glide_docking_score"}
         self.model_hashes = {
             "model_v2a": sha256(self.model_dir / "model_v2_a_structure_only.joblib"),
             "model_v3": sha256(self.project_root / "models" / "model_v3" / "model.joblib"),
@@ -178,7 +185,7 @@ class CandidateInputProcessor:
         output: dict[str, float] = {}
         for key, value in values.items():
             numeric = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
-            if pd.notna(numeric):
+            if pd.notna(numeric) and np.isfinite(numeric):
                 output[str(key)] = float(numeric)
         return output
 
@@ -192,6 +199,9 @@ class CandidateInputProcessor:
             raise ValueError(f"Candidate input missing required headers: {sorted(missing_headers)}")
         if raw.empty:
             raise ValueError("Candidate input is empty")
+        supplied_ids = raw["compound_id"].str.strip()
+        if supplied_ids.loc[supplied_ids.ne("")].duplicated().any():
+            raise ValueError("Duplicate compound_id in candidate input")
 
         rows: list[dict[str, Any]] = []
         seen_ids: set[str] = set()
@@ -212,7 +222,12 @@ class CandidateInputProcessor:
             }
             for status in EXPERIMENT_STATUS_COLUMNS:
                 explicit = str(record.get(status, "")).strip()
-                output[status] = explicit if explicit else UNKNOWN
+                if explicit.lower() not in {"", "unknown", "nan", "none"}:
+                    raise ValueError("Experimental evidence must use the reviewed feedback interface, not candidate features")
+                output[status] = UNKNOWN
+            for score_name in ("docking_score", "mmgbsa_score"):
+                if pd.notna(output[score_name]) and not np.isfinite(output[score_name]):
+                    raise ValueError(f"Row {row_number}: nonfinite {score_name}")
 
             molecule = Chem.MolFromSmiles(supplied_smiles) if supplied_smiles else None
             if molecule is None:
@@ -237,6 +252,8 @@ class CandidateInputProcessor:
 
             canonical, scaffold, molecule = canonicalize(supplied_smiles)
             compound_id = supplied_id or generated_id(canonical)
+            if compound_id in self.internal_identities and canonical != canonicalize(self.internal_identities[compound_id])[0]:
+                raise ValueError(f"Identity mismatch for registered compound: {compound_id}")
             if compound_id in seen_ids:
                 raise ValueError(f"Duplicate compound_id in input: {compound_id}")
             seen_ids.add(compound_id)
@@ -245,17 +262,37 @@ class CandidateInputProcessor:
             structure = self._structure_features(molecule)
             similarity = self._similarity_features(molecule, scaffold)
             feature_values: dict[str, Any] = {**structure, **similarity}
-
+            ignored_features = []
             for column in JSON_FEATURE_COLUMNS:
                 parsed = json_object(record.get(column, ""), column, row_number)
-                feature_values.update(self._numeric_feature_dict(parsed))
+                for key, value in parsed.items():
+                    if key not in self.supplied_feature_allowlist:
+                        ignored_features.append(key)
+                        continue
+                    numeric = self._numeric_feature_dict({key: value})
+                    if not numeric and str(value).lower() not in {"", "unknown", "nan", "none"}:
+                        raise ValueError(f"Row {row_number}: invalid numeric feature {key}")
+                    if key in feature_values and key in numeric and feature_values[key] != numeric[key]:
+                        raise ValueError(f"Row {row_number}: conflicting feature {key}")
+                    feature_values.update(numeric)
             # Wide optional fields are accepted for machine-generated pipelines.
             for column, value in record.items():
-                if column in required | JSON_FEATURE_COLUMNS | set(EXPERIMENT_STATUS_COLUMNS):
+                if column not in self.supplied_feature_allowlist:
                     continue
                 numeric = pd.to_numeric(value, errors="coerce")
                 if pd.notna(numeric):
+                    if not np.isfinite(numeric):
+                        raise ValueError(f"Row {row_number}: nonfinite feature {column}")
+                    if column in feature_values and feature_values[column] != float(numeric):
+                        raise ValueError(f"Row {row_number}: conflicting wide/JSON feature {column}")
                     feature_values[str(column)] = float(numeric)
+
+            for key, value in feature_values.items():
+                if key.startswith("admet_"):
+                    maximum = 27 if key == "admet_endpoint_sum" else 1
+                    if not 0 <= value <= maximum:
+                        raise ValueError(f"Row {row_number}: out-of-range {key}")
+            output["ignored_supplied_features"] = json.dumps(sorted(set(ignored_features)))
 
             feature_values["glide_docking_score"] = output["docking_score"]
             for name, bundle in self.prior_bundles.items():
@@ -331,7 +368,7 @@ class CandidateInputProcessor:
             "missing_computational_fields",
             *EXPERIMENT_STATUS_COLUMNS,
         ]
-        processed = processed[[*ordered, *[c for c in processed.columns if c not in ordered]]]
+        processed = processed[[*ordered, *sorted(c for c in processed.columns if c not in ordered)]]
         atomic_csv(processed, output_path)
         return processed
 

@@ -1,0 +1,26 @@
+{
+  "snapshot_id": "snapshot-9c23ee8ee21942e5",
+  "created_at": "2026-08-26T06:55:57.194776+00:00",
+  "records": 0,
+  "status": "empty_waiting_for_reviewed_evidence",
+  "conflicting_records": 0,
+  "sources": [],
+  "strata": [],
+  "record_sha256": "8b2c9cc82de23aac5ea159b6f0a567bcbd9a802a4ebd4354dedaadc734e383b2",
+  "training_performed": false,
+  "model_change": "none",
+  "promotion_allowed": false,
+  "next_gates": [
+    "prospective_or_scaffold_holdout_design",
+    "endpoint_specific_label_policy",
+    "explicit_training_authorization",
+    "compare_frozen_baseline",
+    "human_release_review"
+  ],
+  "limitations": [
+    "replicates are not independent compounds",
+    "no cross-unit pooling",
+    "no unreviewed labels",
+    "no automatic replacement of historic models"
+  ]
+}

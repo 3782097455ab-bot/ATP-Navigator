@@ -1,0 +1,75 @@
+[
+  {
+    "source_id": "ABAU_2023",
+    "keywords": ["abaucin", "鲍曼不动杆菌", "生长筛选", "抗菌"],
+    "title": "Deep learning-guided discovery of an antibiotic targeting Acinetobacter baumannii",
+    "doi": "10.1038/s41589-023-01349-8",
+    "url": "https://www.nature.com/articles/s41589-023-01349-8",
+    "verified_scope": "publisher_data_availability_and_downloaded_supplementary_workbook",
+    "knowledge": "SD1包含生长实验，SD2是模型预测，SD3包含不同选择策略后的实验验证。需要分开登记预测与测量，并保留未命中候选。",
+    "project_use": "抗菌筛选策略参照；同菌种外部化学空间审计；不是ATP酶机制证据。",
+    "not_allowed": "不能把生长读数改称MIC、ATP IC50；不能把作者预测列作为实验标签。",
+    "training_status": "not_used; overlap_and_license_review_required",
+    "retrieved_date": "2026-08-26"
+  },
+  {
+    "source_id": "WARD_2025_ATP",
+    "title": "Quinoline ATP Synthase Inhibitors with Activity Against Multidrug Resistant Acinetobacter baumannii and Pseudomonas aeruginosa",
+    "doi": "10.1002/cmdc.202400952",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/40014581/",
+    "verified_scope": "indexed_primary_article_abstract; full_table_not_reextracted_this_phase",
+    "knowledge": "报道14种喹啉衍生物，并比较AB和PA ATP合酶抑制。跨物种靶点差异应独立处理。",
+    "project_use": "ATP合酶同类研究与既有外部数据回源核验优先项。",
+    "not_allowed": "本项目既有Task B可能已经包含此来源；不得重复计为新增独立验证。",
+    "training_status": "not_used_this_phase; check_existing_source_overlap",
+    "retrieved_date": "2026-08-26"
+  },
+  {
+    "source_id": "CHEMSCREENER_2026",
+    "title": "ChemScreener: an active learning enabled hit discovery workflow with WDR5 inhibitor case study",
+    "doi": "10.1186/s13321-026-01204-7",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/42010453/",
+    "verified_scope": "primary_article_abstract",
+    "knowledge": "以迭代实验回流更新候选选择，平衡预测活性与探索。启示是反馈必须对应真实测量，并与非迭代策略比较。",
+    "project_use": "闭环状态机及后续实验对照设计参照。",
+    "not_allowed": "WDR5不是ATP合酶；其命中率不能移植为本项目效果。",
+    "training_status": "methods_only",
+    "retrieved_date": "2026-08-26"
+  },
+  {
+    "source_id": "PDB_7P3W",
+    "title": "F1Fo-ATP synthase from Acinetobacter baumannii (state 3)",
+    "doi": "10.2210/pdb7P3W/pdb",
+    "url": "https://www.rcsb.org/structure/7P3W",
+    "verified_scope": "RCSB_entry",
+    "knowledge": "该结构来自Acinetobacter baumannii ATCC 17978，电镜分辨率4.30 Å。条目配体包含ATP、ADP和镁，不能据此声称内部Hit有实验复合物结构。",
+    "project_use": "靶点、菌株、构象和结构局限登记。",
+    "not_allowed": "结构条目不是化合物抑制率或亲和力标签。",
+    "training_status": "target_context_only",
+    "retrieved_date": "2026-08-26"
+  },
+  {
+    "source_id": "CHEMCROW_2024",
+    "title": "Augmenting large language models with chemistry tools",
+    "doi": "10.1038/s42256-024-00832-8",
+    "url": "https://www.nature.com/articles/s42256-024-00832-8",
+    "verified_scope": "primary_article",
+    "knowledge": "化学任务中的语言模型可以调用专业工具；语言解释与化学计算工具职责分开。",
+    "project_use": "受限工具调用、真实工具回执、人类确认；不要让聊天模型生成实验数值。",
+    "not_allowed": "接入聊天模型不等于取得化学验证或真实活性提升。",
+    "training_status": "architecture_only",
+    "retrieved_date": "2026-08-26"
+  },
+  {
+    "source_id": "DENNISON_2025_PYRIDINE",
+    "title": "Synthesis and Evaluation of Pyridine-Based Antibacterial Agents that Inhibit ATP Synthase in Acinetobacter baumannii",
+    "doi": "10.1021/acsomega.5c06380",
+    "url": "https://pubs.acs.org/doi/10.1021/acsomega.5c06380",
+    "verified_scope": "indexed_publisher_abstract_and_supporting_information_description; direct_page_403",
+    "knowledge": "研究同时涉及ATP合酶生化评价与菌体抗菌评价；补充材料列出ATP合成、ETC及docking资料。",
+    "project_use": "帮助区分靶点作用、菌体效应及机制混杂；优先复核已有Dataset v2对应来源。",
+    "not_allowed": "已在内部外部数据文件的reference字段出现，不能将再次检索当作全新独立样本。",
+    "training_status": "existing_source_reverification_only",
+    "retrieved_date": "2026-08-26"
+  }
+]

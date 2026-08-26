@@ -27,7 +27,7 @@ from research_decision_agent import competition_ranks_descending, constrained_di
 from workflow_evaluator import evaluate_workflow, write_evaluation
 
 
-PIPELINE_VERSION = "ATP-Navigator_Phase10_IntegratedWorkflow_v1.0"
+PIPELINE_VERSION = "ATP-Navigator_Phase11_IntegratedWorkflow_v1.1"
 
 
 def json_safe(value: Any) -> Any:
@@ -114,6 +114,9 @@ class NavigatorPipeline:
         for column in required_numeric:
             if column not in result:
                 result[column] = np.nan
+        # Invalid and duplicate structures must not change anyone else's percentiles.
+        excluded = result["structure_status"].ne("valid") | result["duplicate_structure_of"].fillna("").ne("")
+        result.loc[excluded, sorted(required_numeric)] = np.nan
         result["model_percentile"] = rank_percentile(result["model_score"], "lower_is_better")
         result["docking_percentile"] = rank_percentile(
             result["docking_score"], "lower_is_better"
@@ -273,7 +276,7 @@ class NavigatorPipeline:
             "decision_confidence",
             "evidence_coverage",
         ]
-        result = result[[*leading, *[c for c in result.columns if c not in leading]]]
+        result = result[[*leading, *sorted(c for c in result.columns if c not in leading)]]
         result = result.sort_values(["rank", "compound_id"], na_position="last").reset_index(drop=True)
         rank_summary = {
             "profile": profile,

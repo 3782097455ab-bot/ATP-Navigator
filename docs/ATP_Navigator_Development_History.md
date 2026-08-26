@@ -1,5 +1,19 @@
 # ATP-Navigator Development History
 
+## 2026-08-26：Phase 11 — Research Workspace & Reviewed Feedback Interface
+
+- 目标：将对话、真实决策工具和未来实验回流接到同一工作区；不重训。
+- 新增代码：`research_workspace.py`、`workspace_llm_adapter.py`、`workspace_io.py`、`experimental_feedback.py`、`feedback_evaluator.py`、`public_evidence_audit.py`；演示`examples/run_workspace_demo.py`与`tests/test_phase11_workspace.py`。
+- 新增资产：6张来源知识卡、17候选空白回填模板、来源审计、独立会话演示、操作指南与数据优先级文档。
+- 修改：`input_processor.py`（保护派生特征/非有限值/实验字段/身份）、`navigator_pipeline.py`（重复及无效结构不参与归一化、列序稳定）、`.gitignore`、README和长期注册文档。
+- 使用数据：现有17候选、冻结v2/v3工具、官网abaucin补充表；没有新增内部湿实验。
+- 完成功能：本地会话持久记录、动作确认及重放保护、9个白名单工具、已审查反馈分层版本、同端点回顾排名比较接口、公开表来源和结构重叠审计。
+- 模型变化：无；演示核验24个models文件hash一致。可选LLM路由只完成代码和解析测试，尚未真实API联调。
+- 性能变化：未训练，没有新生物学性能指标。17/17候选完成工作区评分；真实反馈0条、评价empty。跨进程确定性及输入保护已经验证。
+- 验证：Phase10/11合计28项测试通过；与旧Phase10演示相比，17候选的model_score、final_score、rank最大绝对差均为0。本轮是流程与可靠性升级，非排名性能升级。
+- 迭代问题：首次测试发现SQLite连接未关闭和文献别名漏检，修复后回归；最初演示保留，最终使用`results/phase11_workspace_demo_v1_1/`。
+- 限制：离线模式为有限命令而非自由聊天；科学闭环需要真实测量、人工审查、独立验证和明确发布授权；外部补充表的实验条件与再分发权仍需核验。
+
 审计日期：2026-08-23
 
 审计范围：Git 提交历史，以及仓库中的 `docs/`、`src/`、`models/`、`results/`、数据版本元数据和模型评价表。本文记录的是可由现有文件证明的开发历史，不把策划书中的未来计划当作已完成工作。

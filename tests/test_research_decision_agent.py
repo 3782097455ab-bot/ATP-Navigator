@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import sys
+import shutil
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -23,9 +25,23 @@ from research_decision_agent import (  # noqa: E402
 class ResearchDecisionAgentTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.agent = ResearchDecisionAgent(PROJECT_ROOT)
+        cls.temporary = tempfile.TemporaryDirectory(prefix="atp_phase9_isolated_")
+        cls.project = Path(cls.temporary.name)
+        config_path = PROJECT_ROOT / "config/decision_agent_v1.json"
+        config = json.loads(config_path.read_text(encoding="utf-8"))
+        for relative in ["config/decision_agent_v1.json", *config["source_files"].values()]:
+            source = PROJECT_ROOT / relative
+            if source.is_file():
+                target = cls.project / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(source, target)
+        cls.agent = ResearchDecisionAgent(cls.project)
         cls.summary = cls.agent.run("balanced", None, 6)
-        cls.results = PROJECT_ROOT / "results/phase9_decision_agent"
+        cls.results = cls.project / "results/phase9_decision_agent"
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.temporary.cleanup()
 
     def test_preserves_model_and_label_boundaries(self) -> None:
         trace = json.loads((self.results / "agent_trace.json").read_text(encoding="utf-8"))
@@ -78,7 +94,7 @@ class ResearchDecisionAgentTests(unittest.TestCase):
             ranking["profile"].eq("balanced") & ranking["historical_alias"].eq("Hit3"),
             "compound_id",
         ].iloc[0]
-        payload = explain_existing(PROJECT_ROOT, hit3, "balanced")
+        payload = explain_existing(self.project, hit3, "balanced")
         self.assertEqual(payload["experimental_ATP_activity"], "unknown")
         self.assertEqual(payload["experimental_MIC"], "unknown")
 

@@ -1,0 +1,104 @@
+[
+  {
+    "compound_id": "ATP-SMI-15737353FB69",
+    "max_morgan_similarity": 0.27586206896551724,
+    "nearest_external_smiles": "O=C(O)c1nn(Cc2ccccc2)nc1C(=O)O",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-4417138BF81D",
+    "max_morgan_similarity": 0.417910447761194,
+    "nearest_external_smiles": "CCc1nc2ccccc2c(C(=O)Nc2cccc(Cl)c2)c1C",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-5B36D3E11A3B",
+    "max_morgan_similarity": 0.2833333333333333,
+    "nearest_external_smiles": "CC(C)NC(=O)[C@@H](N)c1ccccc1",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-5D3E7B6B6796",
+    "max_morgan_similarity": 0.3055555555555556,
+    "nearest_external_smiles": "C[N+](C)(CCOc1ccccc1)Cc1ccccc1.O=C([O-])c1cc2ccccc2cc1O",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-775D33706F04",
+    "max_morgan_similarity": 0.3103448275862069,
+    "nearest_external_smiles": "N=C(N)NCCC[C@H](NC(=O)c1sccc1NS(=O)(=O)c1cccc2nsnc12)C(=O)O",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-874C2DE25FE4",
+    "max_morgan_similarity": 0.2604166666666667,
+    "nearest_external_smiles": "Cc1ccc(S(=O)(=O)N2C[C@@H](O)COC[C@H]3O[C@H](CC(=O)N[C@H]4CCN(Cc5ccccc5)C4)CC[C@@H]32)cc1",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-91E7552C2382",
+    "max_morgan_similarity": 0.3076923076923077,
+    "nearest_external_smiles": "Oc1ccc(OCc2ccccc2)cc1",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-94F73967C042",
+    "max_morgan_similarity": 0.25806451612903225,
+    "nearest_external_smiles": "O=C(CCCl)NCc1ccccc1",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-96FD6257D8BA",
+    "max_morgan_similarity": 0.2597402597402597,
+    "nearest_external_smiles": "c1cncc(-c2nc3ccc4ccccc4c3c3c2CCCC3)c1",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-9DA3213A09E8",
+    "max_morgan_similarity": 0.29850746268656714,
+    "nearest_external_smiles": "N#CCC(=O)NCc1ccccn1",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-BF69AB71C1A4",
+    "max_morgan_similarity": 0.2676056338028169,
+    "nearest_external_smiles": "CC(C)(C)C(=O)C[C@@H](Nc1ccccc1)c1ccc(Cl)cc1",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-C3308BEE03AC",
+    "max_morgan_similarity": 0.27419354838709675,
+    "nearest_external_smiles": "CC(C)NC(=O)[C@@H](N)c1ccccc1",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-C93E6EC67CDB",
+    "max_morgan_similarity": 0.2647058823529412,
+    "nearest_external_smiles": "CC(N)(Cc1cccc(O)c1)C(=O)O",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-CDED936B42F4",
+    "max_morgan_similarity": 0.34545454545454546,
+    "nearest_external_smiles": "CNC[C@@H](O)c1cccc(O)c1",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-CFA68A98711F",
+    "max_morgan_similarity": 0.3404255319148936,
+    "nearest_external_smiles": "Oc1ccc(OCc2ccccc2)cc1",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-E9798004BA11",
+    "max_morgan_similarity": 0.2988505747126437,
+    "nearest_external_smiles": "CCOc1ccc(NC2=NC(=O)/C(=C/c3cc(Br)c(OCc4ccccc4)c(OC)c3)S2)cc1",
+    "semantics": "structural_similarity_not_activity"
+  },
+  {
+    "compound_id": "ATP-SMI-FCA9CDF3313B",
+    "max_morgan_similarity": 0.2804878048780488,
+    "nearest_external_smiles": "CCc1nc2ccccc2c(C(=O)Nc2cccc(Cl)c2)c1C",
+    "semantics": "structural_similarity_not_activity"
+  }
+]

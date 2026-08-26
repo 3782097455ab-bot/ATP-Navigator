@@ -4,6 +4,19 @@
 
 登记原则：数据可用于训练不等于数据是真实活性。每个训练任务必须按来源、身份、target、organism、activity type、unit和计算/实验协议生成独立视图。
 
+## Phase 11新增资产（2026-08-26）
+
+| 资产 | 规模/位置 | 来源与使用边界 |
+|---|---|---|
+| 研究会话 | `workspace_local/`；本地忽略 | 用户文本、候选输入快照、确认和工具产物；不是活性数据 |
+| 实验回填接口/模板 | `data/templates/phase11_feedback_template.csv`；17行身份、结果空白 | `data/experimental/incoming/`接真实数据；`feedback_store/`保存审核版本，当前真实实验0条 |
+| 来源知识卡 | 6张；`data/literature/phase11_knowledge_cards.json` | 原始研究/官方结构数据库，带核验范围；仅检索/方法上下文 |
+| Abaucin补充表 | 6张分子表21,764行；测量8,404行/8,281唯一结构，作者预测13,360行 | DOI10.1038/s41589-023-01349-8官网；`data/external/source_cache/abaucin_2023/`；本地保留，不训练、不再分发待许可复核 |
+| 公开表审计 | `results/phase11_public_evidence/` | 来源hash、各表规模/重叠、17内部结构相似性；非实验性能 |
+| Phase11演示 | `results/phase11_workspace_demo_v1_1/` | 既有17候选；没有新增实验，空反馈评价明确empty；此前初版演示保留 |
+
+实验快照以Task A MIC、Task B ATP_IC50、Task C MMGBSA、CC50分离，进一步按菌株/靶点/单位/模式/协议分层。仅具名人工审查的精确development读数进入潜在训练视图；holdout/benchmark及其重叠结构不能训练。数据具备格式不代表足以训练或证明真实实验；自动训练与模型发布均未启用。
+
 ## 数据资产登记表
 
 | 数据名称 | 来源 | 数据规模 | 文件位置 | 主要字段 | 标签类型 | 可用于训练 | 数据限制 |

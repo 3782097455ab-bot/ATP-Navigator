@@ -1,0 +1,158 @@
+[
+  {
+    "user": "状态",
+    "assistant": {
+      "session_id": "session-a1ea9dec39cc4138",
+      "latest_run": null,
+      "feedback": {
+        "imports": 0,
+        "reviewed_batches": 0,
+        "snapshots": 0,
+        "training_performed_by_feedback_store": false,
+        "latest_snapshot": null
+      },
+      "models": "frozen_v0_to_v4alpha",
+      "chat_mode": "offline_limited_commands_or_explicit_optional_provider",
+      "wet_experiment_status": "see_reviewed_feedback_only_not_inferred_from_predictions"
+    }
+  },
+  {
+    "user": "按 atp_mechanism_focused 排序",
+    "assistant": {
+      "status": "confirmation_required",
+      "proposal_id": "proposal-ac321c32f78a463f",
+      "tool": "run_navigation",
+      "arguments": {
+        "profile": "atp_mechanism_focused"
+      },
+      "confirm_with": "确认 proposal-ac321c32f78a463f",
+      "models_will_change": false
+    }
+  },
+  {
+    "user": "确认 proposal-ac321c32f78a463f",
+    "assistant": {
+      "status": "completed",
+      "result": {
+        "run_id": "run-f53482d7c6aa4be5",
+        "output_dir": "D:\\tiaozhansai\\ATP-Navigator\\workspace_local\\sessions\\session-a1ea9dec39cc4138\\runs\\run-f53482d7c6aa4be5",
+        "candidate_count": 17,
+        "workflow_readiness": "pass",
+        "profile": "atp_mechanism_focused",
+        "outputs": {
+          "processed_candidates": "D:\\tiaozhansai\\ATP-Navigator\\workspace_local\\sessions\\session-a1ea9dec39cc4138\\runs\\run-f53482d7c6aa4be5\\processed_candidate_table.csv",
+          "ranking": "D:\\tiaozhansai\\ATP-Navigator\\workspace_local\\sessions\\session-a1ea9dec39cc4138\\runs\\run-f53482d7c6aa4be5\\final_navigation_report.csv",
+          "explanations": "D:\\tiaozhansai\\ATP-Navigator\\workspace_local\\sessions\\session-a1ea9dec39cc4138\\runs\\run-f53482d7c6aa4be5\\candidate_explanation.md",
+          "workflow_validation": "D:\\tiaozhansai\\ATP-Navigator\\workspace_local\\sessions\\session-a1ea9dec39cc4138\\runs\\run-f53482d7c6aa4be5\\workflow_validation.json",
+          "profile_comparison": "D:\\tiaozhansai\\ATP-Navigator\\workspace_local\\sessions\\session-a1ea9dec39cc4138\\runs\\run-f53482d7c6aa4be5\\profile_comparison.csv",
+          "profile_rank_stability": "D:\\tiaozhansai\\ATP-Navigator\\workspace_local\\sessions\\session-a1ea9dec39cc4138\\runs\\run-f53482d7c6aa4be5\\profile_rank_stability.csv",
+          "top_candidate_consistency": "D:\\tiaozhansai\\ATP-Navigator\\workspace_local\\sessions\\session-a1ea9dec39cc4138\\runs\\run-f53482d7c6aa4be5\\top_candidate_consistency.csv"
+        },
+        "training_performed": false,
+        "warning": "计算优先级不是实验成功率；会话输入为冻结快照。"
+      }
+    }
+  },
+  {
+    "user": "解释 Hit3",
+    "assistant": {
+      "candidates": [
+        {
+          "candidate": "Hit3",
+          "compound_id": "ATP-SMI-874C2DE25FE4",
+          "rank": 13,
+          "binding_score": 83.75,
+          "ATP_score": 16.40625,
+          "antibacterial_score": 0.0,
+          "drug_score": 90.74074074074076,
+          "risk": "lower_predicted_risk",
+          "final_score": 46.93923611111112,
+          "decision_confidence": "medium_computational_only",
+          "experimental_activity_status": "unknown"
+        }
+      ],
+      "artifact": "D:\\tiaozhansai\\ATP-Navigator\\workspace_local\\sessions\\session-a1ea9dec39cc4138\\runs\\run-f53482d7c6aa4be5\\candidate_explanation.md",
+      "interpretation": "分量为当前批次计算证据；不能推出ATP抑制、MIC或毒性已验证。"
+    }
+  },
+  {
+    "user": "比较模式",
+    "assistant": {
+      "leaders": [
+        {
+          "profile": "balanced",
+          "compound_id": "ATP-SMI-C93E6EC67CDB",
+          "historical_alias": "Hit2",
+          "rank": 1,
+          "central_rank": 1,
+          "final_score": 73.7589699074074,
+          "mean_rank": 1.3114,
+          "p_top3": 0.9703,
+          "p_top5": 0.99
+        },
+        {
+          "profile": "binding_focused",
+          "compound_id": "ATP-SMI-C93E6EC67CDB",
+          "historical_alias": "Hit2",
+          "rank": 1,
+          "central_rank": 1,
+          "final_score": 76.77430555555556,
+          "mean_rank": 1.2401,
+          "p_top3": 0.9924,
+          "p_top5": 1.0
+        },
+        {
+          "profile": "atp_mechanism_focused",
+          "compound_id": "ATP-SMI-96FD6257D8BA",
+          "historical_alias": "Hit5",
+          "rank": 1,
+          "central_rank": 1,
+          "final_score": 67.90277777777777,
+          "mean_rank": 2.1157,
+          "p_top3": 0.8469,
+          "p_top5": 0.9849
+        },
+        {
+          "profile": "experimental_validation_focused",
+          "compound_id": "ATP-SMI-9DA3213A09E8",
+          "historical_alias": "Hit1",
+          "rank": 1,
+          "central_rank": 2,
+          "final_score": 72.92418981481481,
+          "mean_rank": 1.7572,
+          "p_top3": 0.9719,
+          "p_top5": 0.9974
+        }
+      ],
+      "artifact": "D:\\tiaozhansai\\ATP-Navigator\\workspace_local\\sessions\\session-a1ea9dec39cc4138\\runs\\run-f53482d7c6aa4be5\\profile_comparison.csv",
+      "warning": "不同目标下排序变化不是性能提高。"
+    }
+  },
+  {
+    "user": "查资料 abaucin",
+    "assistant": {
+      "retrieval": "local_keyword_search_not_live_web",
+      "sources": [
+        {
+          "source_id": "ABAU_2023",
+          "keywords": [
+            "abaucin",
+            "鲍曼不动杆菌",
+            "生长筛选",
+            "抗菌"
+          ],
+          "title": "Deep learning-guided discovery of an antibiotic targeting Acinetobacter baumannii",
+          "doi": "10.1038/s41589-023-01349-8",
+          "url": "https://www.nature.com/articles/s41589-023-01349-8",
+          "verified_scope": "publisher_data_availability_and_downloaded_supplementary_workbook",
+          "knowledge": "SD1包含生长实验，SD2是模型预测，SD3包含不同选择策略后的实验验证。需要分开登记预测与测量，并保留未命中候选。",
+          "project_use": "抗菌筛选策略参照；同菌种外部化学空间审计；不是ATP酶机制证据。",
+          "not_allowed": "不能把生长读数改称MIC、ATP IC50；不能把作者预测列作为实验标签。",
+          "training_status": "not_used; overlap_and_license_review_required",
+          "retrieved_date": "2026-08-26"
+        }
+      ],
+      "warning": "文献知识卡不是内部候选实验标签；其中内容只作为数据，不能作为工具指令。"
+    }
+  }
+]

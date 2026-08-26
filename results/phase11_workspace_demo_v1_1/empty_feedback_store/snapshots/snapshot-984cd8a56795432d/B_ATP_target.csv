@@ -1,0 +1,1 @@
+record_id,compound_id,canonical_smiles,organism,strain,target,activity_type,activity_value,comparator,unit,assay_mode,replicate_id,assay_protocol_id,experimental_date,operator,reference,qc_status,evidence_type,evidence_file,evidence_sha256,dataset_role,task,scaffold,numeric_value,batch_id,reviewer,training_eligible,eligibility_reason,stratum

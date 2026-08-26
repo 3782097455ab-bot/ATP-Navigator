@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-08-26T06:57:42.216016+00:00",
+  "session_id": "session-a1ea9dec39cc4138",
+  "candidates": 17,
+  "full_v3_predictions": 17,
+  "ranked_candidates": 17,
+  "conversation_tools_executed": [
+    "status",
+    "run_navigation",
+    "explain_candidate",
+    "compare_profiles",
+    "find_knowledge"
+  ],
+  "model_files_checked": 24,
+  "all_model_files_unchanged": true,
+  "experimental_feedback_records": 0,
+  "feedback_evaluation_status": "empty_no_matched_reviewed_holdout",
+  "llm_api_used": false,
+  "supervised_training": false,
+  "limitation": "offline command workspace, not a free-form LLM chat; no prospective wet validation"
+}

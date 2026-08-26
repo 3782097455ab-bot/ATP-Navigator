@@ -6,6 +6,18 @@ AI 用于学习和整合已有虚拟筛选证据，辅助候选排序；当前�
 
 系统位于传统虚拟筛选之后、合成与生物实验之前。它把研究意图、Docking/MMGBSA/ADMET、外部知识、模型分歧和实验预算转化为可审计的候选优先级与下一实验建议。项目不是通用“药物发现平台”。
 
+## Phase 11会话工作区与实验回填
+
+```powershell
+python src/research_workspace.py --input results/demo/demo_input.csv --interactive
+```
+
+输入“状态”“按 atp_mechanism_focused 排序”“解释 Hit3”“比较模式”“查资料 ATP”。写入动作必须确认；会话和结果保存在本地`workspace_local/`。默认是有限命令模式，非自由聊天大模型；可选大模型工具路由尚未真实API联调。
+
+真实实验回填入口是`data/experimental/incoming/`，先使用`data/templates/phase11_feedback_template.csv`。经校验、人工审查后产生独立版本，不自动重训或发布。完整指南：[Phase11 Workspace and Feedback](docs/Phase11_Workspace_and_Feedback_Guide.md)；公开数据与后续需求：[Data Priorities](docs/Phase11_Public_Knowledge_and_Data_Priorities.md)。
+
+已保存的最终演示在`results/phase11_workspace_demo_v1_1/`，包含真实会话工具回执、17候选排序和明确为empty的湿实验反馈评价。未声称实验成功率或成本节约。
+
 ## Phase 10完整决策入口
 
 ```powershell
