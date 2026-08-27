@@ -248,7 +248,7 @@ def _archive_partial_summary(output: Path) -> str | None:
     return str(destination.relative_to(output.parents[1]))
 
 
-def _failure_audit(results: list[dict], output: Path) -> list[dict]:
+def _failure_audit(results: list[dict], output: Path, retry_performed: bool = False) -> list[dict]:
     rows = []
     for result in results:
         if result.get("status") != "failed":
@@ -272,7 +272,7 @@ def _failure_audit(results: list[dict], output: Path) -> list[dict]:
             "stderr_summary": stderr_summary,
             "technical_recoverable": bool(technical),
             "retry_recommended": bool(technical),
-            "retry_performed_in_finalization": False,
+            "retry_performed_in_finalization": bool(retry_performed),
             "attempt": result.get("attempt"),
             "elapsed_seconds": result.get("elapsed_seconds"),
             "result_path": str((folder / "result.json").relative_to(PROJECT)),
@@ -636,6 +636,15 @@ def run(project: Path, workers: int, batch_size: int, retry_failed: bool, max_ba
     archived_partial_summary = _archive_partial_summary(output)
     prior_qc_path = output / "full_library_qc_summary.json"
     prior_qc = json.loads(prior_qc_path.read_text(encoding="utf-8")) if prior_qc_path.is_file() else None
+    pre_retry_failures = []
+    if retry_failed:
+        for path in [output / "failed_candidate_audit.csv", output / "failed_candidate_audit.json",
+                     output / "phase14_execution_summary.json", output / "full_library_qc_summary.json"]:
+            if path.is_file():
+                destination = output / "audit/history" / (path.stem + "_pre_phase14_1_retry" + path.suffix)
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                if not destination.exists():
+                    shutil.copy2(path, destination)
     before = _load_model_snapshot(project); write_json(output / "model_hashes_before.json", before)
     protocol = _protocol(project); frame = _candidate_table(project)
     receptor = project / "workspace_local/artifacts/e5e92ede1b1d000b00a7e5dbe3f3b02f0df0cd63b47dd8a421eeb8bddb1083ed/receptor.pdbqt"
@@ -660,6 +669,16 @@ def run(project: Path, workers: int, batch_size: int, retry_failed: bool, max_ba
             pending.append(task)
         else:
             existing.append(result)
+    if retry_failed:
+        for task in pending:
+            path = Path(task["folder"]) / "result.json"
+            if path.is_file():
+                try:
+                    previous = json.loads(path.read_text(encoding="utf-8"))
+                    if previous.get("status") == "failed" and previous.get("signature") == task["signature"]:
+                        pre_retry_failures.append(previous.get("compound_id"))
+                except (OSError, ValueError, json.JSONDecodeError):
+                    pass
     initial_success_cache_hits = sum(r.get("status") == "success" for r in existing)
     initial_terminal_failures = sum(r.get("status") == "failed" for r in existing)
     all_results = list(existing)
@@ -712,15 +731,25 @@ def run(project: Path, workers: int, batch_size: int, retry_failed: bool, max_ba
           "actual_newly_executed": len(newly_executed),
           "pose_qc_pass": sum(r.get("status") == "success" and r.get("pose_qc") == "pass" for r in all_results),
           "processed": len(all_results), "remaining_at_start": len(pending)}
-    if completed_resume_qc:
+    if completed_resume_qc and not retry_failed:
         for key in ["cached", "initial_terminal_failures", "actual_newly_executed", "remaining_at_start"]:
             qc[key] = completed_resume_qc.get(key, qc[key])
         qc["finalization_cache_hits"] = initial_success_cache_hits
+    if retry_failed:
+        retry_ids = sorted(set(pre_retry_failures))
+        retry_results = [r for r in all_results if r.get("compound_id") in retry_ids]
+        qc.update({
+            "phase14_1_retry_attempted": len(retry_ids),
+            "phase14_1_retry_success": sum(r.get("status") == "success" for r in retry_results),
+            "phase14_1_retry_failed": sum(r.get("status") == "failed" for r in retry_results),
+            "phase14_1_retry_candidate_ids": retry_ids,
+            "cumulative_new_vina_executions_since_1468_cache": int((prior_qc or {}).get("actual_newly_executed", 0)) + len(retry_ids),
+        })
     write_json(output / "full_library_qc_summary.json", qc)
-    failures = _failure_audit(all_results, output)
+    failures = _failure_audit(all_results, output, retry_performed=retry_failed)
     analysis = _analysis(project, frame, all_results, output) if len(success) else {"status":"not_available"}
     after = {name: file_hash(project / name) for name in before}; write_json(output / "model_hashes_after.json", after)
-    summary = {"phase": PHASE, "protocol_id": PROTOCOL_ID,
+    summary = {"phase": "Phase 14.1" if retry_failed else PHASE, "protocol_id": PROTOCOL_ID,
                "protocol_file_hash": protocol_hash, "registry_protocol_hash": digest(frozen),
                "receptor_hash": receptor_hash, "tool_hash": tool_hash,
                "qc": qc, "analysis": analysis, "evidence_registry_records": evidence_count,

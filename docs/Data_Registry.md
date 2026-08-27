@@ -154,6 +154,13 @@ Phase 14没有产生新的监督标签。MIC、ATP activity、细胞毒性、静
 
 ## 新数据登记规则
 
+## Phase 14.1新增/更新资产
+
+| 数据名称 | 来源 | 数据规模 | 文件位置 | 标签类型 | 可用于训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| Phase 14.1最终Vina证据 | Phase 14中5个`insufficient memory`技术失败，在冻结`vina_7p3w_v1`下以2并发显式重试 | 1633 success；0 failed；4899 Registry records | `results/phase14/` | 真实计算工具证据 | 当前否 | 不等同Glide，不是生物活性或实验标签；重试前审计保存在`audit/history/` |
+| Hit1–Hit17 + IN-2身份审计 | 冻结内部ranking、candidate manifest、HTVS结构表、compound mapping | 18 queries；1 exact canonical；17 unresolved | `results/phase14_1/internal17_identity_audit.csv`、`docs/internal17_identity_audit.md` | identity/provenance QC | 否 | related mapping不得升级为exact；Hit3别名不能证明其属于HTVS-1633 |
+
 每次新增数据必须记录：
 
 1. 数据文件名、版本和SHA-256；

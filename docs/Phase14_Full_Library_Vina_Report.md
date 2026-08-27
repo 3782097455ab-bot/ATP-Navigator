@@ -16,29 +16,26 @@ Vina结果只登记为独立`vina_affinity`计算证据，不写入Glide字段�
 ## 2. 全库执行与QC
 
 - total/eligible：1633/1633；processed：1633；
-- success：1628；failed：5；恢复启动时cache hit：1468；
-- 恢复阶段真实新执行：165；最终汇总cache hit：1628；
-- pose QC pass：1628；
+- Phase 14初始终态为1628 success、5 failed；Phase 14.1仅对5个technical-recoverable内存失败执行显式重试；
+- Phase 14.1最终态：success=1633、failed=0；重试启动时cache hit=1628，真实新执行=5，max_workers=2；
+- pose QC pass：1633；
 - invalid structure：0；preparation failed：0；
-- Vina failed：5；pose QC failed：0。
+- Vina failed：0；pose QC failed：0。
 
-执行采用50–100条批次、content-addressed cache、失败结果保留和显式`retry_failed`。实测20并发触发Windows页面文件/内存错误，随后固定16并发完成剩余队列；最终仍有5条因`insufficient memory`终止。它们被保留为明确failed，未为追求100%成功率自动重试。该限制属于计算资源约束，不属于分子QC结果。
+执行采用50–100条批次、content-addressed cache、失败结果保留和显式`retry_failed`。实测20并发触发Windows页面文件/内存错误，随后固定16并发完成主队列；Phase 14保留5条`insufficient memory`失败。Phase 14.1经人工授权后，在完全相同的冻结科学协议下以2并发只重试这5条，5/5成功。该修复只改变执行资源并发，不改变receptor、box、ligand preparation、exhaustiveness、num_modes、energy_range或seed。
 
 ### 失败审计
 
-- `ATP-HTVS-E82D7E524403`：vina_failed / vina_failed:return_code_1；stderr=`Error: insufficient memory!`；technical_recoverable=true；retry_performed=false。
-- `ATP-HTVS-F716E067906C`：vina_failed / vina_failed:return_code_1；stderr=`Error: insufficient memory!`；technical_recoverable=true；retry_performed=false。
-- `ATP-HTVS-F79E64AB5B06`：vina_failed / vina_failed:return_code_1；stderr=`Error: insufficient memory!`；technical_recoverable=true；retry_performed=false。
-- `ATP-HTVS-F89CD1E9CA34`：vina_failed / vina_failed:return_code_1；stderr=`Error: insufficient memory!`；technical_recoverable=true；retry_performed=false。
-- `ATP-HTVS-F8D25E752EF8`：vina_failed / vina_failed:return_code_1；stderr=`Error: insufficient memory!`；technical_recoverable=true；retry_performed=false。
+- Phase 14原5条内存失败审计和重试前summary保存在`results/phase14/audit/history/`；
+- Phase 14.1最终失败数为0，未发生结构级、协议级或pose QC失败。
 
 ## 3. 全库结构与协议比较
 
-- 成功候选：1628；Bemis–Murcko scaffolds：564；
-- Morgan/Butina chemical-space clusters：928；
-- Vina affinity分布：min=-10.553，P5=-9.15165，median=-8.0335，mean=-7.902335995085996，P95=-6.113200000000002，max=-5.011 kcal/mol；
-- isolated scaffolds：320；largest scaffold size：83；
-- Glide/Vina matched subset：1628；Spearman=0.1644331085911322；Kendall=0.10971583402428257；
+- 成功候选：1633；Bemis–Murcko scaffolds：565；
+- Morgan/Butina chemical-space clusters：929；
+- Vina affinity分布：min=-10.553，P5=-9.1464，median=-8.029，mean=-7.899842008573179，P95=-6.056200000000004，max=-5.011 kcal/mol；
+- isolated scaffolds：321；largest scaffold size：84；
+- Glide/Vina matched subset：1633；Spearman=0.16871901379218926；Kendall=0.11266477813435863；
 - Top5 overlap=0；Top10 overlap=0。
 
 这些量只描述两个计算协议的排序一致性，不是实验验证，也不能据此断言候选具有生物活性。
@@ -47,17 +44,17 @@ Vina结果只登记为独立`vina_affinity`计算证据，不写入Glide字段�
 
 Hit3未能通过exact canonical SMILES映射到HTVS-1633，因此全库rank、percentile和scaffold-relative rank均为unknown；未使用名称猜测补齐。
 
-在Hit1–Hit17和IN-2共18个查询结构中，exact canonical SMILES映射数为1。其余映射状态见`results/phase14/internal17_global_position.csv`。所有无法确认的身份保持`not_present_in_htvs1633`或`unknown`。
+在Hit1–Hit17和IN-2共18个查询结构中，exact canonical SMILES映射数为1。Phase 14.1进一步按exact canonical、InChIKey、connectivity、neutral parent、tautomer、stereochemistry和历史ID分层审计：Hit13为exact canonical，其余17个unresolved；相关映射不会升级为exact。详见`results/phase14_1/internal17_identity_audit.csv`和`docs/internal17_identity_audit.md`。
 
-- 已确认映射：Hit13 → `ATP-HTVS-5658ECC62B06`；Vina rank=1077.0，percentile=33.866，scaffold-relative rank=11.0，affinity=-7.672 kcal/mol。
+- 已确认映射：Hit13 → `ATP-HTVS-FBBE5B904E6C`；Vina rank=1077.0，percentile=34.069，scaffold-relative rank=1.0，affinity=-7.676 kcal/mol。
 
 ## 5. 最大协议分歧
 
-- `ATP-HTVS-CF9A421CD50D`：Vina rank=41，Glide rank=1608，rank delta=-1567，class=extreme_disagreement。
-- `ATP-HTVS-898AE5CA69D9`：Vina rank=86，Glide rank=1623，rank delta=-1537，class=extreme_disagreement。
-- `ATP-HTVS-9505CBC4E7EE`：Vina rank=27，Glide rank=1550，rank delta=-1523，class=extreme_disagreement。
-- `ATP-HTVS-450A55DE989E`：Vina rank=103，Glide rank=1625，rank delta=-1522，class=extreme_disagreement。
-- `ATP-HTVS-1449F4F4BA71`：Vina rank=1540，Glide rank=20，rank delta=1520，class=extreme_disagreement。
+- `ATP-HTVS-CF9A421CD50D`：Vina rank=41，Glide rank=1612，rank delta=-1571，class=extreme_disagreement。
+- `ATP-HTVS-898AE5CA69D9`：Vina rank=86，Glide rank=1628，rank delta=-1542，class=extreme_disagreement。
+- `ATP-HTVS-450A55DE989E`：Vina rank=103，Glide rank=1630，rank delta=-1527，class=extreme_disagreement。
+- `ATP-HTVS-9505CBC4E7EE`：Vina rank=27，Glide rank=1554，rank delta=-1527，class=extreme_disagreement。
+- `ATP-HTVS-1449F4F4BA71`：Vina rank=1543，Glide rank=20，rank delta=1523，class=extreme_disagreement。
 
 最大分歧用于下一步证据获取优先级设计，不表示任一协议更接近真实活性。
 
@@ -81,6 +78,6 @@ Hit3未能通过exact canonical SMILES映射到HTVS-1633，因此全库rank、pe
 
 ## 8. 验证
 
-- 完整历史测试与Phase 14新增测试：120/120通过；
+- Phase 14原完整测试：120/120通过；Phase 14.1增加重试与身份审计回归测试，最终总数以Phase 14.1验收记录为准；
 - 24个受保护模型文件：阶段前后SHA-256 mismatch=0；
-- 最终QC、Registry、排名和图表均从保存的真实结果缓存重建，未在finalization阶段执行`retry_failed`。
+- 最终QC、Registry、排名和图表均从保存的真实工具结果重建；只有经人工授权的Phase 14.1五条技术失败执行了`retry_failed`。

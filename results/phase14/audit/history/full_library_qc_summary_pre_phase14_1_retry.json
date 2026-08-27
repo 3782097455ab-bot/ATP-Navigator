@@ -1,0 +1,1 @@
+{"actual_newly_executed": 165, "cached": 1468, "eligible": 1633, "failed": 5, "finalization_cache_hits": 1628, "initial_terminal_failures": 0, "invalid_structure": 0, "pose_qc_failed": 0, "pose_qc_pass": 1628, "preparation_failed": 0, "processed": 1633, "remaining_at_start": 165, "success": 1628, "total": 1633, "vina_failed": 5}

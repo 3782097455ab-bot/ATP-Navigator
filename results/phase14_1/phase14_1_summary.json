@@ -1,0 +1,67 @@
+{
+  "phase": "Phase 14.1",
+  "vina_retry": {
+    "attempted": 5,
+    "success": 5,
+    "failed": 0,
+    "workers": 2,
+    "protocol_id": "vina_7p3w_v1",
+    "protocol_file_hash": "19ff755d00741e9d2ec60c732f24dea6a28fd4f478940b28dbc11bea68c3fe36",
+    "receptor_hash": "e5e92ede1b1d000b00a7e5dbe3f3b02f0df0cd63b47dd8a421eeb8bddb1083ed"
+  },
+  "final_vina": {
+    "actual_newly_executed": 5,
+    "cached": 1628,
+    "cumulative_new_vina_executions_since_1468_cache": 170,
+    "eligible": 1633,
+    "failed": 0,
+    "initial_terminal_failures": 0,
+    "invalid_structure": 0,
+    "phase14_1_retry_attempted": 5,
+    "phase14_1_retry_candidate_ids": [
+      "ATP-HTVS-E82D7E524403",
+      "ATP-HTVS-F716E067906C",
+      "ATP-HTVS-F79E64AB5B06",
+      "ATP-HTVS-F89CD1E9CA34",
+      "ATP-HTVS-F8D25E752EF8"
+    ],
+    "phase14_1_retry_failed": 0,
+    "phase14_1_retry_success": 5,
+    "pose_qc_failed": 0,
+    "pose_qc_pass": 1633,
+    "preparation_failed": 0,
+    "processed": 1633,
+    "remaining_at_start": 5,
+    "success": 1633,
+    "total": 1633,
+    "vina_failed": 0
+  },
+  "identity_audit": {
+    "phase": "Phase 14.1",
+    "query_count": 18,
+    "htvs_count": 1633,
+    "relation_counts": {
+      "exact_canonical": 1,
+      "exact_inchikey": 0,
+      "same_connectivity": 0,
+      "neutral_parent_match": 0,
+      "tautomer_related": 0,
+      "stereochemistry_related": 0,
+      "historical_compound_mapping": 0,
+      "unresolved": 17
+    },
+    "exact_query_count": 1,
+    "unresolved_query_count": 17,
+    "hit3_relation": "unresolved",
+    "hit13_relation": "exact_canonical",
+    "input_hashes": {
+      "configs\\projects\\ab_atp_synthase\\vina_7p3w_v1\\candidate_identity_manifest.csv": "588006f24e857e2566cdaac47c8530c797fcaabfacd4cbaede85341211578d4c",
+      "data\\htvs_structures_v0_1.csv": "c144af1f1afbef864c84cea524e2b4e248d0460b999e933047cd26b51fbb2477",
+      "data\\compound_mapping_v1.csv": "e446071fd81ef698c38af503221201f8d6ad19e5569fb9691fa601718921066a",
+      "results\\ranking_output.csv": "016b291674b595da644ae7eb43780637d0aba60e931b59a1d60c6b569351c53e"
+    },
+    "policy": "related mappings are not exact structures; no name/rank-only inference"
+  },
+  "training_performed": false,
+  "historical_model_change": false
+}

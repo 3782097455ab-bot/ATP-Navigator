@@ -131,6 +131,14 @@ class Phase14FullLibraryTests(unittest.TestCase):
             self.assertEqual(kept["failure_reason"], "preserved")
             self.assertIsNone(_existing_result({"folder": str(root), "signature": "sig", "retry_failed": True}))
 
+    def test_retry_flag_does_not_change_frozen_protocol(self):
+        before = _protocol(PROJECT)
+        after = _protocol(PROJECT)
+        self.assertEqual(before, after)
+        self.assertEqual(after["exhaustiveness"], 16)
+        self.assertEqual(after["num_modes"], 9)
+        self.assertEqual(after["energy_range"], 3)
+
     def test_json_safe_converts_nonfinite_values(self):
         converted = _json_safe({"missing": float("nan"), "positive": 1.5})
         self.assertIsNone(converted["missing"])

@@ -1,0 +1,19 @@
+{
+  "phase": "Phase 14.1",
+  "vina_total": 1633,
+  "vina_success": 1633,
+  "vina_failed": 0,
+  "retry_attempted": 5,
+  "retry_success": 5,
+  "retry_workers": 2,
+  "scientific_protocol_changed": false,
+  "identity_queries": 18,
+  "identity_exact": 1,
+  "identity_unresolved": 17,
+  "protected_model_files": 24,
+  "model_hashes_unchanged": true,
+  "tests_run": 128,
+  "tests_passed": 128,
+  "training_performed": false,
+  "experimental_labels_added": 0
+}

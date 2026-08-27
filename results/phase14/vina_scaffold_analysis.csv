@@ -1,6 +1,6 @@
 scaffold,scaffold_size,best_candidate,best_vina_affinity,cluster_count,isolated_scaffold
-c1ccc(CNc2nc(NCc3ccccc3)c3ccccc3[nH+]2)cc1,83,ATP-HTVS-14AE04B6952B,-9.87,25,False
-O=C1CN(Cc2ccccc2)C(c2ccccc2)c2ccccc2N1,63,ATP-HTVS-95B9B67075F0,-7.11,20,False
+c1ccc(CNc2nc(NCc3ccccc3)c3ccccc3[nH+]2)cc1,84,ATP-HTVS-14AE04B6952B,-9.87,25,False
+O=C1CN(Cc2ccccc2)C(c2ccccc2)c2ccccc2N1,65,ATP-HTVS-95B9B67075F0,-7.11,20,False
 O=C(Nc1c[nH+]c2ccccc2c1NCc1ccccc1)c1ccccc1,48,ATP-HTVS-F97015D0DCF4,-8.995,17,False
 c1ccc(CNc2nc3ccccc3nc2NCc2ccccc2)cc1,41,ATP-HTVS-F93F310E89BE,-8.867,23,False
 O=C(Nc1ncc(NCc2ccccc2)c2ccccc12)c1ccccc1,33,ATP-HTVS-9C9650448F2C,-9.426,10,False
@@ -12,16 +12,16 @@ O=C(Nc1ccccc1)c1sc2ccccc2c1NCc1ccccc1,18,ATP-HTVS-60C7695B6F0C,-8.704,10,False
 O=C(Cc1ccccc1)Nc1c(NCc2ccccc2)cnc2ccccc12,16,ATP-HTVS-DDCEA98BB6BE,-9.044,7,False
 O=C(Nc1ccccc1)c1cc(NCc2ccccc2)cs1,16,ATP-HTVS-BCAE8AB499DF,-8.2,8,False
 O=C(NCc1ccccc1)c1cc(NCc2ccccc2)cs1,16,ATP-HTVS-D928A6F83D7E,-8.043,12,False
-c1ccc(CCNc2nc(NCc3ccccc3)[nH+]c3ccccc23)cc1,14,ATP-HTVS-9F7EB006111C,-9.124,7,False
+c1ccc(CCNc2nc(NCc3ccccc3)[nH+]c3ccccc23)cc1,14,ATP-HTVS-9F7EB006111C,-9.124,8,False
 O=C(Cc1ccccc1)Nc1c[nH+]c2ccccc2c1NCc1ccccc1,14,ATP-HTVS-134FC0CB3694,-8.67,10,False
 c1ccc(CNc2nc(NCc3ccccc3)c3ccccc3n2)cc1,12,ATP-HTVS-BE963CFE3042,-9.621,8,False
 O=C(Nc1ncc(Nc2ccccc2)c2ccccc12)c1ccccc1,12,ATP-HTVS-657E323E2351,-9.237,8,False
 c1ccc(C[NH2+]Cc2csc(Nc3ccccc3)n2)cc1,12,ATP-HTVS-CA6523C86104,-8.074,4,False
 c1ccc(CCNc2nc(NCc3ccccc3)c3ccccc3[nH+]2)cc1,11,ATP-HTVS-72BD9FFCF62D,-9.015,10,False
 O=C(Cc1ccccc1)Nc1nc2ccccc2cc1NCc1ccccc1,11,ATP-HTVS-CFB2EA2F52FD,-8.851,10,False
+O=C(Nc1nc2ccccc2cc1Nc1ccccc1)c1ccccc1,11,ATP-HTVS-AEE242E516D8,-8.589,5,False
 O=C(Cc1ccccc1)Nc1ncc(NCc2ccccc2)c2ccccc12,10,ATP-HTVS-7598FFEE7603,-9.064,8,False
 c1ccc(C[NH2+]Cc2cn(Cc3ccccc3)nc2-c2ccccc2)cc1,10,ATP-HTVS-FFD71C24E98D,-8.652,5,False
-O=C(Nc1nc2ccccc2cc1Nc1ccccc1)c1ccccc1,10,ATP-HTVS-AEE242E516D8,-8.589,5,False
 O=C(Nc1nccc(-c2ccccc2)c1C(=O)c1ccccc1)c1ccccc1,10,ATP-HTVS-84AF7025C22A,-7.906,3,False
 c1ccc(C[NH2+]Cc2c[nH]nc2-c2ccccc2)cc1,10,ATP-HTVS-A2EC0CC51325,-7.766,4,False
 c1ccc(C[NH2+]Cc2cn(-c3ccccc3)nc2-c2ccccc2)cc1,9,ATP-HTVS-3E3A2065ACC9,-8.435,7,False
@@ -500,6 +500,7 @@ C(=Cc1ccccc1)CNc1nc2ccccc2nc1NCc1ccccc1,1,ATP-HTVS-BBF7556FA5C3,-7.366,1,True
 O=C(COc1ccccc1)Nc1c(Nc2ccccc2)cnc2ccccc12,1,ATP-HTVS-94FDA1BF8648,-7.308,1,True
 c1ccc(C[NH2+]Cc2ccc(Nc3ccccc3)nc2)cc1,1,ATP-HTVS-EFBD886B8952,-7.293,1,True
 c1ccc(C[NH2+]CCOc2cccc3ccccc23)cc1,1,ATP-HTVS-138C9DBD3419,-7.285,1,True
+c1ccc(CNc2c[nH+]ccc2OCc2ccccc2)cc1,1,ATP-HTVS-F89CD1E9CA34,-7.263,1,True
 C=C(Nc1cc2ccccc2nc1NC(=O)c1ccccc1)c1ccccc1,1,ATP-HTVS-E2A28C61F774,-7.246,1,True
 O=C(Nc1nc2ccccc2cc1Nc1ccccc1)c1cccc(C[NH+]2CCCC2)c1,1,ATP-HTVS-CAF3F282F1EC,-7.243,1,True
 c1ccc(CNc2ncc(-c3ccccc3)s2)cc1,1,ATP-HTVS-B107F9A324A3,-7.235,1,True

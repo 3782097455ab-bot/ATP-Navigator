@@ -6,7 +6,7 @@
 |---|---|---|---|
 | rdkit | 导入模块2026.03.5 | 结构QC、描述符、3D几何辅助 | available，已执行 |
 | meeko | 模块0.7.1 | 配体PDBQT、已准备受体导入/受体转换接口 | available，已真实处理IN-2+17内部候选配体，并将历史pre-protonated 7P3W受体转换为PDBQT；不是重新执行Protein Preparation Wizard |
-| vina | 实际--version：1.2.7 | 开源对接 | available；本项目冻结`vina_7p3w_v1`全库执行1628/1633成功、5个内存型失败，1628 pose QC通过 |
+| vina | 实际--version：1.2.7 | 开源对接 | available；冻结`vina_7p3w_v1`在Phase 14.1最终1633/1633成功，1633 pose QC通过 |
 | ligprep | 安装MacroModel14.4包 | 商业配体准备 | installed_but_license_unavailable |
 | glide | 安装Glide10.3包 | HTVS/SP/XP输入合同 | installed_but_license_unavailable |
 | prime_mmgbsa | 安装PSP7.6包 | 商业MM/GBSA | installed_but_license_unavailable |
@@ -24,8 +24,8 @@
 - Vina executable SHA-256：`e0c4b2715e0c1a74f6e92d0f3be0328ac97542eafbc111e6b1efad897a73cce5`；
 - receptor PDBQT SHA-256：`e5e92ede1b1d000b00a7e5dbe3f3b02f0df0cd63b47dd8a421eeb8bddb1083ed`；
 - protocol file hash：`19ff755d00741e9d2ec60c732f24dea6a28fd4f478940b28dbc11bea68c3fe36`；Registry frozen protocol hash：`5b930c3ba77cbe9b622c4e285cab89f721bedf3693e1200e98d1a4e07dc4a403`；
-- 恢复阶段固定16并发；启动时1468个成功cache hit，只真实执行剩余165个；最终1628 success、5 failed；
-- 5个失败stderr均为`Error: insufficient memory!`，未启用`retry_failed`；
+- Phase 14主恢复阶段固定16并发；启动时1468个成功cache hit，只真实执行剩余165个；初始终态1628 success、5 failed；
+- 5个失败stderr均为`Error: insufficient memory!`；Phase 14.1经授权后以2并发只重试这5个，5/5成功，最终1633 success、0 failed；
 - 全过程未改变receptor、box、ligand preparation、exhaustiveness=16、num_modes=9、energy_range=3、seed=20260827或CPU/job=1。
 
 安装与使用：`examples/setup_open_toolchain.py`从官方发行获取固定Vina版本，并把Meeko/gemmi/psutil放入`workspace_local/tool_deps`，没有改动原模型的Python包集合。商业产品由用户管理安装与许可；程序不调用安装介质中的补丁工具。

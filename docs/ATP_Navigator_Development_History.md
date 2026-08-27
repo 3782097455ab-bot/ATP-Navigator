@@ -941,6 +941,18 @@ Model变化：无。训练：无。实验标签新增：0。当前没有新的�
 
 # Git 历史审计
 
+## 2026-08-28 — Phase 14.1：技术失败补齐与内部候选身份审计
+
+- 目标：在不改变`vina_7p3w_v1`科学参数的前提下处理5个内存型技术失败，并严格核对Hit1–Hit17、IN-2与HTVS-1633的身份关系；
+- 新增文件：`src/phase14_1_identity_audit.py`、`results/phase14_1/internal17_identity_audit.csv`、`results/phase14_1/internal17_identity_audit_summary.json`、`docs/internal17_identity_audit.md`及对应测试；
+- 修改文件：Phase 14 runner增加显式重试审计与pre-retry history保存；Phase 14全库汇总、Registry、排名、图表及维护文档更新；
+- 使用数据：冻结`vina_7p3w_v1`cache/checkpoint、内部17候选ranking、IN-2 manifest、HTVS结构表、compound mapping；
+- 实现功能：只重试5个technical-recoverable候选，max_workers=2；分层结构身份键和历史ID审计；
+- 结果：5/5重试成功，最终1633/1633 Vina success、1633 pose QC pass、4899 Registry records；18个身份查询中Hit13 exact canonical，其余17个unresolved；
+- 模型变化：无；训练：无；实验标签新增：0；
+- 性能变化：不适用。新增的是计算证据完整性和身份可追溯性，不是模型性能提升；
+- 当前限制：只有1个内部Hit能与HTVS-1633 exact匹配；Vina/Glide协议相关性弱，均不能当作实验活性。
+
 | Commit | 时间 | 可确认变化 |
 |---|---|---|
 | `b8a2697` | 2026-08-23T13:19:13+08:00 | GitHub 初始 README 和 `.gitignore`；没有项目代码、模型或结果。 |
