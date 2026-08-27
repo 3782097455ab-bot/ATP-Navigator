@@ -1,0 +1,42 @@
+{
+  "phase": "Phase 14",
+  "host_os": "Windows",
+  "purpose": "record empirically observed worker-count limits during real Vina execution",
+  "observations": [
+    {
+      "workers": 12,
+      "batch_size": 75,
+      "processed": 75,
+      "success": 75,
+      "technical_failures": 0,
+      "elapsed_minutes": 19.24,
+      "interpretation": "stable"
+    },
+    {
+      "workers": 20,
+      "batch_size": 100,
+      "processed": 100,
+      "success_first_attempt": 37,
+      "technical_failures_first_attempt": 63,
+      "failure_breakdown": {
+        "vina_return_code_1": 51,
+        "windows_pagefile_error_1455": 10,
+        "windows_memory_error_8": 1,
+        "vina_exit_3221225794": 1
+      },
+      "interpretation": "unsafe_on_this_host_due_to_memory_and_pagefile_pressure"
+    },
+    {
+      "workers": 16,
+      "retry_failed": true,
+      "retried": 63,
+      "recovered": 63,
+      "remaining_failed": 0,
+      "interpretation": "highest_observed_stable_configuration"
+    }
+  ],
+  "recommended_workers_this_host": 16,
+  "scientific_protocol_changed_during_retry": false,
+  "failed_values_used_as_evidence": false,
+  "scope": "execution-resource audit; not ligand quality or biological activity"
+}

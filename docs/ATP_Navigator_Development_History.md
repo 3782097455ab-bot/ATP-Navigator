@@ -1,5 +1,21 @@
 # ATP-Navigator Development History
 
+## 2026-08-28：Phase 14 Full-library 7P3W Vina Evidence Layer
+
+- 目标：在冻结`vina_7p3w_v1`下，为HTVS-1633建立同协议开放Docking证据层；不训练模型、不修改Decision Engine。
+- 新增代码/测试：`src/phase14_full_library_vina.py`、`tests/test_phase14_full_library.py`；支持content-addressed cache、批次检查点、显式失败重试、pose QC、Registry登记、排名和图表。
+- 执行：初期12并发75/75成功；20并发触发Windows内存/页面文件压力后固定16并发。最终恢复启动时1468个成功cache hit，只对剩余165个真实执行。
+- 最终QC：1633/1633明确终态；1628 success、5 failed、0 running、0 remaining；1628 pose QC pass。5个失败均为Vina return code 1且stderr=`Error: insufficient memory!`，本阶段未自动retry。
+- 证据：1628个成功候选各登记`vina_affinity`、`docking` bundle、`pose_qc`三条，Evidence Registry共4884条真实工具记录；失败候选无数值证据。
+- 分布：Vina affinity min -10.553、median -8.0335、mean -7.9023、max -5.011 kcal/mol。
+- 结构空间：564个Bemis–Murcko scaffolds，320个singleton，最大scaffold 83候选；Morgan2048/Butina得到928个clusters。
+- 协议比较：1628 matched subset的Glide/Vina Spearman 0.1644、Kendall 0.1097；Top5 overlap 0、Top10 overlap 0。最大分歧为`ATP-HTVS-CF9A421CD50D`，Vina rank 41、Glide rank 1608、delta -1567。
+- 内部映射：Hit1–Hit17和IN-2共18个查询结构只有Hit13 exact canonical SMILES匹配，映射到`ATP-HTVS-5658ECC62B06`，Vina rank 1077、percentile 33.866、scaffold rank 11、affinity -7.672。Hit3与IN-2不在HTVS-1633，位置保持unknown。
+- 输出：`results/phase14/`下的全库ranking、distribution、scaffold analysis、协议分歧、evidence completeness、失败审计、Registry导出、5张统计图和最终summary；旧部分summary移入`audit/history`并标记obsolete。
+- 模型变化：无；24个历史模型SHA-256前后完全一致。实验状态不变，未新增MIC、ATP enzyme或实验毒性结果。
+- 测试：完整历史+Phase 14共120/120通过。
+- 限制：Vina与历史Glide不是等价协议；低相关和Top-k无重叠只能证明协议分歧，不能判断哪一协议更接近生物活性。
+
 ## 2026-08-27：Multi-Backend Computational Workflow
 
 - 目标：将研究意图、真实计算、证据回流和冻结决策接通；本轮明确不训练新模型。

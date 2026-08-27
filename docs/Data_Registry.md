@@ -1,6 +1,19 @@
 # ATP-Navigator Data Registry
 
-更新时间：2026-08-27
+更新时间：2026-08-28
+
+## Phase 14：HTVS-1633冻结7P3W Vina证据层
+
+| 数据资产 | 来源与规模 | 文件位置 | 证据/标签类型 | 可用于训练 | 限制 |
+|---|---|---|---|---|---|
+| Full-library Vina ranking | 1633候选；1628真实Vina成功、5明确失败 | `results/phase14/full_library_vina_ranking.csv`、`full_library_qc_summary.json` | `vina_affinity`独立计算证据 | 当前否 | Vina不等于Glide，不是ATP/MIC/毒性实验标签 |
+| Phase 14 Evidence Registry export | 1628候选×3记录=4884条 | `results/phase14/evidence_registry_export.csv`、`evidence_registry_summary.csv` | 真实工具输出、docking bundle和pose QC | 否 | 只有成功作业登记数值；5个failed无数值证据 |
+| Failure audit | 5候选，均为Vina `insufficient memory` | `results/phase14/failed_candidate_audit.csv/json` | 运行失败与provenance QC | 否 | 技术上可恢复，但本阶段未自动重试 |
+| Scaffold/chemical-space audit | 1628成功结构；564 scaffolds；928 clusters | `results/phase14/vina_scaffold_analysis.csv`、`full_library_vina_ranking.csv` | 结构分层与派生rank | 否 | scaffold/cluster不代表活性分类 |
+| Glide/Vina disagreement | 1628 matched candidates | `results/phase14/glide_vina_protocol_disagreement.csv`、`glide_vina_protocol_metrics.json` | 协议比较派生值 | 否 | Spearman/Kendall不是实验性能；两协议字段严格隔离 |
+| Internal reference mapping | Hit1–Hit17+IN-2共18结构查询；exact match 1 | `results/phase14/internal17_global_position.csv` | 身份映射与全库位置 | 否 | 仅Hit13可确认映射；Hit3/IN-2等保持unknown |
+
+Phase 14没有产生新的监督标签。MIC、ATP activity、细胞毒性、静态MM/GBSA、MD/MMGBSA、Glide和Vina继续按endpoint/protocol/provenance隔离。
 
 ## Multi-Backend Workflow证据（2026-08-27）
 

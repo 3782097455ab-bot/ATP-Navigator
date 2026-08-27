@@ -1,0 +1,53 @@
+{
+  "phase": "Phase 14",
+  "date": "2026-08-28",
+  "status": "pass",
+  "calculation_terminal_state": {
+    "total": 1633,
+    "success": 1628,
+    "failed": 5,
+    "running": 0,
+    "remaining": 0,
+    "pose_qc_pass": 1628,
+    "failure_retry_performed": false
+  },
+  "artifact_row_counts": {
+    "full_library_vina_ranking": 1628,
+    "evidence_completeness_matrix": 1633,
+    "vina_scaffold_analysis": 564,
+    "glide_vina_protocol_disagreement": 1628,
+    "internal_reference_positions": 18,
+    "failed_candidate_audit": 5,
+    "evidence_registry_export": 4884,
+    "figures": 5
+  },
+  "evidence_registry": {
+    "vina_affinity": 1628,
+    "docking_bundle": 1628,
+    "pose_qc": 1628,
+    "total": 4884
+  },
+  "protocol_integrity": {
+    "protocol_id": "vina_7p3w_v1",
+    "protocol_file_hash": "19ff755d00741e9d2ec60c732f24dea6a28fd4f478940b28dbc11bea68c3fe36",
+    "registry_protocol_hash": "5b930c3ba77cbe9b622c4e285cab89f721bedf3693e1200e98d1a4e07dc4a403",
+    "receptor_hash": "e5e92ede1b1d000b00a7e5dbe3f3b02f0df0cd63b47dd8a421eeb8bddb1083ed",
+    "vina_executable_hash": "e0c4b2715e0c1a74f6e92d0f3be0328ac97542eafbc111e6b1efad897a73cce5"
+  },
+  "historical_models": {
+    "protected_files": 24,
+    "hash_mismatches": 0,
+    "unchanged": true
+  },
+  "tests": {
+    "run": 120,
+    "failures": 0,
+    "errors": 0,
+    "status": "pass"
+  },
+  "obsolete_partial_summary_status": "obsolete_partial_snapshot",
+  "training_performed": false,
+  "decision_engine_modified": false,
+  "experimental_labels_added": 0,
+  "biological_activity_claim": false
+}

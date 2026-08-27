@@ -1,6 +1,18 @@
 # ATP-Navigator Current System Status
 
-更新时间：2026-08-27
+更新时间：2026-08-28
+
+## Phase 14完成态：HTVS-1633同协议Vina证据层
+
+- 冻结`vina_7p3w_v1`已覆盖1633/1633候选终态：1628 success、5 failed、0 running、0 remaining；
+- 5个失败均在Vina网格计算后以`return_code_1 / insufficient memory`终止；未自动`retry_failed`，无失败数值进入Evidence Registry；
+- 1628个成功候选全部通过pose/file QC，形成4884条真实工具证据（vina affinity、docking result bundle、pose QC各1628条）；
+- Vina affinity范围-10.553至-5.011 kcal/mol，中位数-8.0335；564个Bemis–Murcko scaffold，其中320个singleton，最大scaffold含83个候选；Morgan/Butina结构簇928个；
+- Glide/Vina matched subset为1628：Spearman 0.1644、Kendall 0.1097、Top5 overlap 0、Top10 overlap 0；属于协议一致性审计，不是生物活性验证；
+- Hit1–Hit17与IN-2共18个查询结构中，只有Hit13与HTVS-1633 exact canonical SMILES匹配：Vina rank 1077、percentile 33.866、scaffold-relative rank 11；Hit3与IN-2均不在该结构集合，位置为unknown；
+- Model v0–v4-alpha共24个受保护文件SHA-256全部不变；完整回归测试120/120通过；未训练模型、未修改Decision Engine、未新增实验标签。
+
+主要入口：`results/phase14/phase14_execution_summary.json`、`results/phase14/full_library_vina_ranking.csv`、`docs/Phase14_Full_Library_Vina_Report.md`。
 
 当前阶段：Multi-Backend Computational Workflow已完成增量实现和小规模软件验证。系统定位：实验前计算证据整合与候选优先级辅助决策。Model v3保持正式监督模型；v0–v4-alpha与既有shadow模型均不重训。
 

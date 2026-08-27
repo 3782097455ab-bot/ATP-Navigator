@@ -1,6 +1,14 @@
 # ATP-Navigator Model Registry
 
-更新时间：2026-08-27
+更新时间：2026-08-28
+
+## Phase 14 Full-library Vina Evidence Layer：无模型变更
+
+- 未训练、替换或微调Model v0–v4-alpha；没有Model v5；
+- Phase 13保存的24个受保护模型文件在Phase 14前后SHA-256完全一致（mismatch=0）；
+- 1628个Vina affinity只作为`vina_7p3w_v1`独立计算证据，不写入历史Glide feature，不作为实验或监督label；
+- 全库rank、percentile、scaffold rank与Glide/Vina disagreement均为派生审计结果，不登记为模型性能提升；
+- Decision Engine评分逻辑和历史候选面板未修改。
 
 ## Multi-Backend Workflow（2026-08-27）：无模型变更
 

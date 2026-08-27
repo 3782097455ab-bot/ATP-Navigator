@@ -1,0 +1,4 @@
+﻿evidence_type,protocol_id,tool_version,record_count
+docking,vina_7p3w_v1,v1.2.7,1628
+pose_qc,vina_7p3w_v1,v1.2.7,1628
+vina_affinity,vina_7p3w_v1,v1.2.7,1628
