@@ -161,6 +161,16 @@ Phase 14没有产生新的监督标签。MIC、ATP activity、细胞毒性、静
 | Phase 14.1最终Vina证据 | Phase 14中5个`insufficient memory`技术失败，在冻结`vina_7p3w_v1`下以2并发显式重试 | 1633 success；0 failed；4899 Registry records | `results/phase14/` | 真实计算工具证据 | 当前否 | 不等同Glide，不是生物活性或实验标签；重试前审计保存在`audit/history/` |
 | Hit1–Hit17 + IN-2身份审计 | 冻结内部ranking、candidate manifest、HTVS结构表、compound mapping | 18 queries；1 exact canonical；17 unresolved | `results/phase14_1/internal17_identity_audit.csv`、`docs/internal17_identity_audit.md` | identity/provenance QC | 否 | related mapping不得升级为exact；Hit3别名不能证明其属于HTVS-1633 |
 
+## Phase 15新增派生资产
+
+| 数据名称 | 来源 | 数据规模 | 文件位置 | 标签类型 | 可用于训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| Protocol robustness | 1633个冻结Vina rank与历史Glide rank | 1633 rows | `results/phase15/protocol_robustness.csv` | 计算协议一致性派生值 | 否 | consensus不等于activity |
+| Uncertainty decomposition | 协议、目标代理、证据完整性、scaffold/cluster；model uncertainty当前不可用 | 1633 rows | `results/phase15/uncertainty_decomposition.csv` | 决策不确定性派生值 | 否 | model uncertainty为NaN，不填假值 |
+| VOI proxy | boundary、disagreement、novelty、missing evidence、relative cost | 1633 rows | `results/phase15/voi_proxy.csv` | acquisition heuristic | 否 | 不是真实经济价值、活性概率或实验label |
+| Acquisition panel v1 | 配置化六类选择规则 | 60 unique candidates | `results/phase15/acquisition_panel_v1.csv` | 下一步计算计划 | 否 | 建议获取MM/GBSA证据，不是实验候选有效性声明 |
+| Budget simulation | 10种策略×5种预算 | 50 rows | `results/phase15/budget_simulation.csv` | 工程/决策模拟 | 否 | 不输出biological hit rate或expected activity gain |
+
 每次新增数据必须记录：
 
 1. 数据文件名、版本和SHA-256；

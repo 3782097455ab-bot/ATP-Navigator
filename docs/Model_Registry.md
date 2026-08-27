@@ -192,3 +192,6 @@ Phase 10不登记为Model v5。其`model_score`仍是静态MM/GBSA计算任务�
 4. 与v0–v3在相同可比集合和协议下评价；
 5. 保存模型、参数、feature list、OOF/独立测试预测和限制；
 6. 同步更新本文、Current System Status、Data Registry和Development History。
+# Phase 15登记（非模型版本）
+
+Phase 15没有新增Model v5，也没有重新训练Model v0–v4-alpha。Acquisition Engine是透明、配置化的证据获取启发式：其输出是下一份计算证据的优先级，不是活性预测模型；VOI proxy、consensus、uncertainty和Hybrid score不得登记为监督label或生物活性概率。

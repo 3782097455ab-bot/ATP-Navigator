@@ -11,7 +11,8 @@
 | glide | 安装Glide10.3包 | HTVS/SP/XP输入合同 | installed_but_license_unavailable |
 | prime_mmgbsa | 安装PSP7.6包 | 商业MM/GBSA | installed_but_license_unavailable |
 | qikprop | 安装QikProp8.0包 | 商业性质预测 | installed_but_license_unavailable |
-| gnina/openmm/gmx_mmpbsa/desmond | unknown | 预留adapter | configuration_error：未实现该执行adapter，不声称可运行 |
+| gnina | executable探测 | CNN rescoring shadow backend | Phase 15认证：unavailable / executable_not_found；0条shadow score；不阻塞主流程 |
+| openmm/gmx_mmpbsa/desmond | unknown | 预留adapter | configuration_error：未实现该执行adapter，不声称可运行 |
 
 统一接口：detect、validate_environment、prepare_input、build_command、run、parse_output、register_evidence。工具记录包括ID/名称/版本/路径/许可/可用状态/backend/supported_tasks及可执行文件hash。不存在“LLM填一个Docking数值”的接口。
 

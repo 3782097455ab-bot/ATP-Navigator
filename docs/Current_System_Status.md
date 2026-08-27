@@ -2,6 +2,18 @@
 
 更新时间：2026-08-28
 
+## Phase 15完成态：预算感知证据获取
+
+- 1633个候选已形成Glide/Vina协议稳健性、五类不确定性、结构空间和证据缺口表；
+- 新增random、Vina top、Glide top、consensus top等baseline及5种高级策略和配置化Hybrid；
+- 已生成60候选MM/GBSA证据获取面板：15双协议强、15极端分歧、10边界不确定、10结构多样、5中位控制、5历史桥接/可解释；
+- budget=10/20/40/60/100均已模拟。Hybrid在相应预算下覆盖10/20/40/60/98个唯一scaffold；
+- GNINA状态为unavailable（executable not found），0条shadow score，不阻塞本阶段；
+- Research Workspace可只读回答预算、协议冲突和候选删除原因；未训练模型、未修改Decision Engine、未新增实验标签。
+- 完整回归测试141/141通过；24个受保护模型文件SHA-256 mismatch=0。
+
+主要入口：`results/phase15/acquisition_panel_v1.csv`、`results/phase15/budget_simulation.csv`、`docs/Phase15_Budget_Aware_Evidence_Acquisition_Report.md`。
+
 ## Phase 14.1完成态：HTVS-1633同协议Vina证据层与身份审计
 
 - 冻结`vina_7p3w_v1`已覆盖1633/1633候选终态：1633 success、0 failed、0 running、0 remaining；

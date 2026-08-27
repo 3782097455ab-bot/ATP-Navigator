@@ -1,0 +1,19 @@
+{
+  "phase": "Phase 15",
+  "candidate_pool": 1633,
+  "panel_size": 60,
+  "budget_scenarios": [10, 20, 40, 60, 100],
+  "selection_strategies": 10,
+  "uncertainty_components_declared": 5,
+  "model_uncertainty_status": "not_available",
+  "gnina_status": "unavailable",
+  "gnina_shadow_scores": 0,
+  "protected_model_files": 24,
+  "model_hash_mismatches": 0,
+  "tests_run": 141,
+  "tests_passed": 141,
+  "training_performed": false,
+  "historical_decision_engine_changed": false,
+  "experimental_labels_added": 0,
+  "phase16_started": false
+}

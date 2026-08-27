@@ -1,0 +1,34 @@
+{
+  "version": "phase15_v1",
+  "random_seed": 20260828,
+  "panel_size": 60,
+  "budgets": [10, 20, 40, 60, 100],
+  "rank_boundaries": [10, 20, 40, 60, 100],
+  "boundary_window": 10,
+  "estimated_cost_units": {
+    "prime_mmgbsa": 10.0,
+    "independent_admet": 3.0,
+    "gnina_shadow": 1.0
+  },
+  "hybrid_weights": {
+    "exploitation": 0.30,
+    "protocol_disagreement": 0.20,
+    "evidence_uncertainty": 0.15,
+    "scaffold_diversity": 0.15,
+    "chemical_space_coverage": 0.10,
+    "rank_boundary_proximity": 0.10
+  },
+  "panel_quotas": {
+    "multi_protocol_strong": 15,
+    "extreme_disagreement": 15,
+    "rank_boundary_uncertain": 10,
+    "scaffold_diverse": 10,
+    "medium_controls": 5,
+    "historical_bridge_interpretable": 5
+  },
+  "semantics": {
+    "consensus": "computational protocol consistency, not biological activity",
+    "voi_proxy": "evidence-acquisition heuristic, not economic value or activity probability",
+    "model_uncertainty": "unknown when no comparable candidate-level model outputs exist"
+  }
+}

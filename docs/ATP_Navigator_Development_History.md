@@ -941,6 +941,18 @@ Model变化：无。训练：无。实验标签新增：0。当前没有新的�
 
 # Git 历史审计
 
+## 2026-08-28 — Phase 15：Budget-aware Evidence Acquisition
+
+- 目标：在Glide/Vina显著分歧且候选级MM/GBSA预算有限时，选择最有信息价值的下一批计算对象；
+- 新增文件：`configs/acquisition_phase15.json`、`src/acquisition/`、`src/phase15_acquisition.py`、`results/phase15/`、`docs/Phase15_Budget_Aware_Evidence_Acquisition_Report.md`、Phase 15测试；
+- 修改文件：Research Workspace及可选LLM router增加只读acquisition advice；Current Status、Data/Model/Tool Registry同步；
+- 使用数据：1633个Vina/Glide matched candidates、结构/scaffold/cluster、QuickProp、Phase 14.1身份审计和Phase 8计划；
+- 实现功能：协议稳健性、五类不确定性、十种选择策略、VOI proxy、60候选六类面板、10/20/40/60/100预算模拟、Research Agent问答、GNINA非阻塞能力探测；
+- 结果：面板60 unique；Hybrid在budget 10/20/40/60/100覆盖10/20/40/60/98个unique scaffold；GNINA unavailable且0条shadow score；
+- 模型变化：无；训练：无；实验标签新增：0；
+- 性能变化：不适用。没有真实实验标签，不输出命中率或活性提升；本阶段提升的是证据获取覆盖与可解释性；
+- 当前限制：model uncertainty不可用；候选级MM/GBSA全缺，evidence-gap分辨率有限；cost为相对单位。
+
 ## 2026-08-28 — Phase 14.1：技术失败补齐与内部候选身份审计
 
 - 目标：在不改变`vina_7p3w_v1`科学参数的前提下处理5个内存型技术失败，并严格核对Hit1–Hit17、IN-2与HTVS-1633的身份关系；

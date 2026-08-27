@@ -1,0 +1,9 @@
+{
+  "reference_manifest": "results/phase14/model_hashes_after.json",
+  "verification_scope": "all protected Model v0-v4-alpha artifacts listed in the reference manifest",
+  "protected_file_count": 24,
+  "mismatch_count": 0,
+  "mismatched_files": [],
+  "status": "unchanged",
+  "verified_at_phase": "Phase 15"
+}

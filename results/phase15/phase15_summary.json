@@ -1,0 +1,65 @@
+{
+  "phase": "Phase 15",
+  "candidate_pool": 1633,
+  "panel_size": 60,
+  "panel_class_counts": {
+    "multi_protocol_strong": 15,
+    "extreme_disagreement": 15,
+    "rank_boundary_uncertain": 10,
+    "scaffold_diverse": 10,
+    "medium_controls": 5,
+    "historical_bridge_interpretable": 5
+  },
+  "budgets": [
+    10,
+    20,
+    40,
+    60,
+    100
+  ],
+  "strategies": [
+    "ATP_Navigator_hybrid",
+    "consensus_top",
+    "disagreement_aware",
+    "diversity_aware",
+    "evidence_gap",
+    "glide_top",
+    "random",
+    "rank_boundary",
+    "uncertainty_aware",
+    "vina_top"
+  ],
+  "protocol_robustness": {
+    "mean_disagreement": 0.2975130728960292,
+    "median_disagreement": 0.25674019607843135,
+    "extreme_ge_0_8": 42,
+    "low_le_0_2": 668
+  },
+  "voi_proxy": {
+    "minimum": 7.798998797179435e-07,
+    "median": 0.0013701144915636465,
+    "mean": 0.0020034234301256545,
+    "maximum": 0.00971571451712259,
+    "interpretation": "evidence-acquisition heuristic only"
+  },
+  "gnina": {
+    "backend": "gnina",
+    "status": "unavailable",
+    "reason": "executable_not_found",
+    "certification_timeout_seconds": 30,
+    "shadow_scores_generated": 0,
+    "blocking": false
+  },
+  "input_hashes": {
+    "ranking": "4a107c9739ee466c2133eba26427a8376a2e6f6e22dc112a7213d112e7e0fc42",
+    "disagreement": "53b8e9b65de2ee67481e36a8a2e621b72331d6ab4a067dd7074eb132dbacdffe",
+    "completeness": "f421f4a38cc1eb9a36d050953eb596423a2509cfd52c09997c624cfdc34d20bc",
+    "docking": "39052324588b608cec5bd6d237f9061a283c9195742b37336f592635e65070d9",
+    "identity": "b019e3474f5e748e83695ed62b7022151421904efbb787e9d80db4c4b8c3c228",
+    "phase8": "3e1ac24aed294ddc0431b1d714a823aaba63ce354388b2df0a7d9f247b28e7c0"
+  },
+  "config_hash": "0112bc842dd921e018b4889d9cd1cd0768a648a1d5917ce9abbbf91f267fc96a",
+  "training_performed": false,
+  "historical_models_modified": false,
+  "biological_activity_claim": false
+}

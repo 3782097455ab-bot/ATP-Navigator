@@ -1,0 +1,8 @@
+{
+  "backend": "gnina",
+  "status": "unavailable",
+  "reason": "executable_not_found",
+  "certification_timeout_seconds": 30,
+  "shadow_scores_generated": 0,
+  "blocking": false
+}
