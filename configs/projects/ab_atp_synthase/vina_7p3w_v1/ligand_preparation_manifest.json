@@ -1,0 +1,15 @@
+{
+  "protocol_id": "vina_7p3w_v1",
+  "preparation_tool": "RDKit 2026.03.5 + Meeko 0.7.1",
+  "identity_input": "explicit canonical/isomeric SMILES from the internal historical candidate registry",
+  "geometry": "ETKDGv3",
+  "geometry_seed": 20260827,
+  "force_field": "MMFF94 where complete parameters exist",
+  "protonation": "preserve explicit input formal charges",
+  "salt_handling": "preserve input; no inferred salts",
+  "pH_enumeration": false,
+  "tautomer_enumeration": false,
+  "stereochemistry": "preserve explicit input stereochemistry",
+  "failure_policy": "block candidate; do not switch force field, protonation, identity, or structure silently",
+  "relation_to_historical_ligprep": "new open-toolchain preparation; not equivalent to the historical LigPrep/Epik workflow"
+}

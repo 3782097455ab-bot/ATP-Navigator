@@ -1,3 +1,5 @@
 # Immutable releases use byte-level provenance hashes. Do not normalize their
 # line endings on add/checkout, including on Windows with core.autocrlf=true.
 data/external/releases/** -text
+configs/projects/ab_atp_synthase/vina_7p3w_v1/assets/** binary
+results/phase13/poses/** binary

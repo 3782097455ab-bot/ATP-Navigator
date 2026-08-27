@@ -18,7 +18,8 @@ from experimental_feedback import FeedbackStore
 from workspace_io import file_hash, identifier, now, safe_id, within
 
 TOOLS = {"status", "run_navigation", "explain_candidate", "compare_profiles", "find_knowledge",
-         "validate_feedback", "ingest_feedback", "prepare_iteration", "evaluate_feedback", "computation_evidence"}
+         "validate_feedback", "ingest_feedback", "prepare_iteration", "evaluate_feedback", "computation_evidence",
+         "candidate_docking_evidence", "vina_glide_disagreements"}
 MUTATING = {"run_navigation", "ingest_feedback", "prepare_iteration", "evaluate_feedback"}
 HELP = ("离线工作区支持：状态；按 balanced / binding_focused / atp_mechanism_focused / "
         "experimental_validation_focused 排序；解释 Hit3；比较模式；查资料 关键词；"
@@ -88,6 +89,7 @@ class ResearchWorkspace:
         if tool not in TOOLS:
             raise ValueError("Tool not allowed")
         expected = {"run_navigation": {"profile"}, "explain_candidate": {"candidate"},
+                    "candidate_docking_evidence": {"candidate"},
                     "find_knowledge": {"query"}, "validate_feedback": {"path"}, "ingest_feedback": {"path"}}.get(tool, set())
         if set(args) != expected or any(not isinstance(v, str) or len(v) > 500 for v in args.values()):
             raise ValueError("Unexpected tool arguments")
@@ -101,6 +103,16 @@ class ResearchWorkspace:
 
     def _execute(self, db, session, tool, args):
         feedback = FeedbackStore(self.project)
+        if tool in {"candidate_docking_evidence", "vina_glide_disagreements"}:
+            row=db.execute('SELECT project_id FROM workflow_run WHERE session_id=? ORDER BY created_at DESC LIMIT 1',
+                           (session['id'],)).fetchone()
+            if not row: return {'status':'no_computational_run'}
+            from workspace.state import State
+            from workspace.workflow_service import project_candidate_docking_evidence,project_vina_glide_disagreements
+            state=State(self.project,self.root)
+            if tool=="candidate_docking_evidence":
+                return project_candidate_docking_evidence(state,row['project_id'],args['candidate'])
+            return project_vina_glide_disagreements(state,row['project_id'])
         if tool == "computation_evidence":
             from workspace.workflow_service import session_evidence_answer
             return session_evidence_answer(db, session['id'])
@@ -229,6 +241,11 @@ class ResearchWorkspace:
             result = self.confirm(session_id, text.partition(" ")[2].strip())
         elif text in {"现在还缺什么证据？", "现在还缺什么证据", "缺什么证据", "/evidence"} or ("为什么" in text and "排名" in text):
             result = self.dispatch(session_id, "computation_evidence", {})
+        elif re.fullmatch(r".+目前有哪些Docking证据[？?]?", text, flags=re.IGNORECASE):
+            candidate=re.sub(r"目前有哪些Docking证据[？?]?$", "", text, flags=re.IGNORECASE).strip()
+            result = self.dispatch(session_id, "candidate_docking_evidence", {"candidate": candidate})
+        elif text in {"Vina和Glide对哪些候选分歧最大？", "Vina和Glide对哪些候选分歧最大?", "Vina和Glide对哪些候选分歧最大"}:
+            result = self.dispatch(session_id, "vina_glide_disagreements", {})
         elif text in {"状态", "/status"}:
             result = self.dispatch(session_id, "status", {})
         elif text in {"比较模式", "/compare"}:

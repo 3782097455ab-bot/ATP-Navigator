@@ -1,0 +1,38 @@
+{
+  "protocol_id": "vina_7p3w_v1",
+  "recovered_on": "2026-08-27",
+  "sources": [
+    {
+      "file": "ATP酶抑制剂的修饰改造.pptx",
+      "sha256": "b5bf3079bd25eeaeeea91da765729b204bc4e862f2190cd72046bc4a5912d286",
+      "slides": [5, 6, 7],
+      "supports": ["historical receptor preparation narrative", "SiteMap-selected Fo-interface pocket", "IN-2 Glide XP pose provenance"]
+    },
+    {
+      "file": "作图/作图/2-基于衍生数据库的虚拟筛选/数据/VSW.maegz",
+      "sha256": "c4048042f3e35cd25c2c1b1a9a188a4000425f39d10feefea7096e98e568cdd1",
+      "structure_index": 1,
+      "supports": ["historical receptor record", "exact grid name", "exact grid center and ranges", "PPW/Epik/force-field properties"]
+    },
+    {
+      "file": "作图/作图/1-阳性化合物和蛋白的MD/图-2/ATP-Ref.pdb",
+      "sha256": "d7ce2643ba6108e46856d22230ec18b20a17f83cef6818082d3be9b6c9df2a65",
+      "supports": ["historical IN-2 pose", "IN-2 protonated connectivity", "e/g receptor coordinates"]
+    },
+    {
+      "file": "作图/作图/1-阳性化合物和蛋白的MD/图-2/SIteMap.pdb",
+      "sha256": "3625da9d7c3680ab8b545e9c4422e3d564629e5c61d559886387b8766c2cc758",
+      "supports": ["117-point historical pocket cloud"]
+    }
+  ],
+  "parameter_sources": {
+    "box": "verbatim historical VSW.maegz gridbox center/range properties",
+    "exhaustiveness_16": "Phase 13 fixed protocol design choice; not recovered from Glide",
+    "num_modes_9": "Phase 13 fixed Vina output policy",
+    "energy_range_3": "Phase 13 fixed Vina output policy",
+    "seed_20260827": "Phase 13 reproducibility choice",
+    "cpu_1": "Phase 13 deterministic resource policy"
+  },
+  "identity_note": "Historical ATP-Ref.pdb ligand connectivity matches the published/vendor ATP Synthesis-IN-2 (compound 5) connectivity; the PDB pose stores a doubly protonated state.",
+  "claim_boundary": "No Vina value is an activity label, experimental result, Glide-equivalent score, or proof of binding."
+}

@@ -60,8 +60,18 @@ class MultiBackendWorkspace:
         for key in ['receptor','grid']:
             item=protocol.get(key)
             if item:
+                item=dict(item);path=Path(item['path'])
+                item['path']=str((state.project/path).resolve() if not path.is_absolute() else path.resolve())
+                protocol[key]=item
                 if file_hash(item['path'])!=item['sha256']: raise ValueError(key+' hash mismatch')
                 state.artifact(item['path'])
+        for candidate,item in protocol.get('reference_poses',{}).items():
+            item=dict(item);path=Path(item['path'])
+            item['path']=str((state.project/path).resolve() if not path.is_absolute() else path.resolve())
+            protocol['reference_poses'][candidate]=item
+            if file_hash(item['path'])!=item['sha256']:
+                raise ValueError('reference pose hash mismatch: '+candidate)
+            state.artifact(item['path'])
         state.freeze_protocol(protocol)
         for row in frame.to_dict('records'):
             state.candidate(project_id,row['compound_id'],row['SMILES'],row.get('historical_alias',''))
@@ -160,7 +170,9 @@ class MultiBackendWorkspace:
             result.append(row)
         return result
 
-    def resume(self,run_id,confirm=False,retry_failed=False):
+    def resume(self,run_id,confirm=False,retry_failed=False,max_new_docking_jobs=None):
+        if max_new_docking_jobs is not None and (type(max_new_docking_jobs) is not int or max_new_docking_jobs<1):
+            raise ValueError('max_new_docking_jobs must be a positive integer')
         run=self.get_run(run_id);state=self.state;output=Path(run['output_dir'])
         if confirm:
             with state.connect() as db: db.execute('UPDATE workflow_run SET confirmed=1 WHERE run_id=?',(run_id,))
@@ -168,6 +180,7 @@ class MultiBackendWorkspace:
             run=self.get_run(run_id)
         if not run['confirmed']: return {'status':'awaiting_confirmation','run_id':run_id,'executed':0}
         caps=self.capabilities_for(run);executor=MultiExecutor(state,caps);ids=json.loads(run['candidate_ids']);p=state.protocol(run['protocol_id']);cfg=json.loads(run['intent'])
+        new_docking_jobs=0;cache_hits=0
         archive=json.loads(run['input_artifact']);frame=pd.read_csv(state.verify_artifact(archive['artifact_hash']),dtype=str,keep_default_na=False).set_index('compound_id')
         self.import_evidence(run);self.set_node(run_id,'import','completed',ids)
         with state.connect() as db:
@@ -247,13 +260,18 @@ class MultiBackendWorkspace:
                         if not isinstance(p.get('mmgbsa'),dict) or any(p['mmgbsa'].get(k) in (None,'unknown') for k in ['job_type','force_field','solvation_model','receptor_flexibility']):
                             problems.append('MMGBSA_protocol_unconfirmed')
                     elif mode=='commercial_full': tool='glide';request['tool_id_override']='commercial_pose_qc'
+                    else:
+                        ligand_jobs=json.loads(self.node(run_id,'ligand_preparation')['jobs'])
+                        request['ligand']=executor.output(ligand_jobs[cid],'ligand.pdbqt')
+                        reference=p.get('reference_poses',{}).get(cid)
+                        if reference: request['reference_pose']=reference
                 elif stage=='properties' and mode=='commercial_full':
                     tool='qikprop'
                     preps=json.loads(self.node(run_id,'commercial_ligprep')['jobs'])
                     request['ligand']=executor.output(preps[cid],'prepared.sdf') if cid in preps else None
                 if stage not in {'structure_qc','properties'} and p.get('confirmation') not in {'researcher_confirmed','official_tutorial_smoke_only'}:
                     problems.append('protocol_confirmation_required')
-                for field in ['ligand','pose','receptor']:
+                for field in ['ligand','pose','receptor','reference_pose']:
                     if field in request:
                         if request[field] is None: problems.append(field+'_artifact_missing')
                         else: inputs.append(state.artifact(request[field]['path']))
@@ -261,7 +279,20 @@ class MultiBackendWorkspace:
                 j=jobs.get(cid) or executor.plan(run_id,run['project_id'],cid,tool,run['protocol_id'],request,inputs)
                 jobs[cid]=j;self.set_node(run_id,stage,'running',selection,jobs)
                 if problems: executor.update(j,'blocked','; '.join(problems))
-                else: executor.run(j,retry=retry_failed)
+                else:
+                    before=state.get_job(j)
+                    completed=executor.run(j,retry=retry_failed)
+                    if completed.get('cache_hit'): cache_hits+=1
+                    if stage=='docking' and completed['status']=='completed' and completed['attempt']>before['attempt']:
+                        new_docking_jobs+=1
+                        if max_new_docking_jobs is not None and new_docking_jobs>=max_new_docking_jobs:
+                            self.set_node(run_id,stage,'paused',selection,jobs,
+                                          reason='controlled_interruption_after_real_docking_jobs')
+                            paused=self.status(run_id)
+                            paused.update({'status':'paused','controlled_interruption':True,
+                                           'executed_new_docking_jobs':new_docking_jobs,'cache_hits':cache_hits})
+                            write_json(output/('controlled_interruption_'+uuid.uuid4().hex[:10]+'.json'),paused)
+                            return paused
             statuses=[state.get_job(j)['status'] for j in jobs.values()]
             status='completed' if len(jobs)==len(selection) and all(x=='completed' for x in statuses) else 'failed' if 'failed' in statuses else 'blocked'
             self.set_node(run_id,stage,status,selection,jobs,reason='' if status=='completed' else 'See candidate jobs and predecessor gates')
@@ -276,6 +307,7 @@ class MultiBackendWorkspace:
             decision=decide(state,run,decision_folder)
         self.set_node(run_id,'decision','completed',ids,reason='frozen_decision_evaluated; missing final scores remain unknown')
         result=self.status(run_id);result['decision']=decision
+        result['executed_new_docking_jobs']=new_docking_jobs;result['cache_hits']=cache_hits
         write_json(output/('execution_snapshot_'+uuid.uuid4().hex[:10]+'.json'),result)
         with state.connect() as db: db.execute('UPDATE workflow_run SET status=? WHERE run_id=?',('completed_with_blocks' if result['blocked_nodes'] else 'completed',run_id))
         state.event(run['session_id'],'computation_resume_finished',{'run_id':run_id,'decision_run_id':decision['decision_run_id'],'training':False})

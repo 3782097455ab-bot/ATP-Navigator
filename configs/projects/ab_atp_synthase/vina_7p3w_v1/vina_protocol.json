@@ -1,0 +1,42 @@
+{
+  "protocol_id": "vina_7p3w_v1",
+  "protocol_kind": "open_toolchain_project_validation",
+  "protocol_status": "ready",
+  "target_reference": "7P3W",
+  "relation_to_historical_glide": "derived_from_historical_site",
+  "historical_equivalence": "not_equivalent",
+  "confirmation": "researcher_confirmed",
+  "receptor": {
+    "path": "configs/projects/ab_atp_synthase/vina_7p3w_v1/assets/ATP_e_g_prepared.pdb",
+    "sha256": "b700d93fd622e74afd3b59f22e5b11f5bd4e764fcb38ad82410e0abb44db4722"
+  },
+  "receptor_hash": "b700d93fd622e74afd3b59f22e5b11f5bd4e764fcb38ad82410e0abb44db4722",
+  "receptor_preparation": "meeko_preprotonated_pdb",
+  "box": {
+    "center": [198.147968145161, 182.436946193548, 155.933369258065],
+    "size": [25.9912574278463, 25.9912574278463, 25.9912574278463]
+  },
+  "box_center_x": 198.147968145161,
+  "box_center_y": 182.436946193548,
+  "box_center_z": 155.933369258065,
+  "size_x": 25.9912574278463,
+  "size_y": 25.9912574278463,
+  "size_z": 25.9912574278463,
+  "ligand_preparation": "ETKDGv3_MMFF_preserve_input",
+  "preparation_tool": "RDKit 2026.03.5 + Meeko 0.7.1",
+  "exhaustiveness": 16,
+  "num_modes": 9,
+  "energy_range": 3,
+  "seed": 20260827,
+  "random_seed": 20260827,
+  "cpu": 1,
+  "vina_version": "1.2.7",
+  "reference_poses": {
+    "ATP-REF-IN2": {
+      "path": "configs/projects/ab_atp_synthase/vina_7p3w_v1/assets/ATP-Ref_IN2_complex.pdb",
+      "sha256": "d7ce2643ba6108e46856d22230ec18b20a17f83cef6818082d3be9b6c9df2a65"
+    }
+  },
+  "evidence_policy": "parallel open-toolchain evidence only; never mapped to Model v3 Glide features",
+  "scope": "pre-experiment computational protocol comparison; not biological validation"
+}

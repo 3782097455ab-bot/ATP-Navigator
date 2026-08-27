@@ -127,6 +127,17 @@
 - Phase 6B：Morgan fingerprint是结构处理产物，不是活性标签；MIC、IC50、细胞毒性、Activity和Inhibition必须分层，训练重叠数据不得报告为独立验证。
 - Phase 7：Task A MIC、Task B分层ATP activity与Task C静态MM/GBSA分别建模；Benchmark 2,080条不参与训练；source level/confidence只用于sample weighting；外部预测只能作为prior，不能改写为内部实验标签。
 - Phase 8：acquisition queue只决定下一批结构导出和同协议MM/GBSA计算顺序；pending/failed计算不得写为数值；P0审计通过前不启动下一轮训练。
+- Phase 13：`vina_7p3w_v1` affinity和pose只属于开放工具链的平行计算证据；不得写入Model v3的Glide字段，不得当作ATP/MIC/毒性实验标签。
+
+## Phase 13新增计算资产
+
+| 数据名称 | 来源 | 数据规模 | 文件位置 | 标签类型 | 可用于训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| 7P3W Vina冻结协议 | 原PPT、VSW.maegz、ATP.pdb、ATP-Ref.pdb、SIteMap.pdb | 1个协议、3份结构资产 | `configs/projects/ab_atp_synthase/vina_7p3w_v1/` | 计算协议/来源元数据 | 否 | 从历史位点派生但不与Glide等价；受体为历史prepared PDB的Meeko转换 |
+| 5候选项目门控 | IN-2、Hit1/2/3/5 | 5/5真实成功 | `results/phase13/validation_5_results.json` | Vina计算证据 | 否 | 不是实验活性；IN-2为reference，不是内部17之一 |
+| 内部17候选Vina结果 | 冻结内部结构、`vina_7p3w_v1` | 17 affinity、17 pose、17 pose QC；成功17/失败0 | `results/phase13/internal_17_results.json`、`poses/` | 同协议开放对接证据 | 当前否 | 只能同cohort排序；不得替代Glide/Model v3输入 |
+| Phase 13 Evidence Registry导出 | 真实工具、历史冻结证据和冻结决策快照 | 309 records；其中18个Vina affinity | `results/phase13/evidence_registry_export.csv` | 混合来源但逐条协议隔离 | 否 | 309不是实验数据；IN-2加17内部候选共18个Vina数值 |
+| Open-toolchain shadow analysis | Vina、历史Glide、静态MM/GBSA、Model v3 rank | 17 candidates | `results/phase13/open_toolchain_shadow_analysis.csv` | 描述性rank comparison | 否 | n=17；不是biological validation，不判断后端真实准确性 |
 
 ## 新数据登记规则
 

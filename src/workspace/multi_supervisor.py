@@ -35,8 +35,11 @@ def main():
                 if not item.is_relative_to(root): raise ValueError('Output path escape')
                 artifacts.append({'path':str(item),'sha256':file_hash(item)})
     except Exception as e: error=type(e).__name__+': '+str(e);rc=-1
+    stdout=root/'stdout.txt';stderr=root/'stderr.txt'
     write_json(root/'receipt.json',{'return_code':rc,'error':error,'completed_at':now(),
-                 'command_sha256':file_hash(path),'result_sha256':result_hash,'artifacts':artifacts})
+                 'command_sha256':file_hash(path),'result_sha256':result_hash,'artifacts':artifacts,
+                 'stdout_sha256':file_hash(stdout) if stdout.is_file() else None,
+                 'stderr_sha256':file_hash(stderr) if stderr.is_file() else None})
 
 
 if __name__=='__main__': main()

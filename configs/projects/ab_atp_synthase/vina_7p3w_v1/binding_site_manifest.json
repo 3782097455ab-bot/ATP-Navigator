@@ -1,0 +1,38 @@
+{
+  "protocol_id": "vina_7p3w_v1",
+  "protocol_status": "ready",
+  "relation_to_historical_glide": "derived_from_historical_site",
+  "historical_grid_name": "InducedFit_1_rec-1_pv-6-out-gridgen",
+  "box": {
+    "center": [198.147968145161, 182.436946193548, 155.933369258065],
+    "size": [25.9912574278463, 25.9912574278463, 25.9912574278463],
+    "units": "angstrom"
+  },
+  "box_source": {
+    "file": "作图/作图/2-基于衍生数据库的虚拟筛选/数据/VSW.maegz",
+    "sha256": "c4048042f3e35cd25c2c1b1a9a188a4000425f39d10feefea7096e98e568cdd1",
+    "structure_index": 1,
+    "properties": [
+      "r_glide_gridbox_xcent",
+      "r_glide_gridbox_ycent",
+      "r_glide_gridbox_zcent",
+      "r_glide_gridbox_xrange",
+      "r_glide_gridbox_yrange",
+      "r_glide_gridbox_zrange"
+    ]
+  },
+  "corroborating_site_map": {
+    "asset": "configs/projects/ab_atp_synthase/vina_7p3w_v1/assets/SiteMap_points.pdb",
+    "sha256": "3625da9d7c3680ab8b545e9c4422e3d564629e5c61d559886387b8766c2cc758",
+    "point_count": 117,
+    "bounds": [[189.29, 181.889, 157.962], [199.29, 192.889, 172.962]]
+  },
+  "historical_reference_pose": {
+    "candidate_id": "ATP-REF-IN2",
+    "asset": "configs/projects/ab_atp_synthase/vina_7p3w_v1/assets/ATP-Ref_IN2_complex.pdb",
+    "sha256": "d7ce2643ba6108e46856d22230ec18b20a17f83cef6818082d3be9b6c9df2a65",
+    "ligand_residue": "UNK Z 999",
+    "heavy_atom_centroid": [197.925935483871, 183.017258064516, 155.908774193548]
+  },
+  "non_equivalence_statement": "The numerical center/range are recovered historical Glide metadata, but Vina search/scoring and grid semantics differ. vina_7p3w_v1 is not Glide-equivalent."
+}

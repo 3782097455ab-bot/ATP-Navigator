@@ -1,0 +1,6 @@
+compound_id,historical_alias,SMILES
+ATP-SMI-9DA3213A09E8,Hit1,C[NH+](C)Cc1ccc(C[NH2+]Cc2cc(C(=O)N[C@@H](C#N)c3ccccc3)ccn2)cc1
+ATP-SMI-C93E6EC67CDB,Hit2,C[NH2+]C[C@@H](NC(=O)c1cc(NCc2cccc(C[NH+](C)C)c2)c(Cl)s1)c1ccccc1
+ATP-SMI-874C2DE25FE4,Hit3,Cc1ccc(-c2nn(Cc3ccccc3)cc2C[NH2+]Cc2ccccc2C[N@H+]2CC[C@@H](O)C2)cc1
+ATP-SMI-96FD6257D8BA,Hit5,C[NH+]1CCN(c2ccc(CC[NH2+]Cc3cn(-c4ccccc4)nc3-c3cccnc3)cc2)CC1
+ATP-REF-IN2,IN-2,C[NH+](C)Cc1ccc(C[NH2+]Cc2cc3ccccc3nc2SCc2ccccc2)cc1

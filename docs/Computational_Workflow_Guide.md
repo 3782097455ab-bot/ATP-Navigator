@@ -108,4 +108,8 @@ Glide、Glide XP、Vina和Prime各自保留证据类型/工具版本/协议/来�
 
 参考官方[AutoDock Vina基本对接教程](https://autodock-vina.readthedocs.io/en/latest/docking_basic.html)、[Vina v1.2.7发行](https://github.com/ccsb-scripps/AutoDock-Vina/releases/tag/v1.2.7)、[Schrödinger DockingLicense接口](https://learn.schrodinger.com/public/python_api/2026-2/api/schrodinger.glide.html)。实际安装为2024-2产品包；许可特征也结合本地产品启动脚本核对。初次Glide探测使用旧IMPACT_GLIDE项，最终改为GLIDE_MAIN/SP/XP并重新签出核验，仍未通过。
 
-当前最关键外部缺口：合法可用的商业计算许可，以及由研究者确认的7P3W受体准备/位点/grid或新Vina box。软件不能替代这项科学协议确认；目前不能声称7P3W的3–5个候选或17候选新计算全链已完成。
+Phase 13已经从历史PPT、VSW、SiteMap和IN-2 pose恢复了可追溯7P3W位点，并冻结`vina_7p3w_v1`。box中心为(198.147968, 182.436946, 155.933369) Å，三轴尺寸均为25.991257 Å，逐字取自`VSW.maegz`历史gridbox属性。它是`derived_from_historical_site`，不是Glide等价协议。
+
+本项目已真实完成IN-2+17内部候选的Vina链；5候选门控5/5、内部候选17/17、pose QC全部通过。Agent可问“Hit3目前有哪些Docking证据？”和“Vina和Glide对哪些候选分歧最大？”，回答来自共享Registry并保留tool family/protocol。受控暂停恢复、缓存不重算和输出hash保持已实测。
+
+当前最关键外部缺口改为：合法商业许可；开放工具链MM/GBSA/ADMET的明确协议、校准和小规模验证；以及真实ATP酶/MIC/毒性实验回流。1633候选仍未执行，仅有计划。Vina与历史Glide排序在n=17上Spearman -0.0196、Kendall 0.0000、Top-5 overlap 1/5，该结果只说明协议分歧，不能作为生物活性验证或后端准确性结论。详见`docs/Phase13_7P3W_Vina_Validation_Report.md`。

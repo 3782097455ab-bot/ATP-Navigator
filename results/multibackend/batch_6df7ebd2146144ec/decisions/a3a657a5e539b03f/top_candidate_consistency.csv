@@ -1,0 +1,6 @@
+compound_id,historical_alias,profiles_evaluated,top3_profile_count,top5_profile_count,best_rank,worst_rank,mean_profile_rank,interpretation
+ATP-REF-IN2,IN-2,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-874C2DE25FE4,Hit3,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-96FD6257D8BA,Hit5,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-9DA3213A09E8,Hit1,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-C93E6EC67CDB,Hit2,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency

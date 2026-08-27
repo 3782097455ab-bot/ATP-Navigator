@@ -1,0 +1,6 @@
+compound_id,evidence_type,raw_value,tool_id,tool_version,protocol_id,source_batch,cohort_rank,cohort,comparison_scope,cross_protocol
+ATP-REF-IN2,vina_affinity,-8.212,autodock_vina,v1.2.7,vina_7p3w_v1,batch_6df7ebd2146144ec,2,"[""autodock_vina"", ""v1.2.7"", ""vina_7p3w_v1"", ""batch_6df7ebd2146144ec"", ""vina_affinity""]",within_cohort_only,False
+ATP-SMI-874C2DE25FE4,vina_affinity,-8.846,autodock_vina,v1.2.7,vina_7p3w_v1,batch_6df7ebd2146144ec,1,"[""autodock_vina"", ""v1.2.7"", ""vina_7p3w_v1"", ""batch_6df7ebd2146144ec"", ""vina_affinity""]",within_cohort_only,False
+ATP-SMI-96FD6257D8BA,vina_affinity,-8.085,autodock_vina,v1.2.7,vina_7p3w_v1,batch_6df7ebd2146144ec,4,"[""autodock_vina"", ""v1.2.7"", ""vina_7p3w_v1"", ""batch_6df7ebd2146144ec"", ""vina_affinity""]",within_cohort_only,False
+ATP-SMI-9DA3213A09E8,vina_affinity,-8.173,autodock_vina,v1.2.7,vina_7p3w_v1,batch_6df7ebd2146144ec,3,"[""autodock_vina"", ""v1.2.7"", ""vina_7p3w_v1"", ""batch_6df7ebd2146144ec"", ""vina_affinity""]",within_cohort_only,False
+ATP-SMI-C93E6EC67CDB,vina_affinity,-7.887,autodock_vina,v1.2.7,vina_7p3w_v1,batch_6df7ebd2146144ec,5,"[""autodock_vina"", ""v1.2.7"", ""vina_7p3w_v1"", ""batch_6df7ebd2146144ec"", ""vina_affinity""]",within_cohort_only,False

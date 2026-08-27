@@ -18,6 +18,17 @@ class MultiExecutor:
         command={'request':request,'tool_version':info['tool_version'],
                  'executable_sha256':info.get('executable_sha256'),'protocol_hash':digest(self.state.protocol(protocol)),
                  'worker_sha256':file_hash(self.state.project/('src/tools/commercial_worker.py' if tool in {'ligprep','glide','prime_mmgbsa','qikprop'} else 'src/tools/computation_worker.py'))}
+        # A larger candidate-library snapshot does not invalidate a completed
+        # per-candidate calculation when request, protocol, executable and
+        # worker are byte-identical. Reuse is explicit and linked to the new run.
+        with self.state.connect() as db:
+            prior=db.execute('''SELECT job_id FROM calculation_job
+                WHERE project_id=? AND candidate_id=? AND tool_id=? AND protocol_id=?
+                  AND command_manifest=? AND status='completed'
+                ORDER BY completed_at DESC LIMIT 1''',(project,candidate,tool,protocol,encode(command))).fetchone()
+            if prior:
+                db.execute('INSERT OR IGNORE INTO workflow_job_link VALUES (?,?)',(batch,prior['job_id']))
+                return prior['job_id']
         job=self.state.job(batch,project,candidate,tool,protocol,inputs,command)
         with self.state.connect() as db:
             db.execute("UPDATE calculation_job SET status='awaiting_confirmation' WHERE job_id=? AND status='planned'",(job,))
@@ -105,6 +116,11 @@ class MultiExecutor:
         receipt=json.loads(receipt_path.read_text(encoding='utf-8'))
         try:
             if receipt['command_sha256']!=file_hash(folder/'command.json'): raise ValueError('Command tampered')
+            for stream in ['stdout','stderr']:
+                stream_path=folder/(stream+'.txt')
+                expected=receipt.get(stream+'_sha256')
+                if expected is not None and (not stream_path.is_file() or file_hash(stream_path)!=expected):
+                    raise ValueError(stream+' artifact changed')
             if receipt['return_code']!=0:
                 self.update(job_id,'failed',receipt.get('error') or 'Native process failed',return_code=receipt['return_code'],completed_at=receipt['completed_at'])
                 return self.state.get_job(job_id)
@@ -113,6 +129,8 @@ class MultiExecutor:
             info=self.capabilities['tools'][job['tool_id']];adapt=adapter(info)
             result=adapt.parse_output(path,job['candidate_id'])
             artifacts=[self.state.artifact(path),self.state.artifact(folder/'command.json'),self.state.artifact(receipt_path)]
+            for stream in ['stdout.txt','stderr.txt']:
+                if (folder/stream).is_file(): artifacts.append(self.state.artifact(folder/stream))
             for item in receipt['artifacts']:
                 p=Path(item['path']).resolve()
                 if not p.is_relative_to(folder.resolve()) or file_hash(p)!=item['sha256']: raise ValueError('Native artifact changed')

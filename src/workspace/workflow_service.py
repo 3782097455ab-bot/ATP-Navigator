@@ -1,8 +1,76 @@
 """UI-ready local service functions; one state/registry, no independent chat cache."""
 import json
 from pathlib import Path
+import pandas as pd
 from .multi_workflow import MultiBackendWorkspace
 from .multi_evidence import completeness,enriched
+
+
+def _candidate_identity(state, project, query):
+    """Resolve an exact candidate id or historical alias without fuzzy identity guesses."""
+    normalized=str(query).strip().casefold()
+    with state.connect() as db:
+        rows=[dict(row) for row in db.execute(
+            'SELECT candidate_id,alias,smiles FROM candidate WHERE project_id=?',(project,))]
+    matches=[row for row in rows if normalized in {
+        str(row['candidate_id']).casefold(),str(row.get('alias') or '').casefold()}]
+    if len(matches)!=1:
+        return None,{'status':'not_found' if not matches else 'ambiguous_identity',
+                     'query':query,'matches':[row['candidate_id'] for row in matches]}
+    return matches[0],None
+
+
+def project_candidate_docking_evidence(state,project,query):
+    """Return protocol-isolated docking evidence from the shared registry."""
+    candidate,error=_candidate_identity(state,project,query)
+    if error: return error
+    allowed={'docking','vina_affinity','glide_score','glide_xp_score','docking_score'}
+    records=[row for row in enriched(state,project)
+             if row['compound_id']==candidate['candidate_id'] and row['evidence_type'] in allowed]
+    numeric_keys={(json.loads(row['provenance']).get('tool_family',row['tool_id']),row['protocol_id'])
+                  for row in records if row['evidence_type']!='docking'}
+    items=[];seen=set()
+    for row in sorted(records,key=lambda item:(item['timestamp'],item['evidence_id'])):
+        provenance=json.loads(row['provenance'])
+        family=provenance.get('tool_family',row['tool_id'])
+        if row['evidence_type']=='docking' and (family,row['protocol_id']) in numeric_keys:
+            continue
+        key=(family,row['protocol_id'],row['evidence_type'],row['artifact_hash'],str(row['value']))
+        if key in seen: continue
+        seen.add(key)
+        items.append({'evidence_type':row['evidence_type'],'value':row['value'],'unit':row['unit'],
+                      'tool_id':row['tool_id'],'tool_family':family,'protocol_id':row['protocol_id'],
+                      'job_id':row['job_id'],'artifact_hash':row['artifact_hash'],'timestamp':row['timestamp'],
+                      'comparison_role':'parallel_protocol_evidence_not_interchangeable'})
+    return {'status':'available' if items else 'empty','compound_id':candidate['candidate_id'],
+            'historical_alias':candidate.get('alias',''),'source':'shared_Evidence_Registry',
+            'docking_evidence':items,
+            'interpretation':'Vina与Glide按工具和协议隔离；不合并为单一Docking分数，也不代表生物活性。'}
+
+
+def project_vina_glide_disagreements(state,project):
+    """Compare within-cohort Vina and historical Glide ranks, never their raw scales."""
+    records=enriched(state,project);values={}
+    for row in records:
+        provenance=json.loads(row['provenance']);family=provenance.get('tool_family',row['tool_id'])
+        if family=='vina' and row['evidence_type']=='vina_affinity': name='vina'
+        elif family=='glide' and row['evidence_type'] in {'docking_score','glide_score','glide_xp_score'}: name='glide'
+        else: continue
+        key=(row['compound_id'],name)
+        values[key]={'value':float(row['value']),'protocol_id':row['protocol_id'],'timestamp':row['timestamp']}
+    ids=sorted({cid for cid,name in values if (cid,'vina') in values and (cid,'glide') in values})
+    if len(ids)<2:
+        return {'status':'insufficient_overlap','n':len(ids),'source':'shared_Evidence_Registry'}
+    frame=pd.DataFrame([{'compound_id':cid,'vina_affinity':values[cid,'vina']['value'],
+                         'glide_score':values[cid,'glide']['value']} for cid in ids])
+    frame['vina_rank']=frame['vina_affinity'].rank(method='min',ascending=True).astype(int)
+    frame['glide_rank']=frame['glide_score'].rank(method='min',ascending=True).astype(int)
+    frame['rank_shift']=frame['vina_rank']-frame['glide_rank']
+    frame['absolute_rank_shift']=frame['rank_shift'].abs()
+    ranked=frame.sort_values(['absolute_rank_shift','compound_id'],ascending=[False,True])
+    return {'status':'available','n':len(frame),'source':'shared_Evidence_Registry',
+            'comparison':'within-cohort rank disagreement; raw scores are not pooled',
+            'largest_disagreements':ranked.head(10).to_dict('records')}
 
 
 def session_calculation_action(workspace,session_id,text):

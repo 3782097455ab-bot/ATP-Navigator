@@ -3,6 +3,7 @@ import math
 import re
 import shutil
 from .base_adapter import ToolAdapter,ToolInfo,probe
+from workspace.state import file_hash
 
 
 def validate_box(box):
@@ -53,4 +54,21 @@ class VinaAdapter(ToolAdapter):
             errors.append('New protocol and box require researcher confirmation')
         if not protocol.get('receptor'):
             errors.append('Prepared receptor missing')
+        for key in ['exhaustiveness','num_modes','energy_range','seed']:
+            if not isinstance(protocol.get(key),(int,float)) or not math.isfinite(protocol[key]):
+                errors.append(key+' must be explicit and finite')
+        if protocol.get('relation_to_historical_glide')=='equivalent':
+            errors.append('Vina protocol cannot claim equivalence to a historical Glide grid')
         return errors
+
+    def register_evidence(self,state,job,artifact,result):
+        stdout=Path(job['stdout_path']) if job.get('stdout_path') else None
+        stderr=Path(job['stderr_path']) if job.get('stderr_path') else None
+        rows=[{**row,'compound_id':job['candidate_id'],'tool_version':self.info.tool_version} for row in result['evidence']]
+        extra={'backend':self.info.backend_type,'tool_id':'autodock_vina','tool_family':'vina',
+               'adapter_tool_id':self.info.tool_id,'run_id':job['batch_id'],'job_id':job['job_id'],
+               'protocol_id':job['protocol_id'],'stdout_path':str(stdout) if stdout else None,
+               'stderr_path':str(stderr) if stderr else None,
+               'stdout_sha256':file_hash(stdout) if stdout and stdout.is_file() else None,
+               'stderr_sha256':file_hash(stderr) if stderr and stderr.is_file() else None}
+        state.register_many(job['project_id'],job['job_id'],artifact['artifact_hash'],rows,'tool_execution',extra)

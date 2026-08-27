@@ -1,0 +1,18 @@
+compound_id,historical_alias,profiles_evaluated,top3_profile_count,top5_profile_count,best_rank,worst_rank,mean_profile_rank,interpretation
+ATP-SMI-15737353FB69,Hit7,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-4417138BF81D,Hit17,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-5B36D3E11A3B,Hit13,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-5D3E7B6B6796,Hit4,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-775D33706F04,Hit14,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-874C2DE25FE4,Hit3,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-91E7552C2382,Hit16,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-94F73967C042,Hit12,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-96FD6257D8BA,Hit5,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-9DA3213A09E8,Hit1,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-BF69AB71C1A4,Hit8,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-C3308BEE03AC,Hit10,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-C93E6EC67CDB,Hit2,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-CDED936B42F4,Hit11,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-CFA68A98711F,Hit15,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-E9798004BA11,Hit6,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency
+ATP-SMI-FCA9CDF3313B,Hit9,4,0,0,,,,cross-profile decision consistency; not experimental hit frequency

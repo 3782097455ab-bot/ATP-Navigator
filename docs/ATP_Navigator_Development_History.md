@@ -969,3 +969,18 @@ Model变化：无。训练：无。实验标签新增：0。当前没有新的�
 - 未完成：真实生物活性验证、完整原始 MD 轨迹、独立前瞻性测试和更大规模的同协议内部 MM/GBSA 标签。
 
 该历史只描述仓库中已经存在的工作，不把实验验证、完整软件平台或真实新药发现写成已完成成果。
+
+## Phase 13：7P3W真实开放工具链验证（2026-08-27）
+
+- 目标：将Phase 12的Vina软件测试扩展为本项目7P3W受体、IN-2参照和内部Hit候选的真实计算链；不训练模型。
+- 历史恢复：从原PPT第5–7页、`VSW.maegz`、`ATP.pdb`、`ATP-Ref.pdb`和`SIteMap.pdb`恢复历史受体、IN-2 pose、SiteMap位点和VSW精确gridbox元数据。
+- 新增协议：`configs/projects/ab_atp_synthase/vina_7p3w_v1/`，包含5份冻结manifest和3份哈希固定结构资产。协议声明`derived_from_historical_site`且不与Glide等价。
+- 真实执行：IN-2、Hit1、Hit2、Hit3、Hit5的5/5门控通过；随后17/17内部候选完成Vina 1.2.7 docking、parser、pose QC和Evidence Registry。
+- 新增输出：`results/phase13/`内保存5候选门控、17候选结果、17份pose、证据导出、恢复快照、Vina/Glide/MMGBSA/Model v3描述性比较和1633只规划不执行的计划。
+- Agent变化：新增按候选查询协议隔离的Docking证据，以及Vina/Glide最大rank disagreement查询；数据直接来自共享Registry。
+- 方法结果：Vina vs Glide Spearman -0.0196、Kendall 0.0000、Top-5 overlap 1/5；仅为n=17的方法学描述，不是生物活性验证。
+- 恢复实测：3个新Vina作业后受控暂停；恢复前7个已完成作业的job ID、attempt和pose hash保持不变，最终17个完成，幂等重放新增Vina作业0。
+- 模型变化：无。24个受保护模型文件阶段前后SHA-256完全一致，Model v3输入和冻结Decision Engine未改变。
+- 实验状态：MIC、ATP enzyme inhibition、实验毒性仍为unknown；反馈记录为0，前瞻指标not_available。
+- 限制：IN-2新Vina pose与历史pose质心距离9.6702 Å；Vina与Glide排序明显分歧，尚无实验真值判断何者更接近真实活性。商业许可仍不可用。
+- 验证：原94项继续通过，新增11项Phase 13测试通过，完整回归105/105通过。

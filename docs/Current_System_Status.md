@@ -199,3 +199,15 @@ ATP-Navigator/
 5. 保存输入文件hash、配置、OOF/测试结果和限制；
 6. 不覆盖历史模型、数据版本和baseline结果；
 7. 不把计划、预测值或缺失实验写成已完成成果。
+
+## Phase 13状态更新（2026-08-27）
+
+- 已冻结`vina_7p3w_v1`：历史7P3W e/g受体、VSW精确box、IN-2历史pose和SiteMap证据均有来源hash。
+- 已真实完成5候选门控（5/5）和内部17候选Vina docking（17/17），全部parser与pose QC通过；原生pose和日志可追溯。
+- 已建立Vina/Glide协议隔离读取、Agent按协议查询、rank disagreement分析和受控暂停/恢复。
+- Vina vs历史Glide：Spearman -0.0196、Kendall 0.0000、Top-5 overlap 1/5，仅作方法学比较。
+- 24个模型hash不变；未训练模型、未修改Decision Engine、未替换冻结6候选面板。
+- Schrödinger四项工具均为installed_but_license_unavailable；商业全流程仍blocked。
+- 1633候选未执行，仅生成基于实测时长的计划。开放路线下一关键缺口是经过明确协议和校准的MM/GBSA/ADMET补充，而不是继续堆模型。
+- 实验活性状态未改变：MIC、ATP酶抑制和实验毒性仍为unknown。
+- 当前完整回归测试：105/105通过（原94项+Phase 13新增11项）。
