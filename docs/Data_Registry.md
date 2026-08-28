@@ -181,6 +181,15 @@ Phase 14没有产生新的监督标签。MIC、ATP activity、细胞毒性、静
 | Generated Vina evidence | 120个cheap-screened结构，冻结`vina_7p3w_v1` | 120 success | `results/phase16/generated_vina_results.csv` | 真实计算证据 | 否 | 与historical1633隔离；不是实验label |
 | Generated acquisition panel | 六分量透明评分 | 30 candidates | `results/phase16/generated_acquisition_panel_v1.csv` | 下一步MM/GBSA计划 | 否 | 不是活性候选声明，不回流训练 |
 
+## Phase 17新增审计资产
+
+| 数据名称 | 来源 | 数据规模 | 文件位置 | 标签类型 | 可用于训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| Phase 17 candidate pool | Phase15 historical panel + Phase16 generated panel | 90 unique：60 historical + 30 generated | `results/phase17/phase17_candidate_pool.csv` | 计算计划/身份来源 | 否 | generated与HTVS身份严格隔离 |
+| High-cost qualification panel | IN-2 + 5个历史类别候选 + 2个生成候选 | 8 candidates | `results/phase17/phase17_high_cost_panel.csv` | 资格验证计划 | 否 | 不表示活性；IN-2不可被替换 |
+| Open-MM/GBSA execution audit | 后端能力门控和8个终态任务 | 8 blocked；0 numerical evidence | `results/phase17/open_mmgbsa_results.csv` | 计算执行/QC状态 | 否 | 空DeltaG不得填充；blocked不是实验阴性或计算失败值 |
+| Phase 17 downstream placeholders | 三协议、parent-child、shadow decision、next20 schema | 4个not_available + 1个not_generated状态表 | `results/phase17/` | 状态/接口合同 | 否 | 无高成本证据时禁止计算伪相关性或排名变化 |
+
 每次新增数据必须记录：
 
 1. 数据文件名、版本和SHA-256；

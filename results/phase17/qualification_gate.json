@@ -1,0 +1,13 @@
+{
+  "batch30_started": false,
+  "batch60_started": false,
+  "blocked": 8,
+  "checked_at": "2026-08-28T05:15:47.884440+00:00",
+  "failed": 0,
+  "qualified": false,
+  "reason": "complete_open_mmgbsa_route_unavailable: OpenMM is installed in the isolated Phase 17 environment, but no validated ligand-parameterization plus MM/GBSA analysis chain is available (OpenFF Toolkit/AmberTools and ParmEd or gmx_MMPBSA are unavailable).",
+  "requested": 8,
+  "stage": "qualification",
+  "success": 0,
+  "success_threshold": 7
+}

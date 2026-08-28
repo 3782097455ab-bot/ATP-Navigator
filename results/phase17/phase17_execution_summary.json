@@ -1,0 +1,50 @@
+{
+  "backend_status": "blocked",
+  "batch30": {
+    "failed": 0,
+    "started": false,
+    "success": 0
+  },
+  "biological_activity_claim": false,
+  "candidate_pool": {
+    "generated": 30,
+    "historical": 60,
+    "total": 90
+  },
+  "completed_at": "2026-08-28T05:15:48.548493+00:00",
+  "expanded_to_60": false,
+  "generated_parent_comparison": "not_available",
+  "high_cost_evidence_records": 0,
+  "historical_models_modified": false,
+  "model_hashes_unchanged": true,
+  "next20": "not_available",
+  "open_mmgbsa_distribution": "not_available",
+  "phase": "Phase 17",
+  "protected_model_count": 24,
+  "protocol_frozen": false,
+  "protocol_hash": "f2300d9128cb754443943b4c2a12ac26d057c52f1a0c34da1e1fea91cf00a956",
+  "protocol_id": "open_mmgbsa_7p3w_v1",
+  "qualification": {
+    "batch30_started": false,
+    "batch60_started": false,
+    "blocked": 8,
+    "checked_at": "2026-08-28T05:15:47.884440+00:00",
+    "failed": 0,
+    "qualified": false,
+    "reason": "complete_open_mmgbsa_route_unavailable: OpenMM is installed in the isolated Phase 17 environment, but no validated ligand-parameterization plus MM/GBSA analysis chain is available (OpenFF Toolkit/AmberTools and ParmEd or gmx_MMPBSA are unavailable).",
+    "requested": 8,
+    "stage": "qualification",
+    "success": 0,
+    "success_threshold": 7
+  },
+  "qualification_runtime_seconds": 0.0,
+  "qualification_runtime_status": "not_run_backend_capability_gate_blocked",
+  "shadow_decision": "not_available",
+  "simulated_numerical_results": false,
+  "started_at": "2026-08-28T05:15:46.586322+00:00",
+  "status": "completed_at_qualification_gate",
+  "stopped_before_phase18": true,
+  "three_protocol_correlation": "not_available",
+  "total_workflow_runtime_seconds": 1.9617773000209127,
+  "training_performed": false
+}

@@ -1022,6 +1022,18 @@ Model变化：无。训练：无。实验标签新增：0。当前没有新的�
 
 该历史只描述仓库中已经存在的工作，不把实验验证、完整软件平台或真实新药发现写成已完成成果。
 
+## Phase 17：开放高成本物理证据资格门控（2026-08-28）
+
+- 目标：在不修改Model v0–v4-alpha、Decision Engine、Phase14–16或`vina_7p3w_v1`的前提下，验证能否建立可审计的开放MM/GBSA后端，并按8→30→60门控扩展；
+- 新增文件：`src/high_cost/`、`src/phase17_high_cost.py`、`results/phase17/`、`docs/Phase17_High_Cost_Evidence_Report.md`及Phase 17测试；
+- 使用数据：Phase 15历史acquisition panel 60个、Phase 16 generated panel 30个、IN-2参照、7P3W冻结来源清单；
+- 实现功能：项目隔离后端探测、90候选来源隔离池、8候选资格集合、atomic result/checkpoint、失败门控和下游not_available语义；
+- 后端结果：OpenMM 8.6.0与openmmforcefields 0.15.1项目隔离安装并通过导入；OpenFF Toolkit、AmberTools、ParmEd/gmx_MMPBSA链不完整；Prime许可沿用既有`license_unavailable`状态且未重试；
+- 计算结果：资格验证未启动；8/8为`blocked`、0 success、0 failed、0 open-MM/GBSA数值；30/60批处理未启动；Registry新增高成本证据0条；
+- 模型变化：无；24个受保护模型文件hash不变；训练：无；实验标签新增：0；
+- 性能变化：不适用。没有高成本证据，三协议相关性、shadow ranking、parent-child差值和next20均明确为not_available；
+- 当前限制：缺少经过验证的小分子参数化和MM/GBSA分析链。恢复必须从8候选资格门控开始，禁止跳过门控或模拟数值。
+
 ## Phase 13：7P3W真实开放工具链验证（2026-08-27）
 
 - 目标：将Phase 12的Vina软件测试扩展为本项目7P3W受体、IN-2参照和内部Hit候选的真实计算链；不训练模型。

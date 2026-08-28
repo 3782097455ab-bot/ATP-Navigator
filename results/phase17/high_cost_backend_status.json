@@ -1,0 +1,186 @@
+{
+  "audit_scope": "Phase 17 project-local and PATH capability audit",
+  "backends": {
+    "acpype": {
+      "blocking_reason": "executable_not_found",
+      "dependencies": [],
+      "executable_path": null,
+      "installed": false,
+      "probe": "not_found",
+      "usable": false,
+      "version": "unknown"
+    },
+    "ambertools_antechamber": {
+      "blocking_reason": "executable_not_found",
+      "dependencies": [],
+      "executable_path": null,
+      "installed": false,
+      "probe": "not_found",
+      "usable": false,
+      "version": "unknown"
+    },
+    "ambertools_sqm": {
+      "blocking_reason": "executable_not_found",
+      "dependencies": [],
+      "executable_path": null,
+      "installed": false,
+      "probe": "not_found",
+      "usable": false,
+      "version": "unknown"
+    },
+    "ambertools_tleap": {
+      "blocking_reason": "executable_not_found",
+      "dependencies": [],
+      "executable_path": null,
+      "installed": false,
+      "probe": "not_found",
+      "usable": false,
+      "version": "unknown"
+    },
+    "gmx_MMPBSA": {
+      "blocking_reason": "executable_not_found",
+      "dependencies": [],
+      "executable_path": null,
+      "installed": false,
+      "probe": "not_found",
+      "usable": false,
+      "version": "unknown"
+    },
+    "gromacs": {
+      "blocking_reason": "executable_not_found",
+      "dependencies": [],
+      "executable_path": null,
+      "installed": false,
+      "probe": "not_found",
+      "usable": false,
+      "version": "unknown"
+    },
+    "openff_toolkit": {
+      "blocking_reason": "no compatible distribution is available from the configured package index",
+      "dependencies": [],
+      "executable_path": null,
+      "installed": false,
+      "usable": false,
+      "version": "unknown"
+    },
+    "openmm": {
+      "blocking_reason": "",
+      "dependencies": [
+        "validated ligand force field",
+        "MM/GBSA analysis implementation"
+      ],
+      "executable_path": "D:\\tiaozhansai\\ATP-Navigator\\.venv\\Scripts\\python.exe",
+      "installation_scope": "workspace_local/phase17/deps",
+      "installed": true,
+      "probe": {
+        "passed": true,
+        "return_code": 0,
+        "stderr": "",
+        "stdout": "8.6\nReference,CPU,OpenCL"
+      },
+      "usable": true,
+      "version": "8.6.0"
+    },
+    "openmmforcefields": {
+      "blocking_reason": "OpenFF Toolkit and AmberTools are unavailable",
+      "dependencies": [
+        "OpenFF Toolkit or AmberTools for small-molecule parameterization"
+      ],
+      "executable_path": "D:\\tiaozhansai\\ATP-Navigator\\.venv\\Scripts\\python.exe",
+      "installation_scope": "workspace_local/phase17/deps",
+      "installed": true,
+      "probe": {
+        "passed": true,
+        "return_code": 0,
+        "stderr": "",
+        "stdout": "0.15.1"
+      },
+      "usable": false,
+      "version": "0.15.1"
+    },
+    "parmed": {
+      "blocking_reason": "installation requires an unavailable Microsoft C++ build toolchain",
+      "dependencies": [],
+      "executable_path": null,
+      "installed": false,
+      "usable": false,
+      "version": "unknown"
+    },
+    "rdkit": {
+      "blocking_reason": "",
+      "dependencies": [],
+      "executable_path": "D:\\tiaozhansai\\ATP-Navigator\\.venv\\Scripts\\python.exe",
+      "installed": true,
+      "probe": {
+        "passed": true,
+        "return_code": 0,
+        "stderr": "",
+        "stdout": "2026.03.5"
+      },
+      "usable": true,
+      "version": "2026.03.5"
+    },
+    "schrodinger_prime_mmgbsa": {
+      "blocking_reason": "existing audited license checkout failed; not retried in Phase 17",
+      "dependencies": [
+        "Schrödinger license entitlement"
+      ],
+      "executable_path": "D:\\xuedinge the beginning\\prime_mmgbsa.exe",
+      "installed": true,
+      "prior_audit": "results\\system_capabilities.json",
+      "status": "license_unavailable",
+      "usable": false,
+      "version": "7.6"
+    }
+  },
+  "complete_open_source_route_usable": false,
+  "created_at": "2026-08-28T05:15:47.840832+00:00",
+  "installation_attempts": [
+    {
+      "packages": [
+        "openmm",
+        "parmed"
+      ],
+      "reason": "ParmEd native extension requires Microsoft Visual C++ 14+",
+      "result": "failed_atomically"
+    },
+    {
+      "packages": [
+        "openmm"
+      ],
+      "result": "installed_project_local",
+      "version": "8.6.0"
+    },
+    {
+      "packages": [
+        "openmmforcefields"
+      ],
+      "result": "installed_project_local",
+      "version": "0.15.1"
+    },
+    {
+      "packages": [
+        "openff-toolkit"
+      ],
+      "reason": "no compatible package-index distribution",
+      "result": "unavailable"
+    }
+  ],
+  "no_simulated_results": true,
+  "routes": {
+    "gromacs_gmx_mmpbsa": {
+      "blocking_reason": "complete_open_mmgbsa_route_unavailable: OpenMM is installed in the isolated Phase 17 environment, but no validated ligand-parameterization plus MM/GBSA analysis chain is available (OpenFF Toolkit/AmberTools and ParmEd or gmx_MMPBSA are unavailable).",
+      "usable": false
+    },
+    "openmm_mmgbsa": {
+      "blocking_reason": "complete_open_mmgbsa_route_unavailable: OpenMM is installed in the isolated Phase 17 environment, but no validated ligand-parameterization plus MM/GBSA analysis chain is available (OpenFF Toolkit/AmberTools and ParmEd or gmx_MMPBSA are unavailable).",
+      "usable": false
+    },
+    "prime_mmgbsa": {
+      "blocking_reason": "license_unavailable",
+      "usable": false
+    }
+  },
+  "scientific_gate": "blocked",
+  "selected_route": null
+}

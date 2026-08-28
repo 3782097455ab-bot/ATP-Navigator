@@ -1,0 +1,2 @@
+parent_id,generated_candidate_id,vina_delta,open_mmgbsa_delta,novelty,tractability,scaffold_relation,warnings,interpretation,status,reason
+,,,,,,,,,not_available,not_available: qualification gate did not run because no complete backend route was usable

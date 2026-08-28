@@ -1,0 +1,2 @@
+candidate_id,current_evidence,missing_evidence,uncertainty,voi_proxy,reason,status
+,,,,,not_available: qualification gate did not run because no complete backend route was usable,not_generated

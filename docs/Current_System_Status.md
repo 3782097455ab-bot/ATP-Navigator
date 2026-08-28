@@ -236,6 +236,16 @@ ATP-Navigator/
 6. 不覆盖历史模型、数据版本和baseline结果；
 7. 不把计划、预测值或缺失实验写成已完成成果。
 
+## Phase 17状态更新（2026-08-28）
+
+- 已建立Phase 17无人值守任务schema、atomic checkpoint/cache语义、90候选来源隔离池和8候选资格集合；
+- OpenMM 8.6.0与openmmforcefields 0.15.1已在`workspace_local/phase17/deps`非破坏性安装并通过真实导入/平台探测；
+- 完整open-MM/GBSA路线仍不可用：OpenFF Toolkit/AmberTools小分子参数化与ParmEd/gmx_MMPBSA分析链缺失；Prime许可不可用且未重复签出；
+- 资格门控终态为8 blocked、0 success、0 failed、0数值；30/60候选计算未启动；
+- Glide/Vina/open-MMGBSA三协议比较、shadow decision和next20均为not_available；没有用空缺结果生成替代分数；
+- Model v0–v4-alpha、Decision Engine、Phase14–16和`vina_7p3w_v1`保持不变，24个模型hash一致；
+- 当前新增的不是模型能力或活性证据，而是高成本后端能力审计和科学门控。下一步必须先补齐并审查完整工具链，再从8候选资格验证恢复。
+
 ## Phase 13状态更新（2026-08-27）
 
 - 已冻结`vina_7p3w_v1`：历史7P3W e/g受体、VSW精确box、IN-2历史pose和SiteMap证据均有来源hash。

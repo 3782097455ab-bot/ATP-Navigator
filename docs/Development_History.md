@@ -22,3 +22,10 @@
 - 冻结`vina_7p3w_v1`不变，以2并发显式重试5个内存型技术失败，5/5成功；最终1633 success、0 failed、1633 pose QC pass；
 - 新增Hit1–Hit17 + IN-2分层身份审计：Hit13 exact canonical，其余17个unresolved，不按名称或排名猜测；
 - 未训练模型，未修改Model v0–v4-alpha，未产生实验标签。
+
+# 2026-08-28 — Phase 17
+
+- 建立可恢复的高成本证据候选池、8候选资格门控、项目隔离后端审计和终态checkpoint；
+- 项目隔离安装并真实探测OpenMM 8.6.0与openmmforcefields 0.15.1，但完整open-MM/GBSA路线因小分子参数化和分析链缺失被科学门控阻断；
+- 8个资格任务全部记录为blocked，0个数值结果；30/60候选批处理未启动；
+- 24个历史模型hash不变；未训练模型、未修改Phase14–16冻结结果、未生成模拟证据。

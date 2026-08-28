@@ -17,6 +17,11 @@
 | CReM | unknown | mutate/grow预留 | unavailable：Python module not found；0 generated；未创建伪fragment DB |
 | REINVENT4 | unknown | constrained generation shadow | unavailable：executable/module not found；0 generated；未模拟输出 |
 | AiZynthFinder | unknown | retrosynthesis feasibility | unavailable：executable/module not found；0 retrosynthesis runs |
+| OpenMM | 8.6.0（Phase17项目隔离安装） | 分子模拟引擎候选 | import/platform probe通过：Reference、CPU、OpenCL；单独可用但完整MM/GBSA route不可用 |
+| openmmforcefields | 0.15.1（Phase17项目隔离安装） | 力场集成候选 | import通过；缺OpenFF Toolkit或AmberTools，不能形成经验证的小分子参数化链 |
+| GROMACS / gmx_MMPBSA | executable探测 | 开放MM/GBSA候选路线 | not_found；Phase17不可用 |
+| AmberTools / ACPYPE | executable探测 | 配体电荷与参数化候选路线 | not_found；Phase17不可用 |
+| ParmEd | 项目隔离安装尝试 | 拓扑/能量分析依赖 | unavailable；本机缺失所需Microsoft C++ 14+构建工具链 |
 
 统一接口：detect、validate_environment、prepare_input、build_command、run、parse_output、register_evidence。工具记录包括ID/名称/版本/路径/许可/可用状态/backend/supported_tasks及可执行文件hash。不存在“LLM填一个Docking数值”的接口。
 
@@ -36,3 +41,7 @@
 安装与使用：`examples/setup_open_toolchain.py`从官方发行获取固定Vina版本，并把Meeko/gemmi/psutil放入`workspace_local/tool_deps`，没有改动原模型的Python包集合。商业产品由用户管理安装与许可；程序不调用安装介质中的补丁工具。
 
 Phase 13许可证复检结果：Glide 10.3、Prime/PSP 7.6、QikProp 8.0、LigPrep 14.4均找到安装和可执行文件，但真实feature checkout返回失败，状态保持`installed_but_license_unavailable`，`commercial_full=blocked`。Vina 1.2.7真实执行了18个项目分子（17内部候选+IN-2参照），所有原生输出、stdout/stderr、工具/输入/pose hash均登记。
+
+## Phase 17高成本后端门控
+
+机器可读状态位于`results/phase17/high_cost_backend_status.json`。项目隔离依赖不会进入Git，也不改变历史模型环境。OpenMM导入成功不等于open-MM/GBSA路线可用；只有配体参数化、模拟、帧提取、GB/PB分析和解析全部经资格验证后，`open_mmgbsa_7p3w_v1`才允许冻结。当前状态为`blocked_before_qualification`，0个高成本数值结果。

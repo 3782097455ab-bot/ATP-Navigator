@@ -1,0 +1,11 @@
+{
+  "completed_at": "2026-08-28T13:20:00+08:00",
+  "command_scope": "all tests/test_*.py modules executed independently",
+  "test_files": 12,
+  "tests_run": 165,
+  "failures": 0,
+  "errors": 0,
+  "status": "pass",
+  "phase17_tests": 11,
+  "notes": "Historical and Phase 17 regression modules all passed; the expected invalid-SMILES parser message is a tested QC path, not a failure."
+}

@@ -199,3 +199,7 @@ Phase 15没有新增Model v5，也没有重新训练Model v0–v4-alpha。Acquis
 ## Phase 16登记（非模型版本）
 
 Phase 16没有新增Model v5。RDKit生成器、cheap screening和generated acquisition是配置化结构生成/证据获取规则，不是监督活性模型。Generated structures、Vina scores、novelty、SA-like proxy和综合priority均禁止作为伪实验label回流训练。
+
+## Phase 17登记（非模型版本）
+
+Phase 17没有新增或训练模型。高成本后端资格门控在真实计算前因完整工具链缺失而停止，0个`open_mmgbsa_deltaG`数值、0条高成本Evidence Registry记录。所有三协议、shadow decision和next20输出保持not_available；不得把blocked状态、候选资格类别或空值作为监督label。Model v0–v4-alpha的24个受保护文件hash保持一致。
