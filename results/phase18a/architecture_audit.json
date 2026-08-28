@@ -1,0 +1,24 @@
+{
+  "phase": "Phase 18A",
+  "ui": "Streamlit local Windows application",
+  "pages": 13,
+  "shared_sources": [
+    "frozen phase CSV/JSON artifacts",
+    "workspace_local/workspace.sqlite3",
+    "Evidence Registry",
+    "FeedbackStore",
+    "git history"
+  ],
+  "reused_engines": [
+    "Phase10 frozen decision outputs",
+    "Phase15 AcquisitionEngine",
+    "Phase16 GeneratedCandidateRegistry"
+  ],
+  "new_parallel_scientific_store": false,
+  "duplicate_scoring_formula": false,
+  "unavailable_backend_simulation": false,
+  "controlled_write_paths": [
+    "workspace_local/phase18a/requests",
+    "browser downloads"
+  ]
+}

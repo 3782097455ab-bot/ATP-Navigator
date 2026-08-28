@@ -1048,3 +1048,15 @@ Model变化：无。训练：无。实验标签新增：0。当前没有新的�
 - 实验状态：MIC、ATP enzyme inhibition、实验毒性仍为unknown；反馈记录为0，前瞻指标not_available。
 - 限制：IN-2新Vina pose与历史pose质心距离9.6702 Å；Vina与Glide排序明显分歧，尚无实验真值判断何者更接近真实活性。商业许可仍不可用。
 - 验证：原94项继续通过，新增11项Phase 13测试通过，完整回归105/105通过。
+
+## Phase 18A：本地研究工作区产品化（2026-08-28）
+
+- 目标：把已有候选、Evidence Registry、冻结Decision、Acquisition、Generation、Job Registry、工具能力与实验反馈入口整合为可展示的本地研究工作区；
+- 新增文件：`app.py`、`.streamlit/config.toml`、`src/app/`、`tests/test_phase18a_app.py`、4份Phase18A文档和8张浏览器验收截图；
+- 修改文件：`README.md`、`requirements.txt`、Current System Status、Model Registry、Data Registry和本开发历史；
+- 使用数据：Phase10冻结决策输出、Phase14/14.1全库与身份审计、Phase15 acquisition、Phase16生成结构、Phase17能力门控、共享workspace SQLite；
+- 实现功能：13页本地GUI、分页/惰性查询、协议分歧图、profile切换、预算策略、谱系、任务/工具状态、受限研究对话、实验反馈预检查和审计导出；
+- 模型变化：无；不训练、不修改Model v0–v4-alpha；
+- 性能变化：不适用，本阶段不比较预测性能；
+- 当前限制：0条经审查实验反馈；高成本物理证据后端仍被科学能力门控；GUI不伪装为计算supervisor；
+- 术语边界：数据语义一致性、target annotation、endpoint segregation和provenance QC，不称为biosafety，不进入临床或临床前叙事。

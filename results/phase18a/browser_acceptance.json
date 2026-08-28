@@ -1,0 +1,24 @@
+{
+  "phase": "Phase 18A",
+  "local_url": "http://127.0.0.1:8501/",
+  "core_pages_checked": 8,
+  "page_title_checks_passed": 8,
+  "browser_errors": 0,
+  "dialogue_interaction": {
+    "question": "如果MM/GBSA只能再算20个，算谁？",
+    "budget_answer_visible": true,
+    "provenance_visible": true,
+    "biological_activity_probability_warning_visible": true,
+    "error": false
+  },
+  "screenshots": [
+    "screenshots/01_dashboard.png",
+    "screenshots/02_candidate_explorer.png",
+    "screenshots/03_evidence_matrix.png",
+    "screenshots/04_protocol_comparison.png",
+    "screenshots/05_decision_workspace.png",
+    "screenshots/06_acquisition_workspace.png",
+    "screenshots/07_execution_jobs.png",
+    "screenshots/08_research_dialogue.png"
+  ]
+}

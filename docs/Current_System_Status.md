@@ -239,6 +239,7 @@ ATP-Navigator/
 ## Phase 17状态更新（2026-08-28）
 
 - 已建立Phase 17无人值守任务schema、atomic checkpoint/cache语义、90候选来源隔离池和8候选资格集合；
+
 - OpenMM 8.6.0与openmmforcefields 0.15.1已在`workspace_local/phase17/deps`非破坏性安装并通过真实导入/平台探测；
 - 完整open-MM/GBSA路线仍不可用：OpenFF Toolkit/AmberTools小分子参数化与ParmEd/gmx_MMPBSA分析链缺失；Prime许可不可用且未重复签出；
 - 资格门控终态为8 blocked、0 success、0 failed、0数值；30/60候选计算未启动；
@@ -257,3 +258,12 @@ ATP-Navigator/
 - 1633候选未执行，仅生成基于实测时长的计划。开放路线下一关键缺口是经过明确协议和校准的MM/GBSA/ADMET补充，而不是继续堆模型。
 - 实验活性状态未改变：MIC、ATP酶抑制和实验毒性仍为unknown。
 - 当前完整回归测试：105/105通过（原94项+Phase 13新增11项）。
+
+## Phase 18A状态更新（2026-08-28）
+
+- 新增Windows本地Streamlit研究工作区，13个页面统一读取历史数据、Evidence Registry、Job Registry和冻结分析结果；
+- 实时登记规模：1633个HTVS候选、360个Phase16生成结构、17个内部候选；三类身份不猜测合并；
+- 已接入Phase10冻结Decision profile和Phase15 Acquisition Engine；没有复制评分公式或训练模型；
+- Tool Capability明确显示可用、不可用与依赖不完整，禁止模拟高成本计算输出；
+- 实验反馈仍为0条审查记录，界面明确显示empty/not_available；
+- Phase18A不执行WSL Phase17.1，不修改Phase14–17冻结结果。

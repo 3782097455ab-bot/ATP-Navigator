@@ -190,6 +190,15 @@ Phase 14没有产生新的监督标签。MIC、ATP activity、细胞毒性、静
 | Open-MM/GBSA execution audit | 后端能力门控和8个终态任务 | 8 blocked；0 numerical evidence | `results/phase17/open_mmgbsa_results.csv` | 计算执行/QC状态 | 否 | 空DeltaG不得填充；blocked不是实验阴性或计算失败值 |
 | Phase 17 downstream placeholders | 三协议、parent-child、shadow decision、next20 schema | 4个not_available + 1个not_generated状态表 | `results/phase17/` | 状态/接口合同 | 否 | 无高成本证据时禁止计算伪相关性或排名变化 |
 
+## Phase 18A界面资产（2026-08-28）
+
+| 数据名称 | 来源 | 规模 | 文件位置 | 标签类型 | 可训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| Unified candidate view | Phase14 HTVS + Phase16 generated + internal17 | 2010身份记录 | 运行时只读视图 | 无 | 否 | 三种身份域不猜测合并 |
+| Unified evidence matrix | 已登记结构/计算/知识/反馈状态 | 2010行 | 运行时只读视图 | 证据状态 | 否 | unknown/missing/not_applicable不等于0 |
+| Phase18A UI screenshots | 本地真实应用浏览器验收 | 8张 | `results/phase18a/screenshots/` | 无 | 否 | 展示证据，不是科学结果 |
+| Generation request | 用户确认后的任务请求 | 当前0或按使用产生 | `workspace_local/phase18a/requests/` | 工作流状态 | 否 | 不执行计算、不覆盖Phase16 |
+
 每次新增数据必须记录：
 
 1. 数据文件名、版本和SHA-256；

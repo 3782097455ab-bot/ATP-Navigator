@@ -1,0 +1,61 @@
+{
+  "phase": "Phase 18A",
+  "generated_at": "2026-08-28T07:56:36.407204+00:00",
+  "status": "pass",
+  "scientific_changes": {
+    "model_training": false,
+    "model_modified": false,
+    "new_activity_labels": 0,
+    "new_docking_or_mmgbsa_values": 0,
+    "phase17_1_started": false
+  },
+  "candidate_counts": {
+    "htvs": 1633,
+    "generated": 360,
+    "internal": 17,
+    "unified_identity_records": 2010
+  },
+  "evidence_counts": {
+    "historical_vina": 1633,
+    "generated_vina": 120,
+    "reviewed_experimental_feedback": 0
+  },
+  "protected_models": {
+    "count": 24,
+    "mismatch_count": 0,
+    "mismatches": [],
+    "reference": "results\\phase14\\model_hashes_after.json"
+  },
+  "frozen_phase_outputs": {
+    "modified_tracked_files": [],
+    "unchanged": true
+  },
+  "browser_acceptance": {
+    "core_pages": 8,
+    "screenshots": [
+      "results\\phase18a\\screenshots\\01_dashboard.png",
+      "results\\phase18a\\screenshots\\02_candidate_explorer.png",
+      "results\\phase18a\\screenshots\\03_evidence_matrix.png",
+      "results\\phase18a\\screenshots\\04_protocol_comparison.png",
+      "results\\phase18a\\screenshots\\05_decision_workspace.png",
+      "results\\phase18a\\screenshots\\06_acquisition_workspace.png",
+      "results\\phase18a\\screenshots\\07_execution_jobs.png",
+      "results\\phase18a\\screenshots\\08_research_dialogue.png"
+    ],
+    "all_titles_verified": true,
+    "browser_errors": 0
+  },
+  "feedback_status": {
+    "imports": 0,
+    "reviewed_batches": 0,
+    "snapshots": 0,
+    "training_performed_by_feedback_store": false,
+    "latest_snapshot": null
+  },
+  "git": {
+    "commit": "a8cf9d7",
+    "branch": "main",
+    "status": "M README.md\n M docs/ATP_Navigator_Development_History.md\n M docs/Current_System_Status.md\n M docs/Data_Registry.md\n M docs/Model_Registry.md\n M requirements.txt\n?? .streamlit/\n?? app.py\n?? docs/GUI_Architecture.md\n?? docs/Phase18A_Productization_Report.md\n?? docs/Research_Dialogue_Guide.md\n?? docs/User_Guide.md\n?? results/phase18a/\n?? src/app/\n?? src/phase18a_acceptance.py\n?? tests/test_phase18a_app.py",
+    "timestamp": "2026-08-28T07:56:36.593934+00:00"
+  }
+}

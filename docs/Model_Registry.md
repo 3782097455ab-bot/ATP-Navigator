@@ -203,3 +203,7 @@ Phase 16没有新增Model v5。RDKit生成器、cheap screening和generated acqu
 ## Phase 17登记（非模型版本）
 
 Phase 17没有新增或训练模型。高成本后端资格门控在真实计算前因完整工具链缺失而停止，0个`open_mmgbsa_deltaG`数值、0条高成本Evidence Registry记录。所有三协议、shadow decision和next20输出保持not_available；不得把blocked状态、候选资格类别或空值作为监督label。Model v0–v4-alpha的24个受保护文件hash保持一致。
+
+## Phase 18A登记（非模型版本）
+
+Phase18A只新增产品化与查询界面，没有新增、训练、微调或替换模型。Decision Workspace读取冻结的Phase10输出；Acquisition Workspace调用冻结的Phase15策略。界面缓存不属于模型缓存，导出不产生新label。24个受保护模型文件继续以`results/phase14/model_hashes_after.json`为基准核验。
