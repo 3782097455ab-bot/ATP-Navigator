@@ -19,7 +19,7 @@ from workspace_io import file_hash, identifier, now, safe_id, within
 
 TOOLS = {"status", "run_navigation", "explain_candidate", "compare_profiles", "find_knowledge",
          "validate_feedback", "ingest_feedback", "prepare_iteration", "evaluate_feedback", "computation_evidence",
-         "candidate_docking_evidence", "vina_glide_disagreements", "acquisition_advice"}
+         "candidate_docking_evidence", "vina_glide_disagreements", "acquisition_advice", "generation_query"}
 MUTATING = {"run_navigation", "ingest_feedback", "prepare_iteration", "evaluate_feedback"}
 HELP = ("离线工作区支持：状态；按 balanced / binding_focused / atp_mechanism_focused / "
         "experimental_validation_focused 排序；解释 Hit3；比较模式；查资料 关键词；"
@@ -91,7 +91,7 @@ class ResearchWorkspace:
             raise ValueError("Tool not allowed")
         expected = {"run_navigation": {"profile"}, "explain_candidate": {"candidate"},
                     "candidate_docking_evidence": {"candidate"},
-                    "find_knowledge": {"query"}, "acquisition_advice": {"question"},
+                    "find_knowledge": {"query"}, "acquisition_advice": {"question"}, "generation_query": {"question"},
                     "validate_feedback": {"path"}, "ingest_feedback": {"path"}}.get(tool, set())
         if set(args) != expected or any(not isinstance(v, str) or len(v) > 500 for v in args.values()):
             raise ValueError("Unexpected tool arguments")
@@ -110,6 +110,12 @@ class ResearchWorkspace:
             result = answer(self.project, args["question"])
             result["artifact"] = str(self.project / "results/phase15/acquisition_panel_v1.csv")
             result["warning"] = "候选选择只优化下一份计算证据的获取，不表示生物活性或实验命中概率。"
+            return result
+        if tool == "generation_query":
+            from generation.query_service import answer
+            result=answer(self.project,args["question"])
+            result["artifact"]=str(self.project/"results/phase16/generated_candidate_registry.csv")
+            result["warning"]="生成结构和Vina证据不是生物活性或合成可行性证明。"
             return result
         if tool in {"candidate_docking_evidence", "vina_glide_disagreements"}:
             row=db.execute('SELECT project_id FROM workflow_run WHERE session_id=? ORDER BY created_at DESC LIMIT 1',
@@ -257,6 +263,9 @@ class ResearchWorkspace:
         elif any(phrase in text for phrase in ["MM/GBSA只能再算20个", "Vina和Glide意见冲突", "两个协议都很强",
                                                "不确定性主要来自协议", "预算从60降到20"]):
             result = self.dispatch(session_id, "acquisition_advice", {"question": text})
+        elif any(phrase in text for phrase in ["围绕IN-2生成100个候选", "只保留核心骨架", "从谁生成", "哪个R group",
+                                               "历史1633最不相似", "值得进一步做MM/GBSA", "为什么被淘汰"]):
+            result = self.dispatch(session_id, "generation_query", {"question": text})
         elif text in {"状态", "/status"}:
             result = self.dispatch(session_id, "status", {})
         elif text in {"比较模式", "/compare"}:

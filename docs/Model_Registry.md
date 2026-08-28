@@ -195,3 +195,7 @@ Phase 10不登记为Model v5。其`model_score`仍是静态MM/GBSA计算任务�
 # Phase 15登记（非模型版本）
 
 Phase 15没有新增Model v5，也没有重新训练Model v0–v4-alpha。Acquisition Engine是透明、配置化的证据获取启发式：其输出是下一份计算证据的优先级，不是活性预测模型；VOI proxy、consensus、uncertainty和Hybrid score不得登记为监督label或生物活性概率。
+
+## Phase 16登记（非模型版本）
+
+Phase 16没有新增Model v5。RDKit生成器、cheap screening和generated acquisition是配置化结构生成/证据获取规则，不是监督活性模型。Generated structures、Vina scores、novelty、SA-like proxy和综合priority均禁止作为伪实验label回流训练。

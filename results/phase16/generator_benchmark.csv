@@ -1,0 +1,5 @@
+﻿backend,seed,raw,valid,unique,validity,uniqueness,novelty_vs_htvs1633,internal_diversity,scaffold_diversity,scaffold_retention,property_warning_rate,vina_execution_success,status,reason
+rdkit_rgroup_enumeration,IN-2,200,200,200,1.0,1.0,0.6081878748351554,0.5865347158183095,0.2055555555555555,0.8,0.01,1.0,available,real RDKit enumeration
+rdkit_rgroup_enumeration,Hit3,200,200,160,1.0,0.8,0.5145919588287222,0.5865347158183095,0.2055555555555555,0.8,0.025,1.0,available,real RDKit enumeration
+crem,not_run,0,0,0,,,,,,,,,unavailable,python_module_not_found
+reinvent4_shadow,not_run,0,0,0,,,,,,,,,unavailable,executable_and_module_not_found

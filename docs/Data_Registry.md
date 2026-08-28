@@ -171,6 +171,16 @@ Phase 14没有产生新的监督标签。MIC、ATP activity、细胞毒性、静
 | Acquisition panel v1 | 配置化六类选择规则 | 60 unique candidates | `results/phase15/acquisition_panel_v1.csv` | 下一步计算计划 | 否 | 建议获取MM/GBSA证据，不是实验候选有效性声明 |
 | Budget simulation | 10种策略×5种预算 | 50 rows | `results/phase15/budget_simulation.csv` | 工程/决策模拟 | 否 | 不输出biological hit rate或expected activity gain |
 
+## Phase 16新增生成资产
+
+| 数据名称 | 来源 | 数据规模 | 文件位置 | 标签类型 | 可用于训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| Generated Candidate Registry | IN-2/Hit3 + RDKit受控R-group枚举 | 360 unique | `results/phase16/generated_candidate_registry.csv` | 生成结构与provenance | 否 | Hit3 HTVS identity unresolved；chemical validity不等于activity/feasibility |
+| Generation QC | 400 raw生成尝试 | 400 rows；40 duplicate rejection | `results/phase16/generation_qc.csv` | QC审计 | 否 | 每条rejection显式记录 |
+| Generated chemical space | Morgan/Tanimoto/Murcko对parent与HTVS-1633比较 | 360 rows | `results/phase16/generated_chemical_space.csv` | 结构派生值 | 否 | novelty不等于活性或专利新颖性 |
+| Generated Vina evidence | 120个cheap-screened结构，冻结`vina_7p3w_v1` | 120 success | `results/phase16/generated_vina_results.csv` | 真实计算证据 | 否 | 与historical1633隔离；不是实验label |
+| Generated acquisition panel | 六分量透明评分 | 30 candidates | `results/phase16/generated_acquisition_panel_v1.csv` | 下一步MM/GBSA计划 | 否 | 不是活性候选声明，不回流训练 |
+
 每次新增数据必须记录：
 
 1. 数据文件名、版本和SHA-256；

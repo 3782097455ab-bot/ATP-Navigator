@@ -2,6 +2,18 @@
 
 更新时间：2026-08-28
 
+## Phase 16完成态：可追溯小规模分子扩展
+
+- RDKit围绕IN-2和Hit3各生成200 raw；400 valid、360 unique、40 duplicate rejection、0个HTVS-1633 exact duplicate；
+- 360个Generated Registry候选具有完整parent/operation/building-block/attachment/provenance；Hit3的HTVS identity保持unresolved；
+- internal diversity=0.5865、74 scaffolds、scaffold retention=0.800、generator collapse=false；
+- cheap screening选择120个，冻结`vina_7p3w_v1`真实执行120/120成功并通过pose QC；
+- generated acquisition panel=30，评分为Vina+tractability+novelty+diversity+warning+scaffold constraint，不是Vina单目标；
+- CReM、REINVENT4、AiZynthFinder均unavailable，未生成模拟结果；未训练或修改历史模型。
+- 完整回归测试154/154通过；24个受保护模型文件SHA-256 mismatch=0；Phase 15冻结结果未修改。
+
+主要入口：`results/phase16/generated_candidate_registry.csv`、`results/phase16/generated_acquisition_panel_v1.csv`、`docs/Phase16_Molecule_Expansion_Report.md`。
+
 ## Phase 15完成态：预算感知证据获取
 
 - 1633个候选已形成Glide/Vina协议稳健性、五类不确定性、结构空间和证据缺口表；

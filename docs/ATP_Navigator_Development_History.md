@@ -941,6 +941,18 @@ Model变化：无。训练：无。实验标签新增：0。当前没有新的�
 
 # Git 历史审计
 
+## 2026-08-28 — Phase 16：Traceable Molecule Expansion Engine
+
+- 目标：以严格seed和受控操作建立小规模生成→QC→结构空间→Vina→acquisition真实闭环；
+- 新增文件：`configs/generation_phase16.json`、`src/generation/`、`src/phase16_molecule_expansion.py`、`results/phase16/`、`docs/Generator_Registry.md`、`docs/Phase16_Molecule_Expansion_Report.md`和新增测试；
+- 修改文件：Research Workspace/LLM router增加只读generation query；Current Status、Data/Model/Tool Registry同步；
+- 使用数据：IN-2确认参考结构、Hit3内部历史结构、HTVS-1633结构、冻结`vina_7p3w_v1`；
+- 实现功能：统一Generator API、RDKit R-group枚举、CReM/REINVENT4/AiZynthFinder真实探测、完整lineage/provenance、化学QC、property/alert/SA-like代理、novelty/diversity/collapse检查、cheap screening、generated专属Vina和六分量acquisition；
+- 结果：400 raw、400 valid、360 unique、0 HTVS exact duplicate；120真实Vina全部成功；30候选acquisition panel；generator collapse=false；
+- 模型变化：无；训练：无；实验标签新增：0；
+- 性能变化：不适用。新增指标只描述生成质量、结构空间和计算执行，不是活性/命中率；
+- 当前限制：仅RDKit backend可用；CReM/REINVENT4/AiZynthFinder unavailable；无generated MM/GBSA和湿实验。
+
 ## 2026-08-28 — Phase 15：Budget-aware Evidence Acquisition
 
 - 目标：在Glide/Vina显著分歧且候选级MM/GBSA预算有限时，选择最有信息价值的下一批计算对象；

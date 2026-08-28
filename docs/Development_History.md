@@ -3,6 +3,13 @@
 项目的唯一完整开发记录维护在[ATP_Navigator_Development_History.md](ATP_Navigator_Development_History.md)。
 
 2026-08-27的Multi-Backend Computational Workflow、Phase 13真实7P3W Vina验证以及2026-08-28 Phase 14全库证据层、失败审计和协议比较均记录在那里，避免维护两份互相矛盾的历史。
+# 2026-08-28 — Phase 16
+
+- 新增统一Generator API与Generated Candidate Registry；
+- RDKit围绕IN-2/Hit3生成400 raw、400 valid、360 unique；Hit3 HTVS identity保持unresolved；
+- 120个cheap-screened候选在冻结`vina_7p3w_v1`下真实执行成功，形成30候选generated acquisition panel；
+- CReM、REINVENT4、AiZynthFinder unavailable且0模拟结果；未训练或修改历史模型。
+
 # 2026-08-28 — Phase 15
 
 - 基于1633个Glide/Vina matched candidates建立预算感知Evidence Acquisition Engine；

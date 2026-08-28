@@ -1,0 +1,21 @@
+{
+  "phase": "Phase 16",
+  "raw_generated": 400,
+  "valid_generated": 400,
+  "unique_valid_generated": 360,
+  "historical_htvs1633_exact_duplicates": 0,
+  "vina_selected": 120,
+  "vina_success": 120,
+  "vina_failed": 0,
+  "generated_acquisition_panel": 30,
+  "generator_collapse": false,
+  "crem_status": "unavailable",
+  "reinvent4_status": "unavailable",
+  "aizynthfinder_status": "unavailable",
+  "protected_model_files": 24,
+  "model_hash_mismatches": 0,
+  "tests_run": 154,
+  "tests_passed": 154,
+  "training_performed": false,
+  "phase17_started": false
+}

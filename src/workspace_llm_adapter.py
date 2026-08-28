@@ -37,6 +37,7 @@ class OpenAIRouter:
                 "run_navigation (profile: balanced, binding_focused, atp_mechanism_focused, experimental_validation_focused); "
                 "explain_candidate (ID/Hit alias); find_knowledge (query); validate_feedback/ingest_feedback (user-supplied incoming CSV path). "
                 "acquisition_advice (the user's evidence-budget question; explain only saved Phase 15 calculations). "
+                "generation_query (question about saved Phase 16 lineage, QC, novelty or acquisition artifacts). "
                 "Never invent a file path or infer human confirmation."
             ),
             "input": json.dumps({"recent_user_messages": user_history, "current_request": message}, ensure_ascii=False),
@@ -70,6 +71,7 @@ class OpenAIRouter:
             return None, {}
         key = {"run_navigation": "profile", "explain_candidate": "candidate", "find_knowledge": "query",
                "acquisition_advice": "question",
+               "generation_query": "question",
                "validate_feedback": "path", "ingest_feedback": "path"}.get(tool)
         if key and not isinstance(value, str):
             raise ValueError("Tool argument must be text")

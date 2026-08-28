@@ -13,6 +13,10 @@
 | qikprop | 安装QikProp8.0包 | 商业性质预测 | installed_but_license_unavailable |
 | gnina | executable探测 | CNN rescoring shadow backend | Phase 15认证：unavailable / executable_not_found；0条shadow score；不阻塞主流程 |
 | openmm/gmx_mmpbsa/desmond | unknown | 预留adapter | configuration_error：未实现该执行adapter，不声称可运行 |
+| RDKit R-group generator | RDKit 2026.03.5 | scaffold-preserving controlled enumeration | available；Phase16真实生成400 raw/400 valid/360 unique |
+| CReM | unknown | mutate/grow预留 | unavailable：Python module not found；0 generated；未创建伪fragment DB |
+| REINVENT4 | unknown | constrained generation shadow | unavailable：executable/module not found；0 generated；未模拟输出 |
+| AiZynthFinder | unknown | retrosynthesis feasibility | unavailable：executable/module not found；0 retrosynthesis runs |
 
 统一接口：detect、validate_environment、prepare_input、build_command、run、parse_output、register_evidence。工具记录包括ID/名称/版本/路径/许可/可用状态/backend/supported_tasks及可执行文件hash。不存在“LLM填一个Docking数值”的接口。
 

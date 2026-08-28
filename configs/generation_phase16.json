@@ -1,0 +1,50 @@
+{
+  "version": "phase16_v1",
+  "random_seed": 20260828,
+  "raw_target_per_seed": 200,
+  "max_unique_valid": 1000,
+  "vina_pool_size": 120,
+  "acquisition_panel_size": 30,
+  "vina_max_workers": 8,
+  "protected_scaffold": true,
+  "reaction_template_id": "aromatic_CH_Rgroup_substitution_v1",
+  "reaction_smarts": "[cH:1].[*:2]-[*:3]>>[c:1]-[*:3]",
+  "building_blocks": [
+    {"id": "R_F", "smiles": "[*:1]F"},
+    {"id": "R_Cl", "smiles": "[*:1]Cl"},
+    {"id": "R_Br", "smiles": "[*:1]Br"},
+    {"id": "R_Me", "smiles": "[*:1]C"},
+    {"id": "R_Et", "smiles": "[*:1]CC"},
+    {"id": "R_iPr", "smiles": "[*:1]C(C)C"},
+    {"id": "R_OMe", "smiles": "[*:1]OC"},
+    {"id": "R_OEt", "smiles": "[*:1]OCC"},
+    {"id": "R_CN", "smiles": "[*:1]C#N"},
+    {"id": "R_CF3", "smiles": "[*:1]C(F)(F)F"},
+    {"id": "R_CONH2", "smiles": "[*:1]C(=O)N"},
+    {"id": "R_SO2NH2", "smiles": "[*:1]S(=O)(=O)N"},
+    {"id": "R_NMe2", "smiles": "[*:1]N(C)C"},
+    {"id": "R_Ph", "smiles": "[*:1]c1ccccc1"},
+    {"id": "R_pyrimidinyl", "smiles": "[*:1]c1nccnc1"},
+    {"id": "R_CH2OH", "smiles": "[*:1]CO"},
+    {"id": "R_CH2CH2OH", "smiles": "[*:1]CCO"},
+    {"id": "R_CO2Me", "smiles": "[*:1]C(=O)OC"},
+    {"id": "R_cPr", "smiles": "[*:1]C1CC1"},
+    {"id": "R_morpholine", "smiles": "[*:1]N1CCOCC1"}
+  ],
+  "screening_weights": {
+    "validity": 0.10,
+    "tractability": 0.20,
+    "novelty": 0.20,
+    "diversity": 0.15,
+    "scaffold_retention": 0.15,
+    "warning_free": 0.20
+  },
+  "acquisition_weights": {
+    "vina": 0.25,
+    "tractability": 0.20,
+    "novelty": 0.20,
+    "diversity": 0.15,
+    "warning_free": 0.10,
+    "scaffold_retention": 0.10
+  }
+}
