@@ -199,6 +199,16 @@ Phase 14没有产生新的监督标签。MIC、ATP activity、细胞毒性、静
 | Phase18A UI screenshots | 本地真实应用浏览器验收 | 8张 | `results/phase18a/screenshots/` | 无 | 否 | 展示证据，不是科学结果 |
 | Generation request | 用户确认后的任务请求 | 当前0或按使用产生 | `workspace_local/phase18a/requests/` | 工作流状态 | 否 | 不执行计算、不覆盖Phase16 |
 
+## Phase 18B产品与协作资产（2026-08-30）
+
+| 数据名称 | 来源 | 规模 | 文件位置 | 标签类型 | 可训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| Research sessions and plans | 本地研究者对话、结构化意图与显式确认 | 按使用产生 | `workspace_local/collaboration.sqlite3` | 产品审计状态 | 否 | 不属于科学label；不得作为活性真值 |
+| Collaboration records | 评论、投票、最终人类决定和证据快照hash | 按使用产生 | `workspace_local/collaboration.sqlite3` | 人类审查/决定 | 否 | 投票不修改AI分数；最终决定不自动训练 |
+| Versioned action artifacts | 经确认的acquisition/generation/export请求 | 按计划版本 | `workspace_local/phase18b/plans/` | 工作流产物 | 否 | acquisition score不是活性概率 |
+| Phase18B UI screenshots | 本地真实浏览器验收 | 8张 | `results/phase18b/screenshots/` | 无 | 否 | 仅证明产品流程可见，不是科学结果 |
+| Registered pose view | Phase14/16与内部Registry pose的运行时只读视图 | 按可用pose | 不复制原pose | 计算结构证据视图 | 否 | Vina pose不等于实验构象或MM/GBSA trajectory pose |
+
 每次新增数据必须记录：
 
 1. 数据文件名、版本和SHA-256；

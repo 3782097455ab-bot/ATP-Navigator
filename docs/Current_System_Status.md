@@ -1,6 +1,19 @@
 # ATP-Navigator Current System Status
 
-更新时间：2026-08-28
+更新时间：2026-08-30
+
+## Phase 18B完成态：对话执行、协作与3D结构工作区
+
+- 已实现自然语言研究会话到结构化意图、Plan Preview、人工确认、白名单动作和Registry结果回传的完整产品路径；
+- 13类意图覆盖候选/证据/来源/协议/决策/获取/生成/计算计划/任务/缺口/能力/谱系/导出；
+- 多轮上下文可将“从这里”限定为上一轮候选集合；实际特征不完整时如实缩小面板，不补造记录；
+- 新增登记pose的3Dmol.js浏览器工作区，保留Vina与open-MM/GBSA pose协议边界；
+- 新增团队审查、投票、最终人类决定、证据快照hash、Make/Test计划队列和统一Activity Timeline；
+- 当前循环明确为computational DBTL，真实湿实验反馈仍为0，不宣称完整实验闭环；
+- 浏览器真实验收覆盖8个关键页面/状态，未见浏览器console error；全仓库195项回归测试通过；
+- 不训练或修改Model v0–v4-alpha，不修改Phase14–18A冻结结果，不干预独立运行的Phase17.1后台任务。
+
+主要入口：`src/agent/`、`src/app/phase18b_views.py`、`results/phase18b/screenshots/`、`docs/Phase18B_Conversational_Collaboration_Report.md`。
 
 ## Phase 16完成态：可追溯小规模分子扩展
 
@@ -77,7 +90,7 @@
 | Public source acquisition | Phase 11 已审计 | abaucin官网补充表：8,404测量行、13,360作者预测行，严格分开；原文数据本地保存、不训练 |
 | 团队数据接入 | 目录和登记表已建立 | `data/external/incoming/`、`data/external/curated/` |
 | 文献追溯 | 框架已建立 | `data/literature/references.csv` |
-| 网页/前端 | 未开发 | 当前不在本阶段范围 |
+| 本地研究界面 | Phase18B 已运行 | Streamlit AI Research Console、3D pose、团队审查、Timeline、计算DBTL、Presentation Mode |
 
 ## 2. 当前模型版本
 

@@ -1,4 +1,4 @@
-# ATP-Navigator Phase 18A 用户指南
+# ATP-Navigator Phase 18B 用户指南
 
 ## 定位
 
@@ -16,7 +16,8 @@ ATP-Navigator 是 ATP 合酶虚拟筛选后的 AI 辅助候选优先级决策系
 
 ## 页面
 
-1. **Dashboard**：实时显示 1633 个 HTVS 候选、360 个 Phase16 生成结构、Vina 证据、获取面板、活动任务和工具能力。
+1. **AI Research Console**：自然语言查询、结构化意图、Plan Preview、人工确认、白名单执行和结果回到会话的统一入口。
+2. **Dashboard**：实时显示 1633 个 HTVS 候选、360 个 Phase16 生成结构、Vina 证据、获取面板、活动任务和工具能力。
 2. **Project Overview**：从 git 历史读取可核查的开发时间线。
 3. **Candidate Explorer**：统一查询 HTVS、内部 17 候选和生成结构。内部候选与 HTVS 的身份映射只使用 Phase14.1 审计，不能按名称或排名猜测。
 4. **Evidence Matrix**：显示 available、missing、unknown 和 not_applicable；缺失值不按 0 处理。
@@ -27,17 +28,22 @@ ATP-Navigator 是 ATP 合酶虚拟筛选后的 AI 辅助候选优先级决策系
 9. **Execution Jobs**：读取共享 SQLite Calculation Job Registry。终态任务默认只读，不自动重启。
 10. **Tool Capability**：显示真实能力、版本和阻塞原因；不可用后端不会产生模拟数值。
 11. **Research Dialogue**：以可追溯规则查询候选证据、预算、协议分歧、证据缺口和工具能力。
-12. **Experiment Feedback**：展示空状态并预览反馈表头。正式导入仍需要证据文件 hash 和人工审查，不自动训练。
-13. **Export**：导出当前表格，同时附加 commit、模型范围、时间与科学协议范围元数据。
+12. **3D Structural Workspace**：显示登记的7P3W受体和协议特异性pose；无pose时保持missing。
+13. **Team Review Board**：分开保存AI建议、团队意见和最终研究者决定。
+14. **Activity Timeline**：汇总会话、计划、任务、证据和协作事件。
+15. **DBTL Loop**：展示计算Design–Build–Test–Learn状态，不宣称湿实验闭环。
+16. **Presentation Mode**：面向比赛现场的真实注册数据演示路径。
+17. **Experiment Feedback**：展示空状态并预览反馈表头。正式导入仍需要证据文件 hash 和人工审查，不自动训练。
+18. **Export**：导出当前表格，同时附加 commit、模型范围、时间与科学协议范围元数据。
 
 ## 推荐演示流程
 
-Dashboard → Protocol Comparison → Acquisition Workspace（预算20）→ Candidate Explorer → Research Dialogue → Experiment Feedback。
+AI Research Console（协议分歧查询 → “从这里”获取计划 → 确认）→ 3D Structural Workspace → Team Review Board → Activity Timeline → Presentation Mode。
 
 ## 当前限制
 
 - 尚无经审核的 ATP 抑制、MIC 或毒性反馈，前瞻评价为 `not_available`；
 - Prime/MMGBSA 当前许可证不可用；Windows OpenMM 依赖链尚不足以产生可接受的 protein–ligand MM/GBSA 证据；
-- Phase18A 不执行 WSL Phase17.1；
-- Research Dialogue 是受限、可追溯的查询层，不是能自由生成科学数值的大模型。
-
+- Phase18B 不停止、重启或修改独立运行的 WSL Phase17.1；
+- Research Console 是受限、可追溯的执行编排层，不是能自由生成科学数值的大模型；
+- AI推荐、团队投票和最终人类决定严格分开，投票不修改模型分数。

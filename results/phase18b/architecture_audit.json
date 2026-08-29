@@ -1,0 +1,38 @@
+{
+  "supported_intents": [
+    "acquisition",
+    "calculation_plan",
+    "candidate_query",
+    "decision_ranking",
+    "evidence_query",
+    "export_request",
+    "generation",
+    "job_status",
+    "missing_evidence",
+    "parent_lineage",
+    "protocol_comparison",
+    "provenance_query",
+    "tool_capability"
+  ],
+  "supported_intent_count": 13,
+  "allowlisted_actions": [
+    "ACTION_COMPARE_PROTOCOL",
+    "ACTION_CREATE_CALCULATION_PLAN",
+    "ACTION_CREATE_GENERATION_REQUEST",
+    "ACTION_DECISION_RANKING",
+    "ACTION_EXPORT_PANEL",
+    "ACTION_JOB_STATUS",
+    "ACTION_MISSING_EVIDENCE",
+    "ACTION_PARENT_LINEAGE",
+    "ACTION_QUERY_CANDIDATE",
+    "ACTION_QUERY_EVIDENCE",
+    "ACTION_QUERY_PROVENANCE",
+    "ACTION_RUN_ACQUISITION",
+    "ACTION_TOOL_CAPABILITY"
+  ],
+  "natural_language_shell_execution": false,
+  "natural_language_sql_execution": false,
+  "natural_language_eval_execution": false,
+  "llm_scientific_number_generation": false,
+  "unknown_experiment_fill": false
+}

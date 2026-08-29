@@ -207,3 +207,7 @@ Phase 17没有新增或训练模型。高成本后端资格门控在真实计算
 ## Phase 18A登记（非模型版本）
 
 Phase18A只新增产品化与查询界面，没有新增、训练、微调或替换模型。Decision Workspace读取冻结的Phase10输出；Acquisition Workspace调用冻结的Phase15策略。界面缓存不属于模型缓存，导出不产生新label。24个受保护模型文件继续以`results/phase14/model_hashes_after.json`为基准核验。
+
+## Phase 18B登记（非模型版本）
+
+Phase18B新增的是会话编排、白名单动作、协作审查、注册pose查看和Presentation Mode，不是Model v5。可选OpenAI provider只允许解析意图和解释Registry结果；不得生成Docking、MM/GBSA、活性、毒性或模型分数。对话计划、获取优先级、团队投票和最终人类决定均禁止作为自动监督标签。Model v0–v4-alpha继续冻结。

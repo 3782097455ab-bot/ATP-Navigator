@@ -1,0 +1,38 @@
+{
+  "tested_at": "2026-08-30T00:25:00+08:00",
+  "url": "http://localhost:8501/",
+  "status": "passed",
+  "checks": {
+    "research_console_loaded": true,
+    "read_only_protocol_query": true,
+    "multi_turn_context": true,
+    "plan_preview_before_execution": true,
+    "explicit_confirmation": true,
+    "versioned_acquisition_artifact": true,
+    "plan_linked_registry_jobs": true,
+    "registered_pose_rendered": true,
+    "browser_console_errors": 0,
+    "team_review_saved": true,
+    "neutral_review_vote_saved": true,
+    "ai_score_unchanged_by_vote": true,
+    "activity_timeline_loaded": true,
+    "computational_dbtl_boundary_visible": true,
+    "presentation_mode_loaded": true
+  },
+  "confirmed_plan_id": "plan_af3207b6a04f408295",
+  "requested_candidates": 5,
+  "actual_candidates": 4,
+  "actual_count_reason": "Only four candidates from the previous ten-candidate conversational scope had records in the frozen acquisition feature universe; no fifth record was fabricated.",
+  "scientific_result_generated": false,
+  "wet_lab_claim_generated": false,
+  "screenshots": [
+    "01_research_console.png",
+    "02_plan_preview.png",
+    "03_confirmed_execution.png",
+    "04_3d_structural_workspace.png",
+    "05_team_review_board.png",
+    "06_activity_timeline.png",
+    "07_computational_dbtl.png",
+    "08_presentation_mode.png"
+  ]
+}

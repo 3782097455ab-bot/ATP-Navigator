@@ -1060,3 +1060,16 @@ Model变化：无。训练：无。实验标签新增：0。当前没有新的�
 - 性能变化：不适用，本阶段不比较预测性能；
 - 当前限制：0条经审查实验反馈；高成本物理证据后端仍被科学能力门控；GUI不伪装为计算supervisor；
 - 术语边界：数据语义一致性、target annotation、endpoint segregation和provenance QC，不称为biosafety，不进入临床或临床前叙事。
+
+## Phase 18B：对话执行、团队协作与3D结构工作区（2026-08-30）
+
+- 目标：把Phase18A只读工作区、共享Job/Evidence Registry、冻结Decision/Acquisition/Generation能力整合为可确认执行的研究对话和协作产品；
+- 新增文件：`src/agent/`、`src/app/phase18b_views.py`、`tests/test_phase18b.py`、5份Phase18B文档和8张浏览器验收截图；
+- 修改文件：`app.py`、`src/app/data_adapter.py`、`docs/User_Guide.md`及长期维护文档；
+- 使用数据：Phase10冻结决策、Phase14/14.1 Vina与身份审计、Phase15 Acquisition、Phase16生成谱系、共享workspace Registry；
+- 实现功能：13类意图、多轮候选上下文、Plan Preview/人工确认、白名单动作、产品任务登记、注册pose 3D查看、团队审查/投票/最终人类决定、统一timeline、计算DBTL和Presentation Mode；
+- 浏览器验收：真实执行协议分歧查询和上下文获取计划；请求5个时，冻结获取特征域中只有4个匹配，因此如实生成4候选版本化面板；未补造第5条；
+- 模型变化：无；不训练、不修改Model v0–v4-alpha；
+- 性能变化：不适用。该阶段提升工作流完整性、可追溯性和研究者在环体验，不声称提高预测准确率；
+- 当前限制：实验反馈0；3D仅显示登记的协议pose；可选OpenAI仅限意图解析；不形成临床、临床前或biosafety叙事；
+- Phase17.1关系：保持其后台进程、checkpoint和科学协议不变，本阶段没有停止、重启、重跑或覆盖该计算。

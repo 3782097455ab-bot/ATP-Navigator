@@ -24,6 +24,15 @@ if str(SRC) not in sys.path:
 from app.data_adapter import ProjectData  # noqa: E402
 from app.export_service import csv_bytes, markdown_bytes  # noqa: E402
 from app.query_router import EXAMPLES, ResearchQueryRouter  # noqa: E402
+from app.phase18b_views import (  # noqa: E402
+    activity_timeline as phase18b_activity_timeline,
+    dbtl_loop as phase18b_dbtl_loop,
+    embedded_pose,
+    presentation_mode as phase18b_presentation_mode,
+    research_console as phase18b_research_console,
+    structural_workspace as phase18b_structural_workspace,
+    team_review_board as phase18b_team_review_board,
+)
 
 
 st.set_page_config(page_title="ATP-Navigator", page_icon="🧭", layout="wide", initial_sidebar_state="expanded")
@@ -161,6 +170,8 @@ def candidate_explorer():
     with st.expander("Evidence provenance / 证据来源"):
         provenance = project_data().provenance(selected)
         st.dataframe(provenance, width="stretch", hide_index=True)
+    with st.expander("View in 3D", expanded=False):
+        embedded_pose(PROJECT, str(selected), height=540)
 
 
 def evidence_matrix_page():
@@ -357,6 +368,7 @@ def export_page():
 
 
 PAGES = {
+    "AI Research Console": lambda: phase18b_research_console(PROJECT, title),
     "Dashboard": dashboard,
     "Project Overview": overview,
     "Candidate Explorer": candidate_explorer,
@@ -368,13 +380,18 @@ PAGES = {
     "Execution Jobs": execution_jobs,
     "Tool Capability": tool_capability,
     "Research Dialogue": research_dialogue,
+    "3D Structural Workspace": lambda: phase18b_structural_workspace(PROJECT, title, project_data()),
+    "Team Review Board": lambda: phase18b_team_review_board(PROJECT, title, project_data()),
+    "Activity Timeline": lambda: phase18b_activity_timeline(PROJECT, title),
+    "DBTL Loop": lambda: phase18b_dbtl_loop(PROJECT, title),
+    "Presentation Mode": lambda: phase18b_presentation_mode(PROJECT, title, project_data()),
     "Experiment Feedback": experiment_feedback,
     "Export": export_page,
 }
 
 with st.sidebar:
     st.markdown("## ATP-Navigator")
-    st.caption("Phase 18A · local research workspace")
+    st.caption("Phase 18B · conversational execution & collaboration")
     selected_page = st.radio("导航", list(PAGES), label_visibility="collapsed")
     st.divider()
     git = project_data().git_state()

@@ -132,15 +132,30 @@ class ProjectData:
             status = generated_vina.get("status", pd.Series("success", index=generated_vina.index)).astype(str)
             generated_vina_ids = set(generated_vina.loc[status.eq("success"), id_col].astype(str)) if id_col else set()
         internal_vina_ids = self._phase13_internal_vina_ids()
+        open_mmgbsa_ids: set[str] = set()
+        database = self.runtime / "workspace.sqlite3"
+        if database.is_file():
+            with sqlite3.connect(database) as connection:
+                try:
+                    open_mmgbsa_ids = {
+                        str(row[0])
+                        for row in connection.execute(
+                            """SELECT DISTINCT compound_id FROM evidence
+                               WHERE protocol_id='open_mmgbsa_7p3w_v2'
+                               AND evidence_type='open_mmgbsa_deltaG'"""
+                        )
+                    }
+                except Exception:
+                    open_mmgbsa_ids = set()
         rows = []
         for record in master.to_dict("records"):
             source, cid = record["candidate_source"], record["compound_id"]
             if source == "HTVS 1633":
-                values = dict(structure="available", glide="available", vina="available", mmgbsa="missing",
+                values = dict(structure="available", glide="available", vina="available", mmgbsa="available" if cid in open_mmgbsa_ids else "missing",
                               admet="partial_property_only", literature_prior="missing", lineage="not_applicable", experiment="missing")
             elif source == "Phase 16 generated":
                 values = dict(structure="available", glide="not_applicable", vina="available" if cid in generated_vina_ids else "missing",
-                              mmgbsa="missing", admet="partial_property_only", literature_prior="missing", lineage="available", experiment="missing")
+                              mmgbsa="available" if cid in open_mmgbsa_ids else "missing", admet="partial_property_only", literature_prior="missing", lineage="available", experiment="missing")
             else:
                 values = dict(structure="available", glide="available", vina="available" if cid in internal_vina_ids else "unknown",
                               mmgbsa="available" if pd.notna(record.get("mmgbsa_score")) else "missing",
@@ -240,6 +255,15 @@ class ProjectData:
         for tool_id, value in phase17.items():
             rows.append({"tool_id": tool_id, "status": "available" if value.get("usable") else "unavailable",
                          "version": value.get("version", UNKNOWN), "reason": value.get("blocking_reason", ""), "source": "phase17_capability_gate"})
+        phase17_1 = _read_json(self.results / "phase17_1/backend_certification.json")
+        if phase17_1:
+            rows.append({
+                "tool_id": "open_mmgbsa_7p3w_v2",
+                "status": phase17_1.get("status", "available"),
+                "version": "OpenMM 8.6.0 + gmx_MMPBSA 1.6.5",
+                "reason": "stage-gated WSL qualification/pilot backend",
+                "source": "phase17_1_backend_certification",
+            })
         phase16 = _read_json(self.results / "phase16/generator_backend_status.json")
         generator_values = phase16.get("backends", []) if isinstance(phase16, dict) else []
         if isinstance(generator_values, dict):

@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-08-29T16:50:14.970155+00:00",
+  "status": "passed",
+  "test_command": "python -m unittest discover -s tests -p \"test_*.py\"",
+  "tests_run": 195,
+  "tests_passed": 195,
+  "browser_acceptance": {
+    "tested_at": "2026-08-30T00:25:00+08:00",
+    "url": "http://localhost:8501/",
+    "status": "passed",
+    "checks": {
+      "research_console_loaded": true,
+      "read_only_protocol_query": true,
+      "multi_turn_context": true,
+      "plan_preview_before_execution": true,
+      "explicit_confirmation": true,
+      "versioned_acquisition_artifact": true,
+      "plan_linked_registry_jobs": true,
+      "registered_pose_rendered": true,
+      "browser_console_errors": 0,
+      "team_review_saved": true,
+      "neutral_review_vote_saved": true,
+      "ai_score_unchanged_by_vote": true,
+      "activity_timeline_loaded": true,
+      "computational_dbtl_boundary_visible": true,
+      "presentation_mode_loaded": true
+    },
+    "confirmed_plan_id": "plan_af3207b6a04f408295",
+    "requested_candidates": 5,
+    "actual_candidates": 4,
+    "actual_count_reason": "Only four candidates from the previous ten-candidate conversational scope had records in the frozen acquisition feature universe; no fifth record was fabricated.",
+    "scientific_result_generated": false,
+    "wet_lab_claim_generated": false,
+    "screenshots": [
+      "01_research_console.png",
+      "02_plan_preview.png",
+      "03_confirmed_execution.png",
+      "04_3d_structural_workspace.png",
+      "05_team_review_board.png",
+      "06_activity_timeline.png",
+      "07_computational_dbtl.png",
+      "08_presentation_mode.png"
+    ]
+  },
+  "screenshot_count": 8,
+  "screenshot_hashes": {
+    "01_research_console.png": "95e090a731b16aeeef5542d6aae5463a646cb9af597781a9b365a1504dc75bbe",
+    "02_plan_preview.png": "eda9a4d087813b6ca8b2f98f72066267ff612fc1382fd52bfa962a5069eeefa4",
+    "03_confirmed_execution.png": "b6e9a13ab191eda6ab4a866cb639534d1efc2a0d5500baeec02f3169eba534ce",
+    "04_3d_structural_workspace.png": "85848ee1391ae54b75ab1ce5fa2b2ec2ee863a192986b4b029ef1cd6e1678a36",
+    "05_team_review_board.png": "746b0e979fd9ab1ebff15909af91904d656212e748d79bffee59e87b88e864eb",
+    "06_activity_timeline.png": "f17c74c8d034a0f4386b8a9ccf6519b9d83b390a62be2a205aac65828c81fec1",
+    "07_computational_dbtl.png": "b6d29bf388c053d73ea5dffd284a4a6e0d5086fc475fc0c3ff55109fded7f0a4",
+    "08_presentation_mode.png": "60513376ca32e464b6866f3fef19f9c57c87b06514d30a1f3c32adc63573990f"
+  },
+  "collaboration_counts": {
+    "research_session_v2": 1,
+    "execution_plan_v2": 1,
+    "collaboration_event": 14,
+    "candidate_review": 1,
+    "candidate_vote": 1,
+    "final_human_decision": 0,
+    "make_test_queue": 0
+  },
+  "protected_scientific_tracked_diff": [],
+  "model_hash_summary": {
+    "expected": 24,
+    "verified": 24,
+    "mismatch_count": 0,
+    "all_unchanged": true
+  },
+  "model_training": false,
+  "fabricated_scientific_values": false,
+  "phase17_1_control_action": "none"
+}
