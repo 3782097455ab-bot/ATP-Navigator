@@ -54,6 +54,12 @@ class RuleBasedProvider(IntentProvider):
             operation = "parent_lineage"
         elif any(word in lower for word in ["缺什么", "缺失", "missing evidence", "证据缺口"]):
             operation = "missing_evidence"
+        elif any(word in lower for word in ["mmgbsa更接近", "mm/gbsa更接近", "closer to glide", "closer to vina"]):
+            operation = "protocol_comparison"
+            constraints.update(top_k=budget, analysis_view="protocol_closeness")
+        elif candidates and any(word in lower for word in ["为什么", "为何", "why"]) and any(word in lower for word in ["变化", "改变", "mmgbsa"]):
+            operation = "protocol_comparison"
+            constraints.update(top_k=budget, analysis_view="candidate_explanation")
         elif any(word in lower for word in ["加入mmgbsa后", "mmgbsa后判断变化", "evidence impact"]):
             operation = "protocol_comparison"
             constraints.update(top_k=budget, analysis_view="evidence_impact")

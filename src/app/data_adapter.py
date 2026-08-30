@@ -311,6 +311,12 @@ class ProjectData:
     def phase17_1_post_analysis(self) -> dict:
         return _read_json(self.results / "phase17_1/post_analysis.json")
 
+    def release_candidate_decision(self) -> pd.DataFrame:
+        return _read_csv(self.results / "release_candidate/decision_runs/competition_rc_decision_v1.csv")
+
+    def release_candidate_manifest(self) -> dict:
+        return _read_json(self.results / "release_candidate/competition_rc_manifest.json")
+
     def jobs(self) -> pd.DataFrame:
         database = self.runtime / "workspace.sqlite3"
         if not database.exists():
@@ -362,17 +368,26 @@ class ProjectData:
 
     def git_state(self) -> dict:
         def run(*args: str) -> str:
-            result = subprocess.run(["git", *args], cwd=self.project, capture_output=True, text=True, timeout=10)
-            return result.stdout.strip() if result.returncode == 0 else UNKNOWN
+            result = subprocess.run(
+                ["git", *args], cwd=self.project, capture_output=True, text=True,
+                encoding="utf-8", errors="replace", timeout=10,
+            )
+            return (result.stdout or "").strip() if result.returncode == 0 else UNKNOWN
         return {"commit": run("rev-parse", "--short", "HEAD"), "branch": run("branch", "--show-current"),
                 "status": run("status", "--short"), "timestamp": datetime.now(timezone.utc).isoformat()}
 
     def timeline(self) -> pd.DataFrame:
-        result = subprocess.run(["git", "log", "--date=short", "--pretty=format:%ad|%h|%s"], cwd=self.project,
-                                capture_output=True, text=True, timeout=10)
+        result = subprocess.run(
+            ["git", "log", "--date=short", "--pretty=format:%ad|%h|%s"],
+            cwd=self.project, capture_output=True, text=True,
+            encoding="utf-8", errors="replace", timeout=10,
+        )
         rows = []
         if result.returncode == 0:
-            for line in result.stdout.splitlines():
+            # Some restricted cloud runtimes can return a successful process
+            # result with stdout=None.  That means "no timeline available";
+            # it must not take down the read-only viewer.
+            for line in (result.stdout or "").splitlines():
                 parts = line.split("|", 2)
                 if len(parts) == 3:
                     rows.append(dict(date=parts[0], commit=parts[1], change=parts[2]))
@@ -395,6 +410,17 @@ class ProjectData:
 
     def generated_registry(self) -> pd.DataFrame:
         return self.generated_candidates()
+
+    def benchmark_registry(self) -> pd.DataFrame:
+        """Read the catalog only; registry rows are not training or execution results."""
+        release = self.results / "release_candidate/member_data_integration/benchmark_registry.csv"
+        return _read_csv(release if release.is_file() else self.project / "data/external/integrated/benchmark_registry_v1.csv")
+
+    def benchmark_status(self) -> dict:
+        return _read_json(
+            self.project / "data/external/integrated/benchmark_registry_status.json",
+            default={"Part1 experimental benchmark records": "pending"},
+        )
 
     def phase_snapshot(self) -> dict:
         return {"metrics": self.dashboard_metrics(), "git": self.git_state(),

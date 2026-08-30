@@ -1,0 +1,71 @@
+{
+  "experiment_id": "competition_rc_shadow_001",
+  "dataset_audit_rows": 8820,
+  "task_a": {
+    "baseline_samples": 3458,
+    "augmented_samples": 3719,
+    "member_eligible_rows": 266,
+    "metrics": [
+      {
+        "model": "TaskA_v2_replayed_control",
+        "evaluation_task": "Gram-negative MIC context",
+        "label": "log10_MIC_ug_mL_lower_is_better",
+        "n": 3458,
+        "rmse": 0.792271677175983,
+        "spearman": 0.762801119165141,
+        "ndcg_at_5": 0.9753455618445264,
+        "top_k_enrichment": 0.0,
+        "hit_recovery": 0.0,
+        "split": "same 5-fold scaffold GroupKFold; exact compounds/scaffolds excluded from held-out folds"
+      },
+      {
+        "model": "TaskA_member2_context_shadow",
+        "evaluation_task": "Gram-negative MIC context",
+        "label": "log10_MIC_ug_mL_lower_is_better",
+        "n": 3458,
+        "rmse": 0.8044161058901338,
+        "spearman": 0.7536357978905865,
+        "ndcg_at_5": 0.9653495834068622,
+        "top_k_enrichment": 0.0,
+        "hit_recovery": 0.0,
+        "split": "same 5-fold scaffold GroupKFold; exact compounds/scaffolds excluded from held-out folds"
+      }
+    ],
+    "bootstrap_rmse_delta_95_interval": [
+      0.00046907437439047683,
+      0.024020308690672065
+    ]
+  },
+  "task_b": {
+    "trained": false,
+    "reason": "zero new exact compatible ATP-synthase endpoint records"
+  },
+  "task_c": {
+    "trained": false,
+    "reason": "no new internal MMGBSA or biological candidate labels"
+  },
+  "promotion": {
+    "official_model_before": "Model v3",
+    "official_model_after": "Model v3",
+    "promotion_passed": false,
+    "task_a_shadow_result": "mixed_or_not_improved",
+    "rmse_delta_shadow_minus_control": 0.012144428714150779,
+    "spearman_delta_shadow_minus_control": -0.009165321274554494,
+    "bootstrap_rmse_delta_95_interval": [
+      0.00046907437439047683,
+      0.024020308690672065
+    ],
+    "cold_scaffold_evaluation_n": 3458,
+    "model_v3_direct_comparison_status": "not_applicable_task_mismatch",
+    "reason": "MIC context model cannot replace the internal static-MMGBSA candidate ranker; Member1/BindingDB added zero compatible exact ATP-synthase training labels; prior internal release shadow did not exceed Model v3",
+    "prior_internal_shadow_reference": "results/release_v1_shadow_replace_atp_002/experiment_summary.json"
+  },
+  "domain_shift": {
+    "member_unique_structures": 14,
+    "exact_structure_overlap_with_v2_task_a": 14,
+    "truly_new_structures": 0,
+    "new_information_type": "assay/strain/resistance context, not chemical-space expansion"
+  },
+  "protected_model_hashes_unchanged": true,
+  "new_model_hash": "dbce42d52469523262ffb7ffc5d06616886082fad383fb219161ce9b7b629cc7"
+}

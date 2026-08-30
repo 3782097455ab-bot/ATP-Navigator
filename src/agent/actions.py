@@ -180,7 +180,43 @@ class ActionRegistry:
     def compare_protocol(self, args: dict[str, Any]) -> dict[str, Any]:
         top_k = min(max(int(args.get("top_k", 10)), 1), 100)
         view = str(args.get("analysis_view", "glide_vina_full_library"))
-        if view == "consensus":
+        if view == "protocol_closeness":
+            summary = self.data.phase17_1_post_analysis()
+            metrics = pd.DataFrame(summary.get("pairwise_metrics", []))
+            selected = metrics.loc[
+                metrics.apply(lambda row: "open_mmgbsa" in {str(row.get("protocol_a")), str(row.get("protocol_b"))}, axis=1)
+            ].copy()
+            if not selected.empty:
+                selected["absolute_spearman"] = pd.to_numeric(selected["spearman"], errors="coerce").abs()
+                selected = selected.sort_values(["absolute_spearman", "matched_n"], ascending=[False, False])
+                best = selected.iloc[0]
+                other = "Vina" if "vina" in {best.get("protocol_a"), best.get("protocol_b")} else "Glide"
+                answer = (
+                    f"在现有 Phase17.1 匹配样本中，open MM/GBSA 的排名关联更接近 {other}。"
+                    f"这只是协议排名关联（有效 n={int(best['matched_n'])}），不同物理量不能当作同一种绝对能量。"
+                )
+            else:
+                answer = "没有可用的 open MM/GBSA 成对协议统计。"
+            provenance = [{"source": "results/phase17_1/post_analysis.json", "field": "pairwise_metrics"}]
+            id_column = "candidate_id"
+        elif view == "candidate_explanation":
+            frame = self.data.phase17_1_evidence_impact()
+            candidates = self._resolve(args.get("candidate_scope", []))
+            selected = frame.loc[frame["candidate_id"].astype(str).isin(candidates)].head(top_k) if candidates else frame.iloc[0:0]
+            if not selected.empty:
+                row = selected.iloc[0]
+                answer = (
+                    f"{row['candidate_id']} 从 pre-MM/GBSA rank {int(row['pre_mmgbsa_rank'])} 变为 shadow rank "
+                    f"{int(row['post_mmgbsa_shadow_rank'])}：Glide utility={row['glide_utility']:.3f}，"
+                    f"Vina utility={row['vina_utility']:.3f}，open MM/GBSA utility={row['mmgbsa_utility']:.3f}。"
+                    "Vina 与 MM/GBSA 一致偏弱、与 Glide 偏强判断冲突，因此加入第三协议后优先级下降；"
+                    "这是计算协议分歧，不是生物活性结论。"
+                )
+            else:
+                answer = "该候选没有可用的 Phase17.1 evidence-impact 记录。"
+            provenance = [{"source": "results/phase17_1/evidence_impact.csv", "decision_run_type": "updated_evidence_shadow_only"}]
+            id_column = "candidate_id"
+        elif view == "consensus":
             frame = self.data.phase17_1_protocol_disagreement()
             finite = frame.dropna(subset=["three_protocol_disagreement"]) if not frame.empty else frame
             selected = finite.sort_values(["three_protocol_disagreement", "candidate_id"]).head(top_k)

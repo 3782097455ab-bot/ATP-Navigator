@@ -211,3 +211,21 @@ Phase18A只新增产品化与查询界面，没有新增、训练、微调或替
 ## Phase 18B登记（非模型版本）
 
 Phase18B新增的是会话编排、白名单动作、协作审查、注册pose查看和Presentation Mode，不是Model v5。可选OpenAI provider只允许解析意图和解释Registry结果；不得生成Docking、MM/GBSA、活性、毒性或模型分数。对话计划、获取优先级、团队投票和最终人类决定均禁止作为自动监督标签。Model v0–v4-alpha继续冻结。
+
+## Competition RC shadow模型登记（2026-08-31）
+
+| 项目 | 登记内容 |
+|---|---|
+| 版本 | `competition_rc_shadow_001`；实验性、未晋升 |
+| 目的 | 检查Member2新增菌株/耐药MIC语境是否改善Gram-negative MIC Task-A；不替代候选ranker |
+| 输入 | Morgan1024、RDKit descriptors、完整organism/strain context one-hot |
+| 标签 | `log10(MIC μg/mL)`；仅MIC；不混入IC50/Ki/Kd/Docking/MMGBSA |
+| 数据 | External Dataset v2 Task-A基线3,458样本；加入Member2后3,719聚合样本；Member2贡献266个结构-语境聚合样本、0个新结构 |
+| 划分 | 固定5-fold scaffold GroupKFold；测试scaffold在基线与成员增强训练中均完全排除 |
+| 算法 | 与现有baseline一致的固定LightGBM回归参数；未为超过基线而调参 |
+| 基线指标 | n=3,458；RMSE 0.7923；Spearman 0.7628；NDCG@5 0.9753 |
+| Shadow指标 | n=3,458；RMSE 0.8044；Spearman 0.7536；NDCG@5 0.9653 |
+| 不确定性 | scaffold-fold cluster bootstrap的RMSE(new-old) 95%区间为[0.00047, 0.02402]，指向本次增强未改善该固定benchmark |
+| Promotion Gate | 未通过；Model v3继续是官方候选排序模型；Task-A MIC本身与Model v3内部静态MM/GBSA排序任务不可直接比较 |
+| 文件 | `models/experiments/competition_rc_shadow_001/`、`results/release_candidate/model_promotion/` |
+| 限制 | 新增信息主要是已知19个抗生素结构的菌株语境；化学空间无扩展；不能推出ATP靶点或内部候选活性 |

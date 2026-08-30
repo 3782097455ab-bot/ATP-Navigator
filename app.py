@@ -32,6 +32,7 @@ from app.phase18b_views import (  # noqa: E402
     research_console as phase18b_research_console,
     structural_workspace as phase18b_structural_workspace,
     team_review_board as phase18b_team_review_board,
+    deployment_info,
 )
 
 
@@ -121,6 +122,29 @@ def dashboard():
             st.dataframe(caps[[c for c in ["tool_id", "status", "version", "reason"] if c in caps]].head(18), width="stretch", hide_index=True)
         st.markdown("### 实验反馈")
         st.json(project_data().feedback_status(), expanded=False)
+
+
+def external_benchmark_registry():
+    title("External Benchmark Registry", "成员3 Part2：公开AI benchmark资源地图；目录记录不等于已运行结果")
+    registry = project_data().benchmark_registry()
+    status = project_data().benchmark_status()
+    if registry.empty:
+        st.info("当前没有已登记的 benchmark metadata。")
+    else:
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Catalog entries", len(registry))
+        c2.metric("Executed", int(registry.get("execution_status", pd.Series(dtype=str)).eq("completed").sum()))
+        c3.metric("Training records", 0)
+        tasks = st.multiselect("Task", sorted(registry["task"].dropna().astype(str).unique()), default=[])
+        verification = st.multiselect("Verification", sorted(registry["verification"].dropna().astype(str).unique()), default=[])
+        filtered = registry.copy()
+        if tasks:
+            filtered = filtered.loc[filtered["task"].isin(tasks)]
+        if verification:
+            filtered = filtered.loc[filtered["verification"].isin(verification)]
+        show = [c for c in ["benchmark_id", "dataset", "task", "size", "input", "output", "split", "metric", "source", "reference", "relevance", "verification", "execution_status"] if c in filtered]
+        paged(filtered[show], "benchmark_registry", page_size=30, height=520)
+    st.warning(f"Part1 experimental benchmark records: {status.get('Part1 experimental benchmark records', 'pending')}. 26条Part2记录仅是metadata/catalog，尚未声称已执行。")
 
 
 def overview():
@@ -246,22 +270,36 @@ def protocol_comparison_page():
 
 
 def decision_workspace():
-    title("决策工作区", "读取冻结的 Phase10 决策输出；切换研究目标，不重新训练或改写评分公式")
-    profiles = ["balanced", "binding_focused", "atp_mechanism_focused", "experimental_validation_focused"]
-    profile = st.selectbox("研究目标模式", profiles)
-    ranking = project_data().decision_ranking(profile)
-    if ranking.empty:
-        st.error("冻结决策结果不可用。")
-        return
-    cols = [c for c in ["rank", "candidate", "historical_alias", "compound_id", "binding_score", "ATP_score", "antibacterial_score", "drug_score", "risk", "final_score", "decision_confidence", "evidence_coverage"] if c in ranking]
-    st.dataframe(ranking[cols], width="stretch", hide_index=True, height=520)
-    st.markdown("### Top 候选分量")
-    top = ranking.head(10)
-    components = [c for c in ["binding_score", "ATP_score", "antibacterial_score", "drug_score"] if c in top]
-    if components:
-        long = top.melt(id_vars="compound_id", value_vars=components, var_name="component", value_name="score")
-        st.altair_chart(alt.Chart(long).mark_bar().encode(x="compound_id:N", y="score:Q", color="component:N", tooltip=list(long.columns)).properties(height=360), width="stretch")
-    st.info("当前页面只读取已版本化输出。切换 profile 表示研究目标权重不同，不代表模型性能提升。")
+    title("决策工作区", "历史冻结 Decision 与 Phase17.1 更新证据 shadow run 并存；任何版本都不被覆盖")
+    frozen_tab, rc_tab = st.tabs(["Frozen Decision（17候选）", "Competition RC 三协议 Shadow（30候选）"])
+    with frozen_tab:
+        profiles = ["balanced", "binding_focused", "atp_mechanism_focused", "experimental_validation_focused"]
+        profile = st.selectbox("研究目标模式", profiles)
+        ranking = project_data().decision_ranking(profile)
+        if ranking.empty:
+            st.error("冻结决策结果不可用。")
+        else:
+            cols = [c for c in ["rank", "candidate", "historical_alias", "compound_id", "binding_score", "ATP_score", "antibacterial_score", "drug_score", "risk", "final_score", "decision_confidence", "evidence_coverage"] if c in ranking]
+            st.dataframe(ranking[cols], width="stretch", hide_index=True, height=520)
+            st.markdown("### Top 候选分量")
+            top = ranking.head(10)
+            components = [c for c in ["binding_score", "ATP_score", "antibacterial_score", "drug_score"] if c in top]
+            if components:
+                long = top.melt(id_vars="compound_id", value_vars=components, var_name="component", value_name="score")
+                st.altair_chart(alt.Chart(long).mark_bar().encode(x="compound_id:N", y="score:Q", color="component:N", tooltip=list(long.columns)).properties(height=360), width="stretch")
+    with rc_tab:
+        rc = project_data().release_candidate_decision()
+        manifest = project_data().release_candidate_manifest()
+        if rc.empty:
+            st.info("Competition RC Decision Run 尚未生成。")
+        else:
+            c1, c2, c3 = st.columns(3)
+            c1.metric("候选", len(rc))
+            c2.metric("三协议完整", int(rc["protocol_count"].eq(3).sum()))
+            c3.metric("官方模型", manifest.get("official_model", "Model v3"))
+            st.dataframe(rc, width="stretch", hide_index=True, height=560)
+            st.warning("RC run 是更新证据 shadow decision；实验 ATP 抑制、MIC 与毒性均保持 unknown，未覆盖 Frozen Decision。")
+    st.info("当前页面只读取已版本化输出。切换 profile 或查看 shadow run 不代表模型性能提升。")
 
 
 def acquisition_workspace():
@@ -298,6 +336,9 @@ def molecule_generation():
     show = [c for c in ["compound_id", "parent_id", "parent_alias", "canonical_smiles", "murcko_scaffold", "MW", "cLogP", "TPSA", "sa_like_proxy", "structural_warnings", "provenance_hash"] if c in subset]
     paged(subset[show], "generated", page_size=40)
     st.markdown("### 新扩展请求（安全预览）")
+    deploy = deployment_info(PROJECT)
+    if not deploy["can_execute_local_tools"]:
+        st.info("Execution backend unavailable in cloud_viewer. Existing registered Phase16 results remain available below; new requests cannot run here.")
     n = st.number_input("期望生成数量", 1, 500, 30)
     preserve = st.checkbox("保留 scaffold", value=True)
     preview = {"action": "molecule_expansion_request", "backend": "rdkit_rgroup_enumeration", "seed": parent,
@@ -305,7 +346,7 @@ def molecule_generation():
                "reason": "Phase18A only previews a versioned request; existing Phase16 outputs remain frozen"}
     st.json(preview)
     confirmed = st.checkbox("我确认这只是任务请求预览，不会生成或覆盖 Phase16 结果", key="gen_confirm")
-    if st.button("保存版本化请求", disabled=not confirmed):
+    if st.button("保存版本化请求", disabled=not confirmed or not deploy["can_execute_local_tools"]):
         request_dir = PROJECT / "workspace_local/phase18a/requests"
         request_dir.mkdir(parents=True, exist_ok=True)
         target = request_dir / f"generation_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}.json"
@@ -358,8 +399,11 @@ def research_dialogue():
             if message.get("provenance"):
                 with st.expander("Provenance"):
                     st.json(message["provenance"])
-    question = st.chat_input("询问候选证据、预算、协议分歧或工具能力")
-    if question:
+    with st.form("research_dialogue_input", clear_on_submit=True):
+        question = st.text_input("询问候选证据、预算、协议分歧或工具能力")
+        submitted = st.form_submit_button("发送")
+    if submitted and question.strip():
+        question = question.strip()
         st.session_state.messages.append({"role": "user", "content": question})
         answer = ResearchQueryRouter(project_data()).answer(question)
         content = answer["answer"] + (f"\n\n⚠️ {answer['warning']}" if answer.get("warning") else "")
@@ -409,6 +453,7 @@ PAGES = {
     "Project Overview": overview,
     "Candidate Explorer": candidate_explorer,
     "Evidence Matrix": evidence_matrix_page,
+    "External Benchmark Registry": external_benchmark_registry,
     "Protocol Comparison": protocol_comparison_page,
     "Decision Workspace": decision_workspace,
     "Acquisition Workspace": acquisition_workspace,

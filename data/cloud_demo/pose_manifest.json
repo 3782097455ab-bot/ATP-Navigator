@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "scientific_scope": "read-only registered Vina pose for public visualization; not an experimental structure or MM/GBSA pose",
+  "candidate_id": "ATP-HTVS-18A7589C7FB7",
+  "compound_code": "94049",
+  "canonical_smiles": "C[C@H]([NH2+]CC#Cc1cnc2ccccc2c1NC(=O)Cc1ccc(C#N)c(Cl)c1)c1cccc(F)c1",
+  "protocol_id": "vina_7p3w_v1",
+  "vina_affinity_kcal_mol": -10.553,
+  "global_rank": 1,
+  "pose_qc": "pass",
+  "source_job_signature": "6be9d094953a8d79ea5c804193408b85273600716fc698c33e29d978c245fe5e",
+  "pose_path": "data/cloud_demo/ATP-HTVS-18A7589C7FB7_vina_pose.pdbqt",
+  "pose_sha256": "6a4b5088e254c0e5d0c021095c0bef6979fb8c9da57c203442bd32edb0e9c7b5",
+  "receptor": "7P3W subunits e/g prepared receptor",
+  "receptor_path": "data/cloud_demo/7P3W_subunits_e_g_prepared.pdb",
+  "receptor_sha256": "b700d93fd622e74afd3b59f22e5b11f5bd4e764fcb38ad82410e0abb44db4722"
+}

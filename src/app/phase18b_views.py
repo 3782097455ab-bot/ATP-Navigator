@@ -15,8 +15,17 @@ from agent.orchestrator import ConversationalOrchestrator
 from agent.structure_viewer import PoseRegistry
 
 
-def _deployment() -> dict:
-    mode = os.environ.get("ATP_NAVIGATOR_DEPLOYMENT_MODE", "local_full")
+def deployment_info(project: Path | None = None) -> dict:
+    """Resolve a fail-closed execution mode for local and hosted viewers."""
+    explicit = os.environ.get("ATP_NAVIGATOR_DEPLOYMENT_MODE", "").strip()
+    project = Path(project).resolve() if project else None
+    streamlit_cloud = bool(
+        os.environ.get("STREAMLIT_SHARING_MODE")
+        or os.environ.get("STREAMLIT_CLOUD")
+        or (project and str(project).replace("\\", "/").startswith("/mount/src/"))
+    )
+    local_registry = bool(project and (project / "workspace_local/workspace.sqlite3").is_file())
+    mode = explicit or ("cloud_viewer" if streamlit_cloud or (project and not local_registry) else "local_full")
     persistent = mode == "local_full" or os.environ.get("ATP_NAVIGATOR_COLLAB_PERSISTENT") == "1"
     return {
         "mode": mode,
@@ -27,7 +36,8 @@ def _deployment() -> dict:
 
 @st.cache_resource
 def collaboration(project_text: str) -> CollaborationStore:
-    return CollaborationStore(Path(project_text), ephemeral=_deployment()["collaboration_persistence"].startswith("ephemeral"))
+    project = Path(project_text)
+    return CollaborationStore(project, ephemeral=deployment_info(project)["collaboration_persistence"].startswith("ephemeral"))
 
 
 @st.cache_resource
@@ -63,7 +73,7 @@ def _show_result(result: dict):
 
 def research_console(project: Path, title_fn):
     title_fn("AI Research Console", "自然语言 → 结构化意图 → Plan Preview → 人工确认 → 白名单动作 → Registry结果回到对话")
-    deploy = _deployment()
+    deploy = deployment_info(project)
     store = collaboration(str(project))
     engine = orchestrator(str(project))
     session_id = _session(project)
@@ -124,7 +134,7 @@ def research_console(project: Path, title_fn):
             )
             c1, c2 = st.columns(2)
             if not deploy["can_execute_local_tools"]:
-                st.info("cloud_viewer is read-only for execution plans; local tools and workers cannot run here.")
+                st.info("Execution backend unavailable in cloud_viewer. The plan remains inspectable, but no local tool or worker will run.")
             if c1.button("Confirm & Execute", type="primary", disabled=not deploy["can_execute_local_tools"]):
                 result = engine.confirm(session_id, preview["plan_id"])
                 messages.append({"role": "assistant", "payload": result})
@@ -134,8 +144,17 @@ def research_console(project: Path, title_fn):
                 store.mark_plan(preview["plan_id"], "cancelled", {"reason": "researcher_cancelled"})
                 st.session_state.pop("phase18b_pending_plan", None)
                 st.rerun()
-        question = st.chat_input("询问候选、证据、协议分歧，或创建需要确认的获取/生成/计算计划")
-        if question:
+        # Streamlit's voice-enabled chat_input currently emits a browser
+        # wavesurfer error after rapid multipage reruns on Community Cloud.
+        # A regular form keeps the same typed conversation contract without
+        # requesting microphone state or changing any scientific behavior.
+        with st.form("phase18b_console_input", clear_on_submit=True):
+            question = st.text_input(
+                "询问候选、证据、协议分歧，或创建需要确认的获取/生成/计算计划"
+            )
+            submitted = st.form_submit_button("发送")
+        if submitted and question.strip():
+            question = question.strip()
             messages.append({"role": "user", "text": question})
             result = engine.handle(session_id, question)
             messages.append({"role": "assistant", "payload": result})

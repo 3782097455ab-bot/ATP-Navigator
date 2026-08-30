@@ -1073,3 +1073,41 @@ Model变化：无。训练：无。实验标签新增：0。当前没有新的�
 - 性能变化：不适用。该阶段提升工作流完整性、可追溯性和研究者在环体验，不声称提高预测准确率；
 - 当前限制：实验反馈0；3D仅显示登记的协议pose；可选OpenAI仅限意图解析；不形成临床、临床前或biosafety叙事；
 - Phase17.1关系：保持其后台进程、checkpoint和科学协议不变，本阶段没有停止、重启、重跑或覆盖该计算。
+
+## Public release与成员数据Integration Audit（2026-08-30）
+
+- 目标：在不干扰Phase17.1、不训练模型的前提下，将Phase18B工作区变为公网安全只读应用，并审计成员2/3最新数据；
+- 新增文件：`data/cloud_demo/`、`src/data_integration/member_data_audit.py`、`data/external/integrated/`、`results/data_integration/`、`tests/test_public_release.py`、`docs/Public_Deployment_Guide.md`和`docs/Member_Data_Integration_Audit.md`；
+- 修改文件：`app.py`、`.streamlit/config.toml`、`.python-version`、`requirements.txt`、`src/agent/structure_viewer.py`、`src/app/data_adapter.py`、`src/app/phase18b_views.py`及长期注册文档；
+- 数据结果：成员2为310行、310行结构有效、19个唯一结构、37个exact duplicate rows、19个结构与External v2重叠、真正新增结构0、64个新species/strain context；成员3为26条benchmark metadata，执行数0；
+- 实现功能：cloud_viewer自动门控、Linux相对路径、公共3D真实登记pose、External Benchmark Registry页面、成员数据可复现审计；
+- 模型变化：无；Model v0–v4-alpha保持冻结；训练：无；实验标签新增：0；
+- 性能变化：不适用。本轮提升公共可访问性、证据可追溯性和数据语义审计，不声称模型准确率提高；
+- 当前限制：成员2未扩展化学结构空间；新增assay context仍需逐条endpoint/provenance复核；26个benchmark尚未执行；云端不运行本地科学后端。
+
+## Phase 17.1：三协议后处理恢复与正式收尾（2026-08-31）
+
+- 目标：在不重新计算候选、不启动60扩展、不修改冻结MM/GBSA协议、不训练模型且不改写Registry Evidence的前提下，修复NaN导致的严格JSON序列化失败并完成Pilot30统计后处理；
+- 新增文件：`results/phase17_1/three_protocol_comparison.csv`、`protocol_disagreement.csv`、`evidence_impact.csv`、`post_analysis.json`、`docs/Phase17_1_Final_Report.md`；
+- 修改文件：`src/phase17_1/post_pilot.py`、`src/app/data_adapter.py`、`src/agent/actions.py`、`src/agent/providers.py`、`src/agent/activity.py`、`app.py`、Phase17.1/18B测试和长期维护文档；
+- 使用数据：30/30成功的cached `pilot30_results.csv`、冻结candidate plan、Phase14 exact-ID Glide/Vina导出、冻结Decision结果和共享Registry只读记录；
+- NaN处理：原JSON错误属于技术性序列化问题；CSV保留NaN，JSON用`null + status/reason`；禁止0、均值或其他数值填充；
+- 身份与缺失：exact candidate-ID恢复24个历史HTVS Glide值；5个生成候选与IN-2缺少exact可比Glide记录，保持scientifically unavailable；未解决技术join为0；
+- 实现功能：三组pairwise finite-n统计、三协议分歧、证据完整性变化、updated-evidence shadow rank、Phase15 acquisition信息覆盖验证，以及GUI/Agent只读查询；
+- 模型变化：无；Model v0–v4-alpha与冻结Decision Engine未改写；24个模型hash一致；
+- 性能变化：不适用。本阶段没有监督模型训练或实验真值；相关性描述计算协议排序关系，不代表活性预测性能；
+- 当前限制：三协议exact matched n=24，另外6个候选不能形成三协议统计；open MM/GBSA短时受限水相近似不等价于历史Prime或膜环境模拟；实验ATP inhibition、MIC和毒性仍未知；
+- Phase15结论：30候选覆盖protocol disagreement、strong、boundary、scaffold diversity和historical bridge五类信息需求，支持其信息覆盖目的，但不构成biological hit enrichment证据；
+- 后续状态：可选60扩展保持未启动；未进入Phase17.2。
+
+## Competition Release Candidate Final Integration（2026-08-31）
+
+- 目标：在冻结Phase17.1、Model v0–v4-alpha和历史Decision的前提下，完成成员数据整合、shadow promotion gate、三协议产品接入与比赛RC冻结；
+- 新增文件：`src/release_candidate_integration.py`、`src/release_candidate_shadow.py`、`src/release_candidate_finalize.py`、`results/release_candidate/`、`models/experiments/competition_rc_shadow_001/`、`docs/Competition_Release_Candidate_Report.md`及RC测试；
+- 使用数据：Member1 39条ATP文献线索、Member2 310条GN MIC、Member3 26条benchmark catalog、本轮BindingDB 93,712条原始记录，以及Phase17.1 30个真实open MM/GBSA结果；
+- 数据结果：BindingDB上传TSV与仓库ZIP内容hash一致；Member1可直接训练记录0；Member2新增结构0但新增64类菌株/耐药语境；BindingDB供应文件直接ATP synthase记录0；
+- 模型实验：只训练隔离Task-A MIC shadow；固定scaffold OOF上RMSE 0.7923→0.8044、Spearman 0.7628→0.7536、NDCG@5 0.9753→0.9653，promotion gate未通过；
+- 官方模型：Model v3保持不变；24个受保护历史文件hash一致；新shadow文件独立版本和hash；
+- 决策变化：新增`competition_rc_three_protocol_shadow_v1`，30候选中24个三协议完整，pre/post Top-5 overlap 4/5，最大变化候选为`ATP-HTVS-66618B00A972`；历史冻结Decision不覆盖；
+- 产品接入：Research Console可回答三协议一致/分歧、MM/GBSA更接近哪个协议以及特定候选变化原因；Decision Workspace并列显示历史冻结与RC shadow run；
+- 科学边界：未新增实验ATP inhibition、内部MIC或毒性结果；未启动60候选扩展；不进入Phase17.2，不构建临床、临床前或biosafety叙事。

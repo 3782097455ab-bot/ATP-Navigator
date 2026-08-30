@@ -209,6 +209,25 @@ Phase 14没有产生新的监督标签。MIC、ATP activity、细胞毒性、静
 | Phase18B UI screenshots | 本地真实浏览器验收 | 8张 | `results/phase18b/screenshots/` | 无 | 否 | 仅证明产品流程可见，不是科学结果 |
 | Registered pose view | Phase14/16与内部Registry pose的运行时只读视图 | 按可用pose | 不复制原pose | 计算结构证据视图 | 否 | Vina pose不等于实验构象或MM/GBSA trajectory pose |
 
+## Public release与成员数据接入资产（2026-08-30）
+
+| 数据名称 | 来源 | 规模 | 文件位置 | 标签类型 | 可训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| Member2 GN MIC审计表 | 成员2原始Excel（保持不变） | 310行；310可解析；19唯一结构 | `data/external/integrated/member2_gn_mic_audit.csv` | MIC endpoint记录与QC字段 | 暂否 | 19个结构均与External v2重叠；37个重复行；需endpoint/provenance复核后按任务使用 |
+| Member2候选增量表 | 上述审计后排除严格重复/既有严格assay | 273候选增量行 | `data/external/integrated/member2_gn_mic_increment.csv` | MIC候选增量 | 暂否 | 严格来源键与语义键结果不同；不得自动并入统一label |
+| External Benchmark Registry v1 | 成员3 Part2已审计Excel | 26 metadata entries | `data/external/integrated/benchmark_registry_v1.csv` | benchmark目录元数据 | 否 | 0条已执行；不是训练记录；Part1实验benchmark为pending |
+| Public 3D demonstration asset | Phase14登记Vina rank-1 pose与冻结7P3W e/g受体 | 1 candidate pose + 1 receptor | `data/cloud_demo/` | 真实计算结构展示 | 否 | 只读、hash固定；不是实验构象或MM/GBSA pose |
+
+## Phase 17.1真实高成本证据与后处理资产（2026-08-31）
+
+| 数据名称 | 来源 | 规模 | 文件位置 | 标签类型 | 可训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| Open MM/GBSA Pilot30 | 冻结`open_mmgbsa_7p3w_v2`真实WSL工具链 | 30/30 success；30 deltaG + 30 uncertainty Registry records | `results/phase17_1/pilot30_results.csv`、共享Evidence Registry | 计算物理证据 | 当前否 | 不是实验结合能、活性标签或历史Prime/MMGBSA等价物 |
+| Three-protocol comparison | exact-ID历史Glide、冻结Vina、open MM/GBSA | 30候选；24个三协议exact matched | `results/phase17_1/three_protocol_comparison.csv` | 排名一致性派生值 | 否 | 三种raw value不可当作同一种绝对能量；6个Glide缺失不填充 |
+| Protocol disagreement | within-protocol finite-cohort percentile rank | 30候选；24个三协议可计算 | `results/phase17_1/protocol_disagreement.csv` | 计算协议分歧 | 否 | consensus/disagreement不是生物活性或正确性判断 |
+| Evidence impact shadow run | 加入open MM/GBSA前后证据完整性与shadow rank | 30候选；24个rank-change可比较 | `results/phase17_1/evidence_impact.csv` | 更新证据影子决策 | 否 | 不覆盖冻结Decision Engine；与internal17无exact ID重叠 |
+| Strict post-analysis audit | NaN分类、finite n、相关性和Phase15信息覆盖 | 1 JSON + 1报告 | `results/phase17_1/post_analysis.json`、`docs/Phase17_1_Final_Report.md` | QC/统计审计 | 否 | JSON缺失为null并保留status/reason；未启动60扩展 |
+
 每次新增数据必须记录：
 
 1. 数据文件名、版本和SHA-256；
@@ -220,3 +239,14 @@ Phase 14没有产生新的监督标签。MIC、ATP activity、细胞毒性、静
 7. 能否训练以及允许的具体任务；
 8. 比较符、范围、重复、冲突、identity和数据泄漏处理；
 9. 同步更新本文、Current System Status和Development History。
+
+## Competition Release Candidate RC1数据资产（2026-08-31）
+
+| 数据名称 | 来源 | 规模 | 文件位置 | 标签类型 | 可训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| Member data manifest | 三位成员工作簿、说明文件、BindingDB上传文件及仓库archive | 文件/工作表级清单 | `results/release_candidate/member_data_integration/member_data_manifest.csv` | provenance/QC | 否 | row-level eligibility优先；BindingDB上传TSV与ZIP内文件hash完全一致 |
+| Member1 ATP literature QC | `Member1_ATP_inhibitor_week1.xlsx` | 39 rows；15个有效结构行；8 unique | `results/release_candidate/member_data_integration/member1_qc.csv` | ATP相关文献线索 | 当前否 | 多数为定性、范围、placeholder结构或待回源记录；0条精确可训练记录 |
+| Member2 GN MIC QC | `Member2_GN_antibacterial_week1.xlsx` | 310 rows；19 unique；270行通过row-level shadow eligibility，聚合为266个结构-语境样本 | `results/release_candidate/member_data_integration/member2_qc.csv` | whole-cell MIC | 仅Task-A shadow | 19个结构全部已在External v2；不能解释为ATP合酶活性 |
+| Member3 BindingDB Part1 QC | 上传TSV，与仓库ZIP成员byte-identical | 93,712 raw；96,195 endpoint rows；47,190 unique valid structures | `results/release_candidate/member_data_integration/member3_part1_qc.csv` | Ki/IC50/Kd/EC50分层结合记录 | 当前ATP任务否；general external validation | 直接ATP synthase记录0；SERCA、Na/K ATPase及其他ATPase不等于ATP synthase |
+| Member3 Part2 benchmark registry | 26条公开benchmark metadata | 26 catalog entries | `results/release_candidate/member_data_integration/benchmark_registry.csv` | metadata/catalog | 否 | 0个benchmark被声称已运行 |
+| RC Decision Run | Phase17.1 Glide/Vina/open MM/GBSA版本化后处理 | 30 candidates；24三协议完整 | `results/release_candidate/decision_runs/competition_rc_decision_v1.csv` | 更新证据shadow决策 | 否 | 不覆盖历史Decision；实验ATP/MIC/毒性均unknown |

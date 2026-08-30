@@ -24,6 +24,17 @@ class PoseRegistry:
         self.receptor = self.project / "configs/projects/ab_atp_synthase/vina_7p3w_v1/assets/ATP_e_g_prepared.pdb"
 
     @lru_cache(maxsize=1)
+    def _cloud_pose(self) -> dict[str, Any]:
+        """Return the committed, read-only pose manifest used by cloud_viewer."""
+        path = self.project / "data/cloud_demo/pose_manifest.json"
+        if not path.is_file():
+            return {}
+        try:
+            return json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+
+    @lru_cache(maxsize=1)
     def _historical(self) -> dict[str, dict[str, Any]]:
         path = self.project / "results/phase14/full_library_vina_ranking.csv"
         if not path.is_file():
@@ -74,6 +85,18 @@ class PoseRegistry:
                 "protocol": "vina_7p3w_v1",
                 "source_job": signature,
             }
+            if not pose.is_file():
+                cloud = self._cloud_pose()
+                if cloud.get("candidate_id") == candidate_id:
+                    pose = self.project / cloud["pose_path"]
+                    self.receptor = self.project / cloud["receptor_path"]
+                    metadata = {
+                        "affinity": cloud.get("vina_affinity_kcal_mol"),
+                        "pose_hash": cloud.get("pose_sha256", ""),
+                        "pose_qc": cloud.get("pose_qc", "unknown"),
+                        "protocol": cloud.get("protocol_id", "vina_7p3w_v1"),
+                        "source_job": cloud.get("source_job_signature", ""),
+                    }
         generated = self._generated().get(candidate_id)
         if generated:
             declared = generated.get("pose_path", "").replace("\\", "/")

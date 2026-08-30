@@ -1,0 +1,3 @@
+﻿comparison,exact_structure_overlap,exact_assay_overlap,semantic_assay_overlap,truly_new_structures,truly_new_information
+Member2 vs External Dataset v2,19,0,20,0,64 new organism/strain context strings
+Uploaded BindingDB TSV vs repository ZIP member,not_applicable,byte-identical source,not_applicable,0,0; uploaded TSV SHA256 equals uncompressed ZIP-member SHA256

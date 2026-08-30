@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-08-29T16:50:14.970155+00:00",
+  "generated_at": "2026-08-30T19:40:22.063384+00:00",
   "status": "passed",
-  "test_command": "python -m unittest discover -s tests -p \"test_*.py\"",
-  "tests_run": 195,
-  "tests_passed": 195,
+  "test_command": "python -m pytest tests -q",
+  "tests_run": 212,
+  "tests_passed": 212,
   "browser_acceptance": {
     "tested_at": "2026-08-30T00:25:00+08:00",
     "url": "http://localhost:8501/",

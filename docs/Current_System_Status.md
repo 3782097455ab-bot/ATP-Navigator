@@ -220,7 +220,7 @@ ATP-Navigator/
 - 先完成P0 24个、再完成P1 36个同协议静态MM/GBSA计算；
 - 对公开 Dataset v1.0 逐条回源复核；
 - 跨批次可校准的绝对决策分数；
-- 网页端、正式服务API和软著交付包。
+- 公网只读展示端已完成兼容性实现；正式服务API、身份认证和软著交付包仍未完成。
 
 ## 7. 当前系统边界
 
@@ -280,3 +280,32 @@ ATP-Navigator/
 - Tool Capability明确显示可用、不可用与依赖不完整，禁止模拟高成本计算输出；
 - 实验反馈仍为0条审查记录，界面明确显示empty/not_available；
 - Phase18A不执行WSL Phase17.1，不修改Phase14–17冻结结果。
+
+## Public release与成员数据接入（2026-08-30）
+
+- 新增Streamlit Cloud `cloud_viewer`：只读显示已登记证据、冻结分析、对话计划和真实3D pose；云端禁用WSL、Schrödinger、Vina、MM/GBSA、shell及长任务执行；
+- 在Python 3.11隔离环境验证RDKit 2026.03.5、Streamlit 1.62.0以及`Draw/rdMolDraw2D`导入；依赖已固定；
+- 公网3D示例只复制一个真实登记的`vina_7p3w_v1` pose及7P3W e/g受体，均保存SHA-256；不声称实验构象；
+- 成员2 MIC表完成结构、assay、organism/strain context和provenance审计：310行均可由RDKit解析，19个唯一结构全部已存在于External Dataset v2，真正新增结构0；主要增量是64种新的species/strain context；
+- 成员3 Part2的26条记录进入独立External Benchmark Registry，仅作为metadata/catalog；0个benchmark被声称已执行，Part1实验benchmark记录保持pending；
+- 本次不训练模型、不修改Model v3，也不触碰Phase17.1 worker或checkpoint。
+
+## Phase 17.1正式收尾（2026-08-31）
+
+- Qualification 8/8、累计Pilot30 30/30均成功；failed=0、pending=0；可选60候选扩展未启动；
+- 30个真实open MM/GBSA结果及30个不确定性记录已存在于共享Evidence Registry；本次后处理没有新增、删除或改写Registry Evidence；
+- 修复严格JSON失败：CSV保留NaN，JSON将不可用/不可定义值写为`null`并同时保存status/reason，不进行0值、均值或其他填充；
+- 通过Phase14 exact candidate-ID恢复24个历史HTVS Glide结果；5个Phase16生成候选与IN-2没有可比的exact HTVS Glide记录，保持scientifically unavailable；
+- 三协议exact matched n=24；Vina/open MMGBSA matched n=30；所有相关性只在finite matched subset内计算；
+- 新增three-protocol comparison、protocol disagreement、updated-evidence shadow decision与Phase15 acquisition信息覆盖验证；冻结Decision Engine未覆盖；
+- Evidence Matrix、Candidate Explorer、Protocol Comparison、AI Research Console和Activity Timeline已能读取Phase17.1版本化结果；
+- Model v0–v4-alpha未训练、未修改，24个受保护模型hash一致。
+
+## Competition Release Candidate RC1（2026-08-31）
+
+- 三位成员数据已统一清单与QC：Member1 39条文献线索（8个唯一有效结构、0条可直接训练的精确ATP合酶记录）；Member2 310条MIC（19个结构全部与External v2重叠，新增价值为64类菌株/耐药语境）；Member3 Part1 BindingDB 93,712条原始记录/96,195条端点记录（本文件直接ATP synthase记录0），Part2 26条benchmark metadata；
+- 新增`competition_rc_shadow_001`仅用于Gram-negative MIC语境实验；固定scaffold OOF上RMSE由0.7923变为0.8044、Spearman由0.7628变为0.7536，未通过promotion gate；
+- Model v3继续作为官方候选排序模型；24个历史受保护文件hash不变；新shadow模型独立版本化，不能替代Model v3；
+- 30个真实open MM/GBSA结果已进入Evidence Matrix、Candidate Explorer、Protocol Comparison、Decision Workspace、Research Console与Activity Timeline；
+- 新增30候选的`competition_rc_three_protocol_shadow_v1`决策运行：24个三协议完整、6个两协议完整，Top-5加入MM/GBSA前后重叠4/5；不覆盖历史冻结Decision；
+- Competition RC仍属于实验前计算证据整合与候选优先级辅助决策系统；实验ATP抑制、MIC和毒性状态保持unknown；不建立临床、临床前或biosafety叙事。

@@ -1,0 +1,3 @@
+﻿model,evaluation_task,label,n,rmse,spearman,ndcg_at_5,top_k_enrichment,hit_recovery,split
+TaskA_v2_replayed_control,Gram-negative MIC context,log10_MIC_ug_mL_lower_is_better,3458,0.792271677175983,0.762801119165141,0.9753455618445264,0.0,0.0,same 5-fold scaffold GroupKFold; exact compounds/scaffolds excluded from held-out folds
+TaskA_member2_context_shadow,Gram-negative MIC context,log10_MIC_ug_mL_lower_is_better,3458,0.8044161058901338,0.7536357978905865,0.9653495834068622,0.0,0.0,same 5-fold scaffold GroupKFold; exact compounds/scaffolds excluded from held-out folds

@@ -1,0 +1,16 @@
+{
+  "Part1 experimental benchmark records": "available_general_binding_only",
+  "Part2 metadata catalog": "available",
+  "source_file": "data/external/curated/Member3_Part2_AI_Benchmark_26_audited.xlsx",
+  "source_sha256": "6ffd3d924e37c1d474b6285d6358f1b2653a96344cac169e09e91e5d25854018",
+  "benchmark_registry_count": 26,
+  "registry_type": "benchmark_metadata_catalog",
+  "benchmarks_executed": 0,
+  "training_records_added": 0,
+  "part1_experimental_benchmark_records": "pending",
+  "Part1 source": "BindingDB_BindingDB_Articles.tsv",
+  "Part1 raw rows": 93712,
+  "Part1 QC measurement rows": 96195,
+  "Part1 direct ATP synthase rows": 0,
+  "Part1 use boundary": "general binding external benchmark; not ATP-target training"
+}

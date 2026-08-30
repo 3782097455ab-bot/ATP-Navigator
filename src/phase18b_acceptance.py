@@ -116,7 +116,7 @@ def main() -> int:
     acceptance = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "status": "passed" if args.tests_run == args.tests_passed and model_audit["all_unchanged"] else "failed",
-        "test_command": 'python -m unittest discover -s tests -p "test_*.py"',
+        "test_command": "python -m pytest tests -q",
         "tests_run": args.tests_run,
         "tests_passed": args.tests_passed,
         "browser_acceptance": browser,

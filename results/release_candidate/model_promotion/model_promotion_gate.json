@@ -1,0 +1,16 @@
+{
+  "official_model_before": "Model v3",
+  "official_model_after": "Model v3",
+  "promotion_passed": false,
+  "task_a_shadow_result": "mixed_or_not_improved",
+  "rmse_delta_shadow_minus_control": 0.012144428714150779,
+  "spearman_delta_shadow_minus_control": -0.009165321274554494,
+  "bootstrap_rmse_delta_95_interval": [
+    0.00046907437439047683,
+    0.024020308690672065
+  ],
+  "cold_scaffold_evaluation_n": 3458,
+  "model_v3_direct_comparison_status": "not_applicable_task_mismatch",
+  "reason": "MIC context model cannot replace the internal static-MMGBSA candidate ranker; Member1/BindingDB added zero compatible exact ATP-synthase training labels; prior internal release shadow did not exceed Model v3",
+  "prior_internal_shadow_reference": "results/release_v1_shadow_replace_atp_002/experiment_summary.json"
+}

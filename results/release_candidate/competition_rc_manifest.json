@@ -1,0 +1,31 @@
+{
+  "release_version": "ATP-Navigator-Competition-RC1",
+  "build_timestamp": "2026-08-30T18:25:34.502652+00:00",
+  "source_code_commit": "001409ab66f07b6ad03f918e7252d5d3ff66ed5b",
+  "branch": "main",
+  "data_manifest": "results/release_candidate/member_data_integration/member_data_manifest.csv",
+  "data_manifest_sha256": "c17110ca6cacad3e8b6adc535495eaff5822ec2e9462b078461fa2b05420e03f",
+  "official_model": "Model v3",
+  "official_model_promoted": false,
+  "shadow_model": "competition_rc_shadow_001",
+  "shadow_model_sha256": "dbce42d52469523262ffb7ffc5d06616886082fad383fb219161ce9b7b629cc7",
+  "evidence_registry_version": "Phase17.1 pilot30 / 60 registered evidence records",
+  "decision_version": "competition_rc_three_protocol_shadow_v1",
+  "protocol_versions": [
+    "vina_7p3w_v1",
+    "historical_glide",
+    "open_mmgbsa_7p3w_v2"
+  ],
+  "phase17_mmgbsa_candidates": 30,
+  "phase17_evidence_records": 60,
+  "three_protocol_exact_matched": 24,
+  "protected_model_hash_count": 24,
+  "protected_model_hashes_unchanged": true,
+  "scope": "pre-experimental computational evidence integration and candidate prioritization",
+  "no_claims": [
+    "biological activity",
+    "experimental success probability",
+    "clinical use",
+    "biosafety assessment"
+  ]
+}
