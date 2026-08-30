@@ -102,6 +102,10 @@ class Phase171Tests(unittest.TestCase):
         self.assertEqual(audit["glide_exact_id_recovered"], 24)
         self.assertEqual(audit["glide_remaining_missing"], 6)
         self.assertEqual(audit["technical_errors_unresolved"], [])
+        inventory = {(row["table"], row["field"]): row for row in audit["source_missing_inventory"]}
+        self.assertEqual(inventory[("candidate_plan.csv", "acquisition_score")]["missing_n"], 1)
+        self.assertEqual(inventory[("candidate_plan.csv", "protocol_disagreement")]["missing_n"], 6)
+        self.assertEqual(inventory[("pilot30_results.csv", "failure_stage/failure_reason")]["classification"], "not_applicable")
 
     def test_pairwise_metrics_use_only_finite_matched_observations(self):
         payload = json.loads((PROJECT / "results/phase17_1/post_analysis.json").read_text(encoding="utf-8"))

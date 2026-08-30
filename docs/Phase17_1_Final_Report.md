@@ -8,6 +8,8 @@ This recovery patch reuses the 30/30 cached successful results under frozen prot
 
 The prior failure was technical: IEEE NaN values remained after a pandas metrics table was converted to JSON records, while the atomic writer correctly enforced strict JSON. The candidate plan also failed to carry Glide scores forward. Exact candidate-ID joins to the existing Phase14 export recovered 24 historical HTVS Glide results. Five generated candidates and IN-2 have no exact comparable HTVS Glide record and therefore remain scientifically unavailable; they were not imputed. CSV files retain NaN, while JSON uses `null` plus explicit status/reason fields. Unresolved technical joins: 0.
 
+The source audit also records one unavailable Phase15 acquisition score (IN-2), six unavailable historical protocol-disagreement values, one empty frozen-plan scaffold, and 30 not-applicable failure-stage/reason cells because every pilot job succeeded. Derived three-protocol and shadow fields remain unavailable for the same six candidates rather than being filled.
+
 ## Three-protocol comparison
 
 Three-protocol exact matched subset: 24/30. Normalization is within-protocol finite-cohort percentile rank with lower raw value treated as better. Raw Glide, Vina and open MM/GBSA values are not interpreted as the same absolute energy.

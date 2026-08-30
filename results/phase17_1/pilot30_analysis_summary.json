@@ -30,7 +30,7 @@
     "unique_nonempty_scaffolds": 23
   },
   "candidate_computation_executed": false,
-  "created_at": "2026-08-30T16:30:28.601368+00:00",
+  "created_at": "2026-08-30T16:39:39.404798+00:00",
   "frozen_model_hash_count": 24,
   "frozen_model_hashes_unchanged": true,
   "frozen_protocol_modified": false,
@@ -44,6 +44,22 @@
   },
   "nan_audit": {
     "csv_policy": "NaN retained for unavailable numeric cells",
+    "derived_missing_inventory": {
+      "affected_candidates_n": 6,
+      "classification": "scientifically_unavailable",
+      "fields": [
+        "phase14_glide_rank",
+        "glide_score",
+        "glide_utility",
+        "glide_vs_vina_disagreement",
+        "glide_vs_open_mmgbsa_disagreement",
+        "three_protocol_consensus",
+        "normalized_rank_variance",
+        "three_protocol_disagreement",
+        "pre/post shadow rank-change fields"
+      ],
+      "reason": "six candidates lack exact comparable historical Glide evidence"
+    },
     "glide_exact_id_recovered": 24,
     "glide_remaining_candidate_ids": [
       "ATP-REF-IN2",
@@ -66,6 +82,43 @@
       "repaired": true
     },
     "source_glide_score_missing_before_exact_join": 30,
+    "source_missing_inventory": [
+      {
+        "classification": "technical_carry_forward_omission_then_scientific_domain_gap",
+        "field": "glide_score",
+        "missing_n": 30,
+        "resolution": "24 exact candidate-ID values recovered; 6 remain scientifically unavailable",
+        "table": "candidate_plan.csv"
+      },
+      {
+        "classification": "scientifically_unavailable",
+        "field": "acquisition_score",
+        "missing_n": 1,
+        "resolution": "IN-2 is outside the Phase15 acquisition-score domain; not imputed",
+        "table": "candidate_plan.csv"
+      },
+      {
+        "classification": "scientifically_unavailable",
+        "field": "protocol_disagreement",
+        "missing_n": 6,
+        "resolution": "five generated candidates and IN-2 lack the historical matched protocol pair",
+        "table": "candidate_plan.csv"
+      },
+      {
+        "classification": "scientifically_unavailable_in_frozen_plan",
+        "field": "scaffold",
+        "missing_n": 1,
+        "resolution": "excluded from scaffold-coverage counts; not filled",
+        "table": "candidate_plan.csv"
+      },
+      {
+        "classification": "not_applicable",
+        "field": "failure_stage/failure_reason",
+        "missing_n": 30,
+        "resolution": "all 30 jobs succeeded, so no failure metadata exists",
+        "table": "pilot30_results.csv"
+      }
+    ],
     "technical_errors_unresolved": []
   },
   "normalization": "within-protocol finite-cohort percentile; lower raw values rank better",

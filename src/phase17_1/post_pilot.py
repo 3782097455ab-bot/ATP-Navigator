@@ -418,6 +418,48 @@ def run_post_pilot_analysis(project: Path) -> dict[str, Any]:
             "repaired": True,
         },
         "source_glide_score_missing_before_exact_join": 30,
+        "source_missing_inventory": [
+            {
+                "table": "candidate_plan.csv", "field": "glide_score", "missing_n": 30,
+                "classification": "technical_carry_forward_omission_then_scientific_domain_gap",
+                "resolution": "24 exact candidate-ID values recovered; 6 remain scientifically unavailable",
+            },
+            {
+                "table": "candidate_plan.csv", "field": "acquisition_score",
+                "missing_n": int(pd.to_numeric(plan.iloc[:30]["acquisition_score"], errors="coerce").isna().sum()),
+                "classification": "scientifically_unavailable",
+                "resolution": "IN-2 is outside the Phase15 acquisition-score domain; not imputed",
+            },
+            {
+                "table": "candidate_plan.csv", "field": "protocol_disagreement",
+                "missing_n": int(pd.to_numeric(plan.iloc[:30]["protocol_disagreement"], errors="coerce").isna().sum()),
+                "classification": "scientifically_unavailable",
+                "resolution": "five generated candidates and IN-2 lack the historical matched protocol pair",
+            },
+            {
+                "table": "candidate_plan.csv", "field": "scaffold",
+                "missing_n": int(plan.iloc[:30]["scaffold"].replace("", np.nan).isna().sum()),
+                "classification": "scientifically_unavailable_in_frozen_plan",
+                "resolution": "excluded from scaffold-coverage counts; not filled",
+            },
+            {
+                "table": "pilot30_results.csv", "field": "failure_stage/failure_reason",
+                "missing_n": int(results["failure_stage"].replace("", np.nan).isna().sum()),
+                "classification": "not_applicable",
+                "resolution": "all 30 jobs succeeded, so no failure metadata exists",
+            },
+        ],
+        "derived_missing_inventory": {
+            "affected_candidates_n": int((~comparison["three_protocol_complete"]).sum()),
+            "fields": [
+                "phase14_glide_rank", "glide_score", "glide_utility",
+                "glide_vs_vina_disagreement", "glide_vs_open_mmgbsa_disagreement",
+                "three_protocol_consensus", "normalized_rank_variance",
+                "three_protocol_disagreement", "pre/post shadow rank-change fields",
+            ],
+            "classification": "scientifically_unavailable",
+            "reason": "six candidates lack exact comparable historical Glide evidence",
+        },
         "glide_exact_id_recovered": int(comparison["glide_score"].map(_finite).sum()),
         "glide_remaining_missing": int(len(missing_glide)),
         "glide_remaining_candidate_ids": missing_glide,
@@ -510,6 +552,8 @@ This recovery patch reuses the 30/30 cached successful results under frozen prot
 ## NaN audit and repair
 
 The prior failure was technical: IEEE NaN values remained after a pandas metrics table was converted to JSON records, while the atomic writer correctly enforced strict JSON. The candidate plan also failed to carry Glide scores forward. Exact candidate-ID joins to the existing Phase14 export recovered 24 historical HTVS Glide results. Five generated candidates and IN-2 have no exact comparable HTVS Glide record and therefore remain scientifically unavailable; they were not imputed. CSV files retain NaN, while JSON uses `null` plus explicit status/reason fields. Unresolved technical joins: {len(technical_unresolved)}.
+
+The source audit also records one unavailable Phase15 acquisition score (IN-2), six unavailable historical protocol-disagreement values, one empty frozen-plan scaffold, and 30 not-applicable failure-stage/reason cells because every pilot job succeeded. Derived three-protocol and shadow fields remain unavailable for the same six candidates rather than being filled.
 
 ## Three-protocol comparison
 
