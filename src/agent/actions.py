@@ -93,7 +93,7 @@ class ActionRegistry:
         return action(dict(arguments))
 
     def _resolve(self, values: list[str]) -> list[str]:
-        master = self.data.candidate_master()
+        master = self.data.candidate_explorer_candidates()
         resolved = []
         for token in _safe_candidate_ids(values):
             match = master.loc[
@@ -178,15 +178,43 @@ class ActionRegistry:
         }
 
     def compare_protocol(self, args: dict[str, Any]) -> dict[str, Any]:
-        frame, metrics = self.data.protocol_comparison()
         top_k = min(max(int(args.get("top_k", 10)), 1), 100)
-        selected = frame.sort_values("abs_rank_delta", ascending=False).head(top_k) if not frame.empty else frame
+        view = str(args.get("analysis_view", "glide_vina_full_library"))
+        if view == "consensus":
+            frame = self.data.phase17_1_protocol_disagreement()
+            finite = frame.dropna(subset=["three_protocol_disagreement"]) if not frame.empty else frame
+            selected = finite.sort_values(["three_protocol_disagreement", "candidate_id"]).head(top_k)
+            answer = f"以下为三协议归一化排名最一致的 {len(selected)} 个候选。共识只表示计算一致性。"
+            provenance = [{"source": "results/phase17_1/protocol_disagreement.csv", "normalization": "within-protocol finite-cohort percentile"}]
+            id_column = "candidate_id"
+        elif view == "evidence_impact":
+            frame = self.data.phase17_1_evidence_impact()
+            if not frame.empty:
+                frame = frame.assign(abs_rank_change=pd.to_numeric(frame["rank_change_after_mmgbsa"], errors="coerce").abs())
+                frame = frame.dropna(subset=["abs_rank_change"])
+            selected = frame.sort_values(["abs_rank_change", "candidate_id"], ascending=[False, True]).head(top_k) if not frame.empty else frame
+            answer = f"以下为加入真实 open MM/GBSA 后 shadow 排名变化最大的 {len(selected)} 个候选；冻结 Decision Engine 未被覆盖。"
+            provenance = [{"source": "results/phase17_1/evidence_impact.csv", "decision_run_type": "updated_evidence_shadow_only"}]
+            id_column = "candidate_id"
+        elif view == "disagreement":
+            frame = self.data.phase17_1_protocol_disagreement()
+            finite = frame.dropna(subset=["three_protocol_disagreement"]) if not frame.empty else frame
+            selected = finite.sort_values(["three_protocol_disagreement", "candidate_id"], ascending=[False, True]).head(top_k)
+            answer = f"以下为三个协议仍然冲突最大的 {len(selected)} 个候选。分歧不等于生物活性结论。"
+            provenance = [{"source": "results/phase17_1/protocol_disagreement.csv", "normalization": "within-protocol finite-cohort percentile"}]
+            id_column = "candidate_id"
+        else:
+            frame, metrics = self.data.protocol_comparison()
+            selected = frame.sort_values("abs_rank_delta", ascending=False).head(top_k) if not frame.empty else frame
+            answer = f"以下为 Glide/Vina 排名分歧最大的 {len(selected)} 个候选。协议分歧不是生物活性结论。"
+            provenance = [metrics, {"source": "results/phase14/glide_vina_protocol_disagreement.csv"}]
+            id_column = "canonical_id"
         return {
             "status": "available" if not selected.empty else "empty",
-            "answer": f"以下为 Glide/Vina 排名分歧最大的 {len(selected)} 个候选。协议分歧不是生物活性结论。",
+            "answer": answer,
             "records": selected.to_dict("records"),
-            "candidate_ids": selected.get("canonical_id", pd.Series(dtype=str)).astype(str).tolist(),
-            "provenance": [metrics, {"source": "results/phase14/glide_vina_protocol_disagreement.csv"}],
+            "candidate_ids": selected.get(id_column, pd.Series(dtype=str)).astype(str).tolist(),
+            "provenance": provenance,
         }
 
     def decision_ranking(self, args: dict[str, Any]) -> dict[str, Any]:

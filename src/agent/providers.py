@@ -54,9 +54,18 @@ class RuleBasedProvider(IntentProvider):
             operation = "parent_lineage"
         elif any(word in lower for word in ["缺什么", "缺失", "missing evidence", "证据缺口"]):
             operation = "missing_evidence"
+        elif any(word in lower for word in ["加入mmgbsa后", "mmgbsa后判断变化", "evidence impact"]):
+            operation = "protocol_comparison"
+            constraints.update(top_k=budget, analysis_view="evidence_impact")
+        elif any(word in lower for word in ["三个协议最一致", "三协议最一致", "three protocol consensus"]):
+            operation = "protocol_comparison"
+            constraints.update(top_k=budget, analysis_view="consensus")
+        elif any(word in lower for word in ["仍然证据冲突", "三个协议分歧", "三协议分歧", "three protocol disagreement"]):
+            operation = "protocol_comparison"
+            constraints.update(top_k=budget, analysis_view="disagreement")
         elif ("glide" in lower and "vina" in lower) or any(word in lower for word in ["协议比较", "协议分歧", "protocol disagreement"]):
             operation = "protocol_comparison"
-            constraints["top_k"] = budget
+            constraints.update(top_k=budget, analysis_view="glide_vina_full_library")
         elif any(word in lower for word in ["为什么推荐", "决策排名", "decision rank", "综合排名", "ai排名"]):
             operation = "decision_ranking"
             constraints["top_k"] = budget

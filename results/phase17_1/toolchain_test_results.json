@@ -1,0 +1,133 @@
+{
+  "atp_evidence_records": 0,
+  "created_at": "2026-08-28T18:13:56.933080+00:00",
+  "full_chain_synthetic_test": {
+    "completed_at": "2026-08-28T18:05:42.476610+00:00",
+    "environment": {
+      "mmgbsa_prefix": "/home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa",
+      "openmm_prefix": "/home/lenovojlu/.local/share/atpnav/envs/atpnav-openmm"
+    },
+    "failure_reason": "",
+    "peak_child_memory_kb": 214252,
+    "scope": "tool-chain certification only; not ATP-Navigator scientific evidence",
+    "started_at": "2026-08-28T18:05:04.733624+00:00",
+    "status": "passed",
+    "steps": {
+      "gromacs_topology": {
+        "artifact_sha256": "bb78fbbf7505fa8eba52197e5a8a94860622930c9d2b21f9f30c0dc6710a5dd3",
+        "command": [
+          "/home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/gmx",
+          "grompp",
+          "-f",
+          "/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/analysis.mdp",
+          "-c",
+          "/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/system.gro",
+          "-p",
+          "/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/system.top",
+          "-o",
+          "/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/system.tpr",
+          "-maxwarn",
+          "2"
+        ],
+        "elapsed_seconds": 0.04239249900001596,
+        "passed": true,
+        "return_code": 0,
+        "stderr": "                :-) GROMACS - gmx grompp, 2025.4-conda_forge (-:\n\nExecutable:   /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin.AVX2_256/gmx\nData prefix:  /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa\nWorking dir:  /home/lenovojlu/.cache/atpnav/phase17_1/full_chain\nCommand line:\n  gmx grompp -f /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/analysis.mdp -c /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/system.gro -p /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/system.top -o /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/system.tpr -maxwarn 2\n\n\nNOTE 1 [file /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/analysis.mdp]:\n  You have set rlist larger than the interaction cut-off, but you also have\n  verlet-buffer-tolerance > 0. Will set rlist using\n  verlet-buffer-tolerance.\n\n\nNOTE 2 [file /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/analysis.mdp]:\n  For a correct single-point energy evaluation with nsteps = 0, use\n  continuation = yes to avoid constraining the input coordinates.\n\n\nNOTE 3 [file system.top, line 565]:\n  The bond in molecule-type system1 between atoms 8 H and 7 N has an\n  estimated oscillational period of 1.0e-02 ps, which is less than 10 times\n  the time step of 2.0e-03 ps.\n  Maybe you forgot to change the constraints mdp option.\n\nNumber of degrees of freedom in T-Coupling group rest is 2793.00\nThe integrator does not provide a ensemble temperature, there is no system ensemble temperature\n\nNOTE 4 [file /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/analysis.mdp]:\n  NVE simulation with an initial temperature of zero: will use a Verlet\n  buffer of 10%. Check your energy drift!\n\n\nThere were 4 NOTEs\n\nGROMACS reminds you: \"There is only one thing worse than coming home from the lab to a sink full of dirty dishes, and that is not going to the lab at all!\" (Chien-Shiung Wu)\n\n",
+        "stdout": "Setting the LD random seed to -831654084\n\nGenerated 66 of the 66 non-bonded parameter combinations\n\nExcluding 3 bonded neighbours molecule type 'system1'\n\nExcluding 3 bonded neighbours molecule type 'LIG'\n\nExcluding 3 bonded neighbours molecule type 'HOH'\n\nTaking velocities from '/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/system.gro', all velocities are zero\nAnalysing residue names:\nThere are:     5    Protein residues\nThere are:     1      Other residues\nThere are:   439      Water residues\nAnalysing Protein...\nAnalysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...\n\nThe largest distance between excluded atoms is 0.394 nm between atom 19 and 29\nCalculating fourier grid dimensions for X Y Z\nUsing a fourier grid of 24x24x24, spacing 0.104 0.104 0.104\n\nEstimate for the relative computational load of the PME mesh part: 0.30\n\nThis run will generate roughly 0 Mb of data\n"
+      },
+      "mmgbsa_analysis": {
+        "artifacts": {
+          "FINAL_RESULTS_MMPBSA.csv": "b9f5a9b37b5b445dfee7330ad874b251538f5e807b26247614eca970d1f756b6",
+          "FINAL_RESULTS_MMPBSA.dat": "55e1725397eee1b44fa8136153ee76dee5f38216c74fadc99df5e45dabb0b66c"
+        },
+        "command": [
+          "/home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/gmx_MMPBSA",
+          "-O",
+          "-nogui",
+          "-i",
+          "/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/mmpbsa.in",
+          "-cs",
+          "/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/system.tpr",
+          "-ci",
+          "/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/index.ndx",
+          "-cg",
+          "1",
+          "2",
+          "-ct",
+          "/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/toolchain.xtc",
+          "-cp",
+          "/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/system.top",
+          "-o",
+          "/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/FINAL_RESULTS_MMPBSA.dat",
+          "-eo",
+          "/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/FINAL_RESULTS_MMPBSA.csv"
+        ],
+        "delta_total_kcal_mol": -0.58,
+        "elapsed_seconds": 8.424407863000056,
+        "finite_delta_total": true,
+        "passed": true,
+        "return_code": 0,
+        "stderr": "[INFO   ] Starting gmx_MMPBSA 1.6.5\n[INFO   ] Command-line\n  gmx_MMPBSA -O -nogui -i /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/mmpbsa.in -cs /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/system.tpr -ci /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/index.ndx -cg 1 2 -ct /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/toolchain.xtc -cp /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/system.top -o /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/FINAL_RESULTS_MMPBSA.dat -eo /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/FINAL_RESULTS_MMPBSA.csv\n\n[INFO   ] Checking /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/mmpbsa.in input file...\n[INFO   ] Checking /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/mmpbsa.in input file...Done.\n\n[INFO   ] Checking external programs...\n[INFO   ] cpptraj found! Using /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/cpptraj\n[INFO   ] tleap found! Using /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/tleap\n[INFO   ] parmchk2 found! Using /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/parmchk2\n[INFO   ] sander found! Using /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/sander\n[INFO   ] Using GROMACS version > 5.x.x!\n[INFO   ] gmx found! Using /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/gmx\n[INFO   ] Checking external programs...Done.\n\n[INFO   ] Building AMBER topologies from GROMACS files...\n[INFO   ] Get PDB files from GROMACS structures files...\n[INFO   ] Making gmx_MMPBSA index for complex...\n[INFO   ] Normal Complex: Saving group Receptor_Ligand (1_2) in _GMXMMPBSA_COM_index.ndx file as _GMXMMPBSA_COM.pdb\n[INFO   ] No receptor structure file was defined. Using ST approach...\n[INFO   ] Using receptor structure from complex to generate AMBER topology\n[INFO   ] Normal Receptor: Saving group Receptor (1) in _GMXMMPBSA_COM_index.ndx file as _GMXMMPBSA_REC.pdb\n[INFO   ] No ligand structure file was defined. Using ST approach...\n[INFO   ] Using ligand structure from complex to generate AMBER topology\n[INFO   ] Normal Ligand: Saving group Ligand (2) in _GMXMMPBSA_COM_index.ndx file as _GMXMMPBSA_LIG.pdb\n[INFO   ] Checking the structures consistency...\n[WARNING] No reference structure was found and the complex structure not contain any chain ID. Assigning chains ID automatically...\n[INFO   ] \n[INFO   ] Using topology conversion. Setting radiopt = 0...\n[INFO   ] Building Normal Complex Amber topology...\n[INFO   ] Detected Amber/OPLS force field topology format...\n[INFO   ] Assigning PBRadii mbondi2 to Complex...\n[INFO   ] Writing Normal Complex AMBER topology...\n[INFO   ] No Receptor topology file was defined. Using ST approach...\n[INFO   ] Building AMBER Receptor topology from Complex...\n[INFO   ] Assigning PBRadii mbondi2 to Receptor...\n[INFO   ] Writing Normal Receptor AMBER topology...\n[INFO   ] No Ligand topology file was defined. Using ST approach...\n[INFO   ] Building AMBER Ligand topology from Complex...\n[INFO   ] Assigning PBRadii mbondi2 to Ligand...\n[INFO   ] Writing Normal Ligand AMBER topology...\n[INFO   ] Cleaning normal complex trajectories...\n[INFO   ] Building AMBER topologies from GROMACS files... Done.\n\n[INFO   ] Loading and checking parameter files for compatibility...\n[INFO   ] Preparing trajectories for simulation...\n\n[INFO   ] 10 frames were processed by cpptraj for use in calculation.\n[INFO   ] Starting calculations in 1 CPUs...\n[INFO   ] Running calculations on normal system...\n[INFO   ] Beginning GB calculations with /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/sander\n[INFO   ]   calculating complex contribution...\n\n              0%|          | 0/10 [elapsed: 00:00 remaining: ?]\n            100%|##########| 10/10 [elapsed: 00:01 remaining: 00:00]\n                                                                    \n\n            100%|##########| 10/10 [elapsed: 00:01 remaining: 00:00]\n[INFO   ]   calculating receptor contribution...\n\n              0%|          | 0/10 [elapsed: 00:00 remaining: ?]\n            100%|##########| 10/10 [elapsed: 00:01 remaining: 00:00]\n                                                                    \n\n            100%|##########| 10/10 [elapsed: 00:01 remaining: 00:00]\n[INFO   ]   calculating ligand contribution...\n\n              0%|          | 0/10 [elapsed: 00:00 remaining: ?]\n            100%|##########| 10/10 [elapsed: 00:01 remaining: 00:00]\n                                                                    \n\n            100%|##########| 10/10 [elapsed: 00:01 remaining: 00:00]\n[INFO   ] Parsing results to output files...\n\n[INFO   ] Timing:\n[INFO   ] Total GROMACS setup time:                   2.464 sec.\n[INFO   ] Total AMBER setup time:                     0.006 sec.\n[INFO   ] Creating trajectories with cpptraj:         0.071 sec.\n[INFO   ] Total calculation time:                     3.114 sec.\n[INFO   ] Total GB calculation time:                  0.245 sec.\n[INFO   ] Statistics calculation & output writing:    0.006 sec.\n[INFO   ] Total time taken:                           5.664 sec.\n\n[INFO   ] \n   Finalizing gmx_MMPBSA: [ERROR  ] = 0; [WARNING] = 1\n   Check the gmx_MMPBSA.log file for more details...\n\n[INFO   ] \n Thank you for using gmx_MMPBSA. Please consider supporting gmx_MMPBSA by citing our publication:\n    Valdés-Tresanco, M.S., Valdés-Tresanco, M.E., Valiente, P.A. and Moreno E. \n    gmx_MMPBSA: A New Tool to Perform End-State Free Energy Calculations with GROMACS. \n    J Chem Theory Comput., 2021, 17 (10):6281-6291. Epub 2021 Sep 29. PMID: 34586825.\n    https://pubs.acs.org/doi/10.1021/acs.jctc.1c00645\n\nAlso consider citing MMPBSA.py:\n    Miller III, B. R., McGee Jr., T. D., Swails, J. M. Homeyer, N. Gohlke, H. and Roitberg, A. E.\n    MMPBSA.py: An Efficient Program for End-State Free Energy Calculations.\n    J. Chem. Theory Comput., 2012, 8 (9) pp 3314-3321\n\n[INFO   ] Finalized...\n",
+        "stdout": "\n"
+      },
+      "parameterization_and_sampling": {
+        "artifacts": {
+          "gaff-template-cache.json": "6ec7c4fab9844e6fdba36bb55c638d6f24f53a16a260bd9c628803ed7d8e14ef",
+          "index.ndx": "4a297b4522a0de5331a73af2234efc61c3c104e2a67b15808475d569e7ed21ae",
+          "sampling.csv": "f336eabb740d452a90902c9a9dcb1b04e897a630448a6689d19dad732b9c108a",
+          "system.gro": "686a17c24d56ad223360568da08bbe1d334a1ff0e5742fbe6064a575135314cb",
+          "system.pdb": "bacf5fe150d5fe505477d72189a086aea2437afb19dfb5f651401ce66d70e73d",
+          "system.top": "c33a0c7b4e23fe0560fb07fbcfc4da2e9e31513ec1d9c1f0f4ef6c9499bd8d0e",
+          "toolchain.dcd": "5147700e844c91a97156195eba21a4997dce288d28318c3440066f30a974142e",
+          "toolchain.xtc": "2685fcbd43965c4904c7a942b955ec6c4b00771eb83f2c218a3b5b62a368e40c"
+        },
+        "charge_method": "AM1-BCC through OpenFF Toolkit/AmberTools",
+        "elapsed_seconds": 26.436031913999955,
+        "equilibration_steps": 1000,
+        "final_potential_energy_kj_mol": -17721.521436570645,
+        "ligand": "benzene",
+        "ligand_atom_count": 12,
+        "ligand_charge_sum_e": 0.0,
+        "ligand_smiles": "c1ccccc1",
+        "minimization": "OpenMM minimizeEnergy(maxIterations=1000)",
+        "passed": true,
+        "platform": "CPU",
+        "receptor_atom_count": 42,
+        "sampling_steps": 1000,
+        "system_atom_count": 1371,
+        "time_step_fs": 1.0,
+        "trajectory_frames": 10,
+        "trajectory_read": true
+      },
+      "protein_topology": {
+        "artifacts": {
+          "peptide.inpcrd": "df59c0e1faa313606e3c65deba1844205f4c102c7d987865129dc29ae3051fb2",
+          "peptide.pdb": "db12d4519ca77f8c62f478230077afbe2dd79e5e7b0c427538b0f86cb2ee40fc",
+          "peptide.prmtop": "854b07ee218ece53ef1a829b3d82fa198daa31aa19989906a248d04b895b18d4"
+        },
+        "command": [
+          "/home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/tleap",
+          "-f",
+          "/home/lenovojlu/.cache/atpnav/phase17_1/full_chain/build_peptide.leap"
+        ],
+        "elapsed_seconds": 0.07315596800003732,
+        "passed": true,
+        "return_code": 0,
+        "stderr": "",
+        "stdout": "-I: Adding /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/prep to search path.\n-I: Adding /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/lib to search path.\n-I: Adding /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/parm to search path.\n-I: Adding /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/cmd to search path.\n-f: Source /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/build_peptide.leap.\n\nWelcome to LEaP!\n(no leaprc in search path)\nSourcing: /home/lenovojlu/.cache/atpnav/phase17_1/full_chain/build_peptide.leap\n----- Source: /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/cmd/leaprc.protein.ff14SB\n----- Source of /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/cmd/leaprc.protein.ff14SB done\nLog file: ./leap.log\nLoading parameters: /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/parm/parm10.dat\nReading title:\nPARM99 + frcmod.ff99SB + frcmod.parmbsc0 + OL3 for RNA\nLoading parameters: /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/parm/frcmod.ff14SB\nReading force field modification type file (frcmod)\nReading title:\nff14SB protein backbone and sidechain parameters\nLoading library: /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/lib/amino12.lib\nLoading library: /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/lib/aminoct12.lib\nLoading library: /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/lib/aminont12.lib\nWriting pdb file: peptide.pdb\nChecking Unit.\nBuilding topology.\nBuilding atom parameters.\nBuilding bond parameters.\nBuilding angle parameters.\nBuilding proper torsion parameters.\nBuilding improper torsion parameters.\n total 8 improper torsions applied\nBuilding H-Bond parameters.\nIncorporating Non-Bonded adjustments.\nNot Marking per-residue atom chain types.\nMarking per-residue atom chain types.\n (no restraints)\n\tQuit\n\nExiting LEaP: Errors = 0; Warnings = 0; Notes = 0.\n"
+      }
+    },
+    "test_id": "phase17_1_synthetic_protein_ligand_full_chain_v1"
+  },
+  "official_analysis_test": {
+    "artifact_path": "/home/lenovojlu/.cache/atpnav/phase17_1/gmx_test/gmx_MMPBSA_test/examples/Protein_ligand/ST/FINAL_RESULTS_MMPBSA.dat",
+    "artifact_sha256": "2fbc9122798a690fa5d57fa7b05bb4dd0af641529247fd098652df476011b09e",
+    "finite_delta_total": -15.02,
+    "scope": "official tool example only; excluded from ATP evidence",
+    "status": "passed",
+    "test": "gmx_MMPBSA official Protein_ligand/ST example",
+    "unit": "kcal/mol"
+  },
+  "status": "passed",
+  "training_performed": false
+}

@@ -61,7 +61,7 @@ def project_data() -> ProjectData:
 def cached_frame(name: str) -> pd.DataFrame:
     data = project_data()
     return {
-        "master": data.candidate_master,
+        "master": data.candidate_explorer_candidates,
         "evidence": data.evidence_matrix,
         "jobs": data.jobs,
         "capabilities": data.capabilities,
@@ -150,7 +150,7 @@ def candidate_explorer():
         filtered = filtered.loc[filtered["candidate_source"].isin(sources)]
     if identity:
         filtered = filtered.loc[filtered["identity_status"].astype(str).isin(identity)]
-    show = [c for c in ["compound_id", "display_name", "candidate_source", "identity_status", "vina_affinity", "global_rank", "docking_score", "mmgbsa_score", "scaffold"] if c in filtered]
+    show = [c for c in ["compound_id", "display_name", "candidate_source", "identity_status", "vina_affinity", "global_rank", "docking_score", "mmgbsa_score", "open_mmgbsa_deltaG", "open_mmgbsa_sd", "qc_status", "scaffold"] if c in filtered]
     paged(filtered[show], "candidate", page_size=40, height=390)
     if filtered.empty:
         return
@@ -189,23 +189,59 @@ def evidence_matrix_page():
 
 
 def protocol_comparison_page():
-    title("协议比较", "Vina 与历史 Glide 的协议一致性审计；协议共识不等于生物活性")
-    frame, metrics = project_data().protocol_comparison()
-    m1, m2, m3, m4 = st.columns(4)
-    m1.metric("Matched", metrics.get("matched_candidates", metrics.get("matched_subset", metrics.get("matched", len(frame)))))
-    m2.metric("Spearman", f"{metrics.get('spearman', metrics.get('spearman_correlation', float('nan'))):.3f}")
-    m3.metric("Kendall", f"{metrics.get('kendall_tau', metrics.get('kendall', float('nan'))):.3f}")
-    m4.metric("Top10 overlap", metrics.get("top10_overlap", metrics.get("top_10_overlap", "unknown")))
-    if not frame.empty:
-        sample = frame if len(frame) <= 2500 else frame.sample(2500, random_state=17)
-        chart = alt.Chart(sample).mark_circle(size=35, opacity=.45).encode(
-            x=alt.X("glide_rank:Q", title="Glide rank"), y=alt.Y("vina_rank:Q", title="Vina rank"),
-            color=alt.Color("abs_rank_delta:Q", scale=alt.Scale(scheme="viridis"), title="|rank delta|"),
-            tooltip=[c for c in ["canonical_id", "glide_rank", "vina_rank", "rank_delta", "scaffold"] if c in sample]
-        ).properties(height=520)
-        st.altair_chart(chart, width="stretch")
-        st.markdown("### 最大协议分歧")
-        st.dataframe(frame.sort_values("abs_rank_delta", ascending=False).head(30), width="stretch", hide_index=True)
+    title("协议比较", "历史 Glide、Vina 与真实 open MM/GBSA 的协议一致性审计；协议共识不等于生物活性")
+    tab_three, tab_full = st.tabs(["Phase17.1 三协议（30候选）", "Phase14 Glide/Vina 全库"])
+    with tab_three:
+        summary = project_data().phase17_1_post_analysis()
+        metrics_rows = summary.get("pairwise_metrics", [])
+        three = project_data().phase17_1_three_protocol()
+        disagreement = project_data().phase17_1_protocol_disagreement()
+        impact = project_data().phase17_1_evidence_impact()
+        c1, c2, c3 = st.columns(3)
+        c1.metric("MM/GBSA真实结果", int(three.get("open_mmgbsa_deltaG", pd.Series(dtype=float)).notna().sum()))
+        c2.metric("三协议 exact matched", summary.get("three_protocol_matched_n", "unknown"))
+        c3.metric("未填充缺失值", "是")
+        if metrics_rows:
+            st.dataframe(pd.DataFrame(metrics_rows), width="stretch", hide_index=True)
+        if not three.empty:
+            ranks = three[[c for c in ["candidate_id", "glide_utility", "vina_utility", "mmgbsa_utility"] if c in three]].melt(
+                id_vars="candidate_id", var_name="protocol", value_name="rank_utility"
+            ).dropna()
+            st.altair_chart(
+                alt.Chart(ranks).mark_circle(size=55, opacity=.65).encode(
+                    x=alt.X("candidate_id:N", sort=None, axis=alt.Axis(labels=False), title="Pilot candidate"),
+                    y=alt.Y("rank_utility:Q", title="Within-protocol rank utility"),
+                    color="protocol:N", tooltip=list(ranks.columns),
+                ).properties(height=360), width="stretch"
+            )
+        left, right = st.columns(2)
+        with left:
+            st.markdown("### 最大三协议分歧")
+            if not disagreement.empty:
+                st.dataframe(disagreement.sort_values("three_protocol_disagreement", ascending=False).head(15), width="stretch", hide_index=True)
+        with right:
+            st.markdown("### 加入 MM/GBSA 后最大 shadow rank 变化")
+            if not impact.empty:
+                show = impact.assign(abs_rank_change=pd.to_numeric(impact["rank_change_after_mmgbsa"], errors="coerce").abs())
+                st.dataframe(show.sort_values("abs_rank_change", ascending=False).head(15), width="stretch", hide_index=True)
+        st.info("三协议只按各自有限样本的排名百分位比较；shadow run 不覆盖冻结 Decision Engine。")
+    with tab_full:
+        frame, metrics = project_data().protocol_comparison()
+        m1, m2, m3, m4 = st.columns(4)
+        m1.metric("Matched", metrics.get("matched_candidates", metrics.get("matched_subset", metrics.get("matched", len(frame)))))
+        m2.metric("Spearman", f"{metrics.get('spearman', metrics.get('spearman_correlation', float('nan'))):.3f}")
+        m3.metric("Kendall", f"{metrics.get('kendall_tau', metrics.get('kendall', float('nan'))):.3f}")
+        m4.metric("Top10 overlap", metrics.get("top10_overlap", metrics.get("top_10_overlap", "unknown")))
+        if not frame.empty:
+            sample = frame if len(frame) <= 2500 else frame.sample(2500, random_state=17)
+            chart = alt.Chart(sample).mark_circle(size=35, opacity=.45).encode(
+                x=alt.X("glide_rank:Q", title="Glide rank"), y=alt.Y("vina_rank:Q", title="Vina rank"),
+                color=alt.Color("abs_rank_delta:Q", scale=alt.Scale(scheme="viridis"), title="|rank delta|"),
+                tooltip=[c for c in ["canonical_id", "glide_rank", "vina_rank", "rank_delta", "scaffold"] if c in sample]
+            ).properties(height=520)
+            st.altair_chart(chart, width="stretch")
+            st.markdown("### 最大协议分歧")
+            st.dataframe(frame.sort_values("abs_rank_delta", ascending=False).head(30), width="stretch", hide_index=True)
     st.warning("两个 docking 协议均属于计算证据；相关性或Top-k重叠不构成实验验证。")
 
 

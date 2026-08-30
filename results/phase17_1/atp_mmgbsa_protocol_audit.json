@@ -1,0 +1,94 @@
+{
+  "backend_certification_status": "passed",
+  "blocking_reason": "",
+  "created_at": "2026-08-28T18:14:11.880375+00:00",
+  "historical_system_audit": {
+    "Hit3": {
+      "keyword_counts": {
+        "DPPC": 0,
+        "MEMBRANE PROTEIN": 2,
+        "OPLS_2005": 2,
+        "POPC": 0,
+        "POPE": 0,
+        "SPC ": 63092
+      },
+      "path": "/mnt/d/tiaozhansai/运行/运行/ATP-Top1-MD2/ATP-Top1-MD2-out.cms",
+      "sha256": "851fce6f0d78b9bf7b7af4820dc4345829af3134f8af0b8028313aec9d39b23d",
+      "size_bytes": 29875236,
+      "status": "present"
+    },
+    "IN2": {
+      "keyword_counts": {
+        "DPPC": 0,
+        "MEMBRANE PROTEIN": 2,
+        "OPLS_2005": 2,
+        "POPC": 0,
+        "POPE": 0,
+        "SPC ": 63086
+      },
+      "path": "/mnt/d/tiaozhansai/运行/运行/ATP-Ref-MD1/ATP-Ref-MD1-out.cms",
+      "sha256": "0c14d68625d182f93423e8dae4c1dd8cd0458a5a7e368ccb9f11222d8f300efa",
+      "size_bytes": 19023567,
+      "status": "present"
+    }
+  },
+  "protocol_hash": "cb28279704aa51f7530e0e61fc592450d43823fe1e23aad5975a638b82407aab",
+  "protocol_id": "open_mmgbsa_7p3w_v2",
+  "questions": {
+    "difference_from_historical_prime": {
+      "answer": "Historical static Prime/MMGBSA and MD-derived MMGBSA used Schrodinger/OPLS-era inputs and incomplete protocol metadata. v2 uses Amber ff14SB, GAFF2/AM1-BCC, TIP3P, explicit restrained sampling, and gmx_MMPBSA GB igb=5. Values remain separate endpoints and must not be numerically pooled or substituted."
+    },
+    "membrane_omission_boundary": {
+      "answer": "The frozen protocol omits membrane lipids because neither the Vina receptor nor the available historical system contains POPC/POPE/DPPC coordinates. Protein heavy atoms are restrained and sampling is short; resulting values are protocol-specific comparative rescoring evidence only, not absolute affinity, conformational stability, biological activity, or membrane-mechanism evidence."
+    },
+    "membrane_requirement": {
+      "answer": "A membrane is required for a physically faithful long-timescale model of membrane-associated ATP synthase subunits. Phase17.1 does not claim that level of simulation.",
+      "evidence": {
+        "Hit3": {
+          "DPPC": 0,
+          "MEMBRANE PROTEIN": 2,
+          "OPLS_2005": 2,
+          "POPC": 0,
+          "POPE": 0,
+          "SPC ": 63092
+        },
+        "IN2": {
+          "DPPC": 0,
+          "MEMBRANE PROTEIN": 2,
+          "OPLS_2005": 2,
+          "POPC": 0,
+          "POPE": 0,
+          "SPC ": 63086
+        }
+      }
+    },
+    "mmgbsa_structure": {
+      "answer": "Use the frozen 7P3W e/g receptor heavy-atom coordinates and each candidate's frozen vina_7p3w_v1 rank-1 pose. Do not reuse the Vina PDBQT charge model as a molecular-mechanics topology.",
+      "reason": "The historical prepared complex exists only for IN-2; using it for every ligand would not provide candidate-specific bound poses."
+    }
+  },
+  "receptor_qualification": {
+    "added_heavy_terminal_atoms": 2,
+    "forcefield_match": "amber14/protein.ff14SB.xml createSystem passed",
+    "heavy_atom_rmsd_angstrom": 0.0,
+    "hydrogen_policy": "remove legacy hydrogens; OpenMM/PDBFixer add hydrogens at pH 7.4",
+    "maximum_shared_heavy_atom_shift_angstrom": 0.0,
+    "missing_atom_residue_count_before_terminal_repair": 0,
+    "missing_internal_residues_added": 0,
+    "prepared_atom_count": 5263,
+    "prepared_runtime_path": "/mnt/d/tiaozhansai/ATP-Navigator/workspace_local/phase17_1/shared/receptor_amber_prepared.pdb",
+    "prepared_sha256": "835a707ca4beaae3bbb857d9077768f9055451f2a11b186347e76491d0af9e0b",
+    "receptor_scope": "7P3W subunits e and g only",
+    "shared_heavy_atom_count": 2612,
+    "source_atom_count": 5261,
+    "source_heavy_atom_count": 2612,
+    "source_path": "configs/projects/ab_atp_synthase/vina_7p3w_v1/assets/ATP_e_g_prepared.pdb",
+    "source_sha256": "b700d93fd622e74afd3b59f22e5b11f5bd4e764fcb38ad82410e0abb44db4722",
+    "status": "passed",
+    "terminal_repairs": 2
+  },
+  "scientific_scope": "screening-level restrained aqueous relaxation and endpoint MM/GBSA",
+  "simulated_results_allowed": false,
+  "status": "ready_for_qualification",
+  "training_performed": false
+}

@@ -53,6 +53,18 @@ class IntentTests(unittest.TestCase):
         self.assertEqual(parsed.candidate_scope, self.context["selected_candidate_set"])
         self.assertEqual(parsed.budget, 5)
 
+    def test_phase17_1_questions_route_to_read_only_protocol_views(self):
+        cases = {
+            "哪些候选三个协议最一致？": "consensus",
+            "哪些候选加入MMGBSA后判断变化最大？": "evidence_impact",
+            "哪些候选仍然证据冲突？": "disagreement",
+        }
+        for text, view in cases.items():
+            with self.subTest(text=text):
+                parsed = self.provider.parse(text, self.context)
+                self.assertEqual(parsed.operation, "protocol_comparison")
+                self.assertEqual(parsed.constraints["analysis_view"], view)
+
 
 class OrchestratorAndCollaborationTests(unittest.TestCase):
     def setUp(self):
@@ -142,6 +154,24 @@ class OrchestratorAndCollaborationTests(unittest.TestCase):
 
 
 class StructuralAndBoundaryTests(unittest.TestCase):
+    def test_phase17_1_registry_views_are_queryable(self):
+        registry = ActionRegistry(PROJECT)
+        consensus = registry.compare_protocol({"analysis_view": "consensus", "top_k": 3})
+        impact = registry.compare_protocol({"analysis_view": "evidence_impact", "top_k": 3})
+        conflict = registry.compare_protocol({"analysis_view": "disagreement", "top_k": 3})
+        self.assertEqual(len(consensus["records"]), 3)
+        self.assertEqual(len(impact["records"]), 3)
+        self.assertEqual(len(conflict["records"]), 3)
+        self.assertIn("MM/GBSA", impact["answer"])
+        self.assertNotEqual(consensus["candidate_ids"], conflict["candidate_ids"])
+
+    def test_candidate_and_evidence_views_include_real_open_mmgbsa(self):
+        registry = ActionRegistry(PROJECT)
+        master = registry.data.candidate_explorer_candidates()
+        self.assertEqual(int(master["open_mmgbsa_deltaG"].notna().sum()), 30)
+        evidence = registry.data.evidence_matrix()
+        self.assertEqual(int(evidence["mmgbsa"].eq("available").sum()) >= 30, True)
+
     def test_registered_pose_and_missing_pose(self):
         registry = PoseRegistry(PROJECT)
         candidate = "ATP-HTVS-18A7589C7FB7"

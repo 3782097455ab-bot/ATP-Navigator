@@ -1,0 +1,66 @@
+{
+  "checked_candidates": 8,
+  "numerical_evidence_generated": false,
+  "protocol_hash": "cb28279704aa51f7530e0e61fc592450d43823fe1e23aad5975a638b82407aab",
+  "receptor_sha256": "835a707ca4beaae3bbb857d9077768f9055451f2a11b186347e76491d0af9e0b",
+  "records": [
+    {
+      "candidate_id": "ATP-REF-IN2",
+      "exact_structure_match": true,
+      "expected_inchikey": "SFWQOTBCGHCKGK-UHFFFAOYSA-P",
+      "observed_inchikey": "SFWQOTBCGHCKGK-UHFFFAOYSA-P",
+      "pose_sha256": "b6674ecee63ddcd0388092ca14eaeb14cb5f6a79b94440b7f9533a9b8b44fb95"
+    },
+    {
+      "candidate_id": "ATP-HTVS-AD7FBCC01633",
+      "exact_structure_match": true,
+      "expected_inchikey": "PEEWRVKACKJNAI-HSZRJFAPSA-O",
+      "observed_inchikey": "PEEWRVKACKJNAI-HSZRJFAPSA-O",
+      "pose_sha256": "c0e18bcb9dd95b1e568bd573174398a6964df3f2e6fcc7a04117cd6ac0e66d50"
+    },
+    {
+      "candidate_id": "ATP-HTVS-8F383301D999",
+      "exact_structure_match": true,
+      "expected_inchikey": "PTVLLEMJRQSLJC-ILBGXUMGSA-O",
+      "observed_inchikey": "PTVLLEMJRQSLJC-ILBGXUMGSA-O",
+      "pose_sha256": "c4156167065fb55ba9f9a62abf2ec73d5a778ebd5124519005b6db4b8c3ccd7a"
+    },
+    {
+      "candidate_id": "ATP-HTVS-CF9A421CD50D",
+      "exact_structure_match": true,
+      "expected_inchikey": "YLHKWRQTCLXCSO-KRWDZBQOSA-O",
+      "observed_inchikey": "YLHKWRQTCLXCSO-KRWDZBQOSA-O",
+      "pose_sha256": "6ca5c1376e6c5af59f86c7eeb7f8b6b96c4b4c3b63dee895fbbb556b4a9d38f5"
+    },
+    {
+      "candidate_id": "ATP-HTVS-898AE5CA69D9",
+      "exact_structure_match": true,
+      "expected_inchikey": "XWCXYWAPRLQKBI-UHFFFAOYSA-O",
+      "observed_inchikey": "XWCXYWAPRLQKBI-UHFFFAOYSA-O",
+      "pose_sha256": "aab5089e84f61f29b20d8aac1b634348df9a5f4c6dfda2296c24016a36544676"
+    },
+    {
+      "candidate_id": "ATP-HTVS-1E5A6A308B25",
+      "exact_structure_match": true,
+      "expected_inchikey": "VCWHPLRSCYLBPI-UHFFFAOYSA-O",
+      "observed_inchikey": "VCWHPLRSCYLBPI-UHFFFAOYSA-O",
+      "pose_sha256": "680b05860607e2de6861c7419a12b1f1bbe441dd2d6631dd18bc7c207af1f225"
+    },
+    {
+      "candidate_id": "ATP-GEN-7A898D5E996B",
+      "exact_structure_match": true,
+      "expected_inchikey": "DUEGODGYAVYOKF-UHFFFAOYSA-P",
+      "observed_inchikey": "DUEGODGYAVYOKF-UHFFFAOYSA-P",
+      "pose_sha256": "e51ee52b82575ba013e8f566cb14eb32e700afc9d935b9e81247b60a2886b151"
+    },
+    {
+      "candidate_id": "ATP-GEN-B94A3A6839BC",
+      "exact_structure_match": true,
+      "expected_inchikey": "SEFSVMFABVDKJJ-UHFFFAOYSA-P",
+      "observed_inchikey": "SEFSVMFABVDKJJ-UHFFFAOYSA-P",
+      "pose_sha256": "08b1a28e93d9e9c7fcaa0304bfa8c1e9c2693d83a2d1e3159bf78f60b25c3c64"
+    }
+  ],
+  "simulation_performed": false,
+  "status": "pass"
+}

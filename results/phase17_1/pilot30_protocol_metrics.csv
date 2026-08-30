@@ -1,0 +1,4 @@
+protocol_a,protocol_b,matched_n,spearman,spearman_status,spearman_reason,kendall_tau,kendall_status,kendall_reason,interpretation,top5_effective_k,top5_overlap,top5_overlap_fraction,top5_status,top5_reason,top10_effective_k,top10_overlap,top10_overlap_fraction,top10_status,top10_reason
+glide,vina,24,-0.2617391304347826,available,,-0.21014492753623187,available,,rank association only; raw values are not interchangeable physical energies,5,2,0.4,available,,10,4,0.4,available,
+glide,open_mmgbsa,24,-0.3478260869565217,available,,-0.2318840579710145,available,,rank association only; raw values are not interchangeable physical energies,5,0,0.0,available,,10,2,0.2,available,
+vina,open_mmgbsa,30,0.421579532814238,available,,0.296551724137931,available,,rank association only; raw values are not interchangeable physical energies,5,1,0.2,available,,10,6,0.6,available,

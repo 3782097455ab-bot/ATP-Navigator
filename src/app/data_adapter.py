@@ -109,7 +109,42 @@ class ProjectData:
             selected["mmgbsa_score"] = pd.to_numeric(_first(frame, ["mmgbsa_score"]), errors="coerce")
             selected["parent_id"] = _first(frame, ["parent_id", "parent_compound_id"])
             frames.append(selected)
-        return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+        master = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+        pilot = _read_csv(self.results / "phase17_1/pilot30_results.csv")
+        if not master.empty and not pilot.empty:
+            pilot = pilot.rename(columns={"candidate_id": "compound_id"})
+            fields = [c for c in ["compound_id", "open_mmgbsa_deltaG", "open_mmgbsa_sd", "frame_count", "qc_status", "protocol_id"] if c in pilot]
+            master = master.merge(pilot[fields].drop_duplicates("compound_id"), on="compound_id", how="left")
+        return master
+
+    def candidate_explorer_candidates(self) -> pd.DataFrame:
+        """Candidate view plus a separately identified Phase17.1 reference row."""
+        master = self.candidate_master()
+        plan = _read_csv(self.results / "phase17_1/candidate_plan.csv")
+        pilot = _read_csv(self.results / "phase17_1/pilot30_results.csv")
+        if plan.empty or pilot.empty:
+            return master
+        plan = plan.loc[plan["candidate_id"].astype(str).isin(pilot["candidate_id"].astype(str))].copy()
+        missing = plan.loc[~plan["candidate_id"].astype(str).isin(master["compound_id"].astype(str))]
+        if missing.empty:
+            return master
+        extras = pd.DataFrame({
+            "compound_id": missing["candidate_id"].astype(str),
+            "display_name": missing["candidate_id"].astype(str),
+            "canonical_smiles": _first(missing, ["canonical_smiles"]),
+            "scaffold": _first(missing, ["scaffold"]),
+            "candidate_source": "Internal reference",
+            "identity_status": "registered_internal_reference",
+            "vina_affinity": pd.to_numeric(_first(missing, ["vina_score"]), errors="coerce"),
+            "global_rank": pd.Series(float("nan"), index=missing.index),
+            "docking_score": pd.Series(float("nan"), index=missing.index),
+            "mmgbsa_score": pd.Series(float("nan"), index=missing.index),
+            "parent_id": _first(missing, ["parent_id"]),
+        })
+        pilot_join = pilot.rename(columns={"candidate_id": "compound_id"})
+        fields = [c for c in ["compound_id", "open_mmgbsa_deltaG", "open_mmgbsa_sd", "frame_count", "qc_status", "protocol_id"] if c in pilot_join]
+        extras = extras.merge(pilot_join[fields].drop_duplicates("compound_id"), on="compound_id", how="left")
+        return pd.concat([master, extras], ignore_index=True, sort=False)
 
     def _phase13_internal_vina_ids(self) -> set[str]:
         candidates: set[str] = set()
@@ -133,20 +168,24 @@ class ProjectData:
             generated_vina_ids = set(generated_vina.loc[status.eq("success"), id_col].astype(str)) if id_col else set()
         internal_vina_ids = self._phase13_internal_vina_ids()
         open_mmgbsa_ids: set[str] = set()
+        pilot = _read_csv(self.results / "phase17_1/pilot30_results.csv")
+        if not pilot.empty and "candidate_id" in pilot:
+            status = pilot.get("status", pd.Series("success", index=pilot.index)).astype(str)
+            open_mmgbsa_ids.update(pilot.loc[status.eq("success"), "candidate_id"].astype(str))
         database = self.runtime / "workspace.sqlite3"
         if database.is_file():
             with sqlite3.connect(database) as connection:
                 try:
-                    open_mmgbsa_ids = {
+                    open_mmgbsa_ids.update({
                         str(row[0])
                         for row in connection.execute(
                             """SELECT DISTINCT compound_id FROM evidence
                                WHERE protocol_id='open_mmgbsa_7p3w_v2'
                                AND evidence_type='open_mmgbsa_deltaG'"""
                         )
-                    }
+                    })
                 except Exception:
-                    open_mmgbsa_ids = set()
+                    pass
         rows = []
         for record in master.to_dict("records"):
             source, cid = record["candidate_source"], record["compound_id"]
@@ -157,33 +196,61 @@ class ProjectData:
                 values = dict(structure="available", glide="not_applicable", vina="available" if cid in generated_vina_ids else "missing",
                               mmgbsa="available" if cid in open_mmgbsa_ids else "missing", admet="partial_property_only", literature_prior="missing", lineage="available", experiment="missing")
             else:
-                values = dict(structure="available", glide="available", vina="available" if cid in internal_vina_ids else "unknown",
-                              mmgbsa="available" if pd.notna(record.get("mmgbsa_score")) else "missing",
+                values = dict(structure="available", glide="unknown" if source == "Internal reference" else "available", vina="available" if cid in internal_vina_ids else "unknown",
+                              mmgbsa="available" if cid in open_mmgbsa_ids or pd.notna(record.get("mmgbsa_score")) else "missing",
                               admet="partial_property_only", literature_prior="available", lineage="not_applicable", experiment="missing")
             rows.append({"compound_id": cid, "source": source, **values})
+        represented = {str(row["compound_id"]) for row in rows}
+        for cid in sorted(open_mmgbsa_ids - represented):
+            rows.append({
+                "compound_id": cid,
+                "source": "Internal reference",
+                "structure": "available",
+                "glide": "unknown",
+                "vina": "available",
+                "mmgbsa": "available",
+                "admet": "unknown",
+                "literature_prior": "available",
+                "lineage": "not_applicable",
+                "experiment": "missing",
+            })
         return pd.DataFrame(rows)
 
     def provenance(self, compound_id: str) -> pd.DataFrame:
-        master = self.candidate_master()
+        master = self.candidate_explorer_candidates()
         found = master.loc[master["compound_id"].eq(str(compound_id))]
         if found.empty:
             return pd.DataFrame()
         source = found.iloc[0]["candidate_source"]
+        base = pd.DataFrame()
         if source == "HTVS 1633":
             registry = _read_csv(self.results / "phase14/evidence_registry_export.csv")
             if not registry.empty:
-                return registry.loc[registry["compound_id"].astype(str).eq(str(compound_id))].copy()
-        if source == "Phase 16 generated":
+                base = registry.loc[registry["compound_id"].astype(str).eq(str(compound_id))].copy()
+        elif source == "Phase 16 generated":
             frame = self.generated_candidates()
             row = frame.loc[frame["compound_id"].astype(str).eq(str(compound_id))]
-            return row.assign(evidence_type="generated_structure_and_lineage", protocol_id="phase16_registry",
+            base = row.assign(evidence_type="generated_structure_and_lineage", protocol_id="phase16_registry",
                               source_job_id="not_applicable", artifact_hash=UNKNOWN)
-        row = self.internal_candidates().loc[lambda x: x["compound_id"].astype(str).eq(str(compound_id))]
-        return row.assign(evidence_type="frozen_internal_computational_record", protocol_id="historical_internal",
-                          source_job_id="historical_import", artifact_hash=UNKNOWN)
+        else:
+            row = self.internal_candidates().loc[lambda x: x["compound_id"].astype(str).eq(str(compound_id))]
+            base = row.assign(evidence_type="frozen_internal_computational_record", protocol_id="historical_internal",
+                              source_job_id="historical_import", artifact_hash=UNKNOWN)
+        pilot = _read_csv(self.results / "phase17_1/pilot30_results.csv")
+        extra = pd.DataFrame()
+        if not pilot.empty and "candidate_id" in pilot:
+            extra = pilot.loc[pilot["candidate_id"].astype(str).eq(str(compound_id))].copy()
+            if not extra.empty:
+                extra = extra.rename(columns={"candidate_id": "compound_id"})
+                extra["evidence_type"] = "open_mmgbsa_deltaG"
+                extra["raw_value"] = extra.get("open_mmgbsa_deltaG")
+                extra["unit"] = extra.get("deltaG_unit", "kcal/mol")
+                extra["source_job_id"] = "phase17_1_cached_registry_result"
+                extra["artifact_hash"] = UNKNOWN
+        return pd.concat([base, extra], ignore_index=True, sort=False) if not extra.empty else base
 
     def candidate_detail(self, compound_id: str) -> dict:
-        frame = self.candidate_master()
+        frame = self.candidate_explorer_candidates()
         row = frame.loc[frame["compound_id"].eq(str(compound_id))]
         if row.empty:
             return {}
@@ -231,6 +298,18 @@ class ProjectData:
         frame = _read_csv(self.results / "phase14/glide_vina_protocol_disagreement.csv")
         metrics = _read_json(self.results / "phase14/glide_vina_protocol_metrics.json")
         return frame, metrics
+
+    def phase17_1_three_protocol(self) -> pd.DataFrame:
+        return _read_csv(self.results / "phase17_1/three_protocol_comparison.csv")
+
+    def phase17_1_protocol_disagreement(self) -> pd.DataFrame:
+        return _read_csv(self.results / "phase17_1/protocol_disagreement.csv")
+
+    def phase17_1_evidence_impact(self) -> pd.DataFrame:
+        return _read_csv(self.results / "phase17_1/evidence_impact.csv")
+
+    def phase17_1_post_analysis(self) -> dict:
+        return _read_json(self.results / "phase17_1/post_analysis.json")
 
     def jobs(self) -> pd.DataFrame:
         database = self.runtime / "workspace.sqlite3"

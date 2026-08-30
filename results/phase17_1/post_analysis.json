@@ -1,0 +1,150 @@
+{
+  "acquisition_validation": {
+    "all_requested_information_categories_represented": true,
+    "biological_hit_rate_assessed": false,
+    "conclusion": "supported_for_information_coverage_not_biological_success",
+    "information_category_coverage": {
+      "boundary_uncertainty": 3,
+      "historical_bridge": 4,
+      "protocol_disagreement": 6,
+      "scaffold_diversity": 4,
+      "strong_candidates": 6
+    },
+    "median_absolute_shadow_rank_change": 3.0,
+    "mmgbsa_evidence_added_n": 30,
+    "pilot_n": 30,
+    "selection_class_counts": {
+      "extreme_disagreement": 6,
+      "generated_acquisition": 3,
+      "generated_diverse_novel": 1,
+      "generated_high_ranking": 1,
+      "historical_bridge_interpretable": 3,
+      "medium_controls": 4,
+      "multi_protocol_strong": 5,
+      "rank_boundary_uncertain": 3,
+      "reference_IN2": 1,
+      "scaffold_diverse": 3
+    },
+    "three_protocol_comparable_n": 24,
+    "unique_nonempty_clusters": 25,
+    "unique_nonempty_scaffolds": 23
+  },
+  "candidate_computation_executed": false,
+  "created_at": "2026-08-30T16:30:28.601368+00:00",
+  "frozen_model_hash_count": 24,
+  "frozen_model_hashes_unchanged": true,
+  "frozen_protocol_modified": false,
+  "largest_protocol_disagreement": {
+    "candidate_id": "ATP-HTVS-66618B00A972",
+    "score": 0.8530734632683659
+  },
+  "largest_shadow_rank_change": {
+    "candidate_id": "ATP-HTVS-66618B00A972",
+    "rank_change_after_mmgbsa": -8.0
+  },
+  "nan_audit": {
+    "csv_policy": "NaN retained for unavailable numeric cells",
+    "glide_exact_id_recovered": 24,
+    "glide_remaining_candidate_ids": [
+      "ATP-REF-IN2",
+      "ATP-GEN-7A898D5E996B",
+      "ATP-GEN-B94A3A6839BC",
+      "ATP-GEN-83963B27D9CD",
+      "ATP-GEN-B9896EAB127D",
+      "ATP-GEN-28C82FC9CA0D"
+    ],
+    "glide_remaining_classification": "scientifically_unavailable",
+    "glide_remaining_missing": 6,
+    "glide_remaining_reason": "generated candidates and IN-2 lack an exact comparable HTVS Glide record",
+    "imputation_performed": false,
+    "json_policy": "non-finite/missing values serialized as null with explicit status and reason",
+    "mathematically_undefined_metrics": [],
+    "original_serialization_failure": {
+      "classification": "technical_error",
+      "field_origin": "pairwise metric DataFrame converted to records retained IEEE NaN",
+      "reason": "strict json.dump(allow_nan=False) rejects NaN",
+      "repaired": true
+    },
+    "source_glide_score_missing_before_exact_join": 30,
+    "technical_errors_unresolved": []
+  },
+  "normalization": "within-protocol finite-cohort percentile; lower raw values rank better",
+  "optional_60_expansion_started": false,
+  "pairwise_metrics": [
+    {
+      "interpretation": "rank association only; raw values are not interchangeable physical energies",
+      "kendall_reason": null,
+      "kendall_status": "available",
+      "kendall_tau": -0.21014492753623187,
+      "matched_n": 24,
+      "protocol_a": "glide",
+      "protocol_b": "vina",
+      "spearman": -0.2617391304347826,
+      "spearman_reason": null,
+      "spearman_status": "available",
+      "top10_effective_k": 10,
+      "top10_overlap": 4,
+      "top10_overlap_fraction": 0.4,
+      "top10_reason": null,
+      "top10_status": "available",
+      "top5_effective_k": 5,
+      "top5_overlap": 2,
+      "top5_overlap_fraction": 0.4,
+      "top5_reason": null,
+      "top5_status": "available"
+    },
+    {
+      "interpretation": "rank association only; raw values are not interchangeable physical energies",
+      "kendall_reason": null,
+      "kendall_status": "available",
+      "kendall_tau": -0.2318840579710145,
+      "matched_n": 24,
+      "protocol_a": "glide",
+      "protocol_b": "open_mmgbsa",
+      "spearman": -0.3478260869565217,
+      "spearman_reason": null,
+      "spearman_status": "available",
+      "top10_effective_k": 10,
+      "top10_overlap": 2,
+      "top10_overlap_fraction": 0.2,
+      "top10_reason": null,
+      "top10_status": "available",
+      "top5_effective_k": 5,
+      "top5_overlap": 0,
+      "top5_overlap_fraction": 0.0,
+      "top5_reason": null,
+      "top5_status": "available"
+    },
+    {
+      "interpretation": "rank association only; raw values are not interchangeable physical energies",
+      "kendall_reason": null,
+      "kendall_status": "available",
+      "kendall_tau": 0.296551724137931,
+      "matched_n": 30,
+      "protocol_a": "vina",
+      "protocol_b": "open_mmgbsa",
+      "spearman": 0.421579532814238,
+      "spearman_reason": null,
+      "spearman_status": "available",
+      "top10_effective_k": 10,
+      "top10_overlap": 6,
+      "top10_overlap_fraction": 0.6,
+      "top10_reason": null,
+      "top10_status": "available",
+      "top5_effective_k": 5,
+      "top5_overlap": 1,
+      "top5_overlap_fraction": 0.2,
+      "top5_reason": null,
+      "top5_status": "available"
+    }
+  ],
+  "registry_evidence_mutated": false,
+  "scientific_limitations": [
+    "Protocol correlations compare ranks, not interchangeable absolute physical energies.",
+    "The shadow evidence run does not replace the frozen Decision Engine.",
+    "No biological activity, MIC, toxicity, or experimental success claim is made."
+  ],
+  "scope": "cached_phase17_1_pilot30_post_analysis_only",
+  "three_protocol_matched_n": 24,
+  "training_performed": false
+}

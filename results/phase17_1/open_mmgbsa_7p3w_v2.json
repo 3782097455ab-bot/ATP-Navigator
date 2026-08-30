@@ -1,0 +1,93 @@
+{
+  "analysis": {
+    "entropy": "not included",
+    "gb_model": "igb=5, mbondi2",
+    "minimum_finite_frames": 40,
+    "output": "open_mmgbsa_deltaG",
+    "salt_concentration_molar": 0.15,
+    "tool": "gmx_MMPBSA 1.6.5",
+    "trajectory_approximation": "single trajectory",
+    "unit": "kcal/mol"
+  },
+  "forbidden_equivalences": [
+    "historical_prime_mmgbsa",
+    "historical_md_mmgbsa",
+    "biological_activity",
+    "experimental_binding_affinity"
+  ],
+  "frozen_for_qualification": true,
+  "gates": {
+    "expanded60": {
+      "cumulative_target": 60
+    },
+    "pilot30": {
+      "cumulative_target": 30,
+      "forbid_systematic_corruption": true,
+      "minimum_success": 27,
+      "require_finite_parser": true
+    },
+    "qualification": {
+      "forbid_systematic_corruption": true,
+      "minimum_success": 7,
+      "requested": 8,
+      "require_finite_parser": true
+    }
+  },
+  "ligand_charge_model": "AM1-BCC via OpenFF Toolkit and AmberTools",
+  "ligand_force_field": "GAFF 2.11",
+  "protein_force_field": "Amber ff14SB (amber14/protein.ff14SB.xml)",
+  "protocol_hash": "cb28279704aa51f7530e0e61fc592450d43823fe1e23aad5975a638b82407aab",
+  "protocol_id": "open_mmgbsa_7p3w_v2",
+  "receptor": {
+    "heavy_atom_policy": "source coordinates preserved; only terminal heavy repair and pH 7.4 hydrogen normalization",
+    "prepared_runtime_path": "/mnt/d/tiaozhansai/ATP-Navigator/workspace_local/phase17_1/shared/receptor_amber_prepared.pdb",
+    "prepared_sha256": "835a707ca4beaae3bbb857d9077768f9055451f2a11b186347e76491d0af9e0b",
+    "scope": "7P3W subunits e and g only",
+    "source": "configs/projects/ab_atp_synthase/vina_7p3w_v1/assets/ATP_e_g_prepared.pdb",
+    "source_sha256": "b700d93fd622e74afd3b59f22e5b11f5bd4e764fcb38ad82410e0abb44db4722"
+  },
+  "receptor_protonation": "PDBFixer/OpenMM at pH 7.4 after removal of legacy hydrogens",
+  "resource_policy": {
+    "checkpoint_after_each_candidate": true,
+    "concurrent_jobs": 1,
+    "openmm_cpu_threads": 12,
+    "resume_success_without_recompute": true
+  },
+  "sampling": {
+    "base_random_seed": 20260829,
+    "constraints": "HBonds",
+    "ensemble": "restrained NPT",
+    "equilibration_ps": 50.0,
+    "equilibration_steps": 25000,
+    "expected_frames": 50,
+    "frame_interval_steps": 1000,
+    "friction_per_ps": 1.0,
+    "minimization_max_iterations": 5000,
+    "nonbonded_cutoff_nm": 1.0,
+    "nonbonded_method": "PME",
+    "pressure_atmosphere": 1.0,
+    "production_ps": 100.0,
+    "production_steps": 50000,
+    "protein_heavy_restraint_kcal_mol_angstrom2": 2.0,
+    "rigid_water": true,
+    "temperature_kelvin": 300.0,
+    "time_step_fs": 2.0
+  },
+  "scientific_interpretation": "comparative screening-level high-cost computational evidence; not activity, experimental affinity, or membrane-mechanism validation",
+  "solvent": {
+    "ionic_strength_molar": 0.15,
+    "membrane": "omitted; no lipid coordinates available",
+    "model": "TIP3P explicit water",
+    "neutralize": true,
+    "padding_nm": 1.0
+  },
+  "source_pose_identity_policy": "Meeko SMILES atom-map reconstruction plus canonical connectivity equality; no name-based mapping",
+  "source_pose_protocol": "vina_7p3w_v1",
+  "source_pose_selection": "rank_1_pose_only",
+  "status": "ready_for_qualification",
+  "tool_environments": {
+    "gmx_mmpbsa": "/home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa",
+    "openmm": "/home/lenovojlu/.local/share/atpnav/envs/atpnav-openmm"
+  },
+  "topology_route": "OpenMM SystemGenerator -> ParmEd GROMACS topology -> gmx_MMPBSA"
+}

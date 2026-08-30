@@ -69,6 +69,22 @@ class ActivityService:
                             "record_id": row["evidence_id"],
                         }
                     )
+        post = self.project / "results/phase17_1/post_analysis.json"
+        if post.is_file() and not candidate_id:
+            payload = json.loads(post.read_text(encoding="utf-8"))
+            records.append(
+                {
+                    "timestamp": payload.get("created_at", ""),
+                    "candidate_id": "",
+                    "event_type": "phase17_1_post_analysis_completed",
+                    "summary": (
+                        f"three-protocol matched n={payload.get('three_protocol_matched_n', 'unknown')} · "
+                        "cached results only · Registry Evidence unchanged"
+                    ),
+                    "source": "Versioned analysis artifact",
+                    "record_id": "phase17_1_post_analysis",
+                }
+            )
         frame = pd.DataFrame(records)
         if frame.empty:
             return pd.DataFrame(columns=["timestamp", "candidate_id", "event_type", "summary", "source", "record_id"])

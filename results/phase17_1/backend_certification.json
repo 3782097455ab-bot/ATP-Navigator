@@ -1,0 +1,61 @@
+{
+  "certification": "passed",
+  "created_at": "2026-08-28T18:14:04.151244+00:00",
+  "no_simulated_numerical_output": true,
+  "selected_route": "OpenMM/OpenFF/GAFF sampling + ParmEd/GROMACS bridge + gmx_MMPBSA analysis",
+  "status": "usable",
+  "tools": {
+    "antechamber": {
+      "available": true,
+      "path": "/home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/antechamber",
+      "probe_return_code": 0,
+      "version_output": "\u001b[31m                   -m    \u001b[0m multiplicity (2S+1), default is 1\n\u001b[31m                   -rn   \u001b[0m residue name, overrides input file, default is MOL\n\u001b[31m                   -rf   \u001b[0m residue toplogy file name in prep input file,\n                          default is molecule.res\n\u001b[31m                   -ch   \u001b[0m check file name for gaussian, default is 'molecule'\n\u001b[31m                   -ek   \u001b[0m mopac or sqm keyword, inside quotes; overwrites previous ones\n\u001b[31m                   -gk   \u001b[0m gaussian job keyword, inside quotes, is ignored when both -gopt and -gsp are used\n\u001b[31m                   -gopt \u001b[0m gaussian job keyword for optimization, inside quotes\n\u001b[31m                   -gsp  \u001b[0m gaussian job keyword for single point calculation, inside quotes\n\u001b[31m                   -gm   \u001b[0m gaussian memory keyword, inside quotes, such as \"%mem=1000MB\"\n\u001b[31m                   -gn   \u001b[0m gaussian number of processors keyword, inside quotes, such as \"%nproc=8\"\n\u001b[31m                   -gdsk \u001b[0m gaussian maximum disk usage keyword, inside quotes, such as \"%maxdisk=50GB\"\n\u001b[31m                   -gv   \u001b[0m add keyword to generate gesp file (for Gaussian 09 only)\n\u001b[34m            "
+    },
+    "gmx_MMPBSA": {
+      "available": true,
+      "path": "/home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/gmx_MMPBSA",
+      "probe_return_code": 0,
+      "version_output": "gmx_MMPBSA 1.6.5 based on MMPBSA version 16.0 and AmberTools 20\n[INFO   ] Starting gmx_MMPBSA 1.6.5\n[INFO   ] Command-line\n  gmx_MMPBSA --version"
+    },
+    "gromacs": {
+      "available": true,
+      "path": "/home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/gmx",
+      "probe_return_code": 0,
+      "version_output": ":-) GROMACS - gmx, 2025.4-conda_forge (-:\n\nExecutable:   /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin.AVX2_256/gmx\nData prefix:  /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa\nWorking dir:  /mnt/d/tiaozhansai/ATP-Navigator\nCommand line:\n  gmx --version\n\nGROMACS version:     2025.4-conda_forge\nPrecision:           mixed\nMemory model:        64 bit\nMPI library:         thread_mpi\nOpenMP support:      enabled (GMX_OPENMP_MAX_THREADS = 128)\nGPU support:         OpenCL\nNBNxM GPU setup:     super-cluster 2x2x2 / cluster 8 (cluster-pair splitting on)\nSIMD instructions:   AVX2_256\nCPU FFT library:     fftw-3.3.11-sse2-avx\nGPU FFT library:     clFFT\nMulti-GPU FFT:       none\nRDTSCP usage:        disabled\nTNG support:         enabled\nHwloc support:       disabled\nTracing support:     disabled\nC compiler:          /home/conda/feedstock_root/build_artifacts/gromacs_1764344590343/_build_env/bin/x86_64-conda-linux-gnu-cc GNU 14.3.0\nC compiler flags:    -fexcess-precision=fast -funroll-all-loops -mavx2 -mfma -Wno-missing-field-initializers -O3 -DNDEBUG\nC++ compiler:        /home/conda/feedstock_root/build_artifacts/gromacs_1764344590343/_build_env/bin/x86_64-conda-linux-gnu-"
+    },
+    "mdtraj": {
+      "available": true,
+      "version": "1.11.1"
+    },
+    "meeko": {
+      "available": true,
+      "version": "0.7.1"
+    },
+    "openff_toolkit": {
+      "available": true,
+      "version": "0.16.7"
+    },
+    "openmm": {
+      "available": true,
+      "version": "8.6.0"
+    },
+    "openmmforcefields": {
+      "available": true,
+      "version": "0.15.1"
+    },
+    "parmed": {
+      "available": true,
+      "version": "4.3.1"
+    },
+    "rdkit": {
+      "available": true,
+      "version": "2024.3.5"
+    },
+    "tleap": {
+      "available": true,
+      "path": "/home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/tleap",
+      "probe_return_code": 0,
+      "version_output": "-I: Adding /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/prep to search path.\n-I: Adding /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/lib to search path.\n-I: Adding /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/parm to search path.\n-I: Adding /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/dat/leap/cmd to search path.\nUsage: /home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa/bin/teLeap [options]\nOptions:\n -h         Generate this message.\n -s         Ignore leaprc startup file.\n -I {dir}   Add {dir} to search path.\n -f {file}  Source {file}."
+    }
+  }
+}

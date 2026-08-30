@@ -1,0 +1,12 @@
+{
+  "policy_id": "phase17_1_competition_pilot30",
+  "qualification_target": 8,
+  "pilot_target": 30,
+  "automatic_expansion_target": 30,
+  "optional_extension_target": 60,
+  "auto_expand_to_60": false,
+  "run_post_pilot_analysis": true,
+  "reason": "Freeze the current competition version after the cumulative 30-candidate pilot; retain candidates 31-60 as an optional extension requiring researcher confirmation.",
+  "scientific_protocol_changed": false,
+  "training_allowed": false
+}

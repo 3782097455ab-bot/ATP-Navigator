@@ -1,0 +1,23 @@
+{
+  "architecture": "x86_64",
+  "backend_status": "usable",
+  "created_at": "2026-08-28T18:14:04.317746+00:00",
+  "distribution": "Ubuntu 26.04 LTS",
+  "isolation": "WSL user-local; Windows project .venv unchanged",
+  "kernel": "6.18.33.2-microsoft-standard-WSL2",
+  "mmgbsa_environment_prefix": "/home/lenovojlu/.local/share/atpnav/envs/atpnav-mmgbsa",
+  "openmm_environment_prefix": "/home/lenovojlu/.local/share/atpnav/envs/atpnav-openmm",
+  "project_mount": "/mnt/d/tiaozhansai/ATP-Navigator",
+  "python_mmgbsa": {
+    "return_code": 0,
+    "stderr": "",
+    "stdout": "Python 3.11.16"
+  },
+  "python_openmm": {
+    "return_code": 0,
+    "stderr": "",
+    "stdout": "Python 3.11.16"
+  },
+  "wsl_status": "available",
+  "wsl_version": 2
+}
