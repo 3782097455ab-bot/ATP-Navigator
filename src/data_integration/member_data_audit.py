@@ -249,7 +249,7 @@ def register_member3(project: Path) -> tuple[pd.DataFrame, dict]:
         "registry_type": "benchmark_metadata_catalog",
         "benchmarks_executed": 0,
         "training_records_added": 0,
-        "part1_experimental_benchmark_records": "pending",
+        "part1_experimental_benchmark_records": "available_general_binding_only",
     }
     return registry, summary
 

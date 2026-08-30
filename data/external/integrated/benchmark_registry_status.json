@@ -7,7 +7,7 @@
   "registry_type": "benchmark_metadata_catalog",
   "benchmarks_executed": 0,
   "training_records_added": 0,
-  "part1_experimental_benchmark_records": "pending",
+  "part1_experimental_benchmark_records": "available_general_binding_only",
   "Part1 source": "BindingDB_BindingDB_Articles.tsv",
   "Part1 raw rows": 93712,
   "Part1 QC measurement rows": 96195,

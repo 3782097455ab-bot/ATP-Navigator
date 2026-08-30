@@ -1,7 +1,7 @@
 {
   "release_version": "ATP-Navigator-Competition-RC1",
-  "build_timestamp": "2026-08-30T18:25:34.502652+00:00",
-  "source_code_commit": "001409ab66f07b6ad03f918e7252d5d3ff66ed5b",
+  "build_timestamp": "2026-08-30T19:42:34.287484+00:00",
+  "source_code_commit": "f822235d11effee8ed0bbdf0e6f4f2c168517e2e",
   "branch": "main",
   "data_manifest": "results/release_candidate/member_data_integration/member_data_manifest.csv",
   "data_manifest_sha256": "c17110ca6cacad3e8b6adc535495eaff5822ec2e9462b078461fa2b05420e03f",
