@@ -1,5 +1,13 @@
 # ATP-Navigator public deployment
 
+## Public release
+
+- Public URL: <https://jlu-atp-navigator.streamlit.app/>
+- Visibility: public link access enabled
+- Deployment branch: `main`
+- Deployment commit: `4ded64115935da1bd3682315514d873ad5686b34`
+- Public acceptance: anonymous HTTP session reached the app with status 200; the AI Research Console, Candidate Explorer, External Benchmark Registry, Protocol Comparison, Decision Workspace, 3D Structural Workspace, Team Review Board, Activity Timeline and Presentation Mode were opened without application or browser-console errors.
+
 ## Runtime
 
 - Hosting target: Streamlit Community Cloud
@@ -7,7 +15,7 @@
 - Streamlit: 1.62.0
 - RDKit: 2026.03.5
 - Dependency source: repository-root `requirements.txt`
-- Entrypoint: `app.py`
+- Entrypoint: `streamlit_cloud_app.py` (executes the reviewed `app.py` as `__main__`)
 
 The dependency set was resolved and import-tested in an isolated Python 3.11 environment, including `Chem`, `Draw` and `rdMolDraw2D`.
 
