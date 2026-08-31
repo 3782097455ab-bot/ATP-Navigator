@@ -14,7 +14,14 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 from rdkit import Chem
-from rdkit.Chem import Draw
+
+# The core cheminformatics reader works on the headless cloud image even when
+# optional X11 drawing libraries are absent.  Keep 2D rendering optional so a
+# missing libXrender cannot take down the evidence/decision application.
+try:
+    from rdkit.Chem import Draw
+except ImportError:  # pragma: no cover - depends on the cloud system image
+    Draw = None
 
 PROJECT = Path(__file__).resolve().parent
 SRC = PROJECT / "src"
@@ -183,8 +190,10 @@ def candidate_explorer():
     left, right = st.columns([1, 2.2])
     with left:
         mol = Chem.MolFromSmiles(str(detail.get("canonical_smiles", "")))
-        if mol:
+        if mol and Draw is not None:
             st.image(Draw.MolToImage(mol, size=(420, 300)), caption="由登记 SMILES 实时绘制")
+        elif mol:
+            st.info("当前云端镜像不提供可选的 RDKit 2D 绘图库；结构身份、描述符和登记证据仍可正常使用。")
         else:
             st.warning("登记结构无法绘制。")
     with right:
