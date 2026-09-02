@@ -455,6 +455,40 @@ def molecule_generation():
         st.success(f"已保存请求：{target.relative_to(PROJECT)}。未执行计算。")
 
 
+def scientific_workflow_page():
+    title("可复现虚拟筛选流程", "从靶点与 IN-2 出发，逐层生成、过滤、计算、登记证据并进入研究者决策门控")
+    summary_path = PROJECT / "results/library_generation/workflow_public_summary.json"
+    if not summary_path.exists():
+        st.info("可复现工作流尚未产生已核验的运行摘要。页面不会用示例数值替代真实结果。")
+        return
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    st.warning("这里展示的是重建的可复现 IN-2 衍生库，不是、也不声称等同于历史 Auto_Enum 十万库。")
+    c1, c2, c3, c4 = st.columns(4)
+    stages = pd.DataFrame(summary.get("stage_counts", []))
+    library_stage = stages.loc[stages["stage"].eq("Library Generation")]
+    docking_stage = stages.loc[stages["stage"].eq("Docking")]
+    c1.metric("母体结构", "IN-2")
+    c2.metric("生成后唯一结构", int(library_stage.iloc[0]["output_count"]) if len(library_stage) else 0)
+    c3.metric("真实 Vina 结果", int(docking_stage.iloc[0]["output_count"]) if len(docking_stage) else 0)
+    c4.metric("工作流协议", summary.get("protocol_id", "unknown"))
+    st.markdown("### 科研流程")
+    st.code("靶点 + IN-2 → 衍生库生成 → 结构准备与过滤 → 开放工具对接 → 分层精筛 → 高成本证据门控 → 证据整合 → AI辅助决策 → 候选面板", language=None)
+    if not stages.empty:
+        display = stages.rename(columns={"stage":"流程层", "tool_protocol":"工具 / 协议", "status":"状态",
+                                         "input_count":"输入数量", "output_count":"输出数量",
+                                         "output":"输出", "provenance":"溯源"})
+        st.dataframe(display, width="stretch", hide_index=True, height=500)
+    st.markdown("### 四类证据边界")
+    cols = st.columns(4)
+    cols[0].info("**历史商业流程**\n\n只描述已有材料能够支持的 Schrödinger 工作流，不模拟缺失商业计算。")
+    cols[1].info("**恢复的历史证据**\n\n历史 Glide、MM/GBSA 等结果原值只读，来源与身份状态单独保留。")
+    cols[2].info("**重建开放流程**\n\nRDKit 确定性生成与真实 Vina 使用独立协议名，不能冒充 Glide SP/XP。")
+    cols[3].info("**AI决策扩展**\n\n冻结模型只在输入契约满足时调用；缺失关键证据时明确输出未知或待补充。")
+    st.markdown("### 运行溯源")
+    st.json({"运行编号":summary.get("run_id"), "衍生库哈希":summary.get("library_hash"),
+             "生成配置哈希":summary.get("config_hash"), "输出":summary.get("outputs", {})}, expanded=False)
+
+
 def execution_jobs():
     title("执行任务", "共享 Calculation Job Registry；终态任务不会被界面自动重启")
     jobs = cached_frame("jobs")
@@ -558,6 +592,7 @@ PAGES = {
     "◈ 证据获取": acquisition_workspace,
     "⬡ 三维结构": lambda: phase18b_structural_workspace(PROJECT, title, project_data()),
     "⌁ 分子扩展": molecule_generation,
+    "▥ 科研工作流": scientific_workflow_page,
     "▣ 计算任务": execution_jobs,
     "⚙ 工具能力": tool_capability,
     "↺ 实验反馈": experiment_feedback,

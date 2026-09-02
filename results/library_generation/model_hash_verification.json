@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "reference": "results/phase14/model_hashes_before.json",
+  "protected_model_count": 24,
+  "mismatch_count": 0,
+  "mismatches": [],
+  "verification_method": "SHA-256 comparison executed by tests/test_reconstructed_library.py and full unittest regression",
+  "training_performed": false
+}

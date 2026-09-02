@@ -1,0 +1,11 @@
+{
+  "version": "in2_reaction_templates_v1",
+  "templates": [
+    {
+      "template_id": "aromatic_CH_Rgroup_substitution_v1",
+      "reaction_smarts": "[cH:1].[*:2]-[*:3]>>[c:1]-[*:3]",
+      "implementation": "RDKit graph attachment reused from Phase16",
+      "scope": "one or two enumerated aromatic carbon sites bearing hydrogen"
+    }
+  ]
+}

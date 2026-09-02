@@ -58,8 +58,13 @@ def discover(output=None, env=None, roots=None, which=shutil.which, runner=subpr
         tools['rdkit'].executable = sys.executable
         tools['rdkit'].availability = 'available'
         tools['rdkit'].license_status = 'open_source_no_checkout_required'
+        tools['rdkit_library_generation'].version = rdBase.rdkitVersion
+        tools['rdkit_library_generation'].executable = sys.executable
+        tools['rdkit_library_generation'].availability = 'available'
+        tools['rdkit_library_generation'].license_status = 'open_source_no_checkout_required'
     except ImportError:
         tools['rdkit'].reason = 'RDKit not importable in current interpreter'
+        tools['rdkit_library_generation'].reason = 'RDKit not importable in current interpreter'
     probe, probe_info = None, {'status':'not_run_no_schrodinger_runner'}
     if commands['run']:
         try:

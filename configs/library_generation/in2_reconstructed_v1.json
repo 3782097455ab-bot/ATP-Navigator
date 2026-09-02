@@ -1,0 +1,32 @@
+{
+  "schema_version": "library_generation_config_v1",
+  "generator_id": "in2_reconstructed_derivative_library",
+  "generator_version": "1.0.0",
+  "library_classification": "reconstructed reproducible derivative library",
+  "historical_library_equivalence": false,
+  "parent_id": "ATP-REF-IN2",
+  "parent_alias": "IN-2",
+  "parent_source": "configs/projects/ab_atp_synthase/vina_7p3w_v1/candidate_identity_manifest.csv",
+  "building_block_library": "configs/library_generation/building_blocks_v1.csv",
+  "building_block_library_version": "in2_building_blocks_v1",
+  "reaction_templates": "configs/library_generation/reaction_templates_v1.json",
+  "reaction_template_id": "aromatic_CH_Rgroup_substitution_v1",
+  "attachment_site_rule": "aromatic carbon with at least one hydrogen",
+  "substitution_depths": [1, 2],
+  "random_seed": 20260903,
+  "deduplication_key": "canonical_isomeric_smiles_after_fragment_parent",
+  "sanitization": "RDKit SanitizeMol then FragmentParent then canonical isomeric SMILES",
+  "chunk_size": 2000,
+  "hard_filters": {
+    "allowed_atomic_numbers": [1, 6, 7, 8, 9, 15, 16, 17, 35, 53],
+    "maximum_molecular_weight": 850.0,
+    "maximum_absolute_formal_charge": 3
+  },
+  "rule_filters": {
+    "lipinski": {"maximum_mw": 500.0, "maximum_clogp": 5.0, "maximum_hbd": 5, "maximum_hba": 10, "enforce": false},
+    "veber": {"maximum_rotatable_bonds": 10, "maximum_tpsa": 140.0, "enforce": false},
+    "pains": {"enforce": false},
+    "reactive_warnings": {"enforce": false}
+  },
+  "scientific_boundary": "Enumeration and cheminformatics QC only; structures are hypotheses, not synthesized compounds or activity labels."
+}

@@ -358,6 +358,14 @@ class ProjectData:
                 tool_id = value.get("generator_id", UNKNOWN)
                 rows.append({"tool_id": f"generator:{tool_id}", "status": value.get("status", "available" if value.get("available") else "unavailable"),
                              "version": value.get("version", UNKNOWN), "reason": value.get("reason", ""), "source": "phase16_generator_gate"})
+        reconstructed = _read_json(self.results / "library_generation/generation_validation_summary.json")
+        if reconstructed:
+            generator = reconstructed.get("generator", {})
+            rows.append({"tool_id": "generator:in2_reconstructed_derivative_library",
+                         "status": "available" if reconstructed.get("status") == "completed" else reconstructed.get("status", UNKNOWN),
+                         "version": generator.get("generator_version", UNKNOWN),
+                         "reason": "确定性重建衍生库；不等同历史 Auto_Enum 十万库",
+                         "source": "reconstructed_library_validation"})
         return pd.DataFrame(rows).drop_duplicates(["tool_id", "source"]) if rows else pd.DataFrame(columns=["tool_id", "status", "version", "reason", "source"])
 
     def feedback_status(self) -> dict:
