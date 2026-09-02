@@ -1,4 +1,4 @@
-"""ATP-Navigator Phase 18A local research workspace.
+"""研序智航——面向科研人员的候选优先级决策工作台。
 
 Run from the repository root with:
     streamlit run app.py
@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import sys
 from datetime import datetime, timezone
+from html import escape
 from pathlib import Path
 
 import altair as alt
@@ -43,19 +44,47 @@ from app.phase18b_views import (  # noqa: E402
 )
 
 
-st.set_page_config(page_title="ATP-Navigator", page_icon="🧭", layout="wide", initial_sidebar_state="expanded")
+PRODUCT_NAME = "研序智航"
+PRODUCT_TAGLINE = "AI辅助候选优先级决策工作台"
+PRODUCT_VERSION = "公测版 0.9"
+
+st.set_page_config(page_title=f"{PRODUCT_NAME}｜{PRODUCT_TAGLINE}", page_icon="🧬", layout="wide", initial_sidebar_state="expanded")
 st.markdown("""
 <style>
-  .block-container {padding-top: 1.1rem; padding-bottom: 3rem; max-width: 1540px;}
-  [data-testid="stMetric"] {border: 1px solid #dfe7e5; border-radius: 8px; padding: 0.65rem; background: #fbfdfc;}
-  .status-chip {display:inline-block; padding:.18rem .48rem; margin-right:.35rem; border-radius:999px;
-    background:#e8f3ef; color:#174c3d; font-size:.78rem; border:1px solid #bfd6ce;}
-  .warning-chip {background:#fff4db; color:#704b00; border-color:#eed392;}
-  .unknown {color:#6a7470; font-style:italic;}
-  .small-note {font-size:.82rem; color:#52605b;}
-  h1 {font-size:1.62rem !important; margin-bottom:.1rem !important;}
-  h2 {font-size:1.28rem !important;}
-  h3 {font-size:1.05rem !important;}
+  :root {
+    --yx-ink:#17272a; --yx-deep:#233438; --yx-blue:#10a8c8;
+    --yx-green:#58b957; --yx-mint:#eaf7f3; --yx-paper:#f6faf9;
+    --yx-line:#d9e7e3; --yx-muted:#60716d;
+  }
+  .stApp {background:linear-gradient(145deg,#f8fbfa 0%,#f2f8f7 50%,#f7fbfd 100%); color:var(--yx-ink);}
+  .block-container {padding-top:1rem; padding-bottom:4rem; max-width:1480px;}
+  [data-testid="stSidebar"] {background:linear-gradient(180deg,#1f3134 0%,#17272a 100%); border-right:1px solid #30484a;}
+  [data-testid="stSidebar"] * {color:#edf8f5;}
+  [data-testid="stSidebar"] [role="radiogroup"] label {padding:.42rem .58rem; border-radius:9px; margin:.08rem 0;}
+  [data-testid="stSidebar"] [role="radiogroup"] label:hover {background:rgba(16,168,200,.14);}
+  [data-testid="stSidebar"] [data-checked="true"] {background:linear-gradient(90deg,rgba(88,185,87,.25),rgba(16,168,200,.20));}
+  [data-testid="stHeader"] {background:transparent;}
+  [data-testid="stToolbar"], #MainMenu, footer {display:none !important;}
+  [data-testid="stMetric"] {border:1px solid var(--yx-line); border-radius:14px; padding:.8rem 1rem; background:rgba(255,255,255,.88); box-shadow:0 7px 24px rgba(35,52,56,.05);}
+  [data-testid="stMetricValue"] {color:#173e42;}
+  .yx-brand {padding:.55rem .2rem 1rem;}
+  .yx-brand-mark {width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--yx-green),var(--yx-blue));display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:19px;box-shadow:0 8px 24px rgba(16,168,200,.22);}
+  .yx-brand-name {display:inline-block;margin-left:.65rem;font-size:1.2rem;font-weight:760;vertical-align:middle;letter-spacing:.05em;}
+  .yx-brand-sub {font-size:.75rem;color:#a9c5bf !important;margin:.35rem 0 0 3.2rem;}
+  .yx-topbar {display:flex;justify-content:space-between;align-items:center;padding:.75rem 1rem;margin-bottom:.9rem;border:1px solid var(--yx-line);border-radius:14px;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);}
+  .yx-topbar strong {font-size:.95rem}.yx-topbar span {color:var(--yx-muted);font-size:.8rem;}
+  .yx-hero {position:relative;overflow:hidden;padding:1.35rem 1.5rem;margin:.25rem 0 1.15rem;border-radius:18px;background:linear-gradient(120deg,#20363a 0%,#174f58 58%,#0d879f 100%);color:white;box-shadow:0 16px 42px rgba(24,63,70,.18);}
+  .yx-hero:after {content:"";position:absolute;right:-70px;top:-110px;width:280px;height:280px;border:42px solid rgba(88,185,87,.30);border-radius:50%;}
+  .yx-hero h1 {font-size:1.7rem !important;margin:0 0 .35rem !important;color:white;}
+  .yx-hero p {margin:0;color:#d7ece9;max-width:820px;}
+  .status-chip {display:inline-block;padding:.22rem .55rem;margin:.6rem .32rem 0 0;border-radius:999px;background:#e9f7f1;color:#14543f;font-size:.76rem;border:1px solid #bfe2d4;}
+  .warning-chip {background:#fff4da;color:#725000;border-color:#efd28b;}
+  .unknown {color:#6a7470;font-style:italic;}.small-note{font-size:.82rem;color:#52605b;}
+  h1 {font-size:1.58rem !important;margin-bottom:.1rem !important;} h2{font-size:1.25rem !important;} h3{font-size:1.02rem !important;}
+  .stButton>button {border-radius:10px;border-color:#c9ded9;}
+  .stButton>button[kind="primary"] {background:linear-gradient(90deg,var(--yx-green),#2aa990);border:0;color:white;}
+  [data-testid="stChatMessage"] {border:1px solid var(--yx-line);border-radius:14px;background:rgba(255,255,255,.78);padding:.25rem .4rem;}
+  .yx-footer {margin-top:2rem;padding-top:1rem;border-top:1px solid var(--yx-line);color:var(--yx-muted);font-size:.75rem;text-align:center;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -83,6 +112,56 @@ def cached_metrics() -> dict:
     return project_data().dashboard_metrics()
 
 
+COLUMN_ZH = {
+    "compound_id": "候选编号", "canonical_id": "规范编号", "candidate_id": "候选编号",
+    "display_name": "显示名称", "candidate_source": "候选来源", "source": "来源",
+    "identity_status": "身份状态", "canonical_smiles": "规范SMILES", "scaffold": "骨架",
+    "global_rank": "全库排名", "rank": "排名", "docking_score": "Glide评分",
+    "vina_affinity": "Vina亲和分数", "mmgbsa_score": "MM/GBSA评分",
+    "open_mmgbsa_deltaG": "开放MM/GBSA ΔG", "open_mmgbsa_sd": "MM/GBSA标准差",
+    "qc_status": "质控状态", "status": "状态", "reason": "原因", "version": "版本",
+    "tool_id": "工具编号", "job_id": "任务编号", "protocol_id": "协议编号",
+    "created_at": "创建时间", "started_at": "开始时间", "completed_at": "完成时间",
+    "return_code": "返回码", "failure_reason": "失败原因", "evidence_group": "证据组",
+    "structure": "结构", "glide": "Glide", "vina": "Vina", "mmgbsa": "MM/GBSA",
+    "admet": "ADMET", "literature_prior": "文献先验", "lineage": "谱系", "experiment": "实验",
+    "final_score": "综合得分", "decision_confidence": "决策置信度", "evidence_coverage": "证据覆盖度",
+    "binding_score": "结合得分", "ATP_score": "ATP相关得分", "antibacterial_score": "抗菌知识得分",
+    "drug_score": "成药性得分", "risk": "风险", "parent_id": "母体编号",
+    "parent_alias": "母体别名", "murcko_scaffold": "Murcko骨架", "structural_warnings": "结构提示",
+    "provenance_hash": "溯源哈希", "reviewer": "复核人", "task": "任务类型",
+    "dataset": "数据集", "size": "规模", "input": "输入", "output": "输出",
+    "split": "划分", "metric": "指标", "reference": "参考文献", "relevance": "相关性",
+    "verification": "核验状态", "execution_status": "执行状态",
+}
+
+VALUE_ZH = {
+    "available": "可用", "missing": "缺失", "unknown": "未知", "not_applicable": "不适用",
+    "completed": "已完成", "running": "运行中", "planned": "已计划", "ready": "待运行",
+    "blocked": "受阻", "failed": "失败", "cancelled": "已取消", "pending": "待处理",
+    "pass": "通过", "exact": "精确匹配", "unresolved": "待解析", "not_available": "不可用",
+}
+
+
+def zh_frame(frame: pd.DataFrame) -> pd.DataFrame:
+    """仅本地化展示列名，不改变底层数据或导出契约。"""
+    localized = frame.copy().replace(VALUE_ZH)
+    return localized.rename(columns={c: COLUMN_ZH.get(c, c) for c in localized.columns})
+
+
+_STREAMLIT_DATAFRAME = st.dataframe
+
+
+def _localized_dataframe(data, *args, **kwargs):
+    """统一中文化界面表头；底层DataFrame、CSV与模型输入保持原样。"""
+    if isinstance(data, pd.DataFrame):
+        data = zh_frame(data)
+    return _STREAMLIT_DATAFRAME(data, *args, **kwargs)
+
+
+st.dataframe = _localized_dataframe
+
+
 def paged(frame: pd.DataFrame, key: str, page_size: int = 50, height: int = 520):
     if frame.empty:
         st.info("没有可显示的登记记录。")
@@ -95,13 +174,25 @@ def paged(frame: pd.DataFrame, key: str, page_size: int = 50, height: int = 520)
 
 
 def title(text: str, subtitle: str):
-    st.title(text)
-    st.caption(subtitle)
+    st.markdown(
+        f'<div class="yx-topbar"><strong>{PRODUCT_NAME} · {PRODUCT_VERSION}</strong>'
+        f'<span>本地科研工作区　｜　数据可追溯　｜　研究者在环</span></div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        f'<section class="yx-hero"><h1>{escape(text)}</h1><p>{escape(subtitle)}</p></section>',
+        unsafe_allow_html=True,
+    )
     st.markdown('<span class="status-chip">模型冻结 v0–v4-alpha</span><span class="status-chip">真实 Registry 数据</span><span class="status-chip warning-chip">实验活性未推断</span>', unsafe_allow_html=True)
 
 
 def dashboard():
-    title("ATP-Navigator 研究工作区", "ATP合酶虚拟筛选后的 AI 辅助候选优先级决策系统")
+    title("科研决策工作台", "从虚拟筛选候选集合出发，统一查看计算证据、协议分歧、优先级排序与下一步研究建议")
+    st.markdown("### 从这里开始")
+    q1, q2, q3 = st.columns(3)
+    q1.info("**向助手提问**\n\n用自然语言描述研究目标、候选范围和计算预算。")
+    q2.info("**检查证据**\n\n核对每个候选的结构、Glide、Vina、MM/GBSA与缺失项。")
+    q3.info("**形成决策**\n\n查看多目标排序和推荐理由，由研究者确认下一步。")
     metrics = cached_metrics()
     cols = st.columns(5)
     cols[0].metric("HTVS 候选", metrics["historical_candidates"])
@@ -113,7 +204,7 @@ def dashboard():
     st.code("候选结构 → 证据登记 → 协议比较 → 冻结模型/多目标决策 → 预算感知证据获取 → 实验反馈入口", language=None)
     left, right = st.columns([1.35, 1])
     with left:
-        st.markdown("### Evidence Registry 概览")
+        st.markdown("### 证据登记概览")
         matrix = cached_frame("evidence")
         summaries = []
         for col in ["structure", "glide", "vina", "mmgbsa", "admet", "literature_prior", "lineage", "experiment"]:
@@ -121,7 +212,7 @@ def dashboard():
                 counts = matrix[col].value_counts().to_dict()
                 summaries.append({"evidence_group": col, **counts})
         st.dataframe(pd.DataFrame(summaries).fillna(0), width="stretch", hide_index=True)
-        st.warning("unknown、missing、not_applicable 分开保留；任何一项都不会自动当作 0。")
+        st.warning("未知、缺失、不适用三种状态分开保留；任何一项都不会自动当作 0。")
     with right:
         st.markdown("### 运行能力")
         caps = cached_frame("capabilities")
@@ -132,18 +223,18 @@ def dashboard():
 
 
 def external_benchmark_registry():
-    title("External Benchmark Registry", "成员3 Part2：公开AI benchmark资源地图；目录记录不等于已运行结果")
+    title("外部基准资源库", "公开AI基准数据资源地图；目录登记不等于已经运行或获得验证结果")
     registry = project_data().benchmark_registry()
     status = project_data().benchmark_status()
     if registry.empty:
         st.info("当前没有已登记的 benchmark metadata。")
     else:
         c1, c2, c3 = st.columns(3)
-        c1.metric("Catalog entries", len(registry))
-        c2.metric("Executed", int(registry.get("execution_status", pd.Series(dtype=str)).eq("completed").sum()))
-        c3.metric("Training records", 0)
-        tasks = st.multiselect("Task", sorted(registry["task"].dropna().astype(str).unique()), default=[])
-        verification = st.multiselect("Verification", sorted(registry["verification"].dropna().astype(str).unique()), default=[])
+        c1.metric("已登记资源", len(registry))
+        c2.metric("已实际运行", int(registry.get("execution_status", pd.Series(dtype=str)).eq("completed").sum()))
+        c3.metric("训练记录", 0)
+        tasks = st.multiselect("任务类型", sorted(registry["task"].dropna().astype(str).unique()), default=[])
+        verification = st.multiselect("核验状态", sorted(registry["verification"].dropna().astype(str).unique()), default=[])
         filtered = registry.copy()
         if tasks:
             filtered = filtered.loc[filtered["task"].isin(tasks)]
@@ -151,7 +242,7 @@ def external_benchmark_registry():
             filtered = filtered.loc[filtered["verification"].isin(verification)]
         show = [c for c in ["benchmark_id", "dataset", "task", "size", "input", "output", "split", "metric", "source", "reference", "relevance", "verification", "execution_status"] if c in filtered]
         paged(filtered[show], "benchmark_registry", page_size=30, height=520)
-    st.warning(f"Part1 experimental benchmark records: {status.get('Part1 experimental benchmark records', 'pending')}. 26条Part2记录仅是metadata/catalog，尚未声称已执行。")
+    st.warning(f"第一部分实验基准记录：{status.get('Part1 experimental benchmark records', '待补充')}。第二部分26条记录仅为元数据目录，尚未声称已执行。")
 
 
 def overview():
@@ -200,18 +291,19 @@ def candidate_explorer():
         st.json(detail)
         matrix = cached_frame("evidence").loc[lambda x: x.compound_id.eq(str(selected))]
         st.dataframe(matrix, width="stretch", hide_index=True)
-    with st.expander("Evidence provenance / 证据来源"):
+    with st.expander("证据来源与溯源记录"):
         provenance = project_data().provenance(selected)
         st.dataframe(provenance, width="stretch", hide_index=True)
-    with st.expander("View in 3D", expanded=False):
+    with st.expander("在三维空间中查看", expanded=False):
         embedded_pose(PROJECT, str(selected), height=540)
 
 
 def evidence_matrix_page():
-    title("证据矩阵", "不同证据组保持语义隔离；available、missing、unknown、not_applicable 不混淆")
+    title("证据矩阵", "不同证据组保持语义隔离；可用、缺失、未知、不适用四种状态不会混淆")
     matrix = cached_frame("evidence")
     source = st.multiselect("候选来源", sorted(matrix["source"].unique()), default=[])
-    evidence = st.selectbox("聚焦证据组", ["all", "structure", "glide", "vina", "mmgbsa", "admet", "literature_prior", "lineage", "experiment"])
+    evidence_labels = {"全部": "all", "结构": "structure", "Glide": "glide", "Vina": "vina", "MM/GBSA": "mmgbsa", "ADMET": "admet", "文献先验": "literature_prior", "谱系": "lineage", "实验": "experiment"}
+    evidence = evidence_labels[st.selectbox("聚焦证据组", list(evidence_labels))]
     filtered = matrix.loc[matrix["source"].isin(source)] if source else matrix
     if evidence != "all":
         values = st.multiselect("状态", sorted(filtered[evidence].astype(str).unique()), default=[])
@@ -232,7 +324,7 @@ def protocol_comparison_page():
         impact = project_data().phase17_1_evidence_impact()
         c1, c2, c3 = st.columns(3)
         c1.metric("MM/GBSA真实结果", int(three.get("open_mmgbsa_deltaG", pd.Series(dtype=float)).notna().sum()))
-        c2.metric("三协议 exact matched", summary.get("three_protocol_matched_n", "unknown"))
+        c2.metric("三协议精确匹配", summary.get("three_protocol_matched_n", "未知"))
         c3.metric("未填充缺失值", "是")
         if metrics_rows:
             st.dataframe(pd.DataFrame(metrics_rows), width="stretch", hide_index=True)
@@ -242,8 +334,8 @@ def protocol_comparison_page():
             ).dropna()
             st.altair_chart(
                 alt.Chart(ranks).mark_circle(size=55, opacity=.65).encode(
-                    x=alt.X("candidate_id:N", sort=None, axis=alt.Axis(labels=False), title="Pilot candidate"),
-                    y=alt.Y("rank_utility:Q", title="Within-protocol rank utility"),
+                    x=alt.X("candidate_id:N", sort=None, axis=alt.Axis(labels=False), title="试运行候选"),
+                    y=alt.Y("rank_utility:Q", title="协议内排名效用"),
                     color="protocol:N", tooltip=list(ranks.columns),
                 ).properties(height=360), width="stretch"
             )
@@ -257,19 +349,19 @@ def protocol_comparison_page():
             if not impact.empty:
                 show = impact.assign(abs_rank_change=pd.to_numeric(impact["rank_change_after_mmgbsa"], errors="coerce").abs())
                 st.dataframe(show.sort_values("abs_rank_change", ascending=False).head(15), width="stretch", hide_index=True)
-        st.info("三协议只按各自有限样本的排名百分位比较；shadow run 不覆盖冻结 Decision Engine。")
+        st.info("三协议只按各自有限样本的排名百分位比较；影子运行不会覆盖冻结决策引擎。")
     with tab_full:
         frame, metrics = project_data().protocol_comparison()
         m1, m2, m3, m4 = st.columns(4)
-        m1.metric("Matched", metrics.get("matched_candidates", metrics.get("matched_subset", metrics.get("matched", len(frame)))))
+        m1.metric("匹配候选", metrics.get("matched_candidates", metrics.get("matched_subset", metrics.get("matched", len(frame)))))
         m2.metric("Spearman", f"{metrics.get('spearman', metrics.get('spearman_correlation', float('nan'))):.3f}")
         m3.metric("Kendall", f"{metrics.get('kendall_tau', metrics.get('kendall', float('nan'))):.3f}")
-        m4.metric("Top10 overlap", metrics.get("top10_overlap", metrics.get("top_10_overlap", "unknown")))
+        m4.metric("前10名重叠", metrics.get("top10_overlap", metrics.get("top_10_overlap", "未知")))
         if not frame.empty:
             sample = frame if len(frame) <= 2500 else frame.sample(2500, random_state=17)
             chart = alt.Chart(sample).mark_circle(size=35, opacity=.45).encode(
-                x=alt.X("glide_rank:Q", title="Glide rank"), y=alt.Y("vina_rank:Q", title="Vina rank"),
-                color=alt.Color("abs_rank_delta:Q", scale=alt.Scale(scheme="viridis"), title="|rank delta|"),
+                x=alt.X("glide_rank:Q", title="Glide排名"), y=alt.Y("vina_rank:Q", title="Vina排名"),
+                color=alt.Color("abs_rank_delta:Q", scale=alt.Scale(scheme="viridis"), title="排名差绝对值"),
                 tooltip=[c for c in ["canonical_id", "glide_rank", "vina_rank", "rank_delta", "scaffold"] if c in sample]
             ).properties(height=520)
             st.altair_chart(chart, width="stretch")
@@ -279,11 +371,11 @@ def protocol_comparison_page():
 
 
 def decision_workspace():
-    title("决策工作区", "历史冻结 Decision 与 Phase17.1 更新证据 shadow run 并存；任何版本都不被覆盖")
-    frozen_tab, rc_tab = st.tabs(["Frozen Decision（17候选）", "Competition RC 三协议 Shadow（30候选）"])
+    title("决策工作区", "历史冻结决策与更新证据后的影子运行并存；任何历史版本都不会被覆盖")
+    frozen_tab, rc_tab = st.tabs(["冻结决策（17候选）", "竞赛候选版三协议影子决策（30候选）"])
     with frozen_tab:
-        profiles = ["balanced", "binding_focused", "atp_mechanism_focused", "experimental_validation_focused"]
-        profile = st.selectbox("研究目标模式", profiles)
+        profile_labels = {"均衡模式": "balanced", "结合证据优先": "binding_focused", "ATP机制优先": "atp_mechanism_focused", "实验验证优先": "experimental_validation_focused"}
+        profile = profile_labels[st.selectbox("研究目标模式", list(profile_labels))]
         ranking = project_data().decision_ranking(profile)
         if ranking.empty:
             st.error("冻结决策结果不可用。")
@@ -300,22 +392,22 @@ def decision_workspace():
         rc = project_data().release_candidate_decision()
         manifest = project_data().release_candidate_manifest()
         if rc.empty:
-            st.info("Competition RC Decision Run 尚未生成。")
+            st.info("竞赛候选版决策运行尚未生成。")
         else:
             c1, c2, c3 = st.columns(3)
             c1.metric("候选", len(rc))
             c2.metric("三协议完整", int(rc["protocol_count"].eq(3).sum()))
             c3.metric("官方模型", manifest.get("official_model", "Model v3"))
             st.dataframe(rc, width="stretch", hide_index=True, height=560)
-            st.warning("RC run 是更新证据 shadow decision；实验 ATP 抑制、MIC 与毒性均保持 unknown，未覆盖 Frozen Decision。")
+            st.warning("候选版运行属于更新证据后的影子决策；实验ATP抑制、MIC与毒性均保持未知，不覆盖冻结决策。")
     st.info("当前页面只读取已版本化输出。切换 profile 或查看 shadow run 不代表模型性能提升。")
 
 
 def acquisition_workspace():
     title("证据获取工作区", "回答预算有限时下一份高成本证据应该获取在哪个候选上")
-    labels = {"ATP-Navigator Hybrid": "ATP_Navigator_hybrid", "Vina Top": "vina_top", "Glide Top": "glide_top",
-              "Consensus Top": "consensus_top", "Diversity-aware": "diversity_aware", "Disagreement-aware": "disagreement_aware",
-              "Uncertainty-aware": "uncertainty_aware", "Evidence gap": "evidence_gap", "Random baseline": "random"}
+    labels = {"研序智航综合策略": "ATP_Navigator_hybrid", "Vina高分优先": "vina_top", "Glide高分优先": "glide_top",
+              "协议共识优先": "consensus_top", "结构多样性优先": "diversity_aware", "协议分歧优先": "disagreement_aware",
+              "不确定性优先": "uncertainty_aware", "证据缺口优先": "evidence_gap", "随机基线": "random"}
     c1, c2 = st.columns(2)
     label = c1.selectbox("获取策略", list(labels))
     budget = c2.select_slider("高成本证据预算", [10, 20, 40, 60, 100], value=20)
@@ -329,7 +421,7 @@ def acquisition_workspace():
     simulation = pd.read_csv(PROJECT / "results/phase15/budget_simulation.csv")
     st.markdown("### 已冻结预算模拟")
     st.dataframe(simulation.loc[simulation["budget"].eq(budget)] if "budget" in simulation else simulation, width="stretch", hide_index=True)
-    st.warning("VOI 是证据获取启发式，不是真实经济价值；acquisition score 不是生物活性概率。")
+    st.warning("信息价值仅作为证据获取启发式，不代表真实经济价值；获取分数也不是生物活性概率。")
 
 
 def molecule_generation():
@@ -347,7 +439,7 @@ def molecule_generation():
     st.markdown("### 新扩展请求（安全预览）")
     deploy = deployment_info(PROJECT)
     if not deploy["can_execute_local_tools"]:
-        st.info("Execution backend unavailable in cloud_viewer. Existing registered Phase16 results remain available below; new requests cannot run here.")
+        st.info("云端只读模式无法调用执行后端。仍可查看已登记的历史结果，但不能发起新计算。")
     n = st.number_input("期望生成数量", 1, 500, 30)
     preserve = st.checkbox("保留 scaffold", value=True)
     preview = {"action": "molecule_expansion_request", "backend": "rdkit_rgroup_enumeration", "seed": parent,
@@ -392,7 +484,7 @@ def tool_capability():
     if status:
         caps = caps.loc[caps["status"].astype(str).isin(status)]
     st.dataframe(caps, width="stretch", hide_index=True, height=620)
-    st.warning("OpenMM 包可导入不代表 protein–ligand MM/GBSA 工具链可用。Phase17 已按科学能力门控停止；本阶段不启动 WSL。")
+    st.warning("OpenMM软件包能够导入，不等于蛋白—配体MM/GBSA完整工具链可用。高成本计算严格遵循科学能力门控。")
 
 
 def research_dialogue():
@@ -446,46 +538,87 @@ def export_page():
     title("导出", "导出当前已登记结果，并附加项目、commit、模型范围和时间元数据")
     choices = {"候选总表": cached_frame("master"), "证据矩阵": cached_frame("evidence"),
                "计算任务": cached_frame("jobs"), "工具能力": cached_frame("capabilities"),
-               "Decision balanced": project_data().decision_ranking("balanced"),
-               "Phase15 acquisition panel": pd.read_csv(PROJECT / "results/phase15/acquisition_panel_v1.csv")}
+               "均衡决策结果": project_data().decision_ranking("balanced"),
+               "第15阶段证据获取面板": pd.read_csv(PROJECT / "results/phase15/acquisition_panel_v1.csv")}
     name = st.selectbox("导出内容", list(choices))
     frame = choices[name]
     st.dataframe(frame.head(100), width="stretch", hide_index=True)
     c1, c2 = st.columns(2)
-    c1.download_button("下载 CSV", csv_bytes(frame, name, project_data()), file_name=f"ATP_Navigator_{name.replace(' ', '_')}.csv", mime="text/csv")
-    c2.download_button("下载 Markdown 摘要", markdown_bytes(name, frame, name, project_data()), file_name=f"ATP_Navigator_{name.replace(' ', '_')}.md", mime="text/markdown")
+    c1.download_button("下载 CSV", csv_bytes(frame, name, project_data()), file_name=f"YanXu_ZhiHang_{name.replace(' ', '_')}.csv", mime="text/csv")
+    c2.download_button("下载 Markdown 摘要", markdown_bytes(name, frame, name, project_data()), file_name=f"YanXu_ZhiHang_{name.replace(' ', '_')}.md", mime="text/markdown")
 
 
 PAGES = {
-    "AI Research Console": lambda: phase18b_research_console(PROJECT, title),
-    "Dashboard": dashboard,
-    "Project Overview": overview,
-    "Candidate Explorer": candidate_explorer,
-    "Evidence Matrix": evidence_matrix_page,
-    "External Benchmark Registry": external_benchmark_registry,
-    "Protocol Comparison": protocol_comparison_page,
-    "Decision Workspace": decision_workspace,
-    "Acquisition Workspace": acquisition_workspace,
-    "Molecule Generation": molecule_generation,
-    "Execution Jobs": execution_jobs,
-    "Tool Capability": tool_capability,
-    "Research Dialogue": research_dialogue,
-    "3D Structural Workspace": lambda: phase18b_structural_workspace(PROJECT, title, project_data()),
-    "Team Review Board": lambda: phase18b_team_review_board(PROJECT, title, project_data()),
-    "Activity Timeline": lambda: phase18b_activity_timeline(PROJECT, title),
-    "DBTL Loop": lambda: phase18b_dbtl_loop(PROJECT, title),
-    "Presentation Mode": lambda: phase18b_presentation_mode(PROJECT, title, project_data()),
-    "Experiment Feedback": experiment_feedback,
-    "Export": export_page,
+    "✨ 智能研究助手": lambda: phase18b_research_console(PROJECT, title),
+    "⌂ 工作台首页": dashboard,
+    "◫ 候选库": candidate_explorer,
+    "▦ 证据矩阵": evidence_matrix_page,
+    "⇄ 协议比较": protocol_comparison_page,
+    "◎ 决策工作台": decision_workspace,
+    "◈ 证据获取": acquisition_workspace,
+    "⬡ 三维结构": lambda: phase18b_structural_workspace(PROJECT, title, project_data()),
+    "⌁ 分子扩展": molecule_generation,
+    "▣ 计算任务": execution_jobs,
+    "⚙ 工具能力": tool_capability,
+    "↺ 实验反馈": experiment_feedback,
+    "♧ 团队复核": lambda: phase18b_team_review_board(PROJECT, title, project_data()),
+    "◷ 活动记录": lambda: phase18b_activity_timeline(PROJECT, title),
+    "⟳ 迭代闭环": lambda: phase18b_dbtl_loop(PROJECT, title),
+    "▤ 外部基准": external_benchmark_registry,
+    "◇ 项目历程": overview,
+    "▶ 演示模式": lambda: phase18b_presentation_mode(PROJECT, title, project_data()),
+    "⇩ 导出中心": export_page,
 }
 
+
+@st.dialog("欢迎使用研序智航", width="large")
+def onboarding_dialog():
+    st.markdown("#### 从虚拟筛选结果，到可解释的实验候选优先级")
+    st.write("研序智航位于计算筛选之后、实验验证之前。它帮助研究者整合多协议证据、识别分歧、安排有限计算预算，并保留每一步依据。")
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.markdown("**① 提出研究问题**")
+        st.caption("在“智能研究助手”中直接描述目标和预算，系统会先生成可检查的计划。")
+    with c2:
+        st.markdown("**② 检查候选证据**")
+        st.caption("在候选库、证据矩阵和协议比较中核对结构、来源、缺失项与协议分歧。")
+    with c3:
+        st.markdown("**③ 做出研究者决策**")
+        st.caption("查看可解释排序、团队复核和下一步证据建议；AI不会替代最终科研判断。")
+    st.info("快速体验：进入“智能研究助手”，输入“找出 Glide 和 Vina 分歧最大的 10 个候选”。")
+    if st.button("开始使用", type="primary", width="stretch"):
+        st.session_state["yx_onboarding_complete"] = True
+        st.rerun()
+
+
 with st.sidebar:
-    st.markdown("## ATP-Navigator")
-    st.caption("Phase 18B · conversational execution & collaboration")
-    selected_page = st.radio("导航", list(PAGES), label_visibility="collapsed")
+    st.markdown(
+        '<div class="yx-brand"><span class="yx-brand-mark">研</span>'
+        '<span class="yx-brand-name">研序智航</span>'
+        '<div class="yx-brand-sub">AI辅助候选优先级决策工作台</div></div>',
+        unsafe_allow_html=True,
+    )
+    if st.button("＋ 新建研究会话", type="primary", width="stretch"):
+        st.session_state.pop("phase18b_messages", None)
+        st.session_state.pop("phase18b_pending_plan", None)
+        st.session_state["yx_nav_page"] = "✨ 智能研究助手"
+        st.rerun()
+    if st.session_state.get("yx_nav_page") not in PAGES:
+        st.session_state["yx_nav_page"] = "✨ 智能研究助手"
+    selected_page = st.radio("功能导航", list(PAGES), key="yx_nav_page", label_visibility="collapsed")
     st.divider()
+    if st.button("？ 查看使用教程", width="stretch"):
+        st.session_state["yx_onboarding_complete"] = False
+        st.rerun()
     git = project_data().git_state()
-    st.caption(f"branch: {git['branch']} · commit: {git['commit']}")
-    st.caption("科研边界：实验前计算证据整合与候选优先级辅助决策")
+    st.caption(f"公测版本 · 本地运行\n\n代码 {git['branch']} · {git['commit']}")
+    st.caption("科学边界：实验前计算证据整合与候选优先级辅助决策")
+
+if not st.session_state.get("yx_onboarding_complete", False):
+    onboarding_dialog()
 
 PAGES[selected_page]()
+st.markdown(
+    '<div class="yx-footer">研序智航 · 小范围公测版　｜　所有评分均为计算决策证据，不代表实验活性或临床结论</div>',
+    unsafe_allow_html=True,
+)

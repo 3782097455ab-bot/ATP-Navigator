@@ -155,8 +155,8 @@ class PoseRegistry:
         <div style="position:relative;width:100%;height:{height}px;border:1px solid #dfe7e5;border-radius:10px;overflow:hidden;background:#f8fbfa">
           <div id="atpnav_3d" style="width:100%;height:100%;position:relative"></div>
           <div style="position:absolute;right:10px;top:10px;z-index:5;display:flex;gap:6px">
-            <button onclick="atpnavViewer.zoomTo({{model:1}});atpnavViewer.render()">Zoom ligand</button>
-            <button onclick="atpnavViewer.zoomTo();atpnavViewer.render()">Reset</button>
+            <button onclick="atpnavViewer.zoomTo({{model:1}});atpnavViewer.render()">聚焦配体</button>
+            <button onclick="atpnavViewer.zoomTo();atpnavViewer.render()">重置视图</button>
           </div>
         </div>
         <script src="https://3Dmol.org/build/3Dmol-min.js"></script>

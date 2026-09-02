@@ -1,18 +1,18 @@
-# ATP-Navigator
+# 研序智航
 
-吉林大学 ATP-Navigator 项目：面向 ATP 合酶虚拟筛选后实验决策的研究者协作型 AI 候选优先级系统。
+面向虚拟筛选后实验决策的研究者协作型 AI 候选优先级系统。`ATP-Navigator`保留为历史仓库与模型资产代号，不再作为面向用户的产品名称。
 
 AI 用于学习和整合已有虚拟筛选证据，辅助候选排序；当前项目不将计算结果表述为真实生物活性，也不替代 Schrödinger、MD、MM/GBSA 或后续实验验证。
 
 系统位于传统虚拟筛选之后、合成与生物实验之前。它把研究意图、Docking/MMGBSA/ADMET、外部知识、模型分歧和实验预算转化为可审计的候选优先级与下一实验建议。项目不是通用“药物发现平台”。
 
-## Phase 18B 对话式研究工作区
+## 中文公测版研究工作区
 
 ```powershell
-.\.venv\Scripts\streamlit.exe run app.py
+.\scripts\start_yanxu_zhihang.ps1
 ```
 
-访问 `http://127.0.0.1:8501`。核心首页支持“自然语言 → 结构化计划 → 人工确认 → 白名单动作 → Registry结果回到对话”，并提供候选3D pose、团队审查/投票、统一时间线、计算型DBTL和比赛演示模式。它不重训模型、不生成实验结果，也不自动运行不可用后端。详见 [Phase18B用户指南](docs/User_Guide.md) 和 [对话执行说明](docs/Conversational_Execution.md)。
+访问 `http://127.0.0.1:8501`。页面采用全中文“对话 + 科研工作区”布局，首次进入提供使用教程；核心流程支持“自然语言 → 结构化计划 → 人工确认 → 登记结果回到对话”，并提供候选三维构象、团队复核、统一活动记录、计算型迭代闭环和演示模式。它不重训模型、不生成实验结果，也不自动运行不可用后端。详见 [Phase18B用户指南](docs/User_Guide.md) 和 [对话执行说明](docs/Conversational_Execution.md)。
 
 ## Phase 11会话工作区与实验回填
 

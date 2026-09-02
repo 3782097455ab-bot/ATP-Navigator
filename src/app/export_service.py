@@ -14,7 +14,8 @@ def enrich(frame: pd.DataFrame, kind: str, data: ProjectData) -> pd.DataFrame:
     git = data.git_state()
     metadata = {
         "_export_kind": kind,
-        "_project": "ATP-Navigator",
+        "_product": "研序智航",
+        "_legacy_repository": "ATP-Navigator",
         "_exported_at_utc": datetime.now(timezone.utc).isoformat(),
         "_git_commit": git["commit"],
         "_model_scope": "frozen Model v0-v4-alpha; no training in Phase18A",
@@ -31,5 +32,5 @@ def csv_bytes(frame: pd.DataFrame, kind: str, data: ProjectData) -> bytes:
 
 def markdown_bytes(title: str, frame: pd.DataFrame, kind: str, data: ProjectData, limit: int = 100) -> bytes:
     rich = enrich(frame, kind, data)
-    text = f"# {title}\n\nGenerated from registered ATP-Navigator artifacts. Missing evidence is not zero.\n\n{rich.head(limit).to_markdown(index=False)}\n"
+    text = f"# {title}\n\n由研序智航根据已登记、可追溯的项目资产生成。缺失证据不等于零。\n\n{rich.head(limit).to_markdown(index=False)}\n"
     return text.encode("utf-8")

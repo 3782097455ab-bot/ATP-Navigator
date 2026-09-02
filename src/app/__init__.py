@@ -1,3 +1,3 @@
-"""Local, read-mostly ATP-Navigator research workspace UI."""
+"""研序智航本地科研决策工作台界面。"""
 
 APP_VERSION = "18A.0"
