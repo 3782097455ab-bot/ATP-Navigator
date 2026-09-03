@@ -1,0 +1,17 @@
+{
+  "artifact": {
+    "path": "decision/candidate_panel.csv",
+    "sha256": "9fa10a7368a4c118e2ddfdbb92089119fc491657f20c5f9c4d6d2e959e6c3ffa"
+  },
+  "decision_run_id": "decision_41661af007fbb4067a28fe31",
+  "evidence_gate_passed": 1,
+  "input_count": 1,
+  "model_v3_modified": false,
+  "output_count": 1,
+  "profile_id": "computational_pre_experimental_v1",
+  "registered_input_evidence_count": 11,
+  "scope": "computational pre-experimental prioritization; not biological activity or validation",
+  "status": "completed",
+  "training_performed": false,
+  "unknown_admet_count": 1
+}

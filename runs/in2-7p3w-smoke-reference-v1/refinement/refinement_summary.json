@@ -1,0 +1,15 @@
+{
+  "artifact": {
+    "path": "refinement/acquisition_panel.csv",
+    "sha256": "1b8e262c172fd16b5db1b1cbe66845f004a36e147e46e98ce0764e8ac47b9f93"
+  },
+  "exact_structure_high_cost_cache_reuse": true,
+  "input_count": 7,
+  "output_count": 1,
+  "panel_size_configured": 1,
+  "protocol_id": "acquisition_refinement_v1",
+  "scope": "evidence acquisition priority; not biological hit ranking",
+  "second_docking_protocol": null,
+  "sp_xp_claim": false,
+  "status": "completed_selection_only"
+}

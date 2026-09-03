@@ -229,3 +229,7 @@ Phase18B新增的是会话编排、白名单动作、协作审查、注册pose�
 | Promotion Gate | 未通过；Model v3继续是官方候选排序模型；Task-A MIC本身与Model v3内部静态MM/GBSA排序任务不可直接比较 |
 | 文件 | `models/experiments/competition_rc_shadow_001/`、`results/release_candidate/model_promotion/` |
 | 限制 | 新增信息主要是已知19个抗生素结构的菌株语境；化学空间无扩展；不能推出ATP靶点或内部候选活性 |
+
+## IN-2 / 7P3W参考工作流登记说明（2026-09-03）
+
+本轮没有新增Model v5，也没有训练、微调或覆盖Model v0–v4-alpha。统一工作流在证据门控通过后只读调用现有结构/ATP/抗菌先验，并用`configs/in2_7p3w_reference.yaml`中公开权重形成`computational_pre_experimental_v1`候选面板；该层属于版本化决策规则，不是新的监督模型。24个受保护模型文件的SHA-256均保持不变。

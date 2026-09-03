@@ -1,0 +1,19 @@
+{
+  "candidate_count": 7,
+  "disk_bytes": 5606495,
+  "estimate_scope": "linear estimate from the real N=100 vina_7p3w_v1 run; not a performance guarantee",
+  "estimated_checkpoint_bytes": 7426,
+  "estimated_cpu_seconds": 1615.9209760546685,
+  "estimated_disk_bytes": 392454,
+  "estimated_failures": 0.0,
+  "estimated_wall_seconds": 408.61922668000005,
+  "failure_rate": 0.0,
+  "observed_candidates": 100,
+  "requested_workers": 4,
+  "source": "workspace_local/library_generation/in2_smoke_100_v1/vina_results.csv",
+  "status": "observed",
+  "summed_candidate_seconds": 23084.58537220955,
+  "terminal_checkpoint_bytes": 106096,
+  "wall_seconds": 5837.417524,
+  "workers": 4
+}

@@ -1,0 +1,2 @@
+compound_id,SMILES,docking_score,mmgbsa_score,source
+ATP-RDL-FC76E2D041DBC392,C[NH+](C)Cc1ccc(C[NH2+]Cc2cc3ccccc3nc2SCc2ccc(C3CCC3)c(O)c2)cc1,-8.574,-33.9,reconstructed_IN2_reference_workflow

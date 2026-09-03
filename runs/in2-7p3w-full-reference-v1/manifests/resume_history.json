@@ -1,0 +1,87 @@
+[
+  {
+    "declared_stop_after": null,
+    "invoked_at": "2026-09-03T07:20:35.823120+00:00",
+    "retry_failed": false,
+    "stages_already_checkpointed": [
+      "candidate_panel",
+      "decision",
+      "docking",
+      "evidence_integration",
+      "library_generation",
+      "mmgbsa",
+      "molecular_filtering",
+      "reference_inputs",
+      "refinement"
+    ],
+    "status_before_invocation": "completed_with_declared_resource_gate"
+  },
+  {
+    "declared_stop_after": null,
+    "invoked_at": "2026-09-03T13:32:20.605199+00:00",
+    "retry_failed": false,
+    "stages_already_checkpointed": [
+      "candidate_panel",
+      "decision",
+      "docking",
+      "evidence_integration",
+      "library_generation",
+      "mmgbsa",
+      "molecular_filtering",
+      "reference_inputs",
+      "refinement"
+    ],
+    "status_before_invocation": "completed_with_declared_resource_gate"
+  },
+  {
+    "declared_stop_after": null,
+    "invoked_at": "2026-09-03T13:43:34.889198+00:00",
+    "retry_failed": false,
+    "stages_already_checkpointed": [
+      "candidate_panel",
+      "decision",
+      "docking",
+      "evidence_integration",
+      "library_generation",
+      "mmgbsa",
+      "molecular_filtering",
+      "reference_inputs",
+      "refinement"
+    ],
+    "status_before_invocation": "completed_with_declared_resource_gate"
+  },
+  {
+    "declared_stop_after": null,
+    "invoked_at": "2026-09-03T13:45:16.334447+00:00",
+    "retry_failed": false,
+    "stages_already_checkpointed": [
+      "candidate_panel",
+      "decision",
+      "docking",
+      "evidence_integration",
+      "library_generation",
+      "mmgbsa",
+      "molecular_filtering",
+      "reference_inputs",
+      "refinement"
+    ],
+    "status_before_invocation": "completed_with_declared_resource_gate"
+  },
+  {
+    "declared_stop_after": null,
+    "invoked_at": "2026-09-03T13:49:39.225143+00:00",
+    "retry_failed": false,
+    "stages_already_checkpointed": [
+      "candidate_panel",
+      "decision",
+      "docking",
+      "evidence_integration",
+      "library_generation",
+      "mmgbsa",
+      "molecular_filtering",
+      "reference_inputs",
+      "refinement"
+    ],
+    "status_before_invocation": "completed_with_declared_resource_gate"
+  }
+]

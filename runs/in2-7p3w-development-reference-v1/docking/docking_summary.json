@@ -1,0 +1,23 @@
+{
+  "artifact": {
+    "path": "docking/vina_results.csv",
+    "sha256": "e6fdf74e969475a96e99d39e163da5eb18f3cbc790e1e15360417d7c81a8a4ad"
+  },
+  "cached": 62,
+  "completed_at": "2026-09-03T13:57:47.673962+00:00",
+  "elapsed_seconds": 1.1459666000155266,
+  "failed": 0,
+  "historical_glide_equivalence": false,
+  "input_count": 62,
+  "newly_executed": 0,
+  "pose_qc_pass": 62,
+  "protocol_hash": "19ff755d00741e9d2ec60c732f24dea6a28fd4f478940b28dbc11bea68c3fe36",
+  "protocol_id": "vina_7p3w_v1",
+  "receptor_hash": "e5e92ede1b1d000b00a7e5dbe3f3b02f0df0cd63b47dd8a421eeb8bddb1083ed",
+  "registry_protocol_record_count": 338,
+  "status": "completed",
+  "success": 62,
+  "tool": "AutoDock Vina",
+  "tool_hash": "e0c4b2715e0c1a74f6e92d0f3be0328ac97542eafbc111e6b1efad897a73cce5",
+  "tool_version": "1.2.7"
+}

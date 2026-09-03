@@ -318,3 +318,13 @@ ATP-Navigator/
 - 30个真实open MM/GBSA结果已进入Evidence Matrix、Candidate Explorer、Protocol Comparison、Decision Workspace、Research Console与Activity Timeline；
 - 新增30候选的`competition_rc_three_protocol_shadow_v1`决策运行：24个三协议完整、6个两协议完整，Top-5加入MM/GBSA前后重叠4/5；不覆盖历史冻结Decision；
 - Competition RC仍属于实验前计算证据整合与候选优先级辅助决策系统；实验ATP抑制、MIC和毒性状态保持unknown；不建立临床、临床前或biosafety叙事。
+
+## IN-2 / 7P3W统一参考工作流（2026-09-03）
+
+- 已建立单一配置与单一命令的端到端控制器，串联已准备7P3W/IN-2、确定性衍生库、冻结开放过滤、真实Vina、预算采集、真实Open MM/GBSA、共享Evidence Registry与实验前计算候选面板；
+- smoke真实漏斗：100 → 7 → Vina 7 → Open MM/GBSA 1 → panel 1；development真实漏斗：1,000 → 62 → Vina 62 → Open MM/GBSA 2 → panel 2；两轮计算失败均为0；
+- full模式复用已验证的100,000唯一结构库，冻结过滤保留7,265、剔除92,735；基于真实N=100 Vina运行估算约117.8 h，超过24 h自动门限，因此未启动全量docking，也未生成替代数值；
+- smoke暂停/恢复与development缓存重放均通过；面板hash分别稳定为`9fa10a...`和`2deb5e...`；运行输出按`runs/<run_id>/`组织并包含六份自动报告；
+- 新重建库始终标记为reconstructed reproducible derivative library；RDKit过滤、Vina和Open MM/GBSA分别不冒充QuickProp、Glide和Prime MM/GBSA；
+- 模型变化：无；未训练或覆盖Model v3，24个受保护模型hash保持一致；
+- 当前限制：新结构无实验ATP抑制、MIC和细胞毒性结果，ADMET仍unknown；development高成本面板仅2个且两协议排序相反，不能声称获得稳健活性排序。

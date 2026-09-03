@@ -250,7 +250,7 @@ def run_decision(
         "model_v3_modified": False,
         "decision_run_id": decision_run_id,
         "registered_input_evidence_count": len(set(evidence_ids)),
-        "artifact": {"path": str(panel_path), "sha256": sha256_file(panel_path)},
+        "artifact": {"path": "decision/candidate_panel.csv", "sha256": sha256_file(panel_path)},
     }
     atomic_json(output_dir / "decision_summary.json", summary)
     return summary

@@ -1,0 +1,27 @@
+[
+  {
+    "admet_evidence": "unknown",
+    "antibacterial_prior_score": 50.0,
+    "atp_prior_score": 50.0,
+    "candidate_id": "ATP-RDL-FC76E2D041DBC392",
+    "canonical_smiles": "C[NH+](C)Cc1ccc(C[NH2+]Cc2cc3ccccc3nc2SCc2ccc(C3CCC3)c(O)c2)cc1",
+    "decision_status": "computational_pre_experimental_prioritization",
+    "evidence_completeness": 0.6666666666666666,
+    "evidence_missing": "ADMET",
+    "experimental_cost_class": "high_unpriced; actual laboratory cost unknown",
+    "final_score": 55.0,
+    "open_mmgbsa_deltaG": -33.9,
+    "open_mmgbsa_sd": 2.76,
+    "parent_id": "ATP-REF-IN2",
+    "priority_rank": 1,
+    "protocol_disagreement": 0.0,
+    "rank_p05": 1,
+    "rank_p95": 1,
+    "reason_for_prioritization": "Vina=-8.574 kcal/mol; Open MM/GBSA=-33.9 kcal/mol; exact evidence gate passed; ADMET remains unknown",
+    "recommended_next_experiment": "ATP synthase biochemical inhibition assay; then MIC and cytotoxicity as separate endpoints",
+    "scaffold": "c1ccc(C[NH2+]Cc2cc3ccccc3nc2SCc2ccc(C3CCC3)cc2)cc1",
+    "scope": "computational pre-experimental prioritization; not biological activity or validation",
+    "uncertainty": 0.1104,
+    "vina_affinity": -8.574
+  }
+]

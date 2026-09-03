@@ -1,0 +1,92 @@
+[
+  {
+    "failed_count": 0,
+    "input_count": 1,
+    "output_count": 1,
+    "protocol_id": "7P3W_prepared_assets + confirmed_IN2",
+    "runtime_seconds": 0.009864299994660541,
+    "stage": "Target + IN-2",
+    "stage_id": "reference_inputs",
+    "status": "completed_cached_prepared_assets"
+  },
+  {
+    "failed_count": 0,
+    "input_count": 1,
+    "output_count": 100,
+    "protocol_id": "in2_reconstructed_library_v1",
+    "runtime_seconds": 0.042698900011600927,
+    "stage": "Library Generation",
+    "stage_id": "library_generation",
+    "status": "completed_cache_hit"
+  },
+  {
+    "failed_count": 93,
+    "input_count": 100,
+    "output_count": 7,
+    "protocol_id": "open_physchem_structural_filter_v1",
+    "runtime_seconds": 0.003227400011382997,
+    "stage": "Filtering",
+    "stage_id": "molecular_filtering",
+    "status": "completed_cache_hit"
+  },
+  {
+    "failed_count": 0,
+    "input_count": 7,
+    "output_count": 7,
+    "protocol_id": "vina_7p3w_v1",
+    "runtime_seconds": 0.2099432999966666,
+    "stage": "Docking",
+    "stage_id": "docking",
+    "status": "completed"
+  },
+  {
+    "failed_count": 0,
+    "input_count": 7,
+    "output_count": 1,
+    "protocol_id": "acquisition_refinement_v1",
+    "runtime_seconds": 0.02992230001837015,
+    "stage": "Refinement",
+    "stage_id": "refinement",
+    "status": "completed_selection_only"
+  },
+  {
+    "failed_count": 0,
+    "input_count": 1,
+    "output_count": 1,
+    "protocol_id": "open_mmgbsa_7p3w_v2",
+    "runtime_seconds": 0.03930450000916608,
+    "stage": "Open MM/GBSA",
+    "stage_id": "mmgbsa",
+    "status": "completed"
+  },
+  {
+    "failed_count": 0,
+    "input_count": 8,
+    "output_count": 54,
+    "protocol_id": "shared_Evidence_Registry",
+    "runtime_seconds": 0.0,
+    "stage": "Evidence Integration",
+    "stage_id": "evidence_integration",
+    "status": "completed"
+  },
+  {
+    "failed_count": 0,
+    "input_count": 1,
+    "output_count": 1,
+    "protocol_id": "computational_pre_experimental_v1",
+    "runtime_seconds": 0.2570971999957692,
+    "stage": "AI / Decision",
+    "stage_id": "decision",
+    "status": "completed"
+  },
+  {
+    "failed_count": 0,
+    "input_count": 1,
+    "output_count": 1,
+    "protocol_id": "computational_pre_experimental_v1",
+    "runtime_seconds": 0.0,
+    "stage": "Candidate Panel",
+    "stage_id": "candidate_panel",
+    "status": "completed"
+  }
+]

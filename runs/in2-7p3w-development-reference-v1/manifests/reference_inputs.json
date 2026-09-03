@@ -1,0 +1,19 @@
+{
+  "project_uuid": "9ef7015e-ec46-58fd-bb1b-b06310f0b0b2",
+  "reference_ligand_canonical_smiles": "C[NH+](C)Cc1ccc(C[NH2+]Cc2cc3ccccc3nc2SCc2ccccc2)cc1",
+  "reference_ligand_hash": "ccd401f1ea07dc14c58a5929c18ed4fc70241dd381d7d16b9e89c0c47542dc72",
+  "reference_ligand_id": "ATP-REF-IN2",
+  "status": "completed_cached_prepared_assets",
+  "target": {
+    "name": "Acinetobacter baumannii F1F0 ATP synthase",
+    "pdb_id": "7P3W",
+    "prepared_pdb": "configs/projects/ab_atp_synthase/vina_7p3w_v1/assets/ATP_e_g_prepared.pdb",
+    "prepared_pdb_sha256": "b700d93fd622e74afd3b59f22e5b11f5bd4e764fcb38ad82410e0abb44db4722",
+    "scope": "subunits e and g",
+    "vina_receptor": "workspace_local/artifacts/e5e92ede1b1d000b00a7e5dbe3f3b02f0df0cd63b47dd8a421eeb8bddb1083ed/receptor.pdbqt",
+    "vina_receptor_sha256": "e5e92ede1b1d000b00a7e5dbe3f3b02f0df0cd63b47dd8a421eeb8bddb1083ed"
+  },
+  "target_hash": "b700d93fd622e74afd3b59f22e5b11f5bd4e764fcb38ad82410e0abb44db4722",
+  "vina_receptor_hash": "e5e92ede1b1d000b00a7e5dbe3f3b02f0df0cd63b47dd8a421eeb8bddb1083ed",
+  "workflow_version": "1.0.0"
+}

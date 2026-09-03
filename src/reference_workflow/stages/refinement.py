@@ -113,7 +113,7 @@ def acquisition_panel(
         "sp_xp_claim": False,
         "exact_structure_high_cost_cache_reuse": True,
         "scope": "evidence acquisition priority; not biological hit ranking",
-        "artifact": {"path": str(panel_path), "sha256": sha256_file(panel_path)},
+        "artifact": {"path": "refinement/acquisition_panel.csv", "sha256": sha256_file(panel_path)},
     }
     atomic_json(output_dir / "refinement_summary.json", summary)
     return summary
@@ -145,6 +145,8 @@ def _register_mmgbsa(project: Path, run_id: str, panel_path: Path, rows: list[di
         }
         job_id = state.job(batch, project_id, row["candidate_id"], "open_mmgbsa", protocol["protocol_id"], [source_artifact], command)
         result_path = Path(row["result_path"])
+        if not result_path.is_absolute():
+            result_path = project / result_path
         if row["status"] != "success":
             with state.connect() as db:
                 db.execute(
@@ -199,7 +201,10 @@ def run_mmgbsa(
     started = time.perf_counter()
     cache_root = project / "workspace_local/reference_workflow/mmgbsa_cache"
     for candidate in panel.to_dict("records"):
-        pose = Path(candidate["folder"]) / "pose.pdbqt"
+        pose_root = Path(candidate["folder"])
+        if not pose_root.is_absolute():
+            pose_root = project / pose_root
+        pose = pose_root / "pose.pdbqt"
         signature = stable_hash(
             {
                 "candidate_id": candidate["compound_id"],
@@ -287,7 +292,7 @@ def run_mmgbsa(
                 "protocol_hash": protocol["protocol_hash"],
                 "source_pose_protocol": "vina_7p3w_v1",
                 "pose_sha256": candidate["pose_sha256"],
-                "result_path": str(result_path),
+                "result_path": str(result_path.relative_to(project)).replace("\\", "/"),
                 "started_at": result.get("started_at"),
                 "completed_at": result.get("completed_at"),
                 "scientific_scope": protocol["scientific_interpretation"],
@@ -313,7 +318,7 @@ def run_mmgbsa(
         "newly_executed": newly_executed,
         "registry_records_added_or_verified": registered,
         "elapsed_seconds": time.perf_counter() - started,
-        "artifact": {"path": str(results_path), "sha256": sha256_file(results_path)},
+        "artifact": {"path": "mmgbsa/open_mmgbsa_results.csv", "sha256": sha256_file(results_path)},
     }
     atomic_json(output_dir / "mmgbsa_summary.json", summary)
     return summary

@@ -1,0 +1,10 @@
+stage,stage_id,input_count,output_count,failed_count,status,protocol_id,runtime_seconds
+Target + IN-2,reference_inputs,1,1,0,completed_cached_prepared_assets,7P3W_prepared_assets + confirmed_IN2,0.009864299994660541
+Library Generation,library_generation,1,100,0,completed_cache_hit,in2_reconstructed_library_v1,0.042698900011600927
+Filtering,molecular_filtering,100,7,93,completed_cache_hit,open_physchem_structural_filter_v1,0.003227400011382997
+Docking,docking,7,7,0,completed,vina_7p3w_v1,0.2099432999966666
+Refinement,refinement,7,1,0,completed_selection_only,acquisition_refinement_v1,0.02992230001837015
+Open MM/GBSA,mmgbsa,1,1,0,completed,open_mmgbsa_7p3w_v2,0.03930450000916608
+Evidence Integration,evidence_integration,8,54,0,completed,shared_Evidence_Registry,0.0
+AI / Decision,decision,1,1,0,completed,computational_pre_experimental_v1,0.2570971999957692
+Candidate Panel,candidate_panel,1,1,0,completed,computational_pre_experimental_v1,0.0

@@ -139,6 +139,31 @@ Vina 数值只解释为 `vina_7p3w_v1` 下的计算 docking evidence，不命名
 
 开放精筛不制造第二套 Vina 来冒充 SP/XP。Level A 用真实 Vina、结构多样性、边界位置、IN-2 相似性和证据缺口选择下一份高成本证据，输出被明确标记为 `NOT biological hit ranking`。Level B 只接受同时具备 `vina_7p3w_v1` 与 `open_mmgbsa_7p3w_v2` 的结构；缺失 ADMET、ATP 抑制、MIC 或细胞毒性时继续标记 unknown，并提出独立实验验证顺序。
 
+### 3.9 统一 smoke 的真实端到端结果
+
+统一控制器的 `smoke` 模式已真实走通：100 个重建结构经冻结过滤规则保留 7 个、剔除 93 个；7 个均具有真实且 pose-QC 通过的 `vina_7p3w_v1` 缓存证据；采集层选择 1 个结构进入高成本阶段。`ATP-RDL-FC76E2D041DBC392` 在冻结 `open_mmgbsa_7p3w_v2` 下完成 50 帧分析，得到 -33.90 ± 2.76 kcal/mol 的协议内比较值，轨迹 finite、结构身份 exact、QC 通过。该数值不是实验结合能或活性标签。
+
+最终生成 1 个 evidence-gated computational priority candidate。该候选仍缺 ADMET、ATP 合酶生化抑制、MIC 和细胞毒性实验，因此候选面板明确标注 `ADMET unknown` 并推荐分 endpoint 验证。计算任务失败数为 0。
+
+对同一 smoke run 做了真实阶段边界验收：控制器先在 refinement 后写入 `paused_at_declared_stage_boundary`，随后以相同 run ID 恢复；生成、过滤、Vina 与 Open MM/GBSA 均命中内容寻址缓存。恢复前后候选面板 SHA-256 均为 `9fa10a7368a4c118e2ddfdbb92089119fc491657f20c5f9c4d6d2e959e6c3ffa`。
+
+### 3.10 统一 development 的真实端到端结果
+
+`development` 模式使用同一控制器完成了 1,000 个重建结构的全链运行。冻结过滤保留 62 个、剔除 938 个；62/62 完成真实 `vina_7p3w_v1` 且 pose QC 通过，其中 7 个复用既有真实缓存、55 个为本轮新执行，Vina 阶段 wall time 为 2,683.98 s。Vina affinity 在该 62 结构批次中的范围为 -8.723 至 -7.154 kcal/mol，中位数 -8.127 kcal/mol。
+
+高成本采集层选出 2 个不同 scaffold 的结构；其中 1 个复用 smoke 的 exact-structure Open MM/GBSA 缓存，另 1 个新执行。两者均完成 50 帧 `open_mmgbsa_7p3w_v2` 分析，失败 0；高成本阶段 wall time 为 3,413.29 s。development 的主要真实计算阶段合计约 6,097 s（约 101.6 min，不含早期暂停等待）。
+
+最终 computational priority panel 为：
+
+| priority rank | candidate ID | Vina (kcal/mol) | Open MM/GBSA (kcal/mol) | evidence completeness | missing |
+|---:|---|---:|---:|---:|---|
+| 1 | `ATP-RDL-C7B0FC4CAE17E985` | -8.578 | -22.96 ± 2.44 | 0.667 | ADMET + experimental endpoints |
+| 2 | `ATP-RDL-FC76E2D041DBC392` | -8.574 | -33.90 ± 2.76 | 0.667 | ADMET + experimental endpoints |
+
+两候选在 Vina 与 Open MM/GBSA 的批内相对顺序相反，因此 `protocol_disagreement=1.0`。当前面板规模只有 2，rank interval 只反映已声明权重情景，不能解释为稳健活性排序。两者都需要先做 ATP 合酶生化抑制，再将 MIC 与细胞毒性作为独立 endpoint 验证。
+
+development 候选面板重放前后 SHA-256 均为 `2deb5e2f8dc4ac92fa267d3cf83d095a3bfd45e8a82f5ca6b293355d41bc4241`；重放时 62 个 Vina 与 2 个 Open MM/GBSA 全部命中缓存，未重复计算。
+
 ## 四、AI / 决策扩展
 
 统一控制器不强迫完整 Model v3 对缺少历史 Glide、QuickProp、ADMET 或实验结果的新结构给出伪确定结论，也没有训练新模型。

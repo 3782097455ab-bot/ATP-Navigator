@@ -1,0 +1,17 @@
+{
+  "artifact": {
+    "path": "mmgbsa/open_mmgbsa_results.csv",
+    "sha256": "b15d1f5c7c32b236c58e85e6ed2e92e0af6ed3e7efa19e649350e30f588c615e"
+  },
+  "cached": 2,
+  "elapsed_seconds": 0.05311880001681857,
+  "failed": 0,
+  "historical_prime_equivalence": false,
+  "input_count": 2,
+  "newly_executed": 0,
+  "protocol_hash": "cb28279704aa51f7530e0e61fc592450d43823fe1e23aad5975a638b82407aab",
+  "protocol_id": "open_mmgbsa_7p3w_v2",
+  "registry_records_added_or_verified": 4,
+  "status": "completed",
+  "success": 2
+}

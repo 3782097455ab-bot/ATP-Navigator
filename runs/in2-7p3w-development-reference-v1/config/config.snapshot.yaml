@@ -1,0 +1,213 @@
+{
+  "decision": {
+    "minimum_evidence_gate": [
+      "vina_affinity",
+      "open_mmgbsa_deltaG"
+    ],
+    "output_top_n": 10,
+    "profile_id": "computational_pre_experimental_v1",
+    "scope": "computational pre-experimental prioritization; not biological activity or validation",
+    "weights": {
+      "antibacterial_prior": 0.1,
+      "atp_prior": 0.15,
+      "binding": 0.45,
+      "druglikeness": 0.1,
+      "structure_model": 0.2
+    }
+  },
+  "default_mode": "development",
+  "docking": {
+    "automatic_wall_time_limit_hours": {
+      "development": 6.0,
+      "full": 24.0,
+      "smoke": 3.0
+    },
+    "historical_glide_equivalence": false,
+    "protocol_file": "configs/projects/ab_atp_synthase/vina_7p3w_v1/vina_protocol.json",
+    "protocol_id": "vina_7p3w_v1",
+    "retry_failed": false,
+    "timeout_seconds_per_candidate": 1800,
+    "tool": "AutoDock Vina",
+    "tool_version": "1.2.7",
+    "workers": 4
+  },
+  "filtering": {
+    "historical_quickprop_equivalence": false,
+    "protocol_id": "open_physchem_structural_filter_v1",
+    "rules": [
+      {
+        "field": "sanitization_status",
+        "kind": "hard",
+        "operator": "eq",
+        "rationale": "RDKit technical structure validity",
+        "reason": "invalid_or_unsanitized_structure",
+        "value": "pass"
+      },
+      {
+        "field": "valence_status",
+        "kind": "hard",
+        "operator": "eq",
+        "rationale": "RDKit valence validity",
+        "reason": "invalid_valence",
+        "value": "pass"
+      },
+      {
+        "field": "molecular_weight",
+        "kind": "hard",
+        "maximum": 500.0,
+        "minimum": 250.0,
+        "operator": "between",
+        "rationale": "transparent Lipinski-aligned screening window; not QuickProp",
+        "reason": "molecular_weight_outside_250_500"
+      },
+      {
+        "field": "clogp",
+        "kind": "hard",
+        "maximum": 5.0,
+        "minimum": -1.0,
+        "operator": "between",
+        "rationale": "open physicochemical filter; upper bound follows Rule-of-Five",
+        "reason": "clogp_outside_minus1_5"
+      },
+      {
+        "field": "tpsa",
+        "kind": "hard",
+        "operator": "le",
+        "rationale": "Veber-aligned polar surface threshold",
+        "reason": "tpsa_above_140",
+        "value": 140.0
+      },
+      {
+        "field": "hbd",
+        "kind": "hard",
+        "operator": "le",
+        "rationale": "Rule-of-Five threshold",
+        "reason": "hbd_above_5",
+        "value": 5
+      },
+      {
+        "field": "hba",
+        "kind": "hard",
+        "operator": "le",
+        "rationale": "Rule-of-Five threshold",
+        "reason": "hba_above_10",
+        "value": 10
+      },
+      {
+        "field": "rotatable_bonds",
+        "kind": "hard",
+        "operator": "le",
+        "rationale": "Veber-aligned flexibility threshold",
+        "reason": "rotatable_bonds_above_10",
+        "value": 10
+      },
+      {
+        "field": "absolute_formal_charge",
+        "kind": "hard",
+        "operator": "le",
+        "rationale": "retain the diprotonated IN-2 reference charge state while excluding more extreme formal charges",
+        "reason": "absolute_formal_charge_above_2",
+        "value": 2
+      },
+      {
+        "field": "ring_count",
+        "kind": "warning",
+        "maximum": 8,
+        "minimum": 2,
+        "operator": "between",
+        "rationale": "structural-complexity flag only",
+        "reason": "ring_count_outside_2_8"
+      },
+      {
+        "field": "fraction_csp3",
+        "kind": "warning",
+        "maximum": 0.8,
+        "minimum": 0.05,
+        "operator": "between",
+        "rationale": "three-dimensionality flag only",
+        "reason": "fraction_csp3_outside_0.05_0.80"
+      },
+      {
+        "field": "pains_warnings",
+        "kind": "warning",
+        "operator": "empty",
+        "rationale": "PAINS is a review flag, not an activity label",
+        "reason": "pains_warning"
+      },
+      {
+        "field": "reactive_warnings",
+        "kind": "hard",
+        "operator": "empty",
+        "rationale": "historical PPT required removal of reactive fragments; implemented here with declared RDKit SMARTS, not QuickProp",
+        "reason": "reactive_structural_warning"
+      }
+    ],
+    "rules_frozen_before_reference_runs": true
+  },
+  "generation": {
+    "cache_runs": {
+      "development": "in2_generation_1000_v1",
+      "full": "in2_reconstructed_100k_v1",
+      "smoke": "in2_smoke_100_v1"
+    },
+    "classification": "reconstructed reproducible derivative library",
+    "config": "configs/library_generation/in2_reconstructed_v1.json",
+    "expected_config_hash": "0edaacdb8a4b66f6f28108efa09d111887870a2ef58b4953eddeaca48e82dd6b",
+    "historical_library_equivalence": false,
+    "protocol_id": "in2_reconstructed_library_v1",
+    "reuse_completed_cache": true
+  },
+  "mmgbsa": {
+    "execute": true,
+    "historical_prime_equivalence": false,
+    "panel_size": {
+      "development": 2,
+      "full": 30,
+      "smoke": 1
+    },
+    "protocol_file": "results/phase17_1/open_mmgbsa_7p3w_v2.json",
+    "protocol_id": "open_mmgbsa_7p3w_v2",
+    "timeout_seconds_per_candidate": 14400,
+    "tool": "OpenMM 8.6.0 + gmx_MMPBSA 1.6.5"
+  },
+  "modes": {
+    "development": {
+      "library_size": 1000
+    },
+    "full": {
+      "library_size": 100000
+    },
+    "smoke": {
+      "library_size": 100
+    }
+  },
+  "output_root": "runs",
+  "project": {
+    "project_id": "in2_reconstructed_open_workflow",
+    "project_uuid": "9ef7015e-ec46-58fd-bb1b-b06310f0b0b2",
+    "scientific_scope": "Acinetobacter baumannii F1F0 ATP synthase / IN-2 derivative computational prioritization",
+    "training_performed": false
+  },
+  "reference_ligand": {
+    "canonical_smiles_sha256": "ccd401f1ea07dc14c58a5929c18ed4fc70241dd381d7d16b9e89c0c47542dc72",
+    "compound_id": "ATP-REF-IN2",
+    "source": "configs/projects/ab_atp_synthase/vina_7p3w_v1/candidate_identity_manifest.csv"
+  },
+  "refinement": {
+    "method": "Vina evidence plus diversity, uncertainty, boundary and evidence-gap acquisition",
+    "protocol_id": "acquisition_refinement_v1",
+    "second_docking_protocol": null,
+    "sp_xp_claim": false
+  },
+  "schema_version": "in2_7p3w_reference_config_v1",
+  "target": {
+    "name": "Acinetobacter baumannii F1F0 ATP synthase",
+    "pdb_id": "7P3W",
+    "prepared_pdb": "configs/projects/ab_atp_synthase/vina_7p3w_v1/assets/ATP_e_g_prepared.pdb",
+    "prepared_pdb_sha256": "b700d93fd622e74afd3b59f22e5b11f5bd4e764fcb38ad82410e0abb44db4722",
+    "scope": "subunits e and g",
+    "vina_receptor": "workspace_local/artifacts/e5e92ede1b1d000b00a7e5dbe3f3b02f0df0cd63b47dd8a421eeb8bddb1083ed/receptor.pdbqt",
+    "vina_receptor_sha256": "e5e92ede1b1d000b00a7e5dbe3f3b02f0df0cd63b47dd8a421eeb8bddb1083ed"
+  },
+  "workflow_version": "1.0.0"
+}

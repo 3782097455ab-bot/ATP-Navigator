@@ -1121,3 +1121,16 @@ Model变化：无。训练：无。实验标签新增：0。当前没有新的�
 - 决策变化：新增`competition_rc_three_protocol_shadow_v1`，30候选中24个三协议完整，pre/post Top-5 overlap 4/5，最大变化候选为`ATP-HTVS-66618B00A972`；历史冻结Decision不覆盖；
 - 产品接入：Research Console可回答三协议一致/分歧、MM/GBSA更接近哪个协议以及特定候选变化原因；Decision Workspace并列显示历史冻结与RC shadow run；
 - 科学边界：未新增实验ATP inhibition、内部MIC或毒性结果；未启动60候选扩展；不进入Phase17.2，不构建临床、临床前或biosafety叙事。
+
+## IN-2 / 7P3W端到端参考工作流（2026-09-03）
+
+- 目标：把已分散的7P3W/IN-2、衍生库生成、开放过滤、Vina、Open MM/GBSA、Evidence Registry与决策能力连接成一条可运行、暂停、恢复、缓存和审计的科研入口；
+- 新增文件：`configs/in2_7p3w_reference.yaml`、`run_pipeline.py`、`src/reference_workflow/`、`tests/test_reference_workflow.py`及`runs/in2-7p3w-*-reference-v1/`版本化清单和报告；
+- 修改文件：`README.md`、`app.py`、`.gitignore`、`docs/Reproducible_End_to_End_Workflow.md`及长期维护文档；
+- 使用数据：哈希固定的7P3W e/g受体、确认IN-2结构、100/1,000/100,000重建衍生库缓存、冻结`vina_7p3w_v1`、冻结`open_mmgbsa_7p3w_v2`和共享SQLite Registry；
+- 实现功能：同一控制器支持smoke/development/full；冻结过滤规则、逐结构拒绝原因、资源门控、逐候选缓存、显式失败重试、阶段checkpoint、恢复审计、证据登记、两级决策、候选面板和六份自动报告；
+- 真实结果：smoke 100→7→7→1→1；development 1,000→62→62→2→2；full 100,000→7,265后因117.8 h Vina估算触发声明式资源门控；计算失败0；
+- 可重复性：100k library hash=`2af8186d...`；smoke panel hash=`9fa10a73...`；development panel hash=`2deb5e2f...`，缓存重放前后不变；
+- 模型变化：无；不训练Model v3，不修改Model v0–v4-alpha，24个受保护模型hash一致；
+- 性能变化：不适用。本轮评价的是工作流执行、恢复和证据完整性，不是监督预测性能；
+- 当前限制：新衍生结构缺少实验活性、MIC、毒性和完整ADMET；2个development候选不足以验证排序稳健性；历史Auto_Enum原配置与原十万库仍缺失。

@@ -16,6 +16,7 @@ from reference_workflow.stages.decision import run_decision
 from reference_workflow.stages.molecular_filtering import run_filter
 from reference_workflow.stages.refinement import _wsl_path
 from reference_workflow.util import sha256_file, stable_hash
+from workspace.state import digest
 
 
 class ReferenceWorkflowTests(unittest.TestCase):
@@ -115,22 +116,23 @@ class ReferenceWorkflowTests(unittest.TestCase):
         self.assertEqual(manifest["input_count"], 100000)
         self.assertEqual(manifest["accepted_count"], 7265)
 
-    def test_full_run_manifest_artifacts_are_hash_verified(self):
-        path = PROJECT / "runs/in2-7p3w-full-reference-v1/manifests/run_manifest.json"
-        if not path.is_file():
-            self.skipTest("full reference run manifest not packaged")
-        manifest = json.loads(path.read_text(encoding="utf-8"))
-        run_dir = path.parents[1]
-        missing = []
-        mismatched = []
-        for relative, expected in manifest["artifact_hashes"].items():
-            artifact = run_dir / relative
-            if not artifact.is_file():
-                missing.append(relative)
-            elif sha256_file(artifact) != expected:
-                mismatched.append(relative)
-        self.assertEqual(missing, [])
-        self.assertEqual(mismatched, [])
+    def test_run_manifest_artifacts_are_hash_verified(self):
+        for mode in ("smoke", "development", "full"):
+            path = PROJECT / "runs" / f"in2-7p3w-{mode}-reference-v1" / "manifests/run_manifest.json"
+            if not path.is_file():
+                self.skipTest(f"{mode} reference run manifest not packaged")
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+            run_dir = path.parents[1]
+            missing = []
+            mismatched = []
+            for relative, expected in manifest["artifact_hashes"].items():
+                artifact = run_dir / relative
+                if not artifact.is_file():
+                    missing.append(relative)
+                elif sha256_file(artifact) != expected:
+                    mismatched.append(relative)
+            self.assertEqual(missing, [], mode)
+            self.assertEqual(mismatched, [], mode)
 
     def test_run_manifest_uses_portable_report_paths(self):
         path = PROJECT / "runs/in2-7p3w-full-reference-v1/manifests/run_manifest.json"
@@ -139,6 +141,24 @@ class ReferenceWorkflowTests(unittest.TestCase):
         manifest = json.loads(path.read_text(encoding="utf-8"))
         self.assertTrue(all(not Path(value).is_absolute() for value in manifest["reports"]))
         self.assertTrue(all(not Path(value).is_absolute() for value in manifest["screening_funnel"].values()))
+
+    def test_run_manifest_uses_execution_protocol_hash(self):
+        for mode in ("smoke", "development"):
+            run_dir = PROJECT / "runs" / f"in2-7p3w-{mode}-reference-v1"
+            manifest_path = run_dir / "manifests/run_manifest.json"
+            docking_path = run_dir / "docking/vina_summary.json"
+            if not manifest_path.is_file() or not docking_path.is_file():
+                self.skipTest(f"{mode} reference docking output not packaged")
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            docking = json.loads(docking_path.read_text(encoding="utf-8"))
+            self.assertEqual(manifest["protocol_hashes"]["docking"], docking["protocol_hash"])
+
+        protocol_path = PROJECT / "protocols/vina_7p3w_v1/protocol_manifest.json"
+        full_path = PROJECT / "runs/in2-7p3w-full-reference-v1/manifests/run_manifest.json"
+        if protocol_path.is_file() and full_path.is_file():
+            protocol = json.loads(protocol_path.read_text(encoding="utf-8"))
+            full = json.loads(full_path.read_text(encoding="utf-8"))
+            self.assertEqual(full["protocol_hashes"]["docking"], digest(protocol))
 
     def test_resume_audit_records_checkpoint_without_changing_science_config(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -152,6 +172,34 @@ class ReferenceWorkflowTests(unittest.TestCase):
             self.assertEqual(history[0]["stages_already_checkpointed"], ["library_generation"])
             self.assertFalse(history[0]["retry_failed"])
             self.assertEqual(pipeline.config_hash, stable_hash(self.config))
+
+    def test_completed_reference_runs_have_real_funnels_and_stable_panels(self):
+        expectations = {
+            "smoke": (100, 7, 7, 1, "9fa10a7368a4c118e2ddfdbb92089119fc491657f20c5f9c4d6d2e959e6c3ffa"),
+            "development": (1000, 62, 62, 2, "2deb5e2f8dc4ac92fa267d3cf83d095a3bfd45e8a82f5ca6b293355d41bc4241"),
+        }
+        for mode, (library, filtered, vina, mmgbsa, panel_hash) in expectations.items():
+            run_dir = PROJECT / "runs" / f"in2-7p3w-{mode}-reference-v1"
+            if not (run_dir / "manifests/run_manifest.json").is_file():
+                self.skipTest(f"{mode} reference run manifest not packaged")
+            manifest = json.loads((run_dir / "manifests/run_manifest.json").read_text(encoding="utf-8"))
+            stages = {row["stage_id"]: row for row in manifest["stages"]}
+            self.assertEqual(manifest["status"], "completed")
+            self.assertEqual(stages["library_generation"]["output_count"], library)
+            self.assertEqual(stages["molecular_filtering"]["output_count"], filtered)
+            self.assertEqual(stages["docking"]["output_count"], vina)
+            self.assertEqual(stages["mmgbsa"]["output_count"], mmgbsa)
+            self.assertEqual(manifest["failed_jobs"], 0)
+            self.assertEqual(sha256_file(run_dir / "decision/candidate_panel.csv"), panel_hash)
+
+    def test_published_compute_paths_are_project_relative(self):
+        run_dir = PROJECT / "runs/in2-7p3w-development-reference-v1"
+        if not (run_dir / "manifests/run_manifest.json").is_file():
+            self.skipTest("development reference run manifest not packaged")
+        vina = pd.read_csv(run_dir / "docking/vina_results.csv", keep_default_na=False)
+        mmgbsa = pd.read_csv(run_dir / "mmgbsa/open_mmgbsa_results.csv", keep_default_na=False)
+        self.assertTrue(all(not Path(value).is_absolute() for value in vina["folder"]))
+        self.assertTrue(all(not Path(value).is_absolute() for value in mmgbsa["result_path"]))
 
 
 if __name__ == "__main__":

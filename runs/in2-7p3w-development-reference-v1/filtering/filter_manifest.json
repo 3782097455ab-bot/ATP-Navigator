@@ -1,0 +1,163 @@
+{
+  "accepted_count": 62,
+  "artifacts": {
+    "accepted_candidates": {
+      "path": "filtering/accepted_candidates.csv",
+      "sha256": "6ba0c8866431444b0adaa5e6dbdde9b01eb3b2f4d2c7a4866f0addbeb5bc5ad3"
+    },
+    "filter_rejections": {
+      "path": "filtering/filter_rejections.csv",
+      "sha256": "c5dd82ee74872bc4605c7ddd839cb4ec6fe9d592da6bd54eb5073510e307c6bf"
+    },
+    "filter_results": {
+      "path": "filtering/filter_results.csv",
+      "sha256": "dc4c6928e3c209ae203ba7055645a818c4fd985f8106355ba8ab504786cb8d0f"
+    }
+  },
+  "cached": false,
+  "completed_at": "2026-09-03T00:11:54.285460+00:00",
+  "elapsed_seconds": 1.0017351999995299,
+  "filter_hash": "d92427f281c4690cf9034ca006ecd000dadc0a5711555781c0279b1b88e8ac6a",
+  "filter_protocol_hash": "111b3c00a3e3952c9bcf96154823ebfc6020e02fa571d15f6d902a36a467271f",
+  "historical_quickprop_equivalence": false,
+  "input_count": 1000,
+  "library_hash": "8f5f10e74f226db5d79e35ba92bcaefc15c5e897b2b2fc8dfbe5ff1d83cef232",
+  "protocol_id": "open_physchem_structural_filter_v1",
+  "rdkit_version": "2026.03.5",
+  "reason_counts": [
+    {
+      "count": 329,
+      "kind": "hard",
+      "reason": "clogp_outside_minus1_5"
+    },
+    {
+      "count": 912,
+      "kind": "hard",
+      "reason": "molecular_weight_outside_250_500"
+    },
+    {
+      "count": 704,
+      "kind": "hard",
+      "reason": "rotatable_bonds_above_10"
+    },
+    {
+      "count": 17,
+      "kind": "warning",
+      "reason": "pains_warning"
+    }
+  ],
+  "rejected_count": 938,
+  "rules": [
+    {
+      "field": "sanitization_status",
+      "kind": "hard",
+      "operator": "eq",
+      "rationale": "RDKit technical structure validity",
+      "reason": "invalid_or_unsanitized_structure",
+      "value": "pass"
+    },
+    {
+      "field": "valence_status",
+      "kind": "hard",
+      "operator": "eq",
+      "rationale": "RDKit valence validity",
+      "reason": "invalid_valence",
+      "value": "pass"
+    },
+    {
+      "field": "molecular_weight",
+      "kind": "hard",
+      "maximum": 500.0,
+      "minimum": 250.0,
+      "operator": "between",
+      "rationale": "transparent Lipinski-aligned screening window; not QuickProp",
+      "reason": "molecular_weight_outside_250_500"
+    },
+    {
+      "field": "clogp",
+      "kind": "hard",
+      "maximum": 5.0,
+      "minimum": -1.0,
+      "operator": "between",
+      "rationale": "open physicochemical filter; upper bound follows Rule-of-Five",
+      "reason": "clogp_outside_minus1_5"
+    },
+    {
+      "field": "tpsa",
+      "kind": "hard",
+      "operator": "le",
+      "rationale": "Veber-aligned polar surface threshold",
+      "reason": "tpsa_above_140",
+      "value": 140.0
+    },
+    {
+      "field": "hbd",
+      "kind": "hard",
+      "operator": "le",
+      "rationale": "Rule-of-Five threshold",
+      "reason": "hbd_above_5",
+      "value": 5
+    },
+    {
+      "field": "hba",
+      "kind": "hard",
+      "operator": "le",
+      "rationale": "Rule-of-Five threshold",
+      "reason": "hba_above_10",
+      "value": 10
+    },
+    {
+      "field": "rotatable_bonds",
+      "kind": "hard",
+      "operator": "le",
+      "rationale": "Veber-aligned flexibility threshold",
+      "reason": "rotatable_bonds_above_10",
+      "value": 10
+    },
+    {
+      "field": "absolute_formal_charge",
+      "kind": "hard",
+      "operator": "le",
+      "rationale": "retain the diprotonated IN-2 reference charge state while excluding more extreme formal charges",
+      "reason": "absolute_formal_charge_above_2",
+      "value": 2
+    },
+    {
+      "field": "ring_count",
+      "kind": "warning",
+      "maximum": 8,
+      "minimum": 2,
+      "operator": "between",
+      "rationale": "structural-complexity flag only",
+      "reason": "ring_count_outside_2_8"
+    },
+    {
+      "field": "fraction_csp3",
+      "kind": "warning",
+      "maximum": 0.8,
+      "minimum": 0.05,
+      "operator": "between",
+      "rationale": "three-dimensionality flag only",
+      "reason": "fraction_csp3_outside_0.05_0.80"
+    },
+    {
+      "field": "pains_warnings",
+      "kind": "warning",
+      "operator": "empty",
+      "rationale": "PAINS is a review flag, not an activity label",
+      "reason": "pains_warning"
+    },
+    {
+      "field": "reactive_warnings",
+      "kind": "hard",
+      "operator": "empty",
+      "rationale": "historical PPT required removal of reactive fragments; implemented here with declared RDKit SMARTS, not QuickProp",
+      "reason": "reactive_structural_warning"
+    }
+  ],
+  "rules_frozen_before_reference_runs": true,
+  "scientific_scope": "open physicochemical and structural filtering; not historical QuickProp",
+  "started_at": "2026-09-03T00:11:54.285460+00:00",
+  "status": "completed",
+  "warning_candidate_count": 17
+}

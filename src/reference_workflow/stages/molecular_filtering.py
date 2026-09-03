@@ -65,8 +65,14 @@ def run_filter(
         existing = json.loads(manifest_path.read_text(encoding="utf-8"))
         if existing.get("filter_hash") != filter_hash or existing.get("library_hash") != library_hash:
             raise ValueError("immutable_filter_manifest_changed")
-        if existing.get("filter_protocol_hash") != filter_protocol_hash:
+        portable_artifacts = {
+            "accepted_candidates": {"path": "filtering/accepted_candidates.csv", "sha256": sha256_file(accepted_path)},
+            "filter_results": {"path": "filtering/filter_results.csv", "sha256": sha256_file(results_path)},
+            "filter_rejections": {"path": "filtering/filter_rejections.csv", "sha256": sha256_file(rejections_path)},
+        }
+        if existing.get("filter_protocol_hash") != filter_protocol_hash or existing.get("artifacts") != portable_artifacts:
             existing["filter_protocol_hash"] = filter_protocol_hash
+            existing["artifacts"] = portable_artifacts
             atomic_json(manifest_path, existing)
         return {**existing, "cached": True}
 
@@ -191,9 +197,9 @@ def run_filter(
         "warning_candidate_count": int(checkpoint["warning_candidate_count"]),
         "reason_counts": reason_counts,
         "artifacts": {
-            "accepted_candidates": {"path": str(accepted_path), "sha256": sha256_file(accepted_path)},
-            "filter_results": {"path": str(results_path), "sha256": sha256_file(results_path)},
-            "filter_rejections": {"path": str(rejections_path), "sha256": sha256_file(rejections_path)},
+            "accepted_candidates": {"path": "filtering/accepted_candidates.csv", "sha256": sha256_file(accepted_path)},
+            "filter_results": {"path": "filtering/filter_results.csv", "sha256": sha256_file(results_path)},
+            "filter_rejections": {"path": "filtering/filter_rejections.csv", "sha256": sha256_file(rejections_path)},
         },
         "scientific_scope": "open physicochemical and structural filtering; not historical QuickProp",
     }

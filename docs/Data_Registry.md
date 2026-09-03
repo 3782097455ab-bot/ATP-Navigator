@@ -250,3 +250,13 @@ Phase 14没有产生新的监督标签。MIC、ATP activity、细胞毒性、静
 | Member3 BindingDB Part1 QC | 上传TSV，与仓库ZIP成员byte-identical | 93,712 raw；96,195 endpoint rows；47,190 unique valid structures | `results/release_candidate/member_data_integration/member3_part1_qc.csv` | Ki/IC50/Kd/EC50分层结合记录 | 当前ATP任务否；general external validation | 直接ATP synthase记录0；SERCA、Na/K ATPase及其他ATPase不等于ATP synthase |
 | Member3 Part2 benchmark registry | 26条公开benchmark metadata | 26 catalog entries | `results/release_candidate/member_data_integration/benchmark_registry.csv` | metadata/catalog | 否 | 0个benchmark被声称已运行 |
 | RC Decision Run | Phase17.1 Glide/Vina/open MM/GBSA版本化后处理 | 30 candidates；24三协议完整 | `results/release_candidate/decision_runs/competition_rc_decision_v1.csv` | 更新证据shadow决策 | 否 | 不覆盖历史Decision；实验ATP/MIC/毒性均unknown |
+
+## IN-2 / 7P3W统一参考工作流资产（2026-09-03）
+
+| 数据名称 | 来源 | 规模 | 文件位置 | 标签类型 | 可训练 | 限制 |
+|---|---|---:|---|---|---|---|
+| Reconstructed IN-2 libraries | 冻结RDKit scaffold-preserving R-group枚举配置 | 100 / 1,000 / 100,000 unique | `workspace_local/library_generation/`；版本化hash见run manifest | 生成结构与provenance | 否 | 不等于历史2024 Auto_Enum库；大型派生表不上传Git |
+| Open physicochemical filter results | 冻结`open_physchem_structural_filter_v1` | 7 / 62 / 7,265 pass | `runs/in2-7p3w-*-reference-v1/filtering/` | 规则/QC派生值 | 否 | RDKit规则不等于QuickProp；warning不等于阴性标签 |
+| Development Vina evidence | 冻结`vina_7p3w_v1`真实执行与缓存 | 62/62 success；62 pose-QC pass | `runs/in2-7p3w-development-reference-v1/docking/`、共享Registry | 计算docking证据 | 否 | 不等于Glide或实验活性；55新执行、7缓存复用 |
+| Reconstructed-candidate Open MM/GBSA | 冻结`open_mmgbsa_7p3w_v2` | 2/2 success；各50 frames | `runs/in2-7p3w-development-reference-v1/mmgbsa/`、共享Registry | 高成本计算证据 | 否 | 不等于Prime MM/GBSA或实验结合能；省略膜环境 |
+| Computational candidate panel | Vina + Open MM/GBSA evidence gate、冻结先验与透明权重 | 2 candidates | `runs/in2-7p3w-development-reference-v1/decision/candidate_panel.csv` | 实验前计算优先级 | 否 | ADMET和实验endpoint unknown；小样本且协议分歧明显 |

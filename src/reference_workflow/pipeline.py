@@ -12,7 +12,7 @@ import pandas as pd
 from rdkit import rdBase
 
 from library_generation.engine import ReconstructedLibraryGenerator
-from workspace.state import State
+from workspace.state import State, digest
 
 from .stages.decision import run_decision
 from .stages.docking import estimate_vina, run_vina
@@ -355,7 +355,9 @@ class ReferencePipeline:
             "protocol_hashes": {
                 "generation": generation["config_hash"],
                 "filtering": filtering["filter_protocol_hash"],
-                "docking": stable_hash(docking_protocol),
+                # Match the exact canonicalization used by the execution workspace
+                # when it freezes and registers the Vina protocol.
+                "docking": digest(docking_protocol),
                 "refinement": stable_hash({"config": self.config["refinement"], "panel_size": self.config["mmgbsa"]["panel_size"][mode]}),
                 "mmgbsa": mmgbsa_protocol["protocol_hash"],
                 "decision": stable_hash(self.config["decision"]),

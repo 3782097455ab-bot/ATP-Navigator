@@ -33,7 +33,7 @@ def observed_vina_profile(project: Path) -> dict[str, Any]:
     checkpoint_bytes = sum(path.stat().st_size for path in result_files)
     return {
         "status": "observed",
-        "source": str(source),
+        "source": str(source.relative_to(project)).replace("\\", "/"),
         "observed_candidates": len(success),
         "wall_seconds": float(wall),
         "summed_candidate_seconds": float(cpu),
@@ -124,9 +124,15 @@ def run_vina(
     for result in results:
         result.setdefault("folder", by_id[result["compound_id"]]["folder"])
     result_frame = pd.DataFrame(results).sort_values("compound_id").reset_index(drop=True)
+    # Register from the real local artifact path, then publish a project-relative
+    # path in the portable run output.
+    evidence_count = workflow._register_vina(run_id, accepted_path, result_frame)
+    if "folder" in result_frame:
+        result_frame["folder"] = result_frame["folder"].map(
+            lambda value: str(Path(value).resolve().relative_to(project)).replace("\\", "/")
+        )
     result_path = output_dir / "vina_results.csv"
     atomic_csv(result_path, result_frame)
-    evidence_count = workflow._register_vina(run_id, accepted_path, result_frame)
     summary = {
         "status": "completed" if int(result_frame["status"].eq("failed").sum()) == 0 else "completed_with_failures",
         "protocol_id": docking_config["protocol_id"],
@@ -144,7 +150,7 @@ def run_vina(
         "receptor_hash": file_hash(receptor),
         "tool_hash": file_hash(vina),
         "registry_protocol_record_count": evidence_count,
-        "artifact": {"path": str(result_path), "sha256": sha256_file(result_path)},
+        "artifact": {"path": "docking/vina_results.csv", "sha256": sha256_file(result_path)},
         "completed_at": utc_now(),
     }
     atomic_json(output_dir / "docking_summary.json", summary)
