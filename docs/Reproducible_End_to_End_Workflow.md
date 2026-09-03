@@ -111,23 +111,43 @@ N=100 库使用冻结 `vina_7p3w_v1` 执行真实 AutoDock Vina 1.2.7：
 
 Vina 数值只解释为 `vina_7p3w_v1` 下的计算 docking evidence，不命名为 Glide SP/XP，也不作为活性、命中率或实验成功概率。
 
-### 3.5 高成本阶段门控
+### 3.5 正式统一控制器
 
-本轮没有对新生成结构运行 Open MM/GBSA。已有 `open_mmgbsa_7p3w_v2` 的 30 个真实结果仍属于历史已登记候选，不能自动迁移成新生成结构的证据。新分子必须先经过 pose/identity 审核、预算确认和独立 job/provenance 登记，才能进入高成本物理计算。
+统一科研入口为：
 
-没有启动 100,000 分子全量 docking。
+```powershell
+.\.venv\Scripts\python.exe run_pipeline.py --config configs/in2_7p3w_reference.yaml --mode development
+```
 
-## 四、AI 决策扩展
+`smoke`、`development`、`full` 三种规模由同一个 `ReferencePipeline` 控制。每次运行写入 `runs/<run_id>/`，其中按 `config/manifests/library/filtering/docking/refinement/mmgbsa/evidence/decision/reports/logs` 组织。阶段状态写入 `manifests/stage_state.json`；库生成按 chunk 恢复，Vina 和 Open MM/GBSA 按候选与协议哈希缓存，失败不会在未明确允许时自动重试。
 
-N=100 smoke 调用了只读 `CandidateInputProcessor`：对规范结构计算 Morgan/RDKit 特征，并调用冻结的 Model v2-A structure-only fallback。由于新结构缺少历史 Glide、MM/GBSA、完整 QuickProp 和 ADMET，完整 Model v3 与原 Decision Engine 的输入契约不成立，因此：
+统一配置同时冻结项目 UUID、7P3W/IN-2 哈希、生成协议、开放过滤协议、`vina_7p3w_v1`、`open_mmgbsa_7p3w_v2`、证据门控和透明决策权重。
 
-- 完整 Model v3 decision status：`unknown`；
-- 缺失证据不会填 0，也不会重新分配剩余权重；
-- 只输出独立的 `open_route_shadow_priority`，用于选择下一批证据获取对象；
-- shadow 由 Vina 批内相对位置、冻结 structure-only computational prior 和结构规则构成；
-- shadow 不是 Model v3 的替代版本，不是生物活性概率，也不是实验候选有效性结论。
+### 3.6 冻结的开放过滤协议
 
-这使工作流在数据不完整时仍能给出“下一步应该补什么证据”的面板，同时不越过冻结模型和证据语义边界。
+对 PPT 的 39 张源幻灯片逐页审计后，能够确认历史文字流程是：QuickProp 仅保留符合 Lipinski 且不含反应性片段的结构，再执行 Glide HTVS 前 10% → SP 前 10% → XP → Prime MM/GBSA → Deep-PK。当前开放工作流没有把该描述伪装成已恢复的机器可执行 QuickProp/Glide 配置。
+
+`open_physchem_structural_filter_v1` 在查看漏斗结果前冻结：MW 250–500、cLogP -1–5、TPSA ≤140、HBD ≤5、HBA ≤10、可旋转键 ≤10、绝对形式电荷 ≤2 作为 hard filter；RDKit sanitize、价态与 reactive SMARTS 也作为 hard filter；环数、fraction Csp3 与 PAINS 仅作 warning。每个失败规则均保留 field、threshold、raw value、rationale、kind 和协议哈希。它明确不是 QuickProp。
+
+实测 full 库：100,000 个唯一结构经该冻结规则后保留 7,265 个，92,735 个至少触发一条 hard filter。逐规则记录允许同一结构存在多个失败原因，因此规则计数之和不等于被剔除结构数。
+
+### 3.7 100K Vina 资源门控
+
+根据真实 N=100 `vina_7p3w_v1` 运行的 5,837.42 s wall time、约 23,084 s 候选累计时间、磁盘与失败率线性估算，7,265 个过滤后结构在 4 workers 下约需 424,088 s（117.8 h）wall time。该值超过统一配置的 24 h 自动门限，因此 full 模式在 Vina 前真实停止为 `blocked_by_resource_gate`，没有启动 7,265 个或 100,000 个 docking，也没有生成模拟结果。
+
+### 3.8 高成本证据与两级决策
+
+开放精筛不制造第二套 Vina 来冒充 SP/XP。Level A 用真实 Vina、结构多样性、边界位置、IN-2 相似性和证据缺口选择下一份高成本证据，输出被明确标记为 `NOT biological hit ranking`。Level B 只接受同时具备 `vina_7p3w_v1` 与 `open_mmgbsa_7p3w_v2` 的结构；缺失 ADMET、ATP 抑制、MIC 或细胞毒性时继续标记 unknown，并提出独立实验验证顺序。
+
+## 四、AI / 决策扩展
+
+统一控制器不强迫完整 Model v3 对缺少历史 Glide、QuickProp、ADMET 或实验结果的新结构给出伪确定结论，也没有训练新模型。
+
+Level A 是证据获取决策：利用 Vina 批内相对位置、IN-2 结构相似性、scaffold 多样性、边界位置和证据缺口，决定有限 Open MM/GBSA 预算先给谁。该输出始终标记为“下一份高成本证据优先级”，不是生物活性排序。
+
+Level B 是实验前计算候选决策：只有 Vina pose QC 通过且获得真实 `open_mmgbsa_7p3w_v2` 的结构才能进入。它调用冻结的 structure-only / ATP / antibacterial 先验输出，并以统一配置中公开的权重融合 Vina、Open MM/GBSA、结构先验和规则型 drug-likeness。ADMET、ATP 抑制、MIC 和细胞毒性若无真实记录，保持 `unknown`，不会填 0、插值或借用其他 endpoint。
+
+Level B 的名称固定为 **computational pre-experimental prioritization**。它不是 active compound、validated inhibitor 或 drug candidate 清单。
 
 ## 五、执行方式
 
@@ -140,16 +160,15 @@ N=100 smoke 调用了只读 `CandidateInputProcessor`：对规范结构计算 Mo
   --verify
 ```
 
-执行 N=100 真实开放 workflow smoke：
+执行统一 N=100 smoke：
 
 ```powershell
-.\.venv\Scripts\python.exe src\run_reproducible_workflow.py `
-  --target 100 `
-  --run-id in2_smoke_100_v1 `
-  --workers 4
+.\.venv\Scripts\python.exe run_pipeline.py `
+  --config configs\in2_7p3w_reference.yaml `
+  --mode smoke
 ```
 
-`--run-id` 对应独立的本地 checkpoint 与 content-addressed docking cache。已完成任务会跳过，失败任务不会在未明确允许时自动重试。
+将 `--mode` 替换为 `development` 或 `full` 即可使用完全相同的控制器。`--stop-after docking` 等参数可在阶段边界安全停止；之后用相同 run ID 重启，会验证 checkpoint、library/config/protocol/artifact hash，并跳过已经完成的候选。失败任务不会在未明确允许时自动重试。
 
 ## 六、仍缺失的历史信息
 
@@ -160,7 +179,7 @@ N=100 smoke 调用了只读 `CandidateInputProcessor`：对规范结构计算 Mo
 3. 历史 attachment site、reaction template、枚举顺序、seed、去重和失败保留规则；
 4. 能够证明历史 LigPrep/Glide/QikProp/Prime 全链参数的完整机器可读 protocol manifest；
 5. 新重建衍生结构的实验 ATP 抑制、MIC、毒性和合成结果；
-6. 新重建衍生结构经审核的 Open MM/GBSA 证据；
+6. 新重建衍生库中除已通过高成本采集门控的小规模候选外，其余结构的 Open MM/GBSA 证据；
 7. 新库与原历史十万库逐结构一致性的任何证据。
 
 因此正式名称始终为 **reconstructed reproducible derivative library（重建的可复现衍生库）**，不得改称 historical 100k library。

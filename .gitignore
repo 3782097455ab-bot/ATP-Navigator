@@ -59,6 +59,15 @@ cache/
 
 # Phase 11: private sessions, unreviewed laboratory evidence and source data
 workspace_local/
+# Reproducible run interfaces keep manifests/reports/rankings in Git, while
+# regenerated large tables and per-chunk checkpoints stay local.
+runs/*/library/library.csv
+runs/*/library/generation_rejections.csv
+runs/*/filtering/filter_results.csv
+runs/*/filtering/filter_rejections.csv
+runs/*/filtering/accepted_candidates.csv
+runs/*/filtering/filter_chunks/
+runs/*/filtering/filter_checkpoint.json
 data/experimental/incoming/*
 !data/experimental/incoming/README.md
 data/experimental/feedback_store/

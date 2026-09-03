@@ -64,7 +64,22 @@ st.markdown("""
   [data-testid="stSidebar"] [role="radiogroup"] label:hover {background:rgba(16,168,200,.14);}
   [data-testid="stSidebar"] [data-checked="true"] {background:linear-gradient(90deg,rgba(88,185,87,.25),rgba(16,168,200,.20));}
   [data-testid="stHeader"] {background:transparent;}
-  [data-testid="stToolbar"], #MainMenu, footer {display:none !important;}
+  /* Keep the toolbar container available: Streamlit mounts the sidebar
+     restore control inside it after the sidebar has been collapsed. */
+  [data-testid="stToolbar"] {background:transparent;}
+  [data-testid="stToolbar"] [data-testid="stBaseButton-header"],
+  [data-testid="stToolbar"] [data-testid="stMainMenuButton"],
+  #MainMenu, footer {display:none !important;}
+  [data-testid="stExpandSidebarButton"] {
+    margin:.45rem 0 0 .45rem;
+    border:1px solid var(--yx-line) !important;
+    border-radius:10px !important;
+    background:rgba(255,255,255,.96) !important;
+    box-shadow:0 6px 20px rgba(35,52,56,.12);
+  }
+  [data-testid="stExpandSidebarButton"] * {color:var(--yx-ink) !important;}
+  [data-testid="stSidebarCollapseButton"],
+  [data-testid="stSidebarCollapseButton"] button {visibility:visible !important;}
   [data-testid="stMetric"] {border:1px solid var(--yx-line); border-radius:14px; padding:.8rem 1rem; background:rgba(255,255,255,.88); box-shadow:0 7px 24px rgba(35,52,56,.05);}
   [data-testid="stMetricValue"] {color:#173e42;}
   .yx-brand {padding:.55rem .2rem 1rem;}
@@ -462,21 +477,36 @@ def scientific_workflow_page():
         st.info("可复现工作流尚未产生已核验的运行摘要。页面不会用示例数值替代真实结果。")
         return
     summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    manifest = {}
+    manifest_ref = summary.get("run_manifest")
+    if manifest_ref:
+        candidate = PROJECT / manifest_ref
+        if candidate.is_file():
+            manifest = json.loads(candidate.read_text(encoding="utf-8"))
     st.warning("这里展示的是重建的可复现 IN-2 衍生库，不是、也不声称等同于历史 Auto_Enum 十万库。")
     c1, c2, c3, c4 = st.columns(4)
-    stages = pd.DataFrame(summary.get("stage_counts", []))
-    library_stage = stages.loc[stages["stage"].eq("Library Generation")]
-    docking_stage = stages.loc[stages["stage"].eq("Docking")]
+    stages = pd.DataFrame(manifest.get("stages", summary.get("stage_counts", [])))
+    stage_key = "stage_id" if "stage_id" in stages else "stage"
+    library_stage = stages.loc[stages[stage_key].isin(["library_generation", "Library Generation"])] if not stages.empty else stages
+    docking_stage = stages.loc[stages[stage_key].isin(["docking", "Docking"])] if not stages.empty else stages
     c1.metric("母体结构", "IN-2")
     c2.metric("生成后唯一结构", int(library_stage.iloc[0]["output_count"]) if len(library_stage) else 0)
     c3.metric("真实 Vina 结果", int(docking_stage.iloc[0]["output_count"]) if len(docking_stage) else 0)
-    c4.metric("工作流协议", summary.get("protocol_id", "unknown"))
+    c4.metric("运行状态", manifest.get("status", summary.get("status", "unknown")))
     st.markdown("### 科研流程")
     st.code("靶点 + IN-2 → 衍生库生成 → 结构准备与过滤 → 开放工具对接 → 分层精筛 → 高成本证据门控 → 证据整合 → AI辅助决策 → 候选面板", language=None)
     if not stages.empty:
-        display = stages.rename(columns={"stage":"流程层", "tool_protocol":"工具 / 协议", "status":"状态",
+        display = stages.rename(columns={"stage":"流程层", "stage_id":"流程层", "tool_protocol":"工具 / 协议", "protocol_id":"工具 / 协议", "status":"状态",
                                          "input_count":"输入数量", "output_count":"输出数量",
-                                         "output":"输出", "provenance":"溯源"})
+                                         "failed_count":"失败 / 剔除", "cached_count":"缓存复用",
+                                         "runtime_seconds":"耗时（秒）", "artifact":"产物", "output":"输出", "provenance":"溯源"})
+        labels = {"reference_inputs":"靶点与参考配体", "library_generation":"衍生库生成", "molecular_filtering":"结构与理化过滤",
+                  "docking":"开放工具对接", "refinement":"高成本证据采集", "mmgbsa":"Open MM/GBSA",
+                  "evidence_integration":"证据登记", "decision":"辅助决策", "candidate_panel":"候选面板"}
+        if "流程层" in display:
+            display["流程层"] = display["流程层"].replace(labels)
+        wanted = [c for c in ["流程层", "输入数量", "输出数量", "失败 / 剔除", "缓存复用", "工具 / 协议", "状态", "耗时（秒）", "产物"] if c in display]
+        display = display[wanted]
         st.dataframe(display, width="stretch", hide_index=True, height=500)
     st.markdown("### 四类证据边界")
     cols = st.columns(4)
@@ -485,8 +515,18 @@ def scientific_workflow_page():
     cols[2].info("**重建开放流程**\n\nRDKit 确定性生成与真实 Vina 使用独立协议名，不能冒充 Glide SP/XP。")
     cols[3].info("**AI决策扩展**\n\n冻结模型只在输入契约满足时调用；缺失关键证据时明确输出未知或待补充。")
     st.markdown("### 运行溯源")
-    st.json({"运行编号":summary.get("run_id"), "衍生库哈希":summary.get("library_hash"),
-             "生成配置哈希":summary.get("config_hash"), "输出":summary.get("outputs", {})}, expanded=False)
+    st.json({"运行编号":summary.get("run_id"), "运行模式":summary.get("mode"),
+             "衍生库哈希":manifest.get("library_hash", summary.get("library_hash")),
+             "统一配置哈希":manifest.get("config_hash", summary.get("config_hash")),
+             "过滤协议哈希":manifest.get("filter_hash"),
+             "受保护模型未变化":manifest.get("protected_model_hashes_unchanged"),
+             "运行清单":manifest_ref}, expanded=False)
+    panel_ref = summary.get("candidate_panel")
+    if panel_ref and (PROJECT / panel_ref).is_file():
+        st.markdown("### 计算优先候选前集")
+        panel = pd.read_csv(PROJECT / panel_ref)
+        st.dataframe(panel, width="stretch", hide_index=True)
+        st.caption("仅表示实验前计算优先级，不代表活性化合物、已验证抑制剂或药物候选。")
 
 
 def execution_jobs():
@@ -633,6 +673,17 @@ with st.sidebar:
         '<div class="yx-brand-sub">AI辅助候选优先级决策工作台</div></div>',
         unsafe_allow_html=True,
     )
+    sidebar_pinned = st.toggle(
+        "📌 固定侧边栏",
+        value=True,
+        key="yx_sidebar_pinned",
+        help="开启后侧边栏保持展开，避免误收起。",
+    )
+    if sidebar_pinned:
+        st.markdown(
+            '<style>[data-testid="stSidebarCollapseButton"] {display:none !important;}</style>',
+            unsafe_allow_html=True,
+        )
     if st.button("＋ 新建研究会话", type="primary", width="stretch"):
         st.session_state.pop("phase18b_messages", None)
         st.session_state.pop("phase18b_pending_plan", None)

@@ -6,6 +6,16 @@ AI 用于学习和整合已有虚拟筛选证据，辅助候选排序；当前�
 
 系统位于传统虚拟筛选之后、合成与生物实验之前。它把研究意图、Docking/MMGBSA/ADMET、外部知识、模型分歧和实验预算转化为可审计的候选优先级与下一实验建议。项目不是通用“药物发现平台”。
 
+## IN-2 / 7P3W 统一科研流水线
+
+```powershell
+.\.venv\Scripts\python.exe run_pipeline.py --config configs\in2_7p3w_reference.yaml --mode development
+```
+
+同一控制器支持 `smoke`（100）、`development`（1,000）和 `full`（100,000）三种规模，并按 `runs/<run_id>/` 输出配置快照、阶段清单、过滤审计、真实 Vina/Open MM/GBSA 证据、计算优先候选前集和六份自动报告。它会按哈希复用已完成任务，并可通过 `--stop-after` 在阶段边界暂停；只有显式 `--retry-failed` 才重试终态技术失败。
+
+该入口使用的是**重建的可复现衍生物库**和开放计算协议。它不等同历史 Auto_Enum 十万库；RDKit 过滤不叫 QuickProp，Vina 不叫 Glide，Open MM/GBSA 不叫 Prime MM/GBSA。完整边界与实测结果见 [端到端工作流说明](docs/Reproducible_End_to_End_Workflow.md)。
+
 ## 中文公测版研究工作区
 
 ```powershell
